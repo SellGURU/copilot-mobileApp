@@ -2,6 +2,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../components/text_style.dart';
+
 class ItemCard extends StatelessWidget {
   final String title;
   final String status;
@@ -21,15 +23,46 @@ class ItemCard extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(15),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 20,),
             Row(
               children: [
                 icon,
-                Text(title,style: TextStyle(backgroundColor: Colors.amberAccent),)
+                Text(title,style: AppTextStyles.title1,),
+
               ],
-            )
+            ),
+            Row(
+              children: [
+                Column(
+                  children: [
+                    Text("Avg",style: AppTextStyles.hint,),
+                    Row(
+                      children: [
+                        Text(average,style: AppTextStyles.title1,),
+                        const SizedBox(width: 5,),
+                        const Text("bpm" ,style: AppTextStyles.hint,)
+                      ],
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Text("Avg",style: AppTextStyles.hint,),
+                    Row(
+                      children: [
+                        Text(average,style: AppTextStyles.title1,),
+                        const SizedBox(width: 5,),
+                        const Text("bpm" ,style: AppTextStyles.hint,)
+                      ],
+                    ),
+                  ],
+                )
+              ],
+            ),
+
+
           ],
         ),
       ),
