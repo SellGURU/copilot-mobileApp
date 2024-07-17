@@ -21,9 +21,11 @@ class ItemCard extends StatelessWidget {
       width: 150,
       height: 200,
       child: Padding(
+
         padding: EdgeInsets.all(15),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: 20,),
             Row(
@@ -33,7 +35,10 @@ class ItemCard extends StatelessWidget {
 
               ],
             ),
+            SizedBox(height: 10,),
             Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   children: [
@@ -42,7 +47,7 @@ class ItemCard extends StatelessWidget {
                       children: [
                         Text(average,style: AppTextStyles.title1,),
                         const SizedBox(width: 5,),
-                        const Text("bpm" ,style: AppTextStyles.hint,)
+                        Text("bpm" ,style: AppTextStyles.hint,)
                       ],
                     ),
                   ],
@@ -54,15 +59,13 @@ class ItemCard extends StatelessWidget {
                       children: [
                         Text(average,style: AppTextStyles.title1,),
                         const SizedBox(width: 5,),
-                        const Text("bpm" ,style: AppTextStyles.hint,)
+                        Text("bpm" ,style: AppTextStyles.hint,)
                       ],
                     ),
                   ],
                 )
               ],
             ),
-
-
           ],
         ),
       ),
