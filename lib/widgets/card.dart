@@ -1,6 +1,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:test_copilet/res/colors.dart';
 
 import '../components/text_style.dart';
 
@@ -17,7 +18,7 @@ class ItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      decoration: const BoxDecoration(color: Colors.white,borderRadius: BorderRadius.all(Radius.circular(10))),
+      decoration: const BoxDecoration(boxShadow: [BoxShadow(color: AppColors.textLite)],color: Colors.white,borderRadius: BorderRadius.all(Radius.circular(10))),
       width: 160,
       height: 200,
       child: Padding(
