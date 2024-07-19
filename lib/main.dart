@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:test_copilet/widgets/card.dart';
 
 void main() {
@@ -19,8 +20,7 @@ class MyApp extends StatelessWidget {
         body: SafeArea(child:
         Column(children: [
           Text("salam amin"),
-          ItemCard(title: "Heart Rate",average: "84",icon: SizedBox(),status: "hi",current: "81"),
-
+          ItemCard(title: "Heart Rate",average: "84",icon: SvgPicture.asset("assets/heart.svg",width: 40,height: 40,),status: "hi",current: "81"),
         ],)
         ),
       )

@@ -18,7 +18,7 @@ class ItemCard extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       decoration: const BoxDecoration(color: Colors.white,borderRadius: BorderRadius.all(Radius.circular(10))),
-      width: 150,
+      width: 160,
       height: 200,
       child: Padding(
 
@@ -29,10 +29,10 @@ class ItemCard extends StatelessWidget {
           children: [
             SizedBox(height: 20,),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 icon,
                 Text(title,style: AppTextStyles.title1,),
-
               ],
             ),
             SizedBox(height: 10,),
