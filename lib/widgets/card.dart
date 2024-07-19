@@ -31,7 +31,9 @@ class ItemCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                icon,
+               Container(
+                 child:  icon,
+               ),
                 Text(title,style: AppTextStyles.title1,),
               ],
             ),
