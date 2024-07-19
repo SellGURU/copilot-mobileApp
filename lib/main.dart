@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:test_copilet/res/colors.dart';
+import 'package:test_copilet/route/routes.dart';
 import 'package:test_copilet/widgets/card.dart';
 
 import 'components/text_style.dart';
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         title: 'copilot demo',
         debugShowCheckedModeBanner: false,
+        routes: routes,
         home: Scaffold(
           backgroundColor: AppColors.bgScreen,
           body: SafeArea(
