@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
 
-  static const Color mainBg = Color.fromARGB(255, 254, 254, 254);
+  static const Color mainBg = Colors.white;
+  static const Color bgScreen = Color.fromARGB(255, 254, 254, 254);
   static const Color text = Color.fromARGB(255, 48, 68, 91);
   static const Color primary = Color.fromARGB(255, 48, 68, 91);
   static const Color textLite = Color.fromARGB(255,123, 147, 175);

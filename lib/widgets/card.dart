@@ -21,7 +21,6 @@ class ItemCard extends StatelessWidget {
       width: 160,
       height: 200,
       child: Padding(
-
         padding: EdgeInsets.all(15),
         child: Column(
           mainAxisSize: MainAxisSize.max,

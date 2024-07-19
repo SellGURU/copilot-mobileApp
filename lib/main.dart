@@ -17,22 +17,20 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Demo',
+      title: 'copilot demo',
       debugShowCheckedModeBanner: false,
       home:Scaffold(
+        backgroundColor: AppColors.bgScreen,
         body: SafeArea(child:
         Column(children: [
-          Text("salam amin"),
           ItemCard(title: "Heart Rate",average: "84",icon: SvgPicture.asset("assets/heart.svg",width: 40,height: 40,),status: "hi",current: "81"),
-
         ],)
         ),
         bottomNavigationBar: ConvexAppBar(
-
           style: TabStyle.fixed,
           backgroundColor: AppColors.mainBg,
           color: AppColors.textLite,
-          activeColor: AppColors.greenBega,
+          activeColor: AppColors.iconPurpleDark,
           items: [
             TabItem(title:"Home",icon: Icons.home,),
             TabItem(title:"Results",icon: Icons.monitor_heart_sharp,),
