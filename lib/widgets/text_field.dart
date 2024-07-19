@@ -3,7 +3,6 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:test_copilet/components/extention.dart';
 
-
 import '../components/text_style.dart';
 import '../res/dimens.dart';
 
@@ -18,51 +17,39 @@ class AppTextField extends StatelessWidget {
 
   AppTextField(
       {required this.lable,
-        required this.hint,
-        required this.controller,
-        this.icon = const SizedBox(),
-        this.prefixLable = '',
-        this.textAlign =  TextAlign.center,
-        this.inputType
-      });
+      required this.hint,
+      required this.controller,
+      this.icon = const SizedBox(),
+      this.prefixLable = '',
+      this.textAlign = TextAlign.start,
+      this.inputType});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Padding(
-      padding: EdgeInsets.all(AppDimens.medium),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          SizedBox(
-            width: size.width*.75,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(prefixLable,style: AppTextStyles.hint,),
-                Text(lable,style: AppTextStyles.hint,),
-
-              ],
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
+      children: [
+        SizedBox(
+          width: size.width,
+          child: TextField(
+            textAlign: textAlign,
+            controller: controller,
+            keyboardType: inputType,
+            // decoration: new InputDecoration(
+            //
+            // ),
+            decoration: new InputDecoration(
+              hintStyle: AppTextStyles.hint,
+              hintText: hint,
+              prefixIcon: icon,
+              border: const OutlineInputBorder(
+                borderSide: const BorderSide(color: Colors.grey, width: 0.0,),
+              ),
             ),
           ),
-          AppDimens.medium.height,
-          SizedBox(
-            height: size.height*.07,
-            width: size.width*.75,
-            child: TextField(
-              textAlign: textAlign,
-              controller: controller,
-              keyboardType: inputType,
-              decoration: InputDecoration(
-                  hintStyle:  AppTextStyles.hint,
-                  hintText: hint,
-                  prefixIcon: icon
-              ),
-
-            ),
-          )
-        ],
-      ),
+        )
+      ],
     );
   }
 }
