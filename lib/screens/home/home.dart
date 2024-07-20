@@ -14,51 +14,53 @@ class HomeScreen extends StatelessWidget {
   TextEditingController _controllerSearch = TextEditingController();
     return Scaffold(
         backgroundColor: AppColors.bgScreen,
-        body: Padding(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  SvgPicture.asset("assets/avatar.svg" ,width: 50, height: 50,),
-                  SizedBox(width: 10,),
-                  Column(
-                    textDirection: TextDirection.ltr,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text("Good morning" ,style: AppTextStyles.hint,),
-                      Text("Alexander",style: AppTextStyles.title1,),
-                    ],
-                  ),
-                  SizedBox(width: 205,),
-                  const Icon(Icons.notifications_none_outlined,color: AppColors.shadowColor,),
-                ],
-              ),
-              const SizedBox(height: 30,),
-              AppTextField(lable: 'search', hint: 'search', controller: _controllerSearch,icon: const Icon(Icons.search),),
-              Container(
-                  height: 250,
-                  child: ListView.separated(
-                    itemCount: 10,
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    padding: const EdgeInsets.only(top: 20 ,bottom: 20),
-                    itemBuilder: (BuildContext context, int index) {
-                      return ItemCard(
-                          title: "Heart Rate",
-                          average: "84",
-                          icon: SvgPicture.asset(
-                            "assets/heart.svg",
-                            width: 40,
-                            height: 40,
-                          ),
-                          status: "hi",
-                          current: "81");
-                    }, separatorBuilder: (BuildContext context, int index) {
-                    return SizedBox(width: 10,);
-                  },
-                  ))
-            ],
+        body: SingleChildScrollView(
+          child:Padding(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    SvgPicture.asset("assets/avatar.svg" ,width: 50, height: 50,),
+                    SizedBox(width: 10,),
+                    Column(
+                      textDirection: TextDirection.ltr,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text("Good morning" ,style: AppTextStyles.hint,),
+                        Text("Alexander",style: AppTextStyles.title1,),
+                      ],
+                    ),
+                    SizedBox(width: 205,),
+                    const Icon(Icons.notifications_none_outlined,color: AppColors.shadowColor,),
+                  ],
+                ),
+                const SizedBox(height: 30,),
+                AppTextField(lable: 'search', hint: 'search', controller: _controllerSearch,icon: const Icon(Icons.search),),
+                Container(
+                    height: 250,
+                    child: ListView.separated(
+                      itemCount: 10,
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.only(top: 20 ,bottom: 20),
+                      itemBuilder: (BuildContext context, int index) {
+                        return ItemCard(
+                            title: "Heart Rate",
+                            average: "84",
+                            icon: SvgPicture.asset(
+                              "assets/heart.svg",
+                              width: 40,
+                              height: 40,
+                            ),
+                            status: "hi",
+                            current: "81");
+                      }, separatorBuilder: (BuildContext context, int index) {
+                      return SizedBox(width: 10,);
+                    },
+                    ))
+              ],
+            ),
           ),
         )
     );

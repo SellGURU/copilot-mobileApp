@@ -1,5 +1,4 @@
 import 'dart:ffi';
-
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,33 +24,30 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    var size =MediaQuery.of(context).size;
+    var size = MediaQuery.of(context).size;
     return MaterialApp(
         title: 'copilot demo',
         debugShowCheckedModeBanner: false,
         routes: routes,
-        home:SafeArea(
-          child:  Scaffold(
-            body: SizedBox(
-                      width: size.width,
-                      height: size.height-75,
-                      child: const IndexedStack(
-                        index: 0,
-                        children: [HomeScreen(), SettingPage()],
-                      ),
-                    ),
+        home: Scaffold(
+            body: SafeArea(
+              child: IndexedStack(
+                index: 0,
+                children: [HomeScreen(), SettingPage()],
+              ),
+            ),
             bottomNavigationBar: StyleProvider(
               style: Style(),
               child: ConvexAppBar(
                 elevation: 5,
-                height: 50,
+                height: (size.height*.07),
                 style: TabStyle.fixedCircle,
                 backgroundColor: AppColors.mainBg,
                 color: AppColors.textLite,
                 activeColor: AppColors.iconPurpleDark,
                 top: -30,
                 curveSize: 70,
-                items: [
+                items: const[
                   TabItem(
                     title: "Home",
                     icon: Icons.home,
@@ -70,8 +66,7 @@ class MyApp extends StatelessWidget {
               ),
             ),
           ),
-        )
-    );
+        );
   }
 }
 
@@ -90,3 +85,7 @@ class Style extends StyleHook {
     return AppTextStyles.hint;
   }
 }
+//IndexedStack(
+//                 index: 0,
+//                 children: [HomeScreen(), SettingPage()],
+//               )
