@@ -2,7 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:test_copilet/res/colors.dart';
-
+import 'package:fl_chart/fl_chart.dart';
 import '../components/text_style.dart';
 
 class ItemCard extends StatelessWidget {
@@ -13,6 +13,8 @@ class ItemCard extends StatelessWidget {
   final Widget icon;
 
   ItemCard({super.key, required this.title, required this.average, required this.current, required this.icon, required this.status});
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +77,11 @@ class ItemCard extends StatelessWidget {
                 )
               ],
             ),
+            // Row(
+            //   children:[
+            //     LineChart(mainData())
+            //   ]
+            // )
           ],
         ),
       ),
