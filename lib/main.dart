@@ -53,8 +53,8 @@ class _MyAppState extends State<MyApp> {
             backgroundColor: AppColors.mainBg,
             color: AppColors.textLite,
             activeColor: AppColors.iconPurpleDark,
-            top: -30,
-            curveSize: 70,
+            top: -40,
+            curveSize: 120,
             items: const[
               TabItem(
                 title: "Home",
@@ -80,10 +80,10 @@ class _MyAppState extends State<MyApp> {
 
 class Style extends StyleHook {
   @override
-  double get activeIconSize => 40;
+  double get activeIconSize => 50;
 
   @override
-  double get activeIconMargin => 15;
+  double get activeIconMargin => 10;
 
   @override
   double get iconSize => 30;

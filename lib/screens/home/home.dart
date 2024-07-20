@@ -21,18 +21,22 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    SvgPicture.asset("assets/avatar.svg" ,width: 50, height: 50,),
-                    SizedBox(width: 10,),
-                    Column(
-                      textDirection: TextDirection.ltr,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                    Row(
                       children: [
-                        Text("Good morning" ,style: AppTextStyles.hint,),
-                        Text("Alexander",style: AppTextStyles.title1,),
+                        SvgPicture.asset("assets/avatar.svg" ,width: 50, height: 50,),
+                        SizedBox(width: 10,),
+                        Column(
+                          textDirection: TextDirection.ltr,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text("Good morning" ,style: AppTextStyles.hint,),
+                            Text("Alexander",style: AppTextStyles.title1,),
+                          ],
+                        ),
                       ],
                     ),
-                    SizedBox(width: 205,),
                     const Icon(Icons.notifications_none_outlined,color: AppColors.shadowColor,),
                   ],
                 ),
