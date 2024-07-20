@@ -11,7 +11,7 @@ class RadioButton extends StatefulWidget {
 }
 
 class _RadioButtonState extends State<RadioButton> {
-  var selectedValue="none";
+  var selectedValue = "none";
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,17 +27,32 @@ class _RadioButtonState extends State<RadioButton> {
           value: "Try a new yoga flow",
           groupValue: selectedValue,
           onChanged: (String? value) {
-            setState(() =>selectedValue=value!);
+            setState(() => selectedValue = value!);
           },
-          child:Row(
+          child: Row(
             children: [
-              Padding(padding: EdgeInsets.only(top: 10,bottom: 10),child: SvgPicture.asset("assets/yoga.svg",width: 40, height: 40,),),
-              SizedBox(width: 5,),
-              Text("Try a new yoga flow",style: AppTextStyles.title1,),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: SvgPicture.asset(
+                  "assets/yoga.svg",
+                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "Try a new yoga flow",
+                style: AppTextStyles.title1,
+              ),
             ],
           ),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         RadioMenuButton(
           style: ButtonStyle(
               shape: WidgetStatePropertyAll(RoundedRectangleBorder(
@@ -48,17 +63,32 @@ class _RadioButtonState extends State<RadioButton> {
           value: "Try a new yoga flow",
           groupValue: selectedValue,
           onChanged: (String? value) {
-            setState(() =>selectedValue=value!);
+            setState(() => selectedValue = value!);
           },
-          child:Row(
+          child: Row(
             children: [
-              Padding(padding: EdgeInsets.only(top: 10,bottom: 10),child: SvgPicture.asset("assets/yoga.svg",width: 40, height: 40,),),
-              SizedBox(width: 5,),
-              Text("Try a new yoga flow",style: AppTextStyles.title1,),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: SvgPicture.asset(
+                  "assets/yoga.svg",
+                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "Try a new yoga flow",
+                style: AppTextStyles.title1,
+              ),
             ],
           ),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         RadioMenuButton(
           style: ButtonStyle(
               shape: WidgetStatePropertyAll(RoundedRectangleBorder(
@@ -69,17 +99,32 @@ class _RadioButtonState extends State<RadioButton> {
           value: "Try a new yoga flow",
           groupValue: selectedValue,
           onChanged: (String? value) {
-            setState(() =>selectedValue=value!);
+            setState(() => selectedValue = value!);
           },
-          child:Row(
+          child: Row(
             children: [
-              Padding(padding: EdgeInsets.only(top: 10,bottom: 10),child: SvgPicture.asset("assets/yoga.svg",width: 40, height: 40,),),
-              SizedBox(width: 5,),
-              Text("Try a new yoga flow",style: AppTextStyles.title1,),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: SvgPicture.asset(
+                  "assets/yoga.svg",
+                  colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "Try a new yoga flow",
+                style: AppTextStyles.title1,
+              ),
             ],
           ),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         RadioMenuButton(
           style: ButtonStyle(
               shape: WidgetStatePropertyAll(RoundedRectangleBorder(
@@ -90,17 +135,32 @@ class _RadioButtonState extends State<RadioButton> {
           value: "Try a new yoga flow",
           groupValue: selectedValue,
           onChanged: (String? value) {
-            setState(() =>selectedValue=value!);
+            setState(() => selectedValue = value!);
           },
-          child:Row(
+          child: Row(
             children: [
-              Padding(padding: EdgeInsets.only(top: 10,bottom: 10),child: SvgPicture.asset("assets/yoga.svg",width: 40, height: 40,),),
-              SizedBox(width: 5,),
-              Text("Try a new yoga flow",style: AppTextStyles.title1,),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: SvgPicture.asset(
+                  "assets/yoga.svg",
+                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "Try a new yoga flow",
+                style: AppTextStyles.title1,
+              ),
             ],
           ),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         RadioMenuButton(
           style: ButtonStyle(
               shape: WidgetStatePropertyAll(RoundedRectangleBorder(
@@ -111,17 +171,32 @@ class _RadioButtonState extends State<RadioButton> {
           value: "Try a new yoga flow",
           groupValue: selectedValue,
           onChanged: (String? value) {
-            setState(() =>selectedValue=value!);
+            setState(() => selectedValue = value!);
           },
-          child:Row(
+          child: Row(
             children: [
-              Padding(padding: EdgeInsets.only(top: 10,bottom: 10),child: SvgPicture.asset("assets/yoga.svg",width: 40, height: 40,),),
-              SizedBox(width: 5,),
-              Text("Try a new yoga flow",style: AppTextStyles.title1,),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: SvgPicture.asset(
+                  "assets/yoga.svg",
+                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "Try a new yoga flow",
+                style: AppTextStyles.title1,
+              ),
             ],
           ),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         RadioMenuButton(
           style: ButtonStyle(
               shape: WidgetStatePropertyAll(RoundedRectangleBorder(
@@ -132,17 +207,32 @@ class _RadioButtonState extends State<RadioButton> {
           value: "Try a new yoga flow",
           groupValue: selectedValue,
           onChanged: (String? value) {
-            setState(() =>selectedValue=value!);
+            setState(() => selectedValue = value!);
           },
-          child:Row(
+          child: Row(
             children: [
-              Padding(padding: EdgeInsets.only(top: 10,bottom: 10),child: SvgPicture.asset("assets/yoga.svg",width: 40, height: 40,),),
-              SizedBox(width: 5,),
-              Text("Try a new yoga flow",style: AppTextStyles.title1,),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: SvgPicture.asset(
+                  "assets/yoga.svg",
+                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "Try a new yoga flow",
+                style: AppTextStyles.title1,
+              ),
             ],
           ),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         RadioMenuButton(
           style: ButtonStyle(
               shape: WidgetStatePropertyAll(RoundedRectangleBorder(
@@ -153,17 +243,32 @@ class _RadioButtonState extends State<RadioButton> {
           value: "Try a new yoga flow",
           groupValue: selectedValue,
           onChanged: (String? value) {
-            setState(() =>selectedValue=value!);
+            setState(() => selectedValue = value!);
           },
-          child:Row(
+          child: Row(
             children: [
-              Padding(padding: EdgeInsets.only(top: 10,bottom: 10),child: SvgPicture.asset("assets/yoga.svg",width: 40, height: 40,),),
-              SizedBox(width: 5,),
-              Text("Try a new yoga flow",style: AppTextStyles.title1,),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: SvgPicture.asset(
+                  "assets/yoga.svg",
+                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "Try a new yoga flow",
+                style: AppTextStyles.title1,
+              ),
             ],
           ),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         RadioMenuButton(
           style: ButtonStyle(
               shape: WidgetStatePropertyAll(RoundedRectangleBorder(
@@ -174,17 +279,32 @@ class _RadioButtonState extends State<RadioButton> {
           value: "Try a new yoga flow",
           groupValue: selectedValue,
           onChanged: (String? value) {
-            setState(() =>selectedValue=value!);
+            setState(() => selectedValue = value!);
           },
-          child:Row(
+          child: Row(
             children: [
-              Padding(padding: EdgeInsets.only(top: 10,bottom: 10),child: SvgPicture.asset("assets/yoga.svg",width: 40, height: 40,),),
-              SizedBox(width: 5,),
-              Text("Try a new yoga flow",style: AppTextStyles.title1,),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: SvgPicture.asset(
+                  "assets/yoga.svg",
+                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "Try a new yoga flow",
+                style: AppTextStyles.title1,
+              ),
             ],
           ),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         RadioMenuButton(
           style: ButtonStyle(
               shape: WidgetStatePropertyAll(RoundedRectangleBorder(
@@ -195,17 +315,32 @@ class _RadioButtonState extends State<RadioButton> {
           value: "Try a new yoga flow",
           groupValue: selectedValue,
           onChanged: (String? value) {
-            setState(() =>selectedValue=value!);
+            setState(() => selectedValue = value!);
           },
-          child:Row(
+          child: Row(
             children: [
-              Padding(padding: EdgeInsets.only(top: 10,bottom: 10),child: SvgPicture.asset("assets/yoga.svg",width: 40, height: 40,),),
-              SizedBox(width: 5,),
-              Text("Try a new yoga flow",style: AppTextStyles.title1,),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: SvgPicture.asset(
+                  "assets/yoga.svg",
+                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "Try a new yoga flow",
+                style: AppTextStyles.title1,
+              ),
             ],
           ),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         RadioMenuButton(
           style: ButtonStyle(
               shape: WidgetStatePropertyAll(RoundedRectangleBorder(
@@ -216,17 +351,32 @@ class _RadioButtonState extends State<RadioButton> {
           value: "Try a new yoga flow",
           groupValue: selectedValue,
           onChanged: (String? value) {
-            setState(() =>selectedValue=value!);
+            setState(() => selectedValue = value!);
           },
-          child:Row(
+          child: Row(
             children: [
-              Padding(padding: EdgeInsets.only(top: 10,bottom: 10),child: SvgPicture.asset("assets/yoga.svg",width: 40, height: 40,),),
-              SizedBox(width: 5,),
-              Text("Try a new yoga flow",style: AppTextStyles.title1,),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: SvgPicture.asset(
+                  "assets/yoga.svg",
+                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "Try a new yoga flow",
+                style: AppTextStyles.title1,
+              ),
             ],
           ),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         RadioMenuButton(
           style: ButtonStyle(
               shape: WidgetStatePropertyAll(RoundedRectangleBorder(
@@ -237,17 +387,32 @@ class _RadioButtonState extends State<RadioButton> {
           value: "Try a new yoga flow",
           groupValue: selectedValue,
           onChanged: (String? value) {
-            setState(() =>selectedValue=value!);
+            setState(() => selectedValue = value!);
           },
-          child:Row(
+          child: Row(
             children: [
-              Padding(padding: EdgeInsets.only(top: 10,bottom: 10),child: SvgPicture.asset("assets/yoga.svg",width: 40, height: 40,),),
-              SizedBox(width: 5,),
-              Text("Try a new yoga flow",style: AppTextStyles.title1,),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: SvgPicture.asset(
+                  "assets/yoga.svg",
+                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "Try a new yoga flow",
+                style: AppTextStyles.title1,
+              ),
             ],
           ),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         RadioMenuButton(
           style: ButtonStyle(
               shape: WidgetStatePropertyAll(RoundedRectangleBorder(
@@ -258,17 +423,32 @@ class _RadioButtonState extends State<RadioButton> {
           value: "Try a new yoga flow",
           groupValue: selectedValue,
           onChanged: (String? value) {
-            setState(() =>selectedValue=value!);
+            setState(() => selectedValue = value!);
           },
-          child:Row(
+          child: Row(
             children: [
-              Padding(padding: EdgeInsets.only(top: 10,bottom: 10),child: SvgPicture.asset("assets/yoga.svg",width: 40, height: 40,),),
-              SizedBox(width: 5,),
-              Text("Try a new yoga flow",style: AppTextStyles.title1,),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: SvgPicture.asset(
+                  "assets/yoga.svg",
+                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "Try a new yoga flow",
+                style: AppTextStyles.title1,
+              ),
             ],
           ),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         RadioMenuButton(
           style: ButtonStyle(
               shape: WidgetStatePropertyAll(RoundedRectangleBorder(
@@ -279,17 +459,32 @@ class _RadioButtonState extends State<RadioButton> {
           value: "Try a new yoga flow",
           groupValue: selectedValue,
           onChanged: (String? value) {
-            setState(() =>selectedValue=value!);
+            setState(() => selectedValue = value!);
           },
-          child:Row(
+          child: Row(
             children: [
-              Padding(padding: EdgeInsets.only(top: 10,bottom: 10),child: SvgPicture.asset("assets/yoga.svg",width: 40, height: 40,),),
-              SizedBox(width: 5,),
-              Text("Try a new yoga flow",style: AppTextStyles.title1,),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: SvgPicture.asset(
+                  "assets/yoga.svg",
+                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "Try a new yoga flow",
+                style: AppTextStyles.title1,
+              ),
             ],
           ),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         RadioMenuButton(
           style: ButtonStyle(
               shape: WidgetStatePropertyAll(RoundedRectangleBorder(
@@ -300,17 +495,32 @@ class _RadioButtonState extends State<RadioButton> {
           value: "Try a new yoga flow",
           groupValue: selectedValue,
           onChanged: (String? value) {
-            setState(() =>selectedValue=value!);
+            setState(() => selectedValue = value!);
           },
-          child:Row(
+          child: Row(
             children: [
-              Padding(padding: EdgeInsets.only(top: 10,bottom: 10),child: SvgPicture.asset("assets/yoga.svg",width: 40, height: 40,),),
-              SizedBox(width: 5,),
-              Text("Try a new yoga flow",style: AppTextStyles.title1,),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: SvgPicture.asset(
+                  "assets/yoga.svg",
+                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "Try a new yoga flow",
+                style: AppTextStyles.title1,
+              ),
             ],
           ),
         ),
-        SizedBox(height: 5,),
+        SizedBox(
+          height: 5,
+        ),
         RadioMenuButton(
           style: ButtonStyle(
               shape: WidgetStatePropertyAll(RoundedRectangleBorder(
@@ -321,18 +531,29 @@ class _RadioButtonState extends State<RadioButton> {
           value: "Try a new yoga flow",
           groupValue: selectedValue,
           onChanged: (String? value) {
-            setState(() =>selectedValue=value!);
+            setState(() => selectedValue = value!);
           },
-          child:Row(
+          child: Row(
             children: [
-              Padding(padding: EdgeInsets.only(top: 10,bottom: 10),child: SvgPicture.asset("assets/yoga.svg",width: 40, height: 40,),),
-              SizedBox(width: 5,),
-              Text("Try a new yoga flow",style: AppTextStyles.title1,),
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: SvgPicture.asset(
+                  "assets/yoga.svg",
+                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "Try a new yoga flow",
+                style: AppTextStyles.title1,
+              ),
             ],
           ),
         ),
-
-
       ],
     ));
   }

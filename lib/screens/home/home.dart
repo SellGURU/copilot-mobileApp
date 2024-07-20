@@ -55,6 +55,7 @@ class HomeScreen extends StatelessWidget {
                             average: "84",
                             icon: SvgPicture.asset(
                               "assets/heart.svg",
+                              colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
                               width: 40,
                               height: 40,
                             ),
