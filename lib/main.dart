@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
               style: Style(),
               child: ConvexAppBar(
                 elevation: 5,
-                height: (size.height*.07),
+                height: (size.height*.08),
                 style: TabStyle.fixedCircle,
                 backgroundColor: AppColors.mainBg,
                 color: AppColors.textLite,
