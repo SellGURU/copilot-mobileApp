@@ -43,7 +43,7 @@ class HomeScreen extends StatelessWidget {
                       itemCount: 10,
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
-                      padding: const EdgeInsets.only(top: 20 ,bottom: 20),
+                      padding: const EdgeInsets.only(top: 20 ,bottom: 20,left: 8,right: 10),
                       itemBuilder: (BuildContext context, int index) {
                         return ItemCard(
                             title: "Heart Rate",

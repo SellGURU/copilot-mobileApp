@@ -18,16 +18,23 @@ class ItemCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       alignment: Alignment.center,
-      decoration: const BoxDecoration(boxShadow: [BoxShadow(color: AppColors.textLite)],color: Colors.white,borderRadius: BorderRadius.all(Radius.circular(10))),
+      decoration: BoxDecoration(boxShadow: [
+      BoxShadow(
+      color: Colors.grey.withOpacity(.2),
+      spreadRadius: 5,
+      blurRadius: 10,
+      offset:const Offset(0, 3), // changes position of shadow
+    ),
+    ],color: Colors.white,borderRadius: const BorderRadius.all(Radius.circular(10))),
       width: 160,
       height: 200,
       child: Padding(
-        padding: EdgeInsets.all(15),
+        padding:const EdgeInsets.all(15),
         child: Column(
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 20,),
+           const SizedBox(height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
