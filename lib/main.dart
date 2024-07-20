@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
@@ -18,55 +17,64 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  var pageIndex=0;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return MaterialApp(
-        title: 'copilot demo',
-        debugShowCheckedModeBanner: false,
-        routes: routes,
-        home: Scaffold(
-            body: SafeArea(
-              child: IndexedStack(
-                index: 0,
-                children: [HomeScreen(), SettingPage()],
-              ),
-            ),
-            bottomNavigationBar: StyleProvider(
-              style: Style(),
-              child: ConvexAppBar(
-                elevation: 5,
-                height: (size.height*.08),
-                style: TabStyle.fixedCircle,
-                backgroundColor: AppColors.mainBg,
-                color: AppColors.textLite,
-                activeColor: AppColors.iconPurpleDark,
-                top: -30,
-                curveSize: 70,
-                items: const[
-                  TabItem(
-                    title: "Home",
-                    icon: Icons.home,
-                  ),
-                  TabItem(
-                    title: "Results",
-                    icon: Icons.monitor_heart_sharp,
-                  ),
-                  TabItem(
-                    title: "",
-                    icon: Icons.add,
-                  ),
-                  TabItem(title: "Insight", icon: Icons.pages),
-                  TabItem(title: "Setting", icon: Icons.settings),
-                ],
-              ),
-            ),
+      title: 'copilot demo',
+      debugShowCheckedModeBanner: false,
+      routes: routes,
+      home: Scaffold(
+        body: SafeArea(
+          child: IndexedStack(
+            index: pageIndex,
+            children: [HomeScreen(), Center(child: Text("result"),),Center(child: Text("hi"),),SettingPage()],
           ),
-        );
+        ),
+        bottomNavigationBar: StyleProvider(
+          style: Style(),
+          child: ConvexAppBar(
+            onTap: (index)=>setState(() {
+              pageIndex=index;
+            }),
+            elevation: 5,
+            height: (size.height*.08),
+            style: TabStyle.fixedCircle,
+            backgroundColor: AppColors.mainBg,
+            color: AppColors.textLite,
+            activeColor: AppColors.iconPurpleDark,
+            top: -30,
+            curveSize: 70,
+            items: const[
+              TabItem(
+                title: "Home",
+                icon: Icons.home,
+              ),
+              TabItem(
+                title: "Results",
+                icon: Icons.monitor_heart_sharp,
+              ),
+              TabItem(
+                title: "",
+                icon: Icons.add,
+              ),
+              TabItem(title: "Insight", icon: Icons.pages),
+              TabItem(title: "Setting", icon: Icons.settings),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
 
