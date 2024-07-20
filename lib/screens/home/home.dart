@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../components/text_style.dart';
 import '../../res/colors.dart';
 import '../../widgets/card.dart';
+import '../../widgets/radioBtn.dart';
 import '../../widgets/text_field.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -58,7 +59,8 @@ class HomeScreen extends StatelessWidget {
                       }, separatorBuilder: (BuildContext context, int index) {
                       return SizedBox(width: 10,);
                     },
-                    ))
+                    )),
+                RadioButton(),
               ],
             ),
           ),
