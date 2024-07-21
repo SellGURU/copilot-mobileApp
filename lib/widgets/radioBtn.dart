@@ -35,43 +35,7 @@ class _RadioButtonState extends State<RadioButton> {
                 padding: EdgeInsets.only(top: 10, bottom: 10),
                 child: SvgPicture.asset(
                   "assets/yoga.svg",
-                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
-                  width: 40,
-                  height: 40,
-                ),
-              ),
-              SizedBox(
-                width: 5,
-              ),
-              Text(
-                "Try a new yoga flow",
-                style: AppTextStyles.title1,
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        RadioMenuButton(
-          style: ButtonStyle(
-              shape: WidgetStatePropertyAll(RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10))),
-              backgroundColor: WidgetStatePropertyAll(Colors.white),
-              elevation: WidgetStatePropertyAll(10),
-              shadowColor: WidgetStatePropertyAll(Colors.grey.withOpacity(.3))),
-          value: "Try a new yoga flow",
-          groupValue: selectedValue,
-          onChanged: (String? value) {
-            setState(() => selectedValue = value!);
-          },
-          child: Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 10, bottom: 10),
-                child: SvgPicture.asset(
-                  "assets/yoga.svg",
-                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
                   width: 40,
                   height: 40,
                 ),
@@ -143,7 +107,7 @@ class _RadioButtonState extends State<RadioButton> {
                 padding: EdgeInsets.only(top: 10, bottom: 10),
                 child: SvgPicture.asset(
                   "assets/yoga.svg",
-                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
                   width: 40,
                   height: 40,
                 ),
@@ -179,7 +143,7 @@ class _RadioButtonState extends State<RadioButton> {
                 padding: EdgeInsets.only(top: 10, bottom: 10),
                 child: SvgPicture.asset(
                   "assets/yoga.svg",
-                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
                   width: 40,
                   height: 40,
                 ),
@@ -215,7 +179,7 @@ class _RadioButtonState extends State<RadioButton> {
                 padding: EdgeInsets.only(top: 10, bottom: 10),
                 child: SvgPicture.asset(
                   "assets/yoga.svg",
-                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
                   width: 40,
                   height: 40,
                 ),
@@ -251,7 +215,7 @@ class _RadioButtonState extends State<RadioButton> {
                 padding: EdgeInsets.only(top: 10, bottom: 10),
                 child: SvgPicture.asset(
                   "assets/yoga.svg",
-                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
                   width: 40,
                   height: 40,
                 ),
@@ -287,7 +251,7 @@ class _RadioButtonState extends State<RadioButton> {
                 padding: EdgeInsets.only(top: 10, bottom: 10),
                 child: SvgPicture.asset(
                   "assets/yoga.svg",
-                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
                   width: 40,
                   height: 40,
                 ),
@@ -323,7 +287,7 @@ class _RadioButtonState extends State<RadioButton> {
                 padding: EdgeInsets.only(top: 10, bottom: 10),
                 child: SvgPicture.asset(
                   "assets/yoga.svg",
-                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
                   width: 40,
                   height: 40,
                 ),
@@ -359,7 +323,7 @@ class _RadioButtonState extends State<RadioButton> {
                 padding: EdgeInsets.only(top: 10, bottom: 10),
                 child: SvgPicture.asset(
                   "assets/yoga.svg",
-                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
                   width: 40,
                   height: 40,
                 ),
@@ -395,7 +359,7 @@ class _RadioButtonState extends State<RadioButton> {
                 padding: EdgeInsets.only(top: 10, bottom: 10),
                 child: SvgPicture.asset(
                   "assets/yoga.svg",
-                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
                   width: 40,
                   height: 40,
                 ),
@@ -431,7 +395,7 @@ class _RadioButtonState extends State<RadioButton> {
                 padding: EdgeInsets.only(top: 10, bottom: 10),
                 child: SvgPicture.asset(
                   "assets/yoga.svg",
-                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
                   width: 40,
                   height: 40,
                 ),
@@ -467,7 +431,7 @@ class _RadioButtonState extends State<RadioButton> {
                 padding: EdgeInsets.only(top: 10, bottom: 10),
                 child: SvgPicture.asset(
                   "assets/yoga.svg",
-                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
                   width: 40,
                   height: 40,
                 ),
@@ -503,7 +467,7 @@ class _RadioButtonState extends State<RadioButton> {
                 padding: EdgeInsets.only(top: 10, bottom: 10),
                 child: SvgPicture.asset(
                   "assets/yoga.svg",
-                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
                   width: 40,
                   height: 40,
                 ),
@@ -539,7 +503,43 @@ class _RadioButtonState extends State<RadioButton> {
                 padding: EdgeInsets.only(top: 10, bottom: 10),
                 child: SvgPicture.asset(
                   "assets/yoga.svg",
-                   colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  width: 40,
+                  height: 40,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "Try a new yoga flow",
+                style: AppTextStyles.title1,
+              ),
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 5,
+        ),
+        RadioMenuButton(
+          style: ButtonStyle(
+              shape: WidgetStatePropertyAll(RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10))),
+              backgroundColor: WidgetStatePropertyAll(Colors.white),
+              elevation: WidgetStatePropertyAll(10),
+              shadowColor: WidgetStatePropertyAll(Colors.grey.withOpacity(.3))),
+          value: "Try a new yoga flow",
+          groupValue: selectedValue,
+          onChanged: (String? value) {
+            setState(() => selectedValue = value!);
+          },
+          child: Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(top: 10, bottom: 10),
+                child: SvgPicture.asset(
+                  "assets/yoga.svg",
+                  colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
                   width: 40,
                   height: 40,
                 ),

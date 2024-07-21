@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../components/text_style.dart';
 import '../../res/colors.dart';
 import '../../widgets/card.dart';
+import '../../widgets/longevity.dart';
 import '../../widgets/radioBtn.dart';
 import '../../widgets/text_field.dart';
 
@@ -48,6 +49,7 @@ class HomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 30,),
                 AppTextField(lable: 'search', hint: 'search', controller: _controllerSearch,icon: const Icon(Icons.search),),
+                Longevity(),
                 Container(
                     height: 250,
                     child: ListView.separated(

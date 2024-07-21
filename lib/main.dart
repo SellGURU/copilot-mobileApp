@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         body: SafeArea(
           child: IndexedStack(
-            index: 4,
+            index: pageIndex,
             children: [HomeScreen(), Text("result"), Text("hi"),Text("plan"),SettingPage()],
           ),
         ),
