@@ -55,6 +55,7 @@ class HomeScreen extends StatelessWidget {
                             average: "84",
                             icon: SvgPicture.asset(
                               "assets/heart.svg",
+                              colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
                               width: 40,
                               height: 40,
                             ),
@@ -68,12 +69,12 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Text("Check-in to track your progress",style: AppTextStyles.title1,),
-                      Row()
+                      const Row()
                     ],
                   ),
                 ),
-                SizedBox(height: 30,),
-                RadioButton(),
+                const SizedBox(height: 30,),
+                const RadioButton(),
               ],
             ),
           ),
