@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:test_copilet/res/colors.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:test_copilet/widgets/chart.dart';
 import '../components/text_style.dart';
 
 class ItemCard extends StatelessWidget {
@@ -74,9 +75,11 @@ class ItemCard extends StatelessWidget {
                       ],
                     ),
                   ],
-                )
+                ),
               ],
             ),
+            SizedBox(height: 30,),
+            Chart(),
             // Row(
             //   children:[
             //     LineChart(mainData())

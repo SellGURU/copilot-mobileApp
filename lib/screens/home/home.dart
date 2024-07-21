@@ -51,7 +51,7 @@ class HomeScreen extends StatelessWidget {
                 AppTextField(lable: 'search', hint: 'search', controller: _controllerSearch,icon: const Icon(Icons.search),),
                 Longevity(),
                 Container(
-                    height: 250,
+                    height: 280,
                     child: ListView.separated(
                       itemCount: 10,
                       scrollDirection: Axis.horizontal,
