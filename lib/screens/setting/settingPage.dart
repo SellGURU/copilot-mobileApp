@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +67,7 @@ class SettingPage extends StatelessWidget {
   LineChartData mainData() {
     return LineChartData(
       gridData: FlGridData(
-        show: false,
+        show: true,
         drawVerticalLine: false,
         horizontalInterval: 1,
         verticalInterval: 1,
@@ -131,9 +133,9 @@ class SettingPage extends StatelessWidget {
             colors: gradientColors,
           ),
           barWidth: 1,
-          isStrokeCapRound: true,
+          isStrokeCapRound: false,
           dotData: const FlDotData(
-            show: true,
+            show: false,
           ),
           belowBarData: BarAreaData(
             show: true,
@@ -150,10 +152,12 @@ class SettingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 132,
-      height: 57,
-      child: LineChart(mainData()),
-      );
+    return Center(
+      child: Container(
+        width: 300,
+        height: 300,
+        child: LineChart(mainData()),
+        ),
+    );
   }
 }

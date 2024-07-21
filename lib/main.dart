@@ -10,7 +10,6 @@ import 'package:test_copilet/res/colors.dart';
 import 'package:test_copilet/route/routes.dart';
 import 'package:test_copilet/screens/home/home.dart';
 import 'package:test_copilet/screens/setting/settingPage.dart';
-import 'package:test_copilet/widgets/card.dart';
 
 import 'components/text_style.dart';
 
@@ -31,6 +30,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+
     return MaterialApp(
       title: 'copilot demo',
       debugShowCheckedModeBanner: false,
@@ -38,11 +38,11 @@ class _MyAppState extends State<MyApp> {
       home: Scaffold(
         body: SafeArea(
           child: IndexedStack(
-            index: pageIndex,
-            children: [HomeScreen(), Container(child: Text("result"),),Center(child: Text("hi"),),SettingPage()],
+            index: 4,
+            children: [HomeScreen(), Text("result"), Text("hi"),Text("plan"),SettingPage()],
           ),
         ),
-        bottomNavigationBar: StyleProvider(
+        bottomNavigationBar:  StyleProvider(
           style: Style(),
           child: ConvexAppBar(
             onTap: (index)=>setState(() {
@@ -50,20 +50,20 @@ class _MyAppState extends State<MyApp> {
             }),
             disableDefaultTabController: true,
             elevation: 5,
-            height: (size.height*.06),
+            height: (size.height*.07),
             style: TabStyle.fixed,
             backgroundColor: AppColors.mainBg,
             color: AppColors.textLite,
             activeColor: AppColors.iconPurpleDark,
-            top: -35,
+            top: -30,
             curveSize: 80,
             items:[
               TabItem(
-                title: "Home",
+                title: "Overview",
                 icon: SizedBox(
                   height: (size.height),
                   // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
-                  child: SvgPicture.asset("assets/homeIcon.svg",width: 5,height: 5, colorFilter: pageIndex==0?ColorFilter.mode(AppColors.purpleDark, BlendMode.srcIn):ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
+                  child: SvgPicture.asset("assets/overviewIcon.svg",width: 5,height: 5, colorFilter: pageIndex==0?ColorFilter.mode(AppColors.purpleDark, BlendMode.srcIn):ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
                 ),
               ),
               TabItem(
@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
                 icon: SizedBox(
                   height: (size.height),
                   // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
-                  child: SvgPicture.asset("assets/heartIconMenu.svg",width: 5,height: 5, colorFilter: pageIndex==1?ColorFilter.mode(AppColors.purpleDark, BlendMode.srcIn):ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
+                  child: SvgPicture.asset("assets/resultIcon.svg",width: 5,height: 5, colorFilter: pageIndex==1?ColorFilter.mode(AppColors.purpleDark, BlendMode.srcIn):ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
                 ),
               ),
               TabItem(
@@ -79,13 +79,13 @@ class _MyAppState extends State<MyApp> {
                 icon: Container(
                   height: (size.height),
                   decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
-                  child:const Icon(Icons.add,weight: 10,color: Colors.white,),
+                  child: SvgPicture.asset("assets/addIcon.svg",width: 5,height: 5, colorFilter: pageIndex==1?ColorFilter.mode(AppColors.purpleDark, BlendMode.srcIn):ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
                 ),
               ),
-              TabItem(title: "Insight", icon: SizedBox(
+              TabItem(title: "Plan", icon: SizedBox(
                 height: (size.height),
                 // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
-                child: SvgPicture.asset("assets/settingIcon.svg",width: 5,height: 5, colorFilter: pageIndex==3?ColorFilter.mode(AppColors.purpleDark, BlendMode.srcIn):ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
+                child: SvgPicture.asset("assets/planIcon.svg",width: 5,height: 5, colorFilter: pageIndex==3?ColorFilter.mode(AppColors.purpleDark, BlendMode.srcIn):ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
               )),
               TabItem(title: "Setting",icon: SizedBox(
                 height: (size.height),
@@ -99,10 +99,9 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
 class Style extends StyleHook {
   @override
-  double get activeIconSize => 60;
+  double get activeIconSize => 65;
 
   @override
   double get activeIconMargin => 10;

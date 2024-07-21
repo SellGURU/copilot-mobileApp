@@ -37,7 +37,13 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const Icon(Icons.notifications_none_outlined,color: AppColors.shadowColor,),
+                    Row(
+                      children: [
+                        SvgPicture.asset("assets/notificationIcon.svg" ,width: 25, height: 25,),
+                        SizedBox(width: 5,),
+                        Icon(Icons.notifications_none_outlined,color: AppColors.purpleDark,),
+                      ],
+                    )
                   ],
                 ),
                 const SizedBox(height: 30,),
