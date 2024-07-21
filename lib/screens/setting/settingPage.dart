@@ -10,7 +10,7 @@ class SettingPage extends StatelessWidget {
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 16,
+      fontSize: 12,
     );
     Widget text;
     switch (value.toInt()) {
@@ -37,7 +37,7 @@ class SettingPage extends StatelessWidget {
   Widget leftTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
-      fontSize: 15,
+      fontSize: 8,
     );
     String text;
     switch (value.toInt()) {
@@ -58,23 +58,23 @@ class SettingPage extends StatelessWidget {
   }
 
   List<Color> gradientColors = [
-    AppColors.redBega,
-    AppColors.yellowBega,
+    AppColors.brandSecondaryColor,
+    AppColors.brandSecondaryColor,
   ];
 
   LineChartData mainData() {
     return LineChartData(
       gridData: FlGridData(
-        show: true,
-        drawVerticalLine: true,
+        show: false,
+        drawVerticalLine: false,
         horizontalInterval: 1,
         verticalInterval: 1,
-        getDrawingHorizontalLine: (value) {
-          return const FlLine(
-            color: AppColors.primary,
-            strokeWidth: 1,
-          );
-        },
+        // getDrawingHorizontalLine: (value) {
+        //   return const FlLine(
+        //     color: AppColors.iconPurpleDark,
+        //     strokeWidth: 1,
+        //   );
+        // },
         getDrawingVerticalLine: (value) {
           return const FlLine(
             color: AppColors.greenBega,
@@ -93,7 +93,7 @@ class SettingPage extends StatelessWidget {
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 30,
+            reservedSize: 2,
             interval: 1,
             getTitlesWidget: bottomTitleWidgets,
           ),
@@ -103,12 +103,12 @@ class SettingPage extends StatelessWidget {
             showTitles: true,
             interval: 1,
             getTitlesWidget: leftTitleWidgets,
-            reservedSize: 42,
+            reservedSize: 1,
           ),
         ),
       ),
       borderData: FlBorderData(
-        show: true,
+        show: false,
         border: Border.all(color: const Color(0xff37434d)),
       ),
       minX: 0,
@@ -119,7 +119,7 @@ class SettingPage extends StatelessWidget {
         LineChartBarData(
           spots: const [
             FlSpot(0, 3),
-            FlSpot(2.6, 2),
+            FlSpot(0.6, 2),
             FlSpot(4.9, 5),
             FlSpot(6.8, 3.1),
             FlSpot(8, 4),
@@ -130,16 +130,16 @@ class SettingPage extends StatelessWidget {
           gradient: LinearGradient(
             colors: gradientColors,
           ),
-          barWidth: 5,
+          barWidth: 1,
           isStrokeCapRound: true,
           dotData: const FlDotData(
-            show: false,
+            show: true,
           ),
           belowBarData: BarAreaData(
             show: true,
             gradient: LinearGradient(
               colors: gradientColors
-                  .map((color) => color.withOpacity(0.3))
+                  .map((color) => color.withOpacity(0.2))
                   .toList(),
             ),
           ),
@@ -151,8 +151,8 @@ class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 400,
-      height: 300,
+      width: 132,
+      height: 57,
       child: LineChart(mainData()),
       );
   }
