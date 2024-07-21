@@ -60,23 +60,38 @@ class _MyAppState extends State<MyApp> {
             items:[
               TabItem(
                 title: "Home",
-                icon: Icons.home,
+                icon: SizedBox(
+                  height: (size.height),
+                  // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
+                  child: SvgPicture.asset("assets/homeIcon.svg",width: 5,height: 5, colorFilter: pageIndex==0?ColorFilter.mode(AppColors.purpleDark, BlendMode.srcIn):ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
+                ),
               ),
               TabItem(
                 title: "Results",
-                icon: Icons.add,
+                icon: SizedBox(
+                  height: (size.height),
+                  // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
+                  child: SvgPicture.asset("assets/heartIconMenu.svg",width: 5,height: 5, colorFilter: pageIndex==1?ColorFilter.mode(AppColors.purpleDark, BlendMode.srcIn):ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
+                ),
               ),
               TabItem(
                 title: "",
                 icon: Container(
                   height: (size.height),
-
                   decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
-                  child: Icon(Icons.add),
+                  child:const Icon(Icons.add,weight: 10,color: Colors.white,),
                 ),
               ),
-              TabItem(title: "Insight", icon: Icons.pages),
-              TabItem(title: "Setting", icon: Icons.settings),
+              TabItem(title: "Insight", icon: SizedBox(
+                height: (size.height),
+                // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
+                child: SvgPicture.asset("assets/settingIcon.svg",width: 5,height: 5, colorFilter: pageIndex==3?ColorFilter.mode(AppColors.purpleDark, BlendMode.srcIn):ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
+              )),
+              TabItem(title: "Setting",icon: SizedBox(
+                height: (size.height),
+                // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
+                child: SvgPicture.asset("assets/settingIcon.svg",width: 5,height: 5, colorFilter: pageIndex==4?ColorFilter.mode(AppColors.purpleDark, BlendMode.srcIn):ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
+              )),
             ],
           ),
         ),

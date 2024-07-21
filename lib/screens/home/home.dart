@@ -69,12 +69,12 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Text("Check-in to track your progress",style: AppTextStyles.title1,),
-                      Row()
+                      const Row()
                     ],
                   ),
                 ),
-                SizedBox(height: 30,),
-                RadioButton(),
+                const SizedBox(height: 30,),
+                const RadioButton(),
               ],
             ),
           ),
