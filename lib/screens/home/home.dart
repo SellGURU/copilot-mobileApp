@@ -50,6 +50,7 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(height: 30,),
                 // AppTextField(lable: 'search', hint: 'search', controller: _controllerSearch,icon: const Icon(Icons.search),),
                 const Longevity(),
+                Container(padding: EdgeInsets.only(top:20,bottom: 10),child: SvgPicture.asset("assets/addBio.svg"),),
                 Container(
                   padding: EdgeInsets.only(top: 20),
                   alignment: Alignment.centerLeft,

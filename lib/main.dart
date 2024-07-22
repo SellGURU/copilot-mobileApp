@@ -33,9 +33,11 @@ class _MyAppState extends State<MyApp> {
 
     return MaterialApp(
       title: 'copilot demo',
+
       debugShowCheckedModeBanner: false,
       routes: routes,
       home: Scaffold(
+        backgroundColor: Colors.white,
         body: SafeArea(
           child: IndexedStack(
             index: pageIndex,
