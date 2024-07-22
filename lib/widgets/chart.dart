@@ -1,5 +1,6 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:test_copilet/components/text_style.dart';
 import 'package:test_copilet/components/text_style.dart';
 import 'package:test_copilet/components/text_style.dart';
@@ -10,13 +11,33 @@ class Chart extends StatelessWidget {
   Chart({super.key});
   // const SettingPage({super.key});
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
+    print("value.toInt() ${value.toInt()}");
     switch (value.toInt()) {
+      case 1:
+        return Text(
+          '1',
+          style: AppTextStyles.hint,
+        );
       case 2:
-        return Text('MAR',style: AppTextStyles.hint,);
+        return Text(
+          'MAR',
+          style: AppTextStyles.hint,
+        );
       case 5:
-        return Text('JUN',style: AppTextStyles.hint,);
-      case 8:
-        return Text('SEP',style: AppTextStyles.hint,);
+        return Text(
+          'JUN',
+          style: AppTextStyles.hint,
+        );
+      case 3:
+        return Text(
+          'SEP',
+          style: AppTextStyles.hint,
+        );
+      case 4:
+        return Text(
+          '4',
+          style: AppTextStyles.hint,
+        );
       default:
         return SizedBox();
     }
@@ -25,13 +46,29 @@ class Chart extends StatelessWidget {
   Widget leftTitleWidgets(double value, TitleMeta meta) {
     switch (value.toInt()) {
       case 1:
-        return Container(width:50,child: Text('10',style: AppTextStyles.hint,));
+        return Container(
+            width: 50,
+            child: Text(
+              '10',
+              style: AppTextStyles.hint,
+            ));
       case 3:
-        return Container(width:100,child: Text('30',style: AppTextStyles.hint,));
-      case 5:
-        return Container(child: Text('50',style: AppTextStyles.hint,));
+        return Container(
+            width: 100,
+            child: Text(
+              '30',
+              style: AppTextStyles.hint,
+            ));
+      case 2:
+        return Container(
+            child: Text(
+          '50',
+          style: AppTextStyles.hint,
+        ));
       default:
-        return Container();
+        return SizedBox(
+          width: 0,
+        );
     }
   }
 
@@ -42,9 +79,9 @@ class Chart extends StatelessWidget {
 
   LineChartData mainData() {
     return LineChartData(
-      clipData:FlClipData.none(),
+      clipData: FlClipData.none(),
       gridData: FlGridData(
-        show: true,
+        show: false,
         // drawVerticalLine: false,
         // horizontalInterval: 1,
         // verticalInterval: 1,
@@ -55,13 +92,18 @@ class Chart extends StatelessWidget {
         //   );
         // },
       ),
-      borderData:FlBorderData(
-          border: Border(right: BorderSide(width: 0),left: BorderSide(width: 0),bottom: BorderSide(width: 1),)
-      ),
+      borderData: FlBorderData(
+          border: Border(
+        right: BorderSide(width: 0),
+        left: BorderSide(width: 0),
+        bottom: BorderSide(width: 1),
+      )),
       titlesData: FlTitlesData(
         show: true,
         rightTitles: const AxisTitles(
-          sideTitles:SideTitles(showTitles: false,),
+          sideTitles: SideTitles(
+            showTitles: false,
+          ),
         ),
         topTitles: const AxisTitles(
           sideTitles: SideTitles(showTitles: false),
@@ -69,15 +111,15 @@ class Chart extends StatelessWidget {
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            getTitlesWidget: (value, meta){
-              return bottomTitleWidgets(value,meta);
+            getTitlesWidget: (value, meta) {
+              return bottomTitleWidgets(value, meta);
             },
           ),
         ),
         leftTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            getTitlesWidget:(value, meta)=> leftTitleWidgets(value,meta),
+            getTitlesWidget: (value, meta) => leftTitleWidgets(value, meta),
           ),
         ),
       ),
@@ -85,24 +127,30 @@ class Chart extends StatelessWidget {
         LineChartBarData(
           spots: const [
             FlSpot(0, 3),
-            FlSpot(0.6, 2),
-            FlSpot(4.9, 5),
-            FlSpot(6.8, 3.1),
-            FlSpot(8, 4),
-            FlSpot(9.5, 3),
-            FlSpot(11, 4),
+            FlSpot(2, 4),
+            FlSpot(3, 5),
+            FlSpot(2, 5),
+            FlSpot(3, 4),
+            FlSpot(3, 4),
+            FlSpot(4, 4),
           ],
           isCurved: true,
+          shadow: BoxShadow(
+            color: Colors.grey.withOpacity(.5),
+            spreadRadius: 10,
+            blurRadius: 20,
+            offset: const Offset(0, 3), // changes position of shadow
+          ),
           gradient: LinearGradient(
             colors: gradientColors,
           ),
-          barWidth: 1,
+          barWidth: 2,
           isStrokeCapRound: false,
           dotData: const FlDotData(
             show: false,
           ),
           belowBarData: BarAreaData(
-            show: true,
+            show: false,
             gradient: LinearGradient(
               colors: gradientColors
                   .map((color) => color.withOpacity(0.2))
@@ -117,8 +165,8 @@ class Chart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 132,
-      height: 60,
+      height: 80,
+      // decoration: BoxDecoration(border: Border.all(width: 2)),
       child: LineChart(mainData()),
     );
   }

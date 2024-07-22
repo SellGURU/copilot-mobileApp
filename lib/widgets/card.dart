@@ -29,15 +29,15 @@ class ItemCard extends StatelessWidget {
       offset:const Offset(0, 3), // changes position of shadow
     ),
     ],color: Colors.white,borderRadius: const BorderRadius.all(Radius.circular(10))),
-      width: 160,
+      width: 200,
       height: 200,
       child: Padding(
-        padding:const EdgeInsets.all(15),
+        padding:const EdgeInsets.only(top: 30,left: 15,right: 15,bottom: 0),
         child: Column(
+
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-           const SizedBox(height: 20,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

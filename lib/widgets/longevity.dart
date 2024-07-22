@@ -116,7 +116,7 @@ class _LongevityState extends State<Longevity> {
                       children: [
                         Text(
                           "Health Score: ",
-                          style: AppTextStyles.hint,
+                          style: AppTextStyles.hintSmale,
                         ),
                         Container(
                           decoration: BoxDecoration(color: Color.fromRGBO(6, 199, 141, .4),borderRadius: BorderRadius.circular(20)),
