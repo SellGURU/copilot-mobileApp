@@ -11,8 +11,8 @@ class AppColors {
   static const Color purpleDark = Color.fromARGB(255, 147, 129, 255);
   static const Color iconPurpleDark = Color.fromARGB(255, 147, 129, 255);
   static const Color greenBega = Color.fromARGB(255,6, 199, 141);
-  static const Color redBega = Color.fromARGB(255,252, 84, 116);
-  static const Color yellowBega = Color.fromARGB(255,251, 173, 55);
+  static const Color redBega = Color.fromRGBO(252, 84, 116, 0.3);
+  static const Color yellowBega = Color.fromRGBO(251, 173, 55, 0.3);
   static const Color shadowColor = Color.fromARGB(153, 171, 198, 100);
   static const Color brandSecondaryColor = Color.fromARGB(255, 147, 129, 255);
 }

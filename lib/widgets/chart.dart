@@ -2,8 +2,6 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:test_copilet/components/text_style.dart';
-import 'package:test_copilet/components/text_style.dart';
-import 'package:test_copilet/components/text_style.dart';
 
 import '../res/colors.dart';
 
@@ -11,7 +9,6 @@ class Chart extends StatelessWidget {
   Chart({super.key});
   // const SettingPage({super.key});
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    print("value.toInt() ${value.toInt()}");
     switch (value.toInt()) {
       case 1:
         return Text(

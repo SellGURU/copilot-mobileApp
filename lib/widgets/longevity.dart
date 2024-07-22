@@ -66,7 +66,7 @@ class _LongevityState extends State<Longevity> {
                           decoration: BoxDecoration(color: Color.fromRGBO(6, 199, 141, .4),borderRadius: BorderRadius.circular(20)),
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 5,top: 5,left: 12,right: 12),
-                            child: Text("${"100"}/100",style: AppTextStyles.gradeGreen,),
+                            child: Text("${"90"}/100",style: AppTextStyles.gradeGreen,),
                           ),
                         ),
                         SizedBox(width: 5,),
@@ -100,14 +100,14 @@ class _LongevityState extends State<Longevity> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SvgPicture.asset(
-                          "assets/apple.svg",
+                          "assets/mid.svg",
                           width: 30,
                           height: 30,
                         ),
                         SizedBox(width: 5,),
                         Center(
                             child: Text(
-                          "Nutrition",
+                          "Mind",
                           style: AppTextStyles.title2,
                         )),
                       ],
@@ -119,10 +119,10 @@ class _LongevityState extends State<Longevity> {
                           style: AppTextStyles.hintSmale,
                         ),
                         Container(
-                          decoration: BoxDecoration(color: Color.fromRGBO(6, 199, 141, .4),borderRadius: BorderRadius.circular(20)),
+                          decoration: BoxDecoration(color: AppColors.yellowBega,borderRadius: BorderRadius.circular(20)),
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 5,top: 5,left: 12,right: 12),
-                            child: Text("${"100"}/100",style: AppTextStyles.gradeGreen,),
+                            child: Text("${"56"}/100",style: AppTextStyles.gradeYellow,),
                           ),
                         ),
                         SizedBox(width: 5,),
@@ -156,14 +156,14 @@ class _LongevityState extends State<Longevity> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SvgPicture.asset(
-                          "assets/apple.svg",
+                          "assets/activityIcon.svg",
                           width: 30,
                           height: 30,
                         ),
                         SizedBox(width: 5,),
                         Center(
                             child: Text(
-                              "Nutrition",
+                              "Activity",
                               style: AppTextStyles.title2,
                             )),
                       ],
@@ -178,7 +178,7 @@ class _LongevityState extends State<Longevity> {
                           decoration: BoxDecoration(color: Color.fromRGBO(6, 199, 141, .4),borderRadius: BorderRadius.circular(20)),
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 5,top: 5,left: 12,right: 12),
-                            child: Text("${"100"}/100",style: AppTextStyles.gradeGreen,),
+                            child: Text("${"89"}/100",style: AppTextStyles.gradeGreen,),
                           ),
                         ),
                         SizedBox(width: 5,),
@@ -212,14 +212,14 @@ class _LongevityState extends State<Longevity> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SvgPicture.asset(
-                          "assets/apple.svg",
+                          "assets/sleepIcon.svg",
                           width: 30,
                           height: 30,
                         ),
                         SizedBox(width: 5,),
                         Center(
                             child: Text(
-                              "Nutrition",
+                              "Sleep",
                               style: AppTextStyles.title2,
                             )),
                       ],
@@ -231,10 +231,10 @@ class _LongevityState extends State<Longevity> {
                           style: AppTextStyles.hint,
                         ),
                         Container(
-                          decoration: BoxDecoration(color: Color.fromRGBO(6, 199, 141, .4),borderRadius: BorderRadius.circular(20)),
+                          decoration: BoxDecoration(color: AppColors.redBega,borderRadius: BorderRadius.circular(20)),
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 5,top: 5,left: 12,right: 12),
-                            child: Text("${"100"}/100",style: AppTextStyles.gradeGreen,),
+                            child: Text("${"29"}/100",style: AppTextStyles.gradeRed,),
                           ),
                         ),
                         SizedBox(width: 5,),
