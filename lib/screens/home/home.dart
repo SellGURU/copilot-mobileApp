@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../components/text_style.dart';
@@ -32,7 +30,7 @@ class HomeScreen extends StatelessWidget {
                           width: 50,
                           height: 50,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
                         Column(
@@ -58,10 +56,10 @@ class HomeScreen extends StatelessWidget {
                           width: 25,
                           height: 25,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 5,
                         ),
-                        Icon(
+                        const Icon(
                           Icons.notifications_none_outlined,
                           color: AppColors.purpleDark,
                         ),
@@ -82,7 +80,7 @@ class HomeScreen extends StatelessWidget {
                       offset: const Offset(0, 1), // changes position of shadow
                     ),
                   ]),
-                  child:  Row(
+                  child:  const Row(
                     children: [
                       Row(
                         children: [
@@ -93,7 +91,7 @@ class HomeScreen extends StatelessWidget {
                           Gauges(),
                         ],
                       ),
-                      Container(width: 150,child: Center(child: Text("data")),),
+                      SizedBox(width: 150,child: Center(child: Text("data")),),
                       Row(
                         children: [
                           Gauges(),
@@ -137,7 +135,7 @@ class HomeScreen extends StatelessWidget {
                             average: "84",
                             icon: SvgPicture.asset(
                               "assets/heart.svg",
-                              colorFilter: ColorFilter.mode(
+                              colorFilter: const ColorFilter.mode(
                                   Colors.blue, BlendMode.srcIn),
                               width: 40,
                               height: 40,
@@ -146,7 +144,7 @@ class HomeScreen extends StatelessWidget {
                             current: "81");
                       },
                       separatorBuilder: (BuildContext context, int index) {
-                        return SizedBox(
+                        return const SizedBox(
                           width: 10,
                         );
                       },
