@@ -166,37 +166,7 @@ class HomeScreen extends StatelessWidget {
                   height: 30,
                 ),
                 Container(
-                  child: Column(
-                    children: [
-                      RadioButton(
-                          picUrl: 'assets/yoga.svg',
-                          text: 'Try a new yoga flow'),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      RadioButton(
-                        picUrl: 'assets/pill.svg',
-                        text: 'Start taking an LAL supplement',
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      RadioButton(
-                        picUrl: 'assets/drag.svg',
-                        text: 'Eat a probiotic food today',
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      RadioButton(
-                        picUrl: 'assets/bump.svg',
-                        text: 'Bump up your fibre intake',
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  ),
+                  child: TrackProgress()
                 )
               ],
             ),
