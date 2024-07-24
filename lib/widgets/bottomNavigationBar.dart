@@ -2,14 +2,16 @@ import 'dart:ffi';
 
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:test_copilet/utility/changeScreanBloc/PageIndex_Bloc.dart';
+import 'package:test_copilet/utility/changeScreanBloc/PageIndex_events.dart';
 
 import '../components/text_style.dart';
 import '../res/colors.dart';
 
 class BottomNavigationBarCustom extends StatefulWidget {
-  late var pageIndex;
-  BottomNavigationBarCustom({super.key, required this.pageIndex});
+  BottomNavigationBarCustom({super.key});
 
   @override
   State<BottomNavigationBarCustom> createState() =>
@@ -17,19 +19,23 @@ class BottomNavigationBarCustom extends StatefulWidget {
 }
 
 class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
+  var pageIndex=0;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    print((size.height*.05)*-1);
     return StyleProvider(
       style: Style(),
       child: ConvexAppBar(
         onTap: (index) => setState(() {
-          widget.pageIndex = index;
+          setState(() {
+            pageIndex=index;
+          });
+         BlocProvider.of<PageIndexBloc>(context).add(UpdatePageIndex(index));
         }),
         disableDefaultTabController: true,
         elevation: 5,
-        height: (size.height * .07),
+        height: (size.height * .08),
         style: TabStyle.fixed,
         backgroundColor: AppColors.mainBg,
         color: AppColors.textLite,
@@ -45,7 +51,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
               child: SvgPicture.asset("assets/overviewIcon.svg",
                   width: 5,
                   height: 5,
-                  colorFilter: widget.pageIndex == 0
+                  colorFilter: pageIndex == 0
                       ? ColorFilter.mode(AppColors.purpleDark, BlendMode.srcIn)
                       : ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
             ),
@@ -58,7 +64,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
               child: SvgPicture.asset("assets/resultIcon.svg",
                   width: 5,
                   height: 5,
-                  colorFilter: widget.pageIndex == 1
+                  colorFilter: pageIndex == 1
                       ? ColorFilter.mode(AppColors.purpleDark, BlendMode.srcIn)
                       : ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
             ),
@@ -73,7 +79,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
               child: SvgPicture.asset("assets/addIcon.svg",
                   width: 5,
                   height: 5,
-                  colorFilter: widget.pageIndex == 1
+                  colorFilter: pageIndex == 1
                       ? ColorFilter.mode(AppColors.purpleDark, BlendMode.srcIn)
                       : ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
             ),
@@ -86,10 +92,10 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                 child: SvgPicture.asset("assets/planIcon.svg",
                     width: 5,
                     height: 5,
-                    colorFilter: widget.pageIndex == 3
-                        ? ColorFilter.mode(
+                    colorFilter: pageIndex == 3
+                        ? const ColorFilter.mode(
                             AppColors.purpleDark, BlendMode.srcIn)
-                        : ColorFilter.mode(
+                        : const ColorFilter.mode(
                             AppColors.textLite, BlendMode.srcIn)),
               )),
           TabItem(
@@ -100,7 +106,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                 child: SvgPicture.asset("assets/settingIcon.svg",
                     width: 5,
                     height: 5,
-                    colorFilter: widget.pageIndex == 4
+                    colorFilter: pageIndex == 4
                         ? const ColorFilter.mode(
                             AppColors.purpleDark, BlendMode.srcIn)
                         : const ColorFilter.mode(
