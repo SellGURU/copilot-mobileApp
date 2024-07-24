@@ -123,13 +123,10 @@ class Chart extends StatelessWidget {
       lineBarsData: [
         LineChartBarData(
           spots: const [
-            FlSpot(0, 3),
-            FlSpot(2, 4),
-            FlSpot(3, 5),
-            FlSpot(2, 5),
+            FlSpot(0, 1),
+            FlSpot(2, 2),
             FlSpot(3, 4),
-            FlSpot(3, 4),
-            FlSpot(4, 4),
+            FlSpot(4, 3),
           ],
           isCurved: true,
           shadow: BoxShadow(
