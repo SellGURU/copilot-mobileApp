@@ -45,7 +45,7 @@ class _RadioButtonState extends State<RadioButton> {
           ),
           Text(
             widget.text,
-            style: AppTextStyles.title1,
+            style: AppTextStyles.titleMedium,
           ),
         ],
       ),

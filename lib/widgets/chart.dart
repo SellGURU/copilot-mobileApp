@@ -12,17 +12,7 @@ class Chart extends StatelessWidget {
     switch (value.toInt()) {
       case 1:
         return Text(
-          '1',
-          style: AppTextStyles.hint,
-        );
-      case 2:
-        return Text(
           'MAR',
-          style: AppTextStyles.hint,
-        );
-      case 5:
-        return Text(
-          'JUN',
           style: AppTextStyles.hint,
         );
       case 3:
@@ -30,13 +20,13 @@ class Chart extends StatelessWidget {
           'SEP',
           style: AppTextStyles.hint,
         );
-      case 4:
+      case 5:
         return Text(
-          '4',
+          'JUN',
           style: AppTextStyles.hint,
         );
       default:
-        return SizedBox();
+        return Text("",style: AppTextStyles.hint,);
     }
   }
 
@@ -125,13 +115,14 @@ class Chart extends StatelessWidget {
           spots: const [
             FlSpot(0, 1),
             FlSpot(2, 2),
+            FlSpot(2, 3),
             FlSpot(3, 4),
-            FlSpot(4, 3),
+            FlSpot(4, 5),
           ],
           isCurved: true,
           shadow: BoxShadow(
-            color: Colors.grey.withOpacity(.5),
-            spreadRadius: 10,
+            color: Colors.purple.withOpacity(.5),
+            spreadRadius: 20,
             blurRadius: 20,
             offset: const Offset(0, 3), // changes position of shadow
           ),

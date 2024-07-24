@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../components/text_style.dart';
@@ -71,18 +72,51 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(
                   height: 30,
                 ),
-                Gauges(),
+                Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(.1),
+                      spreadRadius: 5,
+                      blurRadius: 5,
+                      offset: const Offset(0, 1), // changes position of shadow
+                    ),
+                  ]),
+                  child:  Row(
+                    children: [
+                      Row(
+                        children: [
+                          Gauges(),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Gauges(),
+                        ],
+                      ),
+                      Container(width: 150,child: Center(child: Text("data")),),
+                      Row(
+                        children: [
+                          Gauges(),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Gauges(),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
                 const SizedBox(
                   height: 30,
                 ),
                 // AppTextField(lable: 'search', hint: 'search', controller: _controllerSearch,icon: const Icon(Icons.search),),
                 const Longevity(),
                 Container(
-                  padding: EdgeInsets.only(top: 20, bottom: 10),
+                  padding: const EdgeInsets.only(top: 20, bottom: 10),
                   child: SvgPicture.asset("assets/addBio.svg"),
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: 20),
+                  padding: const EdgeInsets.only(top: 20),
                   alignment: Alignment.centerLeft,
                   child: Text(
                     "Blood Biomarkers",
@@ -134,15 +168,33 @@ class HomeScreen extends StatelessWidget {
                 Container(
                   child: Column(
                     children: [
-                      RadioButton(picUrl: 'assets/yoga.svg', text: 'Try a new yoga flow'),
-                     const SizedBox(height: 10,),
-                      RadioButton(picUrl: 'assets/pill.svg', text: 'Start taking an LAL supplement',),
-                     const SizedBox(height: 10,),
-                      RadioButton(picUrl: 'assets/drag.svg', text: 'Eat a probiotic food today',),
-                     const SizedBox(height: 10,),
-                      RadioButton(picUrl: 'assets/bump.svg', text: 'Bump up your fibre intake',),
-                     const SizedBox(height: 10,),
-
+                      RadioButton(
+                          picUrl: 'assets/yoga.svg',
+                          text: 'Try a new yoga flow'),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      RadioButton(
+                        picUrl: 'assets/pill.svg',
+                        text: 'Start taking an LAL supplement',
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      RadioButton(
+                        picUrl: 'assets/drag.svg',
+                        text: 'Eat a probiotic food today',
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      RadioButton(
+                        picUrl: 'assets/bump.svg',
+                        text: 'Bump up your fibre intake',
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                     ],
                   ),
                 )
