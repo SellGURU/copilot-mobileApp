@@ -35,18 +35,18 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
         }),
         disableDefaultTabController: true,
         elevation: 5,
-        height: (size.height * .08),
+        height: 60,
         style: TabStyle.fixed,
         backgroundColor: AppColors.mainBg,
         color: AppColors.textLite,
         activeColor: AppColors.iconPurpleDark,
-        top: ((size.height*.045)*-1),
-        curveSize: 80,
+        // top: ((size.width*.06)*-1),
+        curveSize: 70,
         items: [
           TabItem(
             title: "Overview",
             icon: SizedBox(
-              height: (size.height),
+              height: (size.width),
               // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
               child: SvgPicture.asset("assets/overviewIcon.svg",
                   width: 5,
@@ -72,6 +72,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
           TabItem(
             title: "",
             icon: Container(
+              margin: EdgeInsets.all(5),
               height: (size.height),
               decoration: BoxDecoration(
                   color: AppColors.iconPurpleDark,
