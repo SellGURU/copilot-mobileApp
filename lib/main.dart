@@ -15,6 +15,7 @@ import 'package:test_copilet/screens/setting/settingPage.dart';
 import 'package:test_copilet/utility/changeScreanBloc/PageIndex_Bloc.dart';
 import 'package:test_copilet/utility/changeScreanBloc/PageIndex_events.dart';
 import 'package:test_copilet/utility/changeScreanBloc/PageIndex_states.dart';
+import 'package:test_copilet/utility/switchValueBloc/PageIndex_Bloc.dart';
 import 'package:test_copilet/widgets/bottomNavigationBar.dart';
 
 import 'components/text_style.dart';
@@ -42,7 +43,10 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       routes: routes,
       home: MultiBlocProvider(
-        providers: [BlocProvider(create: (_) => PageIndexBloc())],
+        providers: [
+          BlocProvider(create: (_) => PageIndexBloc()),
+          BlocProvider(create: (_) => SwitchValueGraphBloc())
+        ],
         child: Scaffold(
             backgroundColor: Colors.white,
             body: SafeArea(

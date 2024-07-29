@@ -2,10 +2,14 @@ import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:test_copilet/components/text_style.dart';
 
 import '../../res/colors.dart';
+import '../../utility/switchValueBloc/PageIndex_Bloc.dart';
+import '../../utility/switchValueBloc/PageIndex_events.dart';
+import '../../utility/switchValueBloc/PageIndex_states.dart';
 import '../../widgets/cardResultscreen.dart';
 
 class ResultScreen extends StatefulWidget {
@@ -16,8 +20,9 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
-  bool valueSwitch=false;
+  bool valueSwitch = false;
   int indexItem = 0;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -245,14 +250,19 @@ class _ResultScreenState extends State<ResultScreen> {
                 width: 50,
                 child: FittedBox(
                   fit: BoxFit.fill,
-                  child: CupertinoSwitch(
-                    autofocus: false,
-                    activeColor: AppColors.iconPurpleDark,
-                    value: valueSwitch,
-                    onChanged: (value) {
-                      setState(() {
-                        valueSwitch=value;
-                      });
+                  child: BlocBuilder<SwitchValueGraphBloc, SwitchValueState>(
+                    builder: (context, state) {
+                      return CupertinoSwitch(
+                        autofocus: false,
+                        activeColor: AppColors.iconPurpleDark,
+                        value: state.switchValue,
+                        onChanged: (value) {
+                          print(state.switchValue);
+                          BlocProvider.of<SwitchValueGraphBloc>(context)
+                              .add(UpdateSwitchValueGraph(value));
+                          // valueSwitch = value;
+                        },
+                      );
                     },
                   ),
                 ),
