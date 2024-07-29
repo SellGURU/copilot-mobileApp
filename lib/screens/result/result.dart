@@ -1,9 +1,12 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:test_copilet/components/text_style.dart';
 
 import '../../res/colors.dart';
+import '../../widgets/cardResultscreen.dart';
 
 class ResultScreen extends StatefulWidget {
   const ResultScreen({super.key});
@@ -13,6 +16,7 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
+  bool valueSwitch=false;
   int indexItem = 0;
   @override
   Widget build(BuildContext context) {
@@ -45,7 +49,7 @@ class _ResultScreenState extends State<ResultScreen> {
               )
             ],
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
           Container(
@@ -217,7 +221,48 @@ class _ResultScreenState extends State<ResultScreen> {
                 ),
               ],
             ),
-          )
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  Text(
+                    "Last Update:",
+                    style: AppTextStyles.hint,
+                  ),
+                  Text(
+                    "May 12 , 2024",
+                    style: AppTextStyles.title2,
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: 30,
+                width: 50,
+                child: FittedBox(
+                  fit: BoxFit.fill,
+                  child: CupertinoSwitch(
+                    autofocus: false,
+                    activeColor: AppColors.iconPurpleDark,
+                    value: valueSwitch,
+                    onChanged: (value) {
+                      setState(() {
+                        valueSwitch=value;
+                      });
+                    },
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Cardresultscreen(),
         ],
       ),
     );

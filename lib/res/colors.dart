@@ -13,6 +13,8 @@ class AppColors {
   static const Color greenBega = Color.fromARGB(255,6, 199, 141);
   static const Color redBega = Color.fromRGBO(252, 84, 116, 0.3);
   static const Color yellowBega = Color.fromRGBO(251, 173, 55, 0.3);
+  static const Color purpleBadgeLite = Color.fromRGBO(208, 209, 255, 0.5);
+  static const Color yellowBegaDarker = Color.fromRGBO(255, 228, 94, 1);
   static const Color shadowColor = Color.fromARGB(153, 171, 198, 100);
   static const Color brandSecondaryColor = Color.fromARGB(255, 147, 129, 255);
 }
