@@ -13,7 +13,7 @@ class ResultScreen extends StatefulWidget {
 }
 
 class _ResultScreenState extends State<ResultScreen> {
-  var indexItem = 0;
+  int indexItem = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -63,14 +63,13 @@ class _ResultScreenState extends State<ResultScreen> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      indexItem ==0;
+                      indexItem =0;
                     });
                   },
                   child: Container(
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(7)),
-                      color:AppColors.purpleDark,
-                    ),
+                      color:indexItem==0?AppColors.purpleDark:Colors.white,                    ),
                     height: 50,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 8),
@@ -95,14 +94,13 @@ class _ResultScreenState extends State<ResultScreen> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      indexItem ==1;
+                      indexItem =1;
                     });
                   },
                   child: Container(
-                    decoration: const BoxDecoration(
+                    decoration:  BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(7)),
-                      color:AppColors.purpleDark,
-                    ),
+                      color:indexItem==1?AppColors.purpleDark:Colors.white,                    ),
                     height: 50,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 8),
@@ -127,14 +125,13 @@ class _ResultScreenState extends State<ResultScreen> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      indexItem ==2;
+                      indexItem =2;
                     });
                   },
                   child: Container(
-                    decoration: const BoxDecoration(
+                    decoration:  BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(7)),
-                      color:AppColors.purpleDark,
-                    ),
+                      color:indexItem==2?AppColors.purpleDark:Colors.white,                    ),
                     height: 50,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 8),
@@ -159,13 +156,13 @@ class _ResultScreenState extends State<ResultScreen> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      indexItem ==3;
+                      indexItem =3;
                     });
                   },
                   child: Container(
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(7)),
-                      color:AppColors.purpleDark,
+                      color:indexItem==3?AppColors.purpleDark:Colors.white,
                     ),
                     height: 50,
                     child: Padding(
