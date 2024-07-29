@@ -19,7 +19,7 @@ class BottomNavigationBarCustom extends StatefulWidget {
 }
 
 class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
-  var pageIndex=0;
+  var pageIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +29,9 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
       child: ConvexAppBar(
         onTap: (index) => setState(() {
           setState(() {
-            pageIndex=index;
+            pageIndex = index;
           });
-         BlocProvider.of<PageIndexBloc>(context).add(UpdatePageIndex(index));
+          BlocProvider.of<PageIndexBloc>(context).add(UpdatePageIndex(index));
         }),
         disableDefaultTabController: true,
         elevation: 5,
@@ -65,14 +65,16 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                   width: 5,
                   height: 5,
                   colorFilter: pageIndex == 1
-                      ? ColorFilter.mode(AppColors.purpleDark, BlendMode.srcIn)
-                      : ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
+                      ? const ColorFilter.mode(
+                          AppColors.purpleDark, BlendMode.srcIn)
+                      : const ColorFilter.mode(
+                          AppColors.textLite, BlendMode.srcIn)),
             ),
           ),
           TabItem(
             title: "",
             icon: Container(
-              margin: EdgeInsets.all(5),
+              margin: const EdgeInsets.all(5),
               height: (size.height),
               decoration: BoxDecoration(
                   color: AppColors.iconPurpleDark,
@@ -81,8 +83,10 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                   width: 5,
                   height: 5,
                   colorFilter: pageIndex == 1
-                      ? ColorFilter.mode(AppColors.purpleDark, BlendMode.srcIn)
-                      : ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
+                      ? const ColorFilter.mode(
+                          AppColors.purpleDark, BlendMode.srcIn)
+                      : const ColorFilter.mode(
+                          AppColors.textLite, BlendMode.srcIn)),
             ),
           ),
           TabItem(

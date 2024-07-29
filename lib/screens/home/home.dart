@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:test_copilet/widgets/Mood.dart';
 
 import '../../components/text_style.dart';
 import '../../res/colors.dart';
@@ -80,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                       offset: const Offset(0, 1), // changes position of shadow
                     ),
                   ]),
-                  child:  const Row(
+                  child: const Row(
                     children: [
                       Row(
                         children: [
@@ -91,7 +92,10 @@ class HomeScreen extends StatelessWidget {
                           Gauges(),
                         ],
                       ),
-                      SizedBox(width: 150,child: Center(child: Text("data")),),
+                      SizedBox(
+                        width: 150,
+                        child: Center(child: Text("data")),
+                      ),
                       Row(
                         children: [
                           Gauges(),
@@ -149,6 +153,13 @@ class HomeScreen extends StatelessWidget {
                         );
                       },
                     )),
+                SizedBox(
+                  height: 15,
+                ),
+                Mood(),
+                SizedBox(
+                  height: 40,
+                ),
                 Center(
                   child: Column(
                     children: [
@@ -163,9 +174,7 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(
                   height: 30,
                 ),
-                Container(
-                  child: TrackProgress()
-                )
+                Container(child: TrackProgress())
               ],
             ),
           ),
