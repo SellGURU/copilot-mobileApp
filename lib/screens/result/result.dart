@@ -74,17 +74,17 @@ class _ResultScreenState extends State<ResultScreen> {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 8),
                       child: Row(
-
                         children: [
                           SvgPicture.asset(
-                            "assets/apple.svg",
+                            "assets/drops.svg",
+                              colorFilter: ColorFilter.mode(indexItem==0?AppColors.mainBg:AppColors.textLite, BlendMode.srcIn)
                           ),
                           const SizedBox(
                             width: 7,
                           ),
                           Text(
                             "Blood",
-                            style: AppTextStyles.hint,
+                            style: indexItem==0?AppTextStyles.hintWhite:AppTextStyles.hint ,
                           )
                         ],
                       ),
@@ -108,14 +108,16 @@ class _ResultScreenState extends State<ResultScreen> {
 
                         children: [
                           SvgPicture.asset(
-                            "assets/apple.svg",
+                            "assets/weight.svg",
+                              colorFilter: ColorFilter.mode(indexItem==1?AppColors.mainBg:AppColors.textLite, BlendMode.srcIn)
+
                           ),
                           const SizedBox(
                             width: 7,
                           ),
                           Text(
-                            "Blood",
-                            style: AppTextStyles.hint,
+                            "Activity",
+                            style: indexItem==1?AppTextStyles.hintWhite:AppTextStyles.hint ,
                           )
                         ],
                       ),
@@ -139,14 +141,16 @@ class _ResultScreenState extends State<ResultScreen> {
 
                         children: [
                           SvgPicture.asset(
-                            "assets/apple.svg",
+                            "assets/dna.svg",
+                              colorFilter: ColorFilter.mode(indexItem==2?AppColors.mainBg:AppColors.textLite, BlendMode.srcIn)
+
                           ),
                           const SizedBox(
                             width: 7,
                           ),
                           Text(
-                            "Blood",
-                            style: AppTextStyles.hint,
+                            "DNA",
+                            style: indexItem==2?AppTextStyles.hintWhite:AppTextStyles.hint ,
                           )
                         ],
                       ),
@@ -171,14 +175,17 @@ class _ResultScreenState extends State<ResultScreen> {
 
                         children: [
                           SvgPicture.asset(
-                            "assets/apple.svg",
+                            "assets/monitor.svg",
+                              colorFilter: ColorFilter.mode(indexItem==3?AppColors.mainBg:AppColors.textLite, BlendMode.srcIn)
+
                           ),
                           const SizedBox(
                             width: 7,
                           ),
                           Text(
-                            "Blood",
+                            "AGING",
                             style: AppTextStyles.hint,
+
                           )
                         ],
                       ),

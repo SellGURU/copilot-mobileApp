@@ -13,7 +13,8 @@ class AppTextStyles {
   static TextStyle titleSmale = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 10, color: Colors.black, fontWeight: FontWeight.w500));
   static TextStyle titleMedium = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w400));
   static TextStyle title2 =GoogleFonts.roboto( textStyle:TextStyle(fontSize: 14, color: AppColors.text),fontWeight: FontWeight.w500);
-  static TextStyle hint = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 12, color: AppColors.textLite));
+  static TextStyle hint = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 12, color: AppColors.textLite,fontWeight: FontWeight.w400));
+  static TextStyle hintWhite = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 12, color: Colors.white,fontWeight: FontWeight.w500));
   static TextStyle hintSmale = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 10, color: AppColors.textLite));
   static TextStyle gradeGreen = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 11,fontWeight: FontWeight.w500, color: AppColors.greenBega));
   static TextStyle gradeRed = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 11,fontWeight: FontWeight.w500, color: Colors.red));
