@@ -10,6 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:test_copilet/res/colors.dart';
 import 'package:test_copilet/route/routes.dart';
 import 'package:test_copilet/screens/home/home.dart';
+import 'package:test_copilet/screens/result/result.dart';
 import 'package:test_copilet/screens/setting/settingPage.dart';
 import 'package:test_copilet/utility/changeScreanBloc/PageIndex_Bloc.dart';
 import 'package:test_copilet/utility/changeScreanBloc/PageIndex_events.dart';
@@ -50,10 +51,10 @@ class _MyAppState extends State<MyApp> {
                   return IndexedStack(
                     index: state.pageIndex,
                     children: [
-                      HomeScreen(),
-                      Text("result"),
-                      Text("hi"),
-                      Text("plan"),
+                      const HomeScreen(),
+                      const ResultScreen(),
+                      const Text("hi"),
+                      const Text("plan"),
                       SettingPage()
                     ],
                   );

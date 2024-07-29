@@ -380,18 +380,18 @@ packages:
     dependency: transitive
     description:
       name: syncfusion_flutter_core
-      sha256: "34920fc391f9562d68657b9b25be6e873a67e069a52bcf41ae583b7eb46dcb26"
+      sha256: "76c0efa89c79108f043602b0170512f88fcb83156cca7f5ca6dfe17e840bc63d"
       url: "https://pub.dev"
     source: hosted
-    version: "26.2.4"
+    version: "26.1.42"
   syncfusion_flutter_gauges:
     dependency: "direct main"
     description:
       name: syncfusion_flutter_gauges
-      sha256: aba5188c0f10e6eb218409bd3f8fa5536bcb3b182a081899e5a23a48c6806d55
+      sha256: "2f7c9b845505daef1ac96685e01124da719dcb2dcb3167f42e120061b02696e1"
       url: "https://pub.dev"
     source: hosted
-    version: "26.2.4"
+    version: "26.1.42"
   term_glyph:
     dependency: transitive
     description:
