@@ -45,10 +45,12 @@ class _ResultScreenState extends State<ResultScreen> {
               )
             ],
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Container(
             decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(7)),
+                borderRadius: const BorderRadius.all(Radius.circular(15)),
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
@@ -59,32 +61,40 @@ class _ResultScreenState extends State<ResultScreen> {
                   ),
                 ]),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      indexItem =0;
+                      indexItem = 0;
                     });
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(7)),
-                      color:indexItem==0?AppColors.purpleDark:Colors.white,                    ),
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      color:
+                          indexItem == 0 ? AppColors.purpleDark : Colors.white,
+                    ),
                     height: 50,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 8),
                       child: Row(
                         children: [
-                          SvgPicture.asset(
-                            "assets/drops.svg",
-                              colorFilter: ColorFilter.mode(indexItem==0?AppColors.mainBg:AppColors.textLite, BlendMode.srcIn)
-                          ),
+                          SvgPicture.asset("assets/drops.svg",
+                              colorFilter: ColorFilter.mode(
+                                  indexItem == 0
+                                      ? AppColors.mainBg
+                                      : AppColors.textLite,
+                                  BlendMode.srcIn)),
                           const SizedBox(
                             width: 7,
                           ),
                           Text(
                             "Blood",
-                            style: indexItem==0?AppTextStyles.hintWhite:AppTextStyles.hint ,
+                            style: indexItem == 0
+                                ? AppTextStyles.hintWhite
+                                : AppTextStyles.hint,
                           )
                         ],
                       ),
@@ -94,30 +104,35 @@ class _ResultScreenState extends State<ResultScreen> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      indexItem =1;
+                      indexItem = 1;
                     });
                   },
                   child: Container(
-                    decoration:  BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(7)),
-                      color:indexItem==1?AppColors.purpleDark:Colors.white,                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      color:
+                          indexItem == 1 ? AppColors.purpleDark : Colors.white,
+                    ),
                     height: 50,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 8),
                       child: Row(
-
                         children: [
-                          SvgPicture.asset(
-                            "assets/weight.svg",
-                              colorFilter: ColorFilter.mode(indexItem==1?AppColors.mainBg:AppColors.textLite, BlendMode.srcIn)
-
-                          ),
+                          SvgPicture.asset("assets/weight.svg",
+                              colorFilter: ColorFilter.mode(
+                                  indexItem == 1
+                                      ? AppColors.mainBg
+                                      : AppColors.textLite,
+                                  BlendMode.srcIn)),
                           const SizedBox(
                             width: 7,
                           ),
                           Text(
                             "Activity",
-                            style: indexItem==1?AppTextStyles.hintWhite:AppTextStyles.hint ,
+                            style: indexItem == 1
+                                ? AppTextStyles.hintWhite
+                                : AppTextStyles.hint,
                           )
                         ],
                       ),
@@ -127,30 +142,35 @@ class _ResultScreenState extends State<ResultScreen> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      indexItem =2;
+                      indexItem = 2;
                     });
                   },
                   child: Container(
-                    decoration:  BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(7)),
-                      color:indexItem==2?AppColors.purpleDark:Colors.white,                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      color:
+                          indexItem == 2 ? AppColors.purpleDark : Colors.white,
+                    ),
                     height: 50,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 8),
                       child: Row(
-
                         children: [
-                          SvgPicture.asset(
-                            "assets/dna.svg",
-                              colorFilter: ColorFilter.mode(indexItem==2?AppColors.mainBg:AppColors.textLite, BlendMode.srcIn)
-
-                          ),
+                          SvgPicture.asset("assets/dna.svg",
+                              colorFilter: ColorFilter.mode(
+                                  indexItem == 2
+                                      ? AppColors.mainBg
+                                      : AppColors.textLite,
+                                  BlendMode.srcIn)),
                           const SizedBox(
                             width: 7,
                           ),
                           Text(
                             "DNA",
-                            style: indexItem==2?AppTextStyles.hintWhite:AppTextStyles.hint ,
+                            style: indexItem == 2
+                                ? AppTextStyles.hintWhite
+                                : AppTextStyles.hint,
                           )
                         ],
                       ),
@@ -160,32 +180,35 @@ class _ResultScreenState extends State<ResultScreen> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
-                      indexItem =3;
+                      indexItem = 3;
                     });
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(7)),
-                      color:indexItem==3?AppColors.purpleDark:Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      color:
+                          indexItem == 3 ? AppColors.purpleDark : Colors.white,
                     ),
                     height: 50,
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0,vertical: 8),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 8),
                       child: Row(
-
                         children: [
-                          SvgPicture.asset(
-                            "assets/monitor.svg",
-                              colorFilter: ColorFilter.mode(indexItem==3?AppColors.mainBg:AppColors.textLite, BlendMode.srcIn)
-
-                          ),
+                          SvgPicture.asset("assets/monitor.svg",
+                              colorFilter: ColorFilter.mode(
+                                  indexItem == 3
+                                      ? AppColors.mainBg
+                                      : AppColors.textLite,
+                                  BlendMode.srcIn)),
                           const SizedBox(
                             width: 7,
                           ),
                           Text(
                             "AGING",
-                            style: AppTextStyles.hint,
-
+                            style: indexItem == 3
+                                ? AppTextStyles.hintWhite
+                                : AppTextStyles.hint,
                           )
                         ],
                       ),
