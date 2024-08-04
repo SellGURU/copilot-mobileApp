@@ -48,51 +48,53 @@ class _MyAppState extends State<MyApp> {
       title: 'copilot demo',
       debugShowCheckedModeBanner: false,
       routes: routes,
-      home: FutureBuilder<String?>(
-          future: getTokenLocally(),
-          builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(
-                  child: Scaffold(
-                body: CircularProgressIndicator(),
-              ));
-            } else if (snapshot.hasError) {
-              print("$snapshot.error");
-              return Center(child: Text('Error: ${snapshot.error}'));
-            } else {
-              String? token = snapshot.data;
-              print("token $token");
-              if (token == null) {
-                return LoginPage();
+      home: Scaffold(
+        body: FutureBuilder<String?>(
+            future: getTokenLocally(),
+            builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                    child: Scaffold(
+                  body: CircularProgressIndicator(),
+                ));
+              } else if (snapshot.hasError) {
+                print("$snapshot.error");
+                return Center(child: Text('Error: ${snapshot.error}'));
               } else {
-                return MultiBlocProvider(
-                  providers: [
-                    BlocProvider(create: (_) => PageIndexBloc()),
-                    BlocProvider(create: (_) => SwitchValueGraphBloc())
-                  ],
-                  child: Scaffold(
-                      backgroundColor: Colors.white,
-                      body: SafeArea(
-                        child: BlocBuilder<PageIndexBloc, PageIndexState>(
-                          builder: (context, state) {
-                            return IndexedStack(
-                              index: state.pageIndex,
-                              children: [
-                                const HomeScreen(),
-                                const ResultScreen(),
-                                const Text("hi"),
-                                LDLCholesterolScreen(),
-                                SettingPage()
-                              ],
-                            );
-                          },
+                String? token = snapshot.data;
+                print("token $token");
+                if (token == null) {
+                  return LoginPage();
+                } else {
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (_) => PageIndexBloc()),
+                      BlocProvider(create: (_) => SwitchValueGraphBloc())
+                    ],
+                    child: Scaffold(
+                        backgroundColor: Colors.white,
+                        body: SafeArea(
+                          child: BlocBuilder<PageIndexBloc, PageIndexState>(
+                            builder: (context, state) {
+                              return IndexedStack(
+                                index: state.pageIndex,
+                                children: [
+                                  const HomeScreen(),
+                                  const ResultScreen(),
+                                  const Text("hi"),
+                                  LDLCholesterolScreen(),
+                                  SettingPage()
+                                ],
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                      bottomNavigationBar: BottomNavigationBarCustom()),
-                );
+                        bottomNavigationBar: BottomNavigationBarCustom()),
+                  );
+                }
               }
-            }
-          }),
+            }),
+      ),
     );
   }
 }

@@ -22,6 +22,6 @@ Future<String> getTokenHttp(String username, String password) async {
     return responseBody['access_token'];
   } else {
     print("error in get token:${response.statusCode}");
-    return "null";
+    throw Exception('Failed to retrieve token');
   }
 }

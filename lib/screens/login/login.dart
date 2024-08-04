@@ -20,12 +20,11 @@ class _LoginPageState extends State<LoginPage> {
   // TODO: need validation form
   Future<void> _handleLogin(BuildContext context) async {
     try {
-      String token = getTokenHttp(
-              _userNameController.value.text, _passwordController.value.text)
-          as String;
+      String token =await getTokenHttp(
+              _userNameController.value.text, _passwordController.value.text);
       if (token.isNotEmpty) {
         await UpdateToken(token); // Assuming UpdateToken is an async function
-        Navigator.pushNamed(context, "/HomeScreen");
+        Navigator.pushReplacementNamed(context, "/HomeScreen");
       } else {
         // Handle empty token case
         ScaffoldMessenger.of(context).showSnackBar(
@@ -34,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
       }
     } catch (e) {
       // Handle errors
-      print("error");
+      print("error login page ${e.toString()}");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error: ${e.toString()}')),
       );
@@ -45,39 +44,37 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    return SafeArea(
-      child: new Scaffold(
-        body: SingleChildScrollView(
-          child: Container(
-            height: size.height,
-            padding: EdgeInsets.symmetric(horizontal: 40),
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                AppTextField(
-                  lable: 'username',
-                  hint: 'username',
-                  controller: _userNameController,
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                AppTextField(
-                  lable: 'pass',
-                  hint: 'password',
-                  controller: _passwordController,
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                ElevatedButton(
-                    onPressed: () async {
-                      await _handleLogin(context);
-                    },
-                    child: const Text("login"))
-              ],
-            ),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Container(
+          height: size.height,
+          padding: EdgeInsets.symmetric(horizontal: 40),
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AppTextField(
+                lable: 'username',
+                hint: 'username',
+                controller: _userNameController,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              AppTextField(
+                lable: 'pass',
+                hint: 'password',
+                controller: _passwordController,
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              ElevatedButton(
+                  onPressed: () async {
+                    await _handleLogin(context);
+                  },
+                  child: const Text("login"))
+            ],
           ),
         ),
       ),
