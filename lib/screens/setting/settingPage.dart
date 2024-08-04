@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:test_copilet/utility/token/clearToken.dart';
+import 'package:test_copilet/utility/token/getTokenHttp.dart';
 import 'package:test_copilet/widgets/chart.dart';
 
 class SettingPage extends StatelessWidget {
@@ -11,8 +12,9 @@ class SettingPage extends StatelessWidget {
     return Center(
         child: ElevatedButton(
       onPressed: () {
-        clearToken();
-        Navigator.pushNamed(context, "/login");
+        // clearToken();
+        getTokenHttp("username", "password");
+        // Navigator.pushNamed(context, "/login");
       },
       child: const Text("delete token"),
     ));
