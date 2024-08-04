@@ -5,6 +5,6 @@ import 'names.dart';
 
 Map<String, Widget Function(BuildContext)> routes = {
   ScreenNames.home: (context) => const HomeScreen(),
-  ScreenNames.setting: (context) => const HomeScreen(),
+  ScreenNames.login: (context) => const HomeScreen(),
 
 };
