@@ -10,11 +10,11 @@ class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: ElevatedButton(
+      child: ElevatedButton(
       onPressed: () {
-        // clearToken();
-        getTokenHttp("username", "password");
-        // Navigator.pushNamed(context, "/login");
+        clearToken();
+        // getTokenHttp("amin75t", "1");
+        Navigator.pushNamed(context, "/login");
       },
       child: const Text("delete token"),
     ));

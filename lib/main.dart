@@ -13,6 +13,7 @@ import 'package:test_copilet/res/colors.dart';
 import 'package:test_copilet/route/routes.dart';
 import 'package:test_copilet/screens/home/home.dart';
 import 'package:test_copilet/screens/login/login.dart';
+import 'package:test_copilet/screens/news/news.dart';
 import 'package:test_copilet/screens/result/result.dart';
 import 'package:test_copilet/screens/setting/settingPage.dart';
 import 'package:test_copilet/utility/changeScreanBloc/PageIndex_Bloc.dart';
@@ -38,21 +39,23 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var pageIndex = 0;
-  bool contishen=true;
+  bool contishen = true;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-
 
     return MaterialApp(
       title: 'copilot demo',
       debugShowCheckedModeBanner: false,
       routes: routes,
-        home: FutureBuilder<String?>(
+      home: FutureBuilder<String?>(
           future: getTokenLocally(),
           builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: Scaffold(body: CircularProgressIndicator(),));
+              return const Center(
+                  child: Scaffold(
+                body: CircularProgressIndicator(),
+              ));
             } else if (snapshot.hasError) {
               print("$snapshot.error");
               return Center(child: Text('Error: ${snapshot.error}'));
@@ -60,9 +63,8 @@ class _MyAppState extends State<MyApp> {
               String? token = snapshot.data;
               print("token $token");
               if (token == null) {
-                return const LoginPage();
-              }
-              else{
+                return LoginPage();
+              } else {
                 return MultiBlocProvider(
                   providers: [
                     BlocProvider(create: (_) => PageIndexBloc()),
@@ -79,7 +81,7 @@ class _MyAppState extends State<MyApp> {
                                 const HomeScreen(),
                                 const ResultScreen(),
                                 const Text("hi"),
-                                const Text("plan"),
+                                LDLCholesterolScreen(),
                                 SettingPage()
                               ],
                             );
@@ -90,11 +92,7 @@ class _MyAppState extends State<MyApp> {
                 );
               }
             }
-          }
-
-        ),
+          }),
     );
   }
 }
-
-

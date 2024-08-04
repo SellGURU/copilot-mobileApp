@@ -79,7 +79,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
               decoration: BoxDecoration(
                   color: AppColors.iconPurpleDark,
                   borderRadius: BorderRadius.circular(99)),
-              child: SvgPicture.asset("assets/addIcon.svg",
+              child: SvgPicture.asset("assets/codie.svg",
                   width: 5,
                   height: 5,
                   colorFilter: pageIndex == 1
