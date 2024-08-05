@@ -157,6 +157,9 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                 ],
               ),
             ), // Latest and History buttons
+            const SizedBox(
+              height: 15,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -197,7 +200,10 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                 ),
               ],
             ),
-            // LDL Cholesterol card
+            const SizedBox(
+              height: 15,
+            ),
+            // LDL Cholesterol card description
             Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -208,18 +214,29 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('LDL Cholesterol', style: AppTextStyles.title1),
-                    SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Container(
+                          width: 30,
+                          height: 30,
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(borderRadius: BorderRadius.circular(99),color: AppColors.yellowBega,),
+                          child: SvgPicture.asset("assets/ldIcon.svg"),
+                        ),
+                       const SizedBox(width: 10,),
+                        Text('LDL Cholesterol', style: AppTextStyles.title1),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
                     Text(
                         'LDL, or low-density lipoprotein, is often referred to as the "bad" cholesterol because high levels of it can lead to a buildup of fatty deposits in your arteries...',
-                        style: AppTextStyles.title2),
-                    TextButton(
-                      onPressed: () {},
-                      child: Text('Learn more'),
-                    ),
+                        style: AppTextStyles.hintBlack),
                   ],
                 ),
               ),
+            ),
+            const SizedBox(
+              height: 15,
             ),
             // Borderline card with chart
             Card(
@@ -319,34 +336,35 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                 ),
               ),
             ),
+            const SizedBox(
+              height: 15,
+            ),
             // Further information sections
             Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               color: AppColors.mainBg,
-              child: const Padding(
+              child:  Padding(
                 padding: EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'What Borderline LDL Cholesterol means for your health?',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                      style: AppTextStyles.title2
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
+                      style: AppTextStyles.hintBlack
                     ),
                   ],
                 ),
               ),
+            ),
+            const SizedBox(
+              height: 15,
             ),
             Card(
               shape: RoundedRectangleBorder(
@@ -360,17 +378,12 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                   children: [
                     Text(
                       'What your body says',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                      ),
+                      style:AppTextStyles.title2
                     ),
                     SizedBox(height: 10),
                     Text(
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
+                      style: AppTextStyles.hintBlack
                     ),
                   ],
                 ),
