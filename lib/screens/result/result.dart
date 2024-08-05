@@ -277,24 +277,38 @@ class _ResultScreenState extends State<ResultScreen> {
             const SizedBox(
               height: 20,
             ),
-            Cardresultscreen(),
+            GestureDetector(
+              onTap: () => Navigator.pushNamed(context, "/ldl"),
+              child: Cardresultscreen(),
+            ),
             const SizedBox(
               height: 20,
             ),
-            Cardresultscreen(),
+            GestureDetector(
+              onTap: () => Navigator.pushNamed(context, "/ldl"),
+              child: Cardresultscreen(),
+            ),
             const SizedBox(
               height: 20,
             ),
-            Cardresultscreen(),
+            GestureDetector(
+              onTap: () => Navigator.pushNamed(context, "/ldl"),
+              child: Cardresultscreen(),
+            ),
             const SizedBox(
               height: 20,
             ),
-            Cardresultscreen(),
+            GestureDetector(
+              onTap: () => Navigator.pushNamed(context, "/ldl"),
+              child: Cardresultscreen(),
+            ),
             const SizedBox(
               height: 20,
             ),
-            Cardresultscreen(),
-
+            GestureDetector(
+              onTap: () => Navigator.pushReplacementNamed(context, "/ldl"),
+              child: Cardresultscreen(),
+            ),
           ],
         ),
       ),
