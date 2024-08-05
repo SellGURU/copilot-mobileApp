@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> {
                                 children: [
                                   const HomeScreen(),
                                   const ResultScreen(),
-                                  const Text("hi"),
+                                  SizedBox(),
                                   LDLCholesterolChart(),
                                   SettingPage()
                                 ],

@@ -74,19 +74,22 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
           TabItem(
             title: "",
             icon: Container(
+              alignment: Alignment.center,
               margin: const EdgeInsets.all(5),
+              padding: EdgeInsets.all(1),
               height: (size.height),
               decoration: BoxDecoration(
                   color: AppColors.iconPurpleDark,
                   borderRadius: BorderRadius.circular(99)),
-              child: SvgPicture.asset("assets/codie.svg",
-                  width: 5,
-                  height: 5,
-                  colorFilter: pageIndex == 1
-                      ? const ColorFilter.mode(
-                          AppColors.purpleDark, BlendMode.srcIn)
-                      : const ColorFilter.mode(
-                          AppColors.textLite, BlendMode.srcIn)),
+              child: Image.asset("assets/codie.png"),
+              // child: SvgPicture.asset("assets/codie.svg",
+              //     width: 5,
+              //     height: 5,
+              //     colorFilter: pageIndex == 1
+              //         ? const ColorFilter.mode(
+              //             AppColors.purpleDark, BlendMode.srcIn)
+              //         : const ColorFilter.mode(
+              //             AppColors.textLite, BlendMode.srcIn)),
             ),
           ),
           TabItem(
