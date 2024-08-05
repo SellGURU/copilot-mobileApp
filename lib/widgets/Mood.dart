@@ -12,11 +12,11 @@ class Mood extends StatefulWidget {
 
 class _MoodState extends State<Mood> {
   List<String> imagePath = [
-    "1-emoji.png",
-    "2-emoji.png",
-    "3-emoji.png",
-    "4-emoji.png",
-    "5-emoji.png",
+    "emoji.png",
+    "emoji-1.png",
+    "emoji-2.png",
+    "emoji-3.png",
+    "emoji-4.png",
   ];
   @override
   Widget build(BuildContext context) {
