@@ -20,8 +20,8 @@ class _LoginPageState extends State<LoginPage> {
   // TODO: need validation form
   Future<void> _handleLogin(BuildContext context) async {
     try {
-      String token =await getTokenHttp(
-              _userNameController.value.text, _passwordController.value.text);
+      String token = await getTokenHttp(
+          _userNameController.value.text, _passwordController.value.text);
       if (token.isNotEmpty) {
         await UpdateToken(token); // Assuming UpdateToken is an async function
         Navigator.pushReplacementNamed(context, "/HomeScreen");
@@ -45,36 +45,38 @@ class _LoginPageState extends State<LoginPage> {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Container(
-          height: size.height,
-          padding: EdgeInsets.symmetric(horizontal: 40),
-          alignment: Alignment.center,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              AppTextField(
-                lable: 'username',
-                hint: 'username',
-                controller: _userNameController,
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              AppTextField(
-                lable: 'pass',
-                hint: 'password',
-                controller: _passwordController,
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              ElevatedButton(
-                  onPressed: () async {
-                    await _handleLogin(context);
-                  },
-                  child: const Text("login"))
-            ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Container(
+            height: size.height,
+            padding: EdgeInsets.symmetric(horizontal: 40),
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AppTextField(
+                  lable: 'username',
+                  hint: 'username',
+                  controller: _userNameController,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                AppTextField(
+                  lable: 'pass',
+                  hint: 'password',
+                  controller: _passwordController,
+                ),
+                const SizedBox(
+                  height: 30,
+                ),
+                ElevatedButton(
+                    onPressed: () async {
+                      await _handleLogin(context);
+                    },
+                    child: const Text("login"))
+              ],
+            ),
           ),
         ),
       ),
