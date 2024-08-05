@@ -131,8 +131,13 @@ class Chart extends StatelessWidget {
           ),
           barWidth: 2,
           isStrokeCapRound: false,
-          dotData: const FlDotData(
-            show: false,
+          dotData: FlDotData(
+            show: true,
+            // dotColor: Colors.white,
+            // dotSize: 6,
+            checkToShowDot: (spot, barData) {
+              return true;
+            },
           ),
           belowBarData: BarAreaData(
             show: false,

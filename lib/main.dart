@@ -82,7 +82,7 @@ class _MyAppState extends State<MyApp> {
                                   const HomeScreen(),
                                   const ResultScreen(),
                                   const Text("hi"),
-                                  LDLCholesterolScreen(),
+                                  LDLCholesterolChart(),
                                   SettingPage()
                                 ],
                               );
