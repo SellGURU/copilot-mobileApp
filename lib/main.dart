@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:test_copilet/res/colors.dart';
 import 'package:test_copilet/route/routes.dart';
+import 'package:test_copilet/screens/CholesterolScreen/CholesterolScreen.dart';
 import 'package:test_copilet/screens/home/home.dart';
 import 'package:test_copilet/screens/login/login.dart';
 import 'package:test_copilet/screens/news/news.dart';
@@ -82,8 +83,8 @@ class _MyAppState extends State<MyApp> {
                                   const HomeScreen(),
                                   const ResultScreen(),
                                   SizedBox(),
-                                  LDLCholesterolChart(),
-                                  SettingPage()
+                                  SizedBox(),
+                                  CholesterolScreen()
                                 ],
                               );
                             },

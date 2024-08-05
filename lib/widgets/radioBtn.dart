@@ -33,7 +33,8 @@ class _TrackProgressState extends State<TrackProgress> {
           onChanged: (String? value) {
             setState(() => selectedValue = value!);
           },
-          child: Row(
+          child:
+          Row(
             children: [
               Padding(
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
