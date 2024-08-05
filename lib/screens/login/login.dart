@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
           _userNameController.value.text, _passwordController.value.text);
       if (token.isNotEmpty) {
         await UpdateToken(token); // Assuming UpdateToken is an async function
-        Navigator.pushReplacementNamed(context, "/HomeScreen");
+        Navigator.pushNamed(context, "/HomeScreen");
       } else {
         // Handle empty token case
         ScaffoldMessenger.of(context).showSnackBar(
@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    return Scaffold(
+    return new Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(

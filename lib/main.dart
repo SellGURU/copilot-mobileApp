@@ -22,6 +22,7 @@ import 'package:test_copilet/utility/changeScreanBloc/PageIndex_Bloc.dart';
 import 'package:test_copilet/utility/changeScreanBloc/PageIndex_events.dart';
 import 'package:test_copilet/utility/changeScreanBloc/PageIndex_states.dart';
 import 'package:test_copilet/utility/switchValueBloc/PageIndex_Bloc.dart';
+import 'package:test_copilet/utility/token/clearToken.dart';
 import 'package:test_copilet/utility/token/getTokenLocaly.dart';
 import 'package:test_copilet/widgets/bottomNavigationBar.dart';
 
@@ -29,6 +30,7 @@ import 'components/text_style.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  clearToken();
   runApp(const MyApp());
 }
 
@@ -50,22 +52,24 @@ class _MyAppState extends State<MyApp> {
       title: 'copilot demo',
       debugShowCheckedModeBanner: false,
       routes: routes,
-      home: Scaffold(
-        body: FutureBuilder<String?>(
+      home: FutureBuilder<String?>(
             future: getTokenLocally(),
             builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
+              // if (snapshot.connectionState == ConnectionState.waiting) {
+              if (false) {
                 return const Center(
                     child: Scaffold(
                   body: CircularProgressIndicator(),
                 ));
-              } else if (snapshot.hasError) {
+              // } else if (snapshot.hasError) {
+              } else if (false) {
                 print("$snapshot.error");
                 return Center(child: Text('Error: ${snapshot.error}'));
               } else {
                 String? token = snapshot.data;
                 print("token $token");
-                if (token == null) {
+                // if (token == null) {
+                if (false) {
                   return LoginPage();
                 } else {
                   return MultiBlocProvider(
@@ -96,7 +100,7 @@ class _MyAppState extends State<MyApp> {
                 }
               }
             }),
-      ),
+
     );
   }
 }
