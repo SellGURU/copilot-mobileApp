@@ -1,0 +1,333 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:test_copilet/components/text_style.dart';
+
+import '../../res/colors.dart';
+
+class HealthPlanScreen extends StatefulWidget {
+  @override
+  State<HealthPlanScreen> createState() => _HealthPlanScreenState();
+}
+
+class _HealthPlanScreenState extends State<HealthPlanScreen> {
+  var indexItem=0;
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(Radius.circular(15)),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(.1),
+                    spreadRadius: 2,
+                    blurRadius: 2,
+                    offset: const Offset(0, 1), // changes position of shadow
+                  ),
+                ]),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      indexItem = 0;
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      color: indexItem == 0
+                          ? AppColors.purpleDark
+                          : Colors.white,
+                    ),
+                    height: 50,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 8),
+                      child: Row(
+                        children: [
+
+
+                          Text(
+                            "All",
+                            style: indexItem == 0
+                                ? AppTextStyles.hintWhite
+                                : AppTextStyles.hint,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      indexItem = 1;
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      color: indexItem == 1
+                          ? AppColors.purpleDark
+                          : Colors.white,
+                    ),
+                    height: 50,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 8),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset("assets/weight.svg",
+                              colorFilter: ColorFilter.mode(
+                                  indexItem == 1
+                                      ? AppColors.mainBg
+                                      : AppColors.textLite,
+                                  BlendMode.srcIn)),
+                          const SizedBox(
+                            width: 7,
+                          ),
+                          Text(
+                            "Nutrition",
+                            style: indexItem == 1
+                                ? AppTextStyles.hintWhite
+                                : AppTextStyles.hint,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      indexItem = 2;
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      color: indexItem == 2
+                          ? AppColors.purpleDark
+                          : Colors.white,
+                    ),
+                    height: 50,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 8),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset("assets/dna.svg",
+                              colorFilter: ColorFilter.mode(
+                                  indexItem == 2
+                                      ? AppColors.mainBg
+                                      : AppColors.textLite,
+                                  BlendMode.srcIn)),
+                          const SizedBox(
+                            width: 7,
+                          ),
+                          Text(
+                            "Activity",
+                            style: indexItem == 2
+                                ? AppTextStyles.hintWhite
+                                : AppTextStyles.hint,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      indexItem = 3;
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      color: indexItem == 3
+                          ? AppColors.purpleDark
+                          : Colors.white,
+                    ),
+                    height: 50,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12.0, vertical: 8),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset("assets/monitor.svg",
+                              colorFilter: ColorFilter.mode(
+                                  indexItem == 3
+                                      ? AppColors.mainBg
+                                      : AppColors.textLite,
+                                  BlendMode.srcIn)),
+                          const SizedBox(
+                            width: 7,
+                          ),
+                          Text(
+                            "Mind",
+                            style: indexItem == 3
+                                ? AppTextStyles.hintWhite
+                                : AppTextStyles.hint,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      indexItem = 4;
+                    });
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                      color: indexItem == 4
+                          ? AppColors.purpleDark
+                          : Colors.white,
+                    ),
+                    height: 50,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 5.0, vertical: 8),
+                      child: Row(
+                        children: [
+                          SvgPicture.asset("assets/monitor.svg",
+                              colorFilter: ColorFilter.mode(
+                                  indexItem == 4
+                                      ? AppColors.mainBg
+                                      : AppColors.textLite,
+                                  BlendMode.srcIn)),
+                          const SizedBox(
+                            width: 3,
+                          ),
+                          Text(
+                            "Sleep",
+                            style: indexItem == 4
+                                ? AppTextStyles.hintWhite
+                                : AppTextStyles.hint,
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),          Container(
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.3),
+                  blurRadius: 8,
+                  spreadRadius: 1,
+                  offset: Offset(0, 3),
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                Text(
+                  'Total Score',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(height: 8),
+                Text(
+                  '68%',
+                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 16),
+          Expanded(
+            child: ListView(
+              children: [
+                buildHealthCard(
+                  'Level up your aerobic workouts',
+                  '5 days per week, 30 minutes minimum',
+                  'Vary the duration or intensity of your workouts',
+                  'assets/gym.png',
+                ),
+                buildHealthCard(
+                  'Embrace a Diet Rich in Fiber',
+                  'To be consumed about 25gr per days',
+                  'Embrace a diet rich in fiber',
+                  'assets/gym.png',
+                ),
+                buildHealthCard(
+                  'Practice Yoga or Meditation',
+                  '5 days per week, 30 minutes minimum',
+                  'Practice stress-reduction techniques like yoga',
+                  'assets/gym.png',
+                ),
+                buildHealthCard(
+                  'Sleep of 7-9 Hours per Night',
+                  'Ensure adequate sleep of 7-9 hours per night',
+                  'Sleep between 7pm and 5am',
+                  'assets/gym.png',
+                ),
+                buildHealthCard(
+                  'Add Antioxidants to Your Diet',
+                  'Include these foods in your diet regularly',
+                  'Add antioxidants to your diet',
+                  'assets/gym.png',
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget buildHealthCard(
+      String title, String subtitle, String description, String imagePath) {
+    return Card(
+      color: Colors.white,
+      margin: EdgeInsets.only(bottom: 16),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Row(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  title,
+                  style:  AppTextStyles.title1,
+                ),
+                SizedBox(height: 8),
+                Container(width:200,child:Text(subtitle,style: AppTextStyles.hint,)),
+                SizedBox(height: 8),
+                Container(width:200,child:Text(description,style: AppTextStyles.hintBlack,)),
+                SizedBox(height: 8),
+                TextButton(
+                  onPressed: () {},
+                  child: Text('View details'),
+                ),
+              ],
+            ),
+            Image.asset(imagePath, width: 100, height: 100),
+          ],
+        ),
+      ),
+    );
+  }
+}

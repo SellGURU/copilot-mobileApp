@@ -15,6 +15,7 @@ import 'package:test_copilet/screens/CholesterolScreen/CholesterolScreen.dart';
 import 'package:test_copilet/screens/home/home.dart';
 import 'package:test_copilet/screens/login/login.dart';
 import 'package:test_copilet/screens/news/news.dart';
+import 'package:test_copilet/screens/plan/planScreen.dart';
 import 'package:test_copilet/screens/result/result.dart';
 import 'package:test_copilet/screens/setting/settingPage.dart';
 import 'package:test_copilet/utility/changeScreanBloc/PageIndex_Bloc.dart';
@@ -72,7 +73,7 @@ class _MyAppState extends State<MyApp> {
                       BlocProvider(create: (_) => PageIndexBloc()),
                       BlocProvider(create: (_) => SwitchValueGraphBloc())
                     ],
-                    child: Scaffold(
+                    child:new Scaffold(
                         backgroundColor: Colors.white,
                         body: SafeArea(
                           child: BlocBuilder<PageIndexBloc, PageIndexState>(
@@ -83,7 +84,7 @@ class _MyAppState extends State<MyApp> {
                                   const HomeScreen(),
                                   const ResultScreen(),
                                   SizedBox(),
-                                  SizedBox(),
+                                  HealthPlanScreen(),
                                   CholesterolScreen()
                                 ],
                               );
