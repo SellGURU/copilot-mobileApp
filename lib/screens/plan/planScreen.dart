@@ -302,8 +302,9 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
       color: Colors.white,
       margin: EdgeInsets.only(bottom: 16),
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding: const EdgeInsets.all(0.0),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -314,9 +315,9 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                   style:  AppTextStyles.title1,
                 ),
                 SizedBox(height: 8),
-                Container(width:200,child:Text(subtitle,style: AppTextStyles.hint,)),
+                Container(child:Text(subtitle,style: AppTextStyles.hint,)),
                 SizedBox(height: 8),
-                Container(width:200,child:Text(description,style: AppTextStyles.hintBlack,)),
+                Container(child:Text(description,style: AppTextStyles.hintBlack,)),
                 SizedBox(height: 8),
                 TextButton(
                   onPressed: () {},
