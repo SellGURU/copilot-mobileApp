@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,9 +19,9 @@ class BottomNavigationBarCustom extends StatefulWidget {
 
 class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
   var pageIndex = 0;
+
   @override
   Widget build(BuildContext context) {
-    print("test");
     var size = MediaQuery.of(context).size;
     return StyleProvider(
       style: Style(),
