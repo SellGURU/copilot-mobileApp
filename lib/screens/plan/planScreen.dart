@@ -4,6 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:test_copilet/components/text_style.dart';
 
 import '../../res/colors.dart';
+import '../../widgets/gauges.dart';
+import '../../widgets/normal-Gauges.dart';
 
 class HealthPlanScreen extends StatefulWidget {
   @override
@@ -14,6 +16,7 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
   var indexItem = 0;
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -234,16 +237,38 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                 ),
               ],
             ),
-            child: const Column(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  'Total Score',
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                Column(
+                  children: [
+                    NormalGauges(),
+                    SizedBox(height: 10,),
+                    NormalGauges()
+                  ],
                 ),
-                SizedBox(height: 8),
-                Text(
-                  '68%',
-                  style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                 Container(
+                   width: size.width*.6,
+                   child: Column(
+                    children: [
+                      Text(
+                        'Total Score',
+                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        '68%',
+                        style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                                   ),
+                 ),
+                Column(
+                  children: [
+                    NormalGauges(),
+                    SizedBox(height: 10,),
+                    NormalGauges()
+                  ],
                 ),
               ],
             ),
