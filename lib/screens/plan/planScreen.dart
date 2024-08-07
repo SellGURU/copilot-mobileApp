@@ -11,7 +11,7 @@ class HealthPlanScreen extends StatefulWidget {
 }
 
 class _HealthPlanScreenState extends State<HealthPlanScreen> {
-  var indexItem=0;
+  var indexItem = 0;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -42,9 +42,8 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(15)),
-                      color: indexItem == 0
-                          ? AppColors.purpleDark
-                          : Colors.white,
+                      color:
+                          indexItem == 0 ? AppColors.purpleDark : Colors.white,
                     ),
                     height: 50,
                     child: Padding(
@@ -52,8 +51,6 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                           horizontal: 12.0, vertical: 8),
                       child: Row(
                         children: [
-
-
                           Text(
                             "All",
                             style: indexItem == 0
@@ -74,9 +71,8 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(15)),
-                      color: indexItem == 1
-                          ? AppColors.purpleDark
-                          : Colors.white,
+                      color:
+                          indexItem == 1 ? AppColors.purpleDark : Colors.white,
                     ),
                     height: 50,
                     child: Padding(
@@ -113,9 +109,8 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(15)),
-                      color: indexItem == 2
-                          ? AppColors.purpleDark
-                          : Colors.white,
+                      color:
+                          indexItem == 2 ? AppColors.purpleDark : Colors.white,
                     ),
                     height: 50,
                     child: Padding(
@@ -152,9 +147,8 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(15)),
-                      color: indexItem == 3
-                          ? AppColors.purpleDark
-                          : Colors.white,
+                      color:
+                          indexItem == 3 ? AppColors.purpleDark : Colors.white,
                     ),
                     height: 50,
                     child: Padding(
@@ -191,9 +185,8 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(15)),
-                      color: indexItem == 4
-                          ? AppColors.purpleDark
-                          : Colors.white,
+                      color:
+                          indexItem == 4 ? AppColors.purpleDark : Colors.white,
                     ),
                     height: 50,
                     child: Padding(
@@ -226,8 +219,9 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
           ),
           const SizedBox(
             height: 20,
-          ),          Container(
-            padding: EdgeInsets.all(16),
+          ),
+          Container(
+            padding: const EdgeInsets.all(16),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(16),
@@ -240,7 +234,7 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                 ),
               ],
             ),
-            child: Column(
+            child: const Column(
               children: [
                 Text(
                   'Total Score',
@@ -256,38 +250,49 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
           ),
           SizedBox(height: 16),
           Expanded(
+
             child: ListView(
               children: [
+                SizedBox(height: 15,),
                 buildHealthCard(
                   'Level up your aerobic workouts',
                   '5 days per week, 30 minutes minimum',
-                  'Vary the duration or intensity of your workouts',
+                  'Vary the duration or intensity ',
                   'assets/gym.png',
                 ),
+                SizedBox(height: 15,),
                 buildHealthCard(
                   'Embrace a Diet Rich in Fiber',
                   'To be consumed about 25gr per days',
                   'Embrace a diet rich in fiber',
                   'assets/gym.png',
                 ),
+                SizedBox(height: 15,),
+
                 buildHealthCard(
                   'Practice Yoga or Meditation',
                   '5 days per week, 30 minutes minimum',
-                  'Practice stress-reduction techniques like yoga',
+                  'Practice stress-reduction',
                   'assets/gym.png',
                 ),
+                SizedBox(height: 15,),
+
                 buildHealthCard(
                   'Sleep of 7-9 Hours per Night',
                   'Ensure adequate sleep of 7-9 hours per night',
                   'Sleep between 7pm and 5am',
                   'assets/gym.png',
                 ),
+                SizedBox(height: 15,),
+
                 buildHealthCard(
                   'Add Antioxidants to Your Diet',
                   'Include these foods in your diet regularly',
                   'Add antioxidants to your diet',
                   'assets/gym.png',
                 ),
+                SizedBox(height: 15,),
+
               ],
             ),
           ),
@@ -298,34 +303,50 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
 
   Widget buildHealthCard(
       String title, String subtitle, String description, String imagePath) {
-    return Card(
-      color: Colors.white,
-      margin: EdgeInsets.only(bottom: 16),
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 5),
+      decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          boxShadow: [
+            BoxShadow(
+              blurStyle: BlurStyle.solid,
+              color: Colors.grey.withOpacity(.2),
+              spreadRadius: 1,
+              blurRadius: 5,
+              offset: const Offset(1, 1), // changes position of shadow
+            ),
+        ]
+      ),
       child: Padding(
-        padding: const EdgeInsets.all(0.0),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   title,
-                  style:  AppTextStyles.title1,
+                  style: AppTextStyles.title1,
                 ),
-                SizedBox(height: 8),
-                Container(child:Text(subtitle,style: AppTextStyles.hint,)),
-                SizedBox(height: 8),
-                Container(child:Text(description,style: AppTextStyles.hintBlack,)),
-                SizedBox(height: 8),
-                TextButton(
-                  onPressed: () {},
-                  child: Text('View details'),
-                ),
+                const SizedBox(height: 5),
+                Container(
+                    child: Text(
+                  subtitle,
+                  style: AppTextStyles.hint,
+                )),
+                SizedBox(height: 5),
+                Container(
+                    child: Text(
+                  description,
+                  style: AppTextStyles.hintBlack,
+                )),
+                SizedBox(height: 5),
+                Text('View details'),
               ],
             ),
-            Image.asset(imagePath, width: 100, height: 100),
+            Image.asset(imagePath, width: 80, height: 100),
           ],
         ),
       ),
