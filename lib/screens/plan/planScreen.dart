@@ -249,7 +249,7 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                 ),
                  Container(
                    width: size.width*.6,
-                   child: Column(
+                   child: const Column(
                     children: [
                       Text(
                         'Total Score',

@@ -23,6 +23,7 @@ import 'package:test_copilet/utility/changeScreanBloc/PageIndex_states.dart';
 import 'package:test_copilet/utility/switchValueBloc/PageIndex_Bloc.dart';
 import 'package:test_copilet/utility/token/clearToken.dart';
 import 'package:test_copilet/utility/token/getTokenLocaly.dart';
+import 'package:test_copilet/widgets/acardion.dart';
 import 'package:test_copilet/widgets/bottomNavigationBar.dart';
 
 import 'components/text_style.dart';
@@ -88,7 +89,7 @@ class _MyAppState extends State<MyApp> {
                                   const ResultScreen(),
                                   SizedBox(),
                                   HealthPlanScreen(),
-                                  CholesterolScreen()
+                                  AccordionPage()
                                 ],
                               );
                             },
