@@ -18,11 +18,11 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
   var toggleHistoryMod = "History";
   var sections = [
     {
-      'headerText': 'Header 1',
+      'headerText': 'What Borderline LDL Cholesterol means for your health?',
       'contentText': 'Content for the first section.',
     },
     {
-      'headerText': 'Header 2',
+      'headerText': 'What you body says',
       'contentText': 'Content for the second section.',
     },
     // Add more sections as needed
