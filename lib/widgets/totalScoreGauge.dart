@@ -4,19 +4,19 @@ import 'package:flutter_svg/svg.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:test_copilet/components/text_style.dart';
 
-class NormalGauges extends StatelessWidget {
-  late String picAddress;
+class Totalscoregauge extends StatelessWidget {
   late double value;
   late Color colorGauge;
-  NormalGauges({super.key, required this.picAddress, required this.colorGauge,required this.value});
+  Totalscoregauge({super.key, required this.colorGauge, required this.value});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Container(
-          width: 50,
-          height: 50,
+          alignment: Alignment.center,
+          width: 120,
+          height: 120,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(1000),
               color: Colors.white,
@@ -29,7 +29,7 @@ class NormalGauges extends StatelessWidget {
                 ),
               ]),
           child: Padding(
-            padding: const EdgeInsets.all(5.0),
+            padding: const EdgeInsets.all(0),
             child: SfRadialGauge(axes: <RadialAxis>[
               RadialAxis(
                 minimum: 0,
@@ -40,12 +40,24 @@ class NormalGauges extends StatelessWidget {
                 endAngle: -90,
                 annotations: <GaugeAnnotation>[
                   GaugeAnnotation(
-                      widget: Container(
-                    child: SvgPicture.asset(
-                      'assets/apple.svg',
-                      width: 20,
+                    horizontalAlignment: GaugeAlignment.center,
+                    verticalAlignment: GaugeAlignment.center,
+                    widget: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Total Score',
+                          style: AppTextStyles.hintSmale,
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          "$value",
+                          style: AppTextStyles.titleBig,
+                        ),
+                      ],
                     ),
-                  ))
+                  )
                 ],
                 axisLineStyle: const AxisLineStyle(
                   thickness: 0.05,

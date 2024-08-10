@@ -9,6 +9,7 @@ class AppTextStyles {
   AppTextStyles._();
 
   static TextStyle title1 =GoogleFonts.roboto( textStyle:TextStyle(fontSize: 16, color: AppColors.text,fontWeight: FontWeight.w500));
+  static TextStyle titleBig =GoogleFonts.roboto( textStyle:TextStyle(fontSize: 24, color: AppColors.text,fontWeight: FontWeight.w700));
   static TextStyle whiteTitle1 = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500));
   static TextStyle titleSmale = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 10, color: Colors.black, fontWeight: FontWeight.w500));
   static TextStyle titleMedium = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w400));

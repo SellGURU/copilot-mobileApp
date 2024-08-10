@@ -6,6 +6,7 @@ import 'package:test_copilet/components/text_style.dart';
 import '../../res/colors.dart';
 import '../../widgets/gauges.dart';
 import '../../widgets/normal-Gauges.dart';
+import '../../widgets/totalScoreGauge.dart';
 
 class HealthPlanScreen extends StatefulWidget {
   @override
@@ -258,21 +259,11 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                   ],
                 ),
                 Container(
-                  width: size.width * .6,
-                  child: const Column(
-                    children: [
-                      Text(
-                        'Total Score',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        '68%',
-                        style: TextStyle(
-                            fontSize: 32, fontWeight: FontWeight.bold),
-                      ),
-                    ],
+                  width: size.width * .5,
+                  // height: size.height * .1,
+                  child: Totalscoregauge(
+                    colorGauge: AppColors.purpleDark,
+                    value: 49,
                   ),
                 ),
                 Column(
@@ -396,7 +387,10 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                   style: AppTextStyles.hintBlack,
                 )),
                 SizedBox(height: 5),
-                Text('View details'),
+                Text(
+                  'View details',
+                  style: TextStyle(color: AppColors.purpleDark),
+                ),
               ],
             ),
             Image.asset(imagePath, width: 80, height: 100),
