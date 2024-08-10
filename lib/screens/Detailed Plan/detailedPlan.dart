@@ -4,41 +4,39 @@ import 'package:flutter/material.dart';
 class WorkoutScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Image.asset("assets/gymBig.png"),
-            SizedBox(height: 16.0),
-            Text(
-              'Level up your aerobic workouts',
-              style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-              ),
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Image.asset("assets/gymBig.png"),
+          const SizedBox(height: 16.0),
+          const Text(
+            'Level up your aerobic workouts',
+            style: TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
             ),
-            SizedBox(height: 8.0),
-            Text(
-              '5 days per week, 30 minutes minimum',
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.grey[700],
-              ),
+          ),
+          SizedBox(height: 8.0),
+          Text(
+            '5 days per week, 30 minutes minimum',
+            style: TextStyle(
+              fontSize: 16.0,
+              color: Colors.grey[700],
             ),
-            SizedBox(height: 16.0),
-            Text(
-              'Enhance the effectiveness, intensity, or overall quality of your aerobic exercise routines. Aerobic workouts, also known as cardiovascular exercises, are activities that increase your heart rate and improve the efficiency of your cardiovascular system.',
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.grey[800],
-              ),
+          ),
+          SizedBox(height: 16.0),
+          Text(
+            'Enhance the effectiveness, intensity, or overall quality of your aerobic exercise routines. Aerobic workouts, also known as cardiovascular exercises, are activities that increase your heart rate and improve the efficiency of your cardiovascular system.',
+            style: TextStyle(
+              fontSize: 16.0,
+              color: Colors.grey[800],
             ),
-            SizedBox(height: 24.0),
-            CheckInWidget(),
-          ],
-        ),
+          ),
+          SizedBox(height: 24.0),
+          CheckInWidget(),
+        ],
       ),
     );
   }
@@ -90,29 +88,39 @@ class CheckInWidget extends StatelessWidget {
   }
 }
 
-class CheckInDay extends StatelessWidget {
-  final String day;
-  final bool checkedIn;
+class CheckInDay extends StatefulWidget {
+  late String day;
+  late bool checkedIn;
 
   CheckInDay({required this.day, required this.checkedIn});
 
+  @override
+  State<CheckInDay> createState() => _CheckInDayState();
+}
+
+class _CheckInDayState extends State<CheckInDay> {
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Text(
-          day,
+          widget.day,
           style: TextStyle(
             fontSize: 18.0,
             fontWeight: FontWeight.bold,
-            color: checkedIn ? Colors.green : Colors.grey,
+            color: widget.checkedIn ? Colors.green : Colors.grey,
           ),
         ),
-        SizedBox(height: 8.0),
-        Icon(
-          checkedIn ? Icons.check_circle : Icons.circle_outlined,
-          color: checkedIn ? Colors.green : Colors.grey,
-          size: 32.0,
+        const SizedBox(height: 8.0),
+        GestureDetector(
+          onTap: () => setState(() {
+            widget.checkedIn = !widget.checkedIn;
+          }),
+          child: Icon(
+            widget.checkedIn ? Icons.check_circle : Icons.circle_outlined,
+            color: widget.checkedIn ? Colors.green : Colors.grey,
+            size: 32.0,
+          ),
         ),
       ],
     );
