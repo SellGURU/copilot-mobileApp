@@ -349,7 +349,7 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
   Widget buildHealthCard(
       String title, String subtitle, String description, String imagePath) {
     return GestureDetector(
-      onTap: () => print(""),
+      onTap: () => Navigator.pushNamed(context, "/detailedPlan"),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 5),
         decoration: BoxDecoration(
