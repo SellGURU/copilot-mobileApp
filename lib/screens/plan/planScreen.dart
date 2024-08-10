@@ -348,53 +348,56 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
 
   Widget buildHealthCard(
       String title, String subtitle, String description, String imagePath) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 5),
-      decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          boxShadow: [
-            BoxShadow(
-              blurStyle: BlurStyle.solid,
-              color: Colors.grey.withOpacity(.2),
-              spreadRadius: 1,
-              blurRadius: 5,
-              offset: const Offset(1, 1), // changes position of shadow
-            ),
-          ]),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: AppTextStyles.title1,
-                ),
-                const SizedBox(height: 5),
-                Container(
-                    child: Text(
-                  subtitle,
-                  style: AppTextStyles.hint,
-                )),
-                SizedBox(height: 5),
-                Container(
-                    child: Text(
-                  description,
-                  style: AppTextStyles.hintBlack,
-                )),
-                SizedBox(height: 5),
-                Text(
-                  'View details',
-                  style: TextStyle(color: AppColors.purpleDark),
-                ),
-              ],
-            ),
-            Image.asset(imagePath, width: 80, height: 100),
-          ],
+    return GestureDetector(
+      onTap: () => print(""),
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 5),
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            boxShadow: [
+              BoxShadow(
+                blurStyle: BlurStyle.solid,
+                color: Colors.grey.withOpacity(.2),
+                spreadRadius: 1,
+                blurRadius: 5,
+                offset: const Offset(1, 1), // changes position of shadow
+              ),
+            ]),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    style: AppTextStyles.title1,
+                  ),
+                  const SizedBox(height: 5),
+                  Container(
+                      child: Text(
+                    subtitle,
+                    style: AppTextStyles.hint,
+                  )),
+                  SizedBox(height: 5),
+                  Container(
+                      child: Text(
+                    description,
+                    style: AppTextStyles.hintBlack,
+                  )),
+                  SizedBox(height: 5),
+                  Text(
+                    'View details',
+                    style: TextStyle(color: AppColors.purpleDark),
+                  ),
+                ],
+              ),
+              Image.asset(imagePath, width: 80, height: 100),
+            ],
+          ),
         ),
       ),
     );

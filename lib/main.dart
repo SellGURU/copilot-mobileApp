@@ -11,6 +11,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:test_copilet/res/colors.dart';
 import 'package:test_copilet/route/routes.dart';
 import 'package:test_copilet/screens/CholesterolScreen/CholesterolScreen.dart';
+import 'package:test_copilet/screens/Detailed%20Plan/detailedPlan.dart';
 import 'package:test_copilet/screens/home/home.dart';
 import 'package:test_copilet/screens/login/login.dart';
 import 'package:test_copilet/screens/CholesterolScreen/LDLChart.dart';
@@ -77,7 +78,7 @@ class _MyAppState extends State<MyApp> {
                       BlocProvider(create: (_) => PageIndexBloc()),
                       BlocProvider(create: (_) => SwitchValueGraphBloc())
                     ],
-                    child:new Scaffold(
+                    child: Scaffold(
                         backgroundColor: Colors.white,
                         body: SafeArea(
                           child: BlocBuilder<PageIndexBloc, PageIndexState>(
@@ -89,7 +90,7 @@ class _MyAppState extends State<MyApp> {
                                   const ResultScreen(),
                                   SizedBox(),
                                   HealthPlanScreen(),
-                                  SizedBox()
+                                  WorkoutScreen()
                                 ],
                               );
                             },
