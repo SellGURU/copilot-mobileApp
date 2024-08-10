@@ -1,10 +1,7 @@
 import 'package:accordion/accordion.dart';
 import 'package:accordion/controllers.dart';
 import 'package:flutter/cupertino.dart';
-
-import 'package:accordion/controllers.dart';
 import 'package:flutter/material.dart';
-import 'package:accordion/accordion.dart';
 import 'package:flutter/widgets.dart';
 import 'package:test_copilet/components/text_style.dart';
 
@@ -21,9 +18,11 @@ class DynamicAccordion extends StatelessWidget {
   Widget build(BuildContext context) {
     return Accordion(
       headerBackgroundColor: AppColors.mainBg,
+
       // headerBorderColorOpened: Colors.transparent,
       // headerBorderWidth: 1,
       // headerBackgroundColorOpened: Colors.green,
+
       contentBackgroundColor: Colors.white,
       // contentBorderColor: Colors.green,
       // contentBorderWidth: 3,
@@ -34,12 +33,14 @@ class DynamicAccordion extends StatelessWidget {
       ),
       contentHorizontalPadding: 20,
       scaleWhenAnimating: true,
+
       openAndCloseAnimation: true,
       headerPadding: const EdgeInsets.symmetric(vertical: 7, horizontal: 15),
       sectionOpeningHapticFeedback: SectionHapticFeedback.heavy,
       sectionClosingHapticFeedback: SectionHapticFeedback.light,
       children: sections.map((section) {
         return AccordionSection(
+
           isOpen: false,
           // leftIcon: const Icon(Icons.circle, color: Colors.white),
           headerBackgroundColor: AppColors.mainBg,

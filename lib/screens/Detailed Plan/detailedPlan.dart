@@ -1,7 +1,33 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:test_copilet/components/text_style.dart';
+import 'package:test_copilet/res/colors.dart';
 
-class WorkoutScreen extends StatelessWidget {
+import '../../widgets/accordion.dart';
+
+class detailedPlan extends StatelessWidget {
+  var sections = [
+    {
+      'headerText': "How this help your blood",
+      'contentText': 'Content for the first section.',
+    },
+    {
+      'headerText': "How this help your body",
+      'contentText': 'Content for the second section.',
+    },
+    {
+      'headerText': "Scientific references",
+      'contentText': 'Content for the second section.',
+    },
+    {
+      'headerText': "Tell me more",
+      'contentText': 'Content for the second section.',
+    },
+    {
+      'headerText': "Scientific references",
+      'contentText': 'Content for the second section.',
+    },
+  ];
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -36,6 +62,9 @@ class WorkoutScreen extends StatelessWidget {
           ),
           SizedBox(height: 24.0),
           CheckInWidget(),
+          DynamicAccordion(
+            sections: sections,
+          )
         ],
       ),
     );
@@ -62,14 +91,18 @@ class CheckInWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Check-in',
-            style: TextStyle(
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Check-in',
+                style: AppTextStyles.title2,
+              ),
+              const Icon(Icons.calendar_month_sharp,
+                  color: AppColors.yellowBega)
+            ],
           ),
-          SizedBox(height: 16.0),
+          const SizedBox(height: 16.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -105,21 +138,25 @@ class _CheckInDayState extends State<CheckInDay> {
       children: [
         Text(
           widget.day,
-          style: TextStyle(
-            fontSize: 18.0,
-            fontWeight: FontWeight.bold,
-            color: widget.checkedIn ? Colors.green : Colors.grey,
-          ),
+          style: AppTextStyles.hint,
         ),
         const SizedBox(height: 8.0),
-        GestureDetector(
-          onTap: () => setState(() {
-            widget.checkedIn = !widget.checkedIn;
-          }),
-          child: Icon(
-            widget.checkedIn ? Icons.check_circle : Icons.circle_outlined,
-            color: widget.checkedIn ? Colors.green : Colors.grey,
-            size: 32.0,
+        // calender section
+        Container(
+          padding: EdgeInsets.all(5),
+          decoration: BoxDecoration(
+              color: widget.checkedIn ? AppColors.greenBega : AppColors.gray,
+              borderRadius: BorderRadius.circular(600)),
+          child: GestureDetector(
+            onTap: () => setState(() {
+              widget.checkedIn = !widget.checkedIn;
+            }),
+            // add number
+            child: Icon(
+              widget.checkedIn ? Icons.check : Icons.circle_outlined,
+              color: widget.checkedIn ? AppColors.mainBg : AppColors.gray,
+              size: 20.0,
+            ),
           ),
         ),
       ],

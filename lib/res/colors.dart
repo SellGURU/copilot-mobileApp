@@ -17,4 +17,5 @@ class AppColors {
   static const Color yellowBegaDarker = Color.fromRGBO(255, 228, 94, 1);
   static const Color shadowColor = Color.fromARGB(153, 171, 198, 100);
   static const Color brandSecondaryColor = Color.fromARGB(255, 147, 129, 255);
+  static const Color gray = Color.fromRGBO(245, 247, 250, 1);
 }

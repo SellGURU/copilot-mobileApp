@@ -90,7 +90,7 @@ class _MyAppState extends State<MyApp> {
                                   const ResultScreen(),
                                   SizedBox(),
                                   HealthPlanScreen(),
-                                  WorkoutScreen()
+                                  detailedPlan()
                                 ],
                               );
                             },
