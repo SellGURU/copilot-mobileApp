@@ -5,7 +5,10 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 import 'package:test_copilet/components/text_style.dart';
 
 class NormalGauges extends StatelessWidget {
-  const NormalGauges({super.key});
+  late String picAddress;
+  late double value;
+  late Color colorGauge;
+  NormalGauges({super.key, required this.picAddress, required this.colorGauge,required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +36,8 @@ class NormalGauges extends StatelessWidget {
                 maximum: 100,
                 showLabels: false,
                 showTicks: false,
-                startAngle: 270,
+                startAngle: -90,
+                endAngle: -90,
                 annotations: <GaugeAnnotation>[
                   GaugeAnnotation(
                       widget: Container(
@@ -43,18 +47,17 @@ class NormalGauges extends StatelessWidget {
                     ),
                   ))
                 ],
-                endAngle: -442,
-                axisLineStyle: AxisLineStyle(
+                axisLineStyle: const AxisLineStyle(
                   thickness: 0.05,
                   color: Colors.white,
                   thicknessUnit: GaugeSizeUnit.factor,
                 ),
                 pointers: <GaugePointer>[
                   RangePointer(
-                    color: Colors.purple,
+                    color: colorGauge,
                     cornerStyle: CornerStyle.bothCurve,
                     enableAnimation: true,
-                    value: 40,
+                    value: value,
                     width: 0.1,
                     sizeUnit: GaugeSizeUnit.factor,
                   )

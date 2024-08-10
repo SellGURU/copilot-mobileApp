@@ -51,7 +51,7 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                     height: 50,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 8),
+                          horizontal: 18, vertical: 8),
                       child: Row(
                         children: [
                           Text(
@@ -233,7 +233,7 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                   color: Colors.grey.withOpacity(0.3),
                   blurRadius: 8,
                   spreadRadius: 1,
-                  offset: Offset(0, 3),
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),
@@ -242,32 +242,54 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
               children: [
                 Column(
                   children: [
-                    NormalGauges(),
-                    SizedBox(height: 10,),
-                    NormalGauges()
+                    NormalGauges(
+                      picAddress: "assets/apple.svg",
+                      value: 50,
+                      colorGauge: Colors.pinkAccent,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    NormalGauges(
+                      picAddress: "assets/apple.svg",
+                      value: 50,
+                      colorGauge: Colors.pinkAccent,
+                    )
                   ],
                 ),
-                 Container(
-                   width: size.width*.6,
-                   child: const Column(
+                Container(
+                  width: size.width * .6,
+                  child: const Column(
                     children: [
                       Text(
                         'Total Score',
-                        style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                       SizedBox(height: 8),
                       Text(
                         '68%',
-                        style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 32, fontWeight: FontWeight.bold),
                       ),
                     ],
-                                   ),
-                 ),
+                  ),
+                ),
                 Column(
                   children: [
-                    NormalGauges(),
-                    SizedBox(height: 10,),
-                    NormalGauges()
+                    NormalGauges(
+                      picAddress: "assets/apple.svg",
+                      value: 50,
+                      colorGauge: Colors.pinkAccent,
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    NormalGauges(
+                      picAddress: "assets/apple.svg",
+                      value: 50,
+                      colorGauge: Colors.pinkAccent,
+                    )
                   ],
                 ),
               ],
@@ -275,49 +297,56 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
           ),
           SizedBox(height: 16),
           Expanded(
-
             child: ListView(
               children: [
-                SizedBox(height: 15,),
+                SizedBox(
+                  height: 15,
+                ),
                 buildHealthCard(
                   'Level up your aerobic workouts',
                   '5 days per week, 30 minutes minimum',
                   'Vary the duration or intensity ',
                   'assets/gym.png',
                 ),
-                SizedBox(height: 15,),
+                SizedBox(
+                  height: 15,
+                ),
                 buildHealthCard(
                   'Embrace a Diet Rich in Fiber',
                   'To be consumed about 25gr per days',
                   'Embrace a diet rich in fiber',
                   'assets/gym.png',
                 ),
-                SizedBox(height: 15,),
-
+                SizedBox(
+                  height: 15,
+                ),
                 buildHealthCard(
                   'Practice Yoga or Meditation',
                   '5 days per week, 30 minutes minimum',
                   'Practice stress-reduction',
                   'assets/gym.png',
                 ),
-                SizedBox(height: 15,),
-
+                SizedBox(
+                  height: 15,
+                ),
                 buildHealthCard(
                   'Sleep of 7-9 Hours per Night',
                   'Ensure adequate sleep of 7-9 hours per night',
                   'Sleep between 7pm and 5am',
                   'assets/gym.png',
                 ),
-                SizedBox(height: 15,),
-
+                SizedBox(
+                  height: 15,
+                ),
                 buildHealthCard(
                   'Add Antioxidants to Your Diet',
                   'Include these foods in your diet regularly',
                   'Add antioxidants to your diet',
                   'assets/gym.png',
                 ),
-                SizedBox(height: 15,),
-
+                SizedBox(
+                  height: 15,
+                ),
               ],
             ),
           ),
@@ -341,10 +370,9 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
               blurRadius: 5,
               offset: const Offset(1, 1), // changes position of shadow
             ),
-        ]
-      ),
+          ]),
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 8),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
