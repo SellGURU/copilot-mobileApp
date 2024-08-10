@@ -1,9 +1,12 @@
+import 'package:accordion/accordion.dart';
+import 'package:accordion/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../components/text_style.dart';
 import '../../res/colors.dart';
+import '../../widgets/accordion.dart';
 
 class CholesterolScreen extends StatefulWidget {
   @override
@@ -13,6 +16,17 @@ class CholesterolScreen extends StatefulWidget {
 class _CholesterolScreenState extends State<CholesterolScreen> {
   var indexItem = 0;
   var toggleHistoryMod = "History";
+  var sections = [
+    {
+      'headerText': 'Header 1',
+      'contentText': 'Content for the first section.',
+    },
+    {
+      'headerText': 'Header 2',
+      'contentText': 'Content for the second section.',
+    },
+    // Add more sections as needed
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +48,8 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                           color: Colors.grey.withOpacity(.1),
                           spreadRadius: 2,
                           blurRadius: 2,
-                          offset: const Offset(0, 1), // changes position of shadow
+                          offset:
+                              const Offset(0, 1), // changes position of shadow
                         ),
                       ]),
                   child: Row(
@@ -223,11 +238,17 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                               width: 30,
                               height: 30,
                               padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(borderRadius: BorderRadius.circular(99),color: AppColors.yellowBega,),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(99),
+                                color: AppColors.yellowBega,
+                              ),
                               child: SvgPicture.asset("assets/ldIcon.svg"),
                             ),
-                           const SizedBox(width: 10,),
-                            Text('LDL Cholesterol', style: AppTextStyles.title1),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Text('LDL Cholesterol',
+                                style: AppTextStyles.title1),
                           ],
                         ),
                         const SizedBox(height: 10),
@@ -342,56 +363,9 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                 const SizedBox(
                   height: 15,
                 ),
-                // Further information sections
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  color: AppColors.mainBg,
-                  child:  Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'What Borderline LDL Cholesterol means for your health?',
-                          style: AppTextStyles.title2
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
-                          style: AppTextStyles.hintBlack
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  color: AppColors.mainBg,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'What your body says',
-                          style:AppTextStyles.title2
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
-                          style: AppTextStyles.hintBlack
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                DynamicAccordion(
+                  sections: sections,
+                )
               ],
             ),
           ),

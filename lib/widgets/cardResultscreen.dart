@@ -64,8 +64,8 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                     children: [
                       Container(
                         padding:
-                            EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                        decoration: BoxDecoration(
+                            const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+                        decoration:const  BoxDecoration(
                             color: AppColors.yellowBegaDarker,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(15))),
@@ -79,10 +79,10 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                       Row(
                         children: [
                           SvgPicture.asset('assets/dangerIcon.svg'),
-                          SizedBox(
+                          const SizedBox(
                             width: 5,
                           ),
-                          Text(
+                          const Text(
                             "Need to work",
                             style: TextStyle(
                                 color: AppColors.yellowBegaDarker,
@@ -95,7 +95,7 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                   )
                 ],
               ),
-              SizedBox(
+             const  SizedBox(
                 height: 15,
               ),
               Row(
@@ -146,17 +146,17 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                           ],
                         )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                     ],
                   )
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 15,
               ),
-              state.switchValue ? Chart():const SizedBox()
+              state.switchValue ? Chart() : const SizedBox()
             ],
           ),
         );

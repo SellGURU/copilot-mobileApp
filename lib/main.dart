@@ -13,7 +13,7 @@ import 'package:test_copilet/route/routes.dart';
 import 'package:test_copilet/screens/CholesterolScreen/CholesterolScreen.dart';
 import 'package:test_copilet/screens/home/home.dart';
 import 'package:test_copilet/screens/login/login.dart';
-import 'package:test_copilet/screens/news/news.dart';
+import 'package:test_copilet/screens/CholesterolScreen/LDLChart.dart';
 import 'package:test_copilet/screens/plan/planScreen.dart';
 import 'package:test_copilet/screens/result/result.dart';
 import 'package:test_copilet/screens/setting/settingPage.dart';
@@ -23,7 +23,7 @@ import 'package:test_copilet/utility/changeScreanBloc/PageIndex_states.dart';
 import 'package:test_copilet/utility/switchValueBloc/PageIndex_Bloc.dart';
 import 'package:test_copilet/utility/token/clearToken.dart';
 import 'package:test_copilet/utility/token/getTokenLocaly.dart';
-import 'package:test_copilet/widgets/acardion.dart';
+import 'package:test_copilet/widgets/accordion.dart';
 import 'package:test_copilet/widgets/bottomNavigationBar.dart';
 
 import 'components/text_style.dart';
@@ -89,7 +89,7 @@ class _MyAppState extends State<MyApp> {
                                   const ResultScreen(),
                                   SizedBox(),
                                   HealthPlanScreen(),
-                                  AccordionPage()
+                                  SizedBox()
                                 ],
                               );
                             },
