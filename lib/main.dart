@@ -9,6 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:test_copilet/res/colors.dart';
+import 'package:test_copilet/route/names.dart';
 import 'package:test_copilet/route/routes.dart';
 import 'package:test_copilet/screens/CholesterolScreen/CholesterolScreen.dart';
 import 'package:test_copilet/screens/Detailed%20Plan/detailedPlan.dart';
@@ -24,14 +25,17 @@ import 'package:test_copilet/utility/changeScreanBloc/PageIndex_states.dart';
 import 'package:test_copilet/utility/switchValueBloc/PageIndex_Bloc.dart';
 import 'package:test_copilet/utility/token/clearToken.dart';
 import 'package:test_copilet/utility/token/getTokenLocaly.dart';
+import 'package:test_copilet/utility/token/updateToken.dart';
 import 'package:test_copilet/widgets/accordion.dart';
 import 'package:test_copilet/widgets/bottomNavigationBar.dart';
 
 import 'components/text_style.dart';
 
-void main() {
+void  main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  clearToken();
+  // clearToken();
+  await UpdateToken("token");
+
   runApp(const MyApp());
 }
 
@@ -47,61 +51,11 @@ class _MyAppState extends State<MyApp> {
   bool contishen = true;
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-
     return MaterialApp(
       title: 'copilot demo',
       debugShowCheckedModeBanner: false,
+      initialRoute: ScreenNames.root,
       routes: routes,
-      home: FutureBuilder<String?>(
-            future: getTokenLocally(),
-            builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
-              // if (snapshot.connectionState == ConnectionState.waiting) {
-              if (false) {
-                return const Center(
-                    child: Scaffold(
-                  body: CircularProgressIndicator(),
-                ));
-              // } else if (snapshot.hasError) {
-              } else if (false) {
-                print("$snapshot.error");
-                return Center(child: Text('Error: ${snapshot.error}'));
-              } else {
-                String? token = snapshot.data;
-                print("token $token");
-                // if (token == null) {
-                if (false) {
-                  return LoginPage();
-                } else {
-                  return MultiBlocProvider(
-                    providers: [
-                      BlocProvider(create: (_) => PageIndexBloc()),
-                      BlocProvider(create: (_) => SwitchValueGraphBloc())
-                    ],
-                    child: Scaffold(
-                        backgroundColor: Colors.white,
-                        body: SafeArea(
-                          child: BlocBuilder<PageIndexBloc, PageIndexState>(
-                            builder: (context, state) {
-                              return IndexedStack(
-                                index: state.pageIndex,
-                                children: [
-                                  const HomeScreen(),
-                                  const ResultScreen(),
-                                  SizedBox(),
-                                  HealthPlanScreen(),
-                                  detailedPlan()
-                                ],
-                              );
-                            },
-                          ),
-                        ),
-                        bottomNavigationBar: BottomNavigationBarCustom()),
-                  );
-                }
-              }
-            }),
-
     );
   }
 }

@@ -19,6 +19,8 @@ class _LoginPageState extends State<LoginPage> {
 
   // TODO: need validation form
   Future<void> _handleLogin(BuildContext context) async {
+    print("login handler");
+    if (_userNameController.value.text.isEmpty) return;
     try {
       String token = await getTokenHttp(
           _userNameController.value.text, _passwordController.value.text);
@@ -44,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    return new Scaffold(
+    return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(

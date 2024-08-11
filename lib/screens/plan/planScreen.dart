@@ -4,9 +4,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:test_copilet/components/text_style.dart';
 
 import '../../res/colors.dart';
+import '../../route/names.dart';
 import '../../widgets/gauges.dart';
 import '../../widgets/normal-Gauges.dart';
 import '../../widgets/totalScoreGauge.dart';
+import '../Detailed Plan/detailedPlan.dart';
 
 class HealthPlanScreen extends StatefulWidget {
   @override
@@ -349,7 +351,7 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
   Widget buildHealthCard(
       String title, String subtitle, String description, String imagePath) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, "/detailedPlan"),
+      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder:(context)=>detailedPlan()) ),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 5),
         decoration: BoxDecoration(
