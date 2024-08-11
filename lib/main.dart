@@ -1,4 +1,3 @@
-
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,6 +15,7 @@ import 'package:test_copilet/screens/Detailed%20Plan/detailedPlan.dart';
 import 'package:test_copilet/screens/home/home.dart';
 import 'package:test_copilet/screens/login/login.dart';
 import 'package:test_copilet/screens/CholesterolScreen/LDLChart.dart';
+import 'package:test_copilet/screens/mainScreen/mainScreen.dart';
 import 'package:test_copilet/screens/plan/planScreen.dart';
 import 'package:test_copilet/screens/result/result.dart';
 import 'package:test_copilet/screens/setting/settingPage.dart';
@@ -31,7 +31,7 @@ import 'package:test_copilet/widgets/bottomNavigationBar.dart';
 
 import 'components/text_style.dart';
 
-void  main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // clearToken();
   await UpdateToken("token");
@@ -54,8 +54,15 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'copilot demo',
       debugShowCheckedModeBanner: false,
-      initialRoute: ScreenNames.root,
+      // initialRoute: ScreenNames.root,
       routes: routes,
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => PageIndexBloc()),
+          BlocProvider(create: (_) => SwitchValueGraphBloc())
+        ],
+        child: Mainscreen(),
+      ),
     );
   }
 }
