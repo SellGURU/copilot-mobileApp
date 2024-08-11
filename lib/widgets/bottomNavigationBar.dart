@@ -1,6 +1,8 @@
 
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:test_copilet/utility/changeScreanBloc/PageIndex_Bloc.dart';
@@ -25,7 +27,9 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
     var size = MediaQuery.of(context).size;
     return StyleProvider(
       style: Style(),
+
       child: ConvexAppBar(
+        shadowColor: Color.fromRGBO(153, 171, 198, 0.18),
         onTap: (index) => setState(() {
           setState(() {
             pageIndex = index;
@@ -79,16 +83,10 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
               height: (size.height),
               decoration: BoxDecoration(
                   color: AppColors.iconPurpleDark,
-                  borderRadius: BorderRadius.circular(99)),
+                  borderRadius: BorderRadius.circular(99),
+                boxShadow: [BoxShadow(color: Color.fromRGBO(97, 62, 234, 0.5),offset: Offset(0,4),blurRadius: 12)]
+              ),
               child: Image.asset("assets/codie.png"),
-              // child: SvgPicture.asset("assets/codie.svg",
-              //     width: 5,
-              //     height: 5,
-              //     colorFilter: pageIndex == 1
-              //         ? const ColorFilter.mode(
-              //             AppColors.purpleDark, BlendMode.srcIn)
-              //         : const ColorFilter.mode(
-              //             AppColors.textLite, BlendMode.srcIn)),
             ),
           ),
           TabItem(
@@ -99,9 +97,10 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                 child: SvgPicture.asset("assets/planIcon.svg",
                     width: 5,
                     height: 5,
+                    alignment:Alignment.center ,
                     colorFilter: pageIndex == 3
                         ? const ColorFilter.mode(
-                            AppColors.purpleDark, BlendMode.srcIn)
+                            AppColors.purpleDark, BlendMode.plus)
                         : const ColorFilter.mode(
                             AppColors.textLite, BlendMode.srcIn)),
               )),

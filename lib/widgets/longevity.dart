@@ -31,7 +31,7 @@ class _LongevityState extends State<Longevity> {
                       color: Colors.grey.withOpacity(.1),
                       spreadRadius: 1,
                       blurRadius: 5,
-                      offset: const Offset(0, 2), // changes position of shadow
+                      offset: const Offset(3, 0), // changes position of shadow
                     ),
                   ]),
               child: Padding(
@@ -77,7 +77,7 @@ class _LongevityState extends State<Longevity> {
                 ),
               ),
             ),
-            const SizedBox(height: 5,),
+            const SizedBox(height: 10,),
             Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
@@ -119,7 +119,7 @@ class _LongevityState extends State<Longevity> {
                           style: AppTextStyles.hintSmale,
                         ),
                         Container(
-                          decoration: BoxDecoration(color: AppColors.yellowBega,borderRadius: BorderRadius.circular(20)),
+                          decoration: BoxDecoration(color: AppColors.yellowBega.withOpacity(.2),borderRadius: BorderRadius.circular(20)),
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 5,top: 5,left: 12,right: 12),
                             child: Text("${"56"}/100",style: AppTextStyles.gradeYellow,),
@@ -133,7 +133,7 @@ class _LongevityState extends State<Longevity> {
                 ),
               ),
             ),
-            const SizedBox(height: 5,),
+            const SizedBox(height: 10,),
             Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
@@ -189,7 +189,7 @@ class _LongevityState extends State<Longevity> {
                 ),
               ),
             ),
-            const SizedBox(height: 5,),
+            const SizedBox(height: 10,),
             Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),

@@ -71,47 +71,6 @@ class HomeScreen extends StatelessWidget {
                 const SizedBox(
                   height: 30,
                 ),
-                // Container(
-                //   padding: const EdgeInsets.all(12),
-                //   decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                //     BoxShadow(
-                //       color: Colors.grey.withOpacity(.1),
-                //       spreadRadius: 5,
-                //       blurRadius: 5,
-                //       offset: const Offset(0, 1), // changes position of shadow
-                //     ),
-                //   ]),
-                //   child: const Row(
-                //     children: [
-                //       Row(
-                //         children: [
-                //           Gauges(),
-                //           SizedBox(
-                //             width: 10,
-                //           ),
-                //           Gauges(),
-                //         ],
-                //       ),
-                //       SizedBox(
-                //         width: 150,
-                //         child: Center(child: Text("data")),
-                //       ),
-                //       Row(
-                //         children: [
-                //           Gauges(),
-                //           SizedBox(
-                //             width: 10,
-                //           ),
-                //           Gauges(),
-                //         ],
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                const SizedBox(
-                  height: 30,
-                ),
-                // AppTextField(lable: 'search', hint: 'search', controller: _controllerSearch,icon: const Icon(Icons.search),),
                 const Longevity(),
                 Container(
                   padding: const EdgeInsets.only(top: 20, bottom: 10),

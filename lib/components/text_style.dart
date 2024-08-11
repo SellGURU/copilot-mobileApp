@@ -20,6 +20,6 @@ class AppTextStyles {
   static TextStyle hintSmale = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 10, color: AppColors.textLite));
   static TextStyle gradeGreen = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 11,fontWeight: FontWeight.w500, color: AppColors.greenBega));
   static TextStyle gradeRed = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 11,fontWeight: FontWeight.w500, color: Colors.red));
-  static TextStyle gradeYellow = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 11,fontWeight: FontWeight.w500, color: Color.fromRGBO(255, 228, 94, 1)));
+  static TextStyle gradeYellow = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 11,fontWeight: FontWeight.w500, color: Color.fromARGB(255,255, 228, 94)));
 
 }

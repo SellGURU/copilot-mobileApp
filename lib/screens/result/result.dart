@@ -310,6 +310,9 @@ class _ResultScreenState extends State<ResultScreen> {
               onTap: () => Navigator.pushReplacementNamed(context, "/ldl"),
               child: Cardresultscreen(),
             ),
+            const SizedBox(
+              height: 40,
+            ),
           ],
         ),
       ),

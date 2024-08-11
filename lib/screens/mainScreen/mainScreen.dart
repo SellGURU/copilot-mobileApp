@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:test_copilet/res/colors.dart';
 
 import '../../utility/changeScreanBloc/PageIndex_Bloc.dart';
 import '../../utility/changeScreanBloc/PageIndex_states.dart';
@@ -24,12 +25,15 @@ class Mainscreen extends StatefulWidget {
 
 class _MainscreenState extends State<Mainscreen> {
   final GlobalKey<NavigatorState> _healthPlanScreenKey = GlobalKey();
-
+  final GlobalKey<NavigatorState> _resultScreenKey = GlobalKey();
 
   // override the back btn
   Future<bool> _onWillPop() async {
-    if (_healthPlanScreenKey.currentState!.canPop()){
+    if (_healthPlanScreenKey.currentState!.canPop()) {
       _healthPlanScreenKey.currentState!.pop();
+    }
+    if (_resultScreenKey.currentState!.canPop()) {
+      _resultScreenKey.currentState!.pop();
     }
 
     return false;
@@ -37,7 +41,7 @@ class _MainscreenState extends State<Mainscreen> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+
     return FutureBuilder<String?>(
         future: getTokenLocally(),
         builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
@@ -62,29 +66,26 @@ class _MainscreenState extends State<Mainscreen> {
               return WillPopScope(
                 onWillPop: _onWillPop,
                 child: Scaffold(
-                    backgroundColor: Colors.white,
+                    backgroundColor: AppColors.bgScreen,
                     body: SafeArea(
                       child: BlocBuilder<PageIndexBloc, PageIndexState>(
                         builder: (context, state) {
-                          // setState(() {
-                          //   pageIndexSelect=state.pageIndex;
-                          // });
-                          // print(pageIndexSelect);
-                
                           return IndexedStack(
                             index: state.pageIndex,
                             children: [
                               const HomeScreen(),
                               Navigator(
-                                key: _healthPlanScreenKey,
-                                onGenerateRoute: (settings) => MaterialPageRoute(
+                                key: _resultScreenKey,
+                                onGenerateRoute: (settings) =>
+                                    MaterialPageRoute(
                                   builder: (context) => const ResultScreen(),
                                 ),
                               ),
                               SizedBox(),
                               Navigator(
                                 key: _healthPlanScreenKey,
-                                onGenerateRoute: (settings) => MaterialPageRoute(
+                                onGenerateRoute: (settings) =>
+                                    MaterialPageRoute(
                                   builder: (context) => HealthPlanScreen(),
                                 ),
                               ),

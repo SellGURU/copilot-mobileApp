@@ -61,7 +61,7 @@ class _MyAppState extends State<MyApp> {
           BlocProvider(create: (_) => PageIndexBloc()),
           BlocProvider(create: (_) => SwitchValueGraphBloc())
         ],
-        child: Mainscreen(),
+        child: const Mainscreen(),
       ),
     );
   }
