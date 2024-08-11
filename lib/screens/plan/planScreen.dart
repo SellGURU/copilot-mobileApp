@@ -247,16 +247,16 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                   children: [
                     NormalGauges(
                       picAddress: "assets/apple.svg",
-                      value: 40,
-                      colorGauge: Colors.pinkAccent,
+                      value: 80,
+                      colorGauge: AppColors.greenBorder,
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     NormalGauges(
-                      picAddress: "assets/apple.svg",
+                      picAddress: "assets/mind-pink.svg",
                       value: 40,
-                      colorGauge: Colors.pinkAccent,
+                      colorGauge: AppColors.pinkBorder,
                     )
                   ],
                 ),
@@ -264,24 +264,24 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                   width: size.width * .5,
                   // height: size.height * .1,
                   child: Totalscoregauge(
-                    colorGauge: AppColors.purpleDark,
-                    value: 49,
+                    colorGauge:AppColors.pinkBorder,
+                    value: 25,
                   ),
                 ),
                 Column(
                   children: [
                     NormalGauges(
-                      picAddress: "assets/apple.svg",
+                      picAddress: "assets/weight-yellow.svg",
                       value: 40,
-                      colorGauge: Colors.pinkAccent,
+                      colorGauge: AppColors.redBorder,
                     ),
                     SizedBox(
                       height: 10,
                     ),
                     NormalGauges(
-                      picAddress: "assets/apple.svg",
-                      value: 40,
-                      colorGauge: Colors.pinkAccent,
+                      picAddress: "assets/moon.svg",
+                      value: 60,
+                      colorGauge: AppColors.blueBorder,
                     )
                   ],
                 ),

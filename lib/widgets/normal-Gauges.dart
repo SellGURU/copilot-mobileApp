@@ -29,7 +29,7 @@ class NormalGauges extends StatelessWidget {
                 ),
               ]),
           child: Padding(
-            padding: const EdgeInsets.all(5.0),
+            padding: const EdgeInsets.all(0.0),
             child: SfRadialGauge(axes: <RadialAxis>[
               RadialAxis(
                 minimum: 0,
@@ -42,13 +42,13 @@ class NormalGauges extends StatelessWidget {
                   GaugeAnnotation(
                       widget: Container(
                     child: SvgPicture.asset(
-                      'assets/apple.svg',
+                      picAddress,
                       width: 20,
                     ),
                   ))
                 ],
                 axisLineStyle: const AxisLineStyle(
-                  thickness: 0.05,
+                  thickness: 0,
                   color: Colors.white,
                   thicknessUnit: GaugeSizeUnit.factor,
                 ),
@@ -58,7 +58,7 @@ class NormalGauges extends StatelessWidget {
                     cornerStyle: CornerStyle.bothCurve,
                     enableAnimation: true,
                     value: value,
-                    width: 0.1,
+                    width: 0.15,
                     sizeUnit: GaugeSizeUnit.factor,
                   )
                 ],

@@ -19,4 +19,9 @@ class AppColors {
   static const Color shadowColor = Color.fromARGB(153, 171, 198, 100);
   static const Color brandSecondaryColor = Color.fromARGB(255, 147, 129, 255);
   static const Color gray = Color.fromRGBO(245, 247, 250, 1);
+  static const Color greenBorder = Color.fromRGBO(152, 245, 225, 1);
+  static const Color pinkBorder = Color.fromRGBO(161, 163, 246, 1);
+  static const Color redBorder = Color.fromRGBO(238, 193, 193, 1);
+  static const Color blueBorder = Color.fromRGBO(166, 208, 238, 1);
+
 }
