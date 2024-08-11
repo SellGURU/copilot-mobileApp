@@ -24,22 +24,13 @@ class Mainscreen extends StatefulWidget {
 
 class _MainscreenState extends State<Mainscreen> {
   final GlobalKey<NavigatorState> _healthPlanScreenKey = GlobalKey();
-  var pageIndexSelect;
 
-  // map[0] => _homeKey
-  // map[1] => _basketKey
-  // map[2] => _profileKey
 
+  // override the back btn
   Future<bool> _onWillPop() async {
-    print(pageIndexSelect);
-    // if (map[selectedIndex]!.currentState!.canPop()) {
-    //   map[selectedIndex]!.currentState!.pop();
-    // } else if (_routeHistory.length > 1) {
-    //   setState(() {
-    //     _routeHistory.removeLast();
-    //     selectedIndex = _routeHistory.last;
-    //   });
-    // }
+    if (_healthPlanScreenKey.currentState!.canPop()){
+      _healthPlanScreenKey.currentState!.pop();
+    }
 
     return false;
   }
@@ -67,35 +58,44 @@ class _MainscreenState extends State<Mainscreen> {
               // if (false) {
               return LoginPage();
             } else {
-              return Scaffold(
-                  backgroundColor: Colors.white,
-                  body: SafeArea(
-                    child: BlocBuilder<PageIndexBloc, PageIndexState>(
-                      builder: (context, state) {
-                        // setState(() {
-                        //   pageIndexSelect=state.pageIndex;
-                        // });
-                        // print(pageIndexSelect);
-
-                        return IndexedStack(
-                          index: state.pageIndex,
-                          children: [
-                            const HomeScreen(),
-                            const ResultScreen(),
-                            SizedBox(),
-                            Navigator(
-                              key: _healthPlanScreenKey,
-                              onGenerateRoute: (settings) => MaterialPageRoute(
-                                builder: (context) => HealthPlanScreen(),
+              // TODO: replace with new version of widget
+              return WillPopScope(
+                onWillPop: _onWillPop,
+                child: Scaffold(
+                    backgroundColor: Colors.white,
+                    body: SafeArea(
+                      child: BlocBuilder<PageIndexBloc, PageIndexState>(
+                        builder: (context, state) {
+                          // setState(() {
+                          //   pageIndexSelect=state.pageIndex;
+                          // });
+                          // print(pageIndexSelect);
+                
+                          return IndexedStack(
+                            index: state.pageIndex,
+                            children: [
+                              const HomeScreen(),
+                              Navigator(
+                                key: _healthPlanScreenKey,
+                                onGenerateRoute: (settings) => MaterialPageRoute(
+                                  builder: (context) => const ResultScreen(),
+                                ),
                               ),
-                            ),
-                            detailedPlan()
-                          ],
-                        );
-                      },
+                              SizedBox(),
+                              Navigator(
+                                key: _healthPlanScreenKey,
+                                onGenerateRoute: (settings) => MaterialPageRoute(
+                                  builder: (context) => HealthPlanScreen(),
+                                ),
+                              ),
+                              detailedPlan()
+                            ],
+                          );
+                        },
+                      ),
                     ),
-                  ),
-                  bottomNavigationBar: BottomNavigationBarCustom());
+                    bottomNavigationBar: BottomNavigationBarCustom()),
+              );
             }
           }
         });

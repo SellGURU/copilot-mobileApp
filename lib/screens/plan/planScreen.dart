@@ -21,7 +21,7 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding:  EdgeInsets.symmetric(vertical: size.height*.03, horizontal: 20),
       child: Column(
         children: [
           Container(

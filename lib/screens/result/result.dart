@@ -9,6 +9,7 @@ import '../../utility/switchValueBloc/PageIndex_Bloc.dart';
 import '../../utility/switchValueBloc/PageIndex_events.dart';
 import '../../utility/switchValueBloc/PageIndex_states.dart';
 import '../../widgets/cardResultscreen.dart';
+import '../CholesterolScreen/CholesterolScreen.dart';
 
 class ResultScreen extends StatefulWidget {
   const ResultScreen({super.key});
@@ -27,7 +28,7 @@ class _ResultScreenState extends State<ResultScreen> {
     return SingleChildScrollView(
       child: Container(
         margin: EdgeInsets.only(top: size.height*.02),
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
         child: Column(
           children: [
             Row(
@@ -278,28 +279,28 @@ class _ResultScreenState extends State<ResultScreen> {
               height: 20,
             ),
             GestureDetector(
-              onTap: () => Navigator.pushNamed(context, "/ldl"),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CholesterolScreen())),
               child: Cardresultscreen(),
             ),
             const SizedBox(
               height: 20,
             ),
             GestureDetector(
-              onTap: () => Navigator.pushNamed(context, "/ldl"),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CholesterolScreen())),
               child: Cardresultscreen(),
             ),
             const SizedBox(
               height: 20,
             ),
             GestureDetector(
-              onTap: () => Navigator.pushNamed(context, "/ldl"),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CholesterolScreen())),
               child: Cardresultscreen(),
             ),
             const SizedBox(
               height: 20,
             ),
             GestureDetector(
-              onTap: () => Navigator.pushNamed(context, "/ldl"),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CholesterolScreen())),
               child: Cardresultscreen(),
             ),
             const SizedBox(
