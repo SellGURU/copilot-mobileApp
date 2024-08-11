@@ -23,8 +23,10 @@ class _ResultScreenState extends State<ResultScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var size=MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Container(
+        margin: EdgeInsets.only(top: size.height*.02),
         padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
         child: Column(
           children: [
@@ -84,10 +86,10 @@ class _ResultScreenState extends State<ResultScreen> {
                             ? AppColors.purpleDark
                             : Colors.white,
                       ),
-                      height: 50,
+                      height: 40,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 12.0, vertical: 8),
+                            horizontal: 9.0, vertical: 8),
                         child: Row(
                           children: [
                             SvgPicture.asset("assets/drops.svg",
@@ -123,10 +125,10 @@ class _ResultScreenState extends State<ResultScreen> {
                             ? AppColors.purpleDark
                             : Colors.white,
                       ),
-                      height: 50,
+                      height: 40,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 12.0, vertical: 8),
+                            horizontal: 9.0, vertical: 8),
                         child: Row(
                           children: [
                             SvgPicture.asset("assets/weight.svg",
@@ -162,10 +164,10 @@ class _ResultScreenState extends State<ResultScreen> {
                             ? AppColors.purpleDark
                             : Colors.white,
                       ),
-                      height: 50,
+                      height: 40,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 12.0, vertical: 8),
+                            horizontal: 9.0, vertical: 8),
                         child: Row(
                           children: [
                             SvgPicture.asset("assets/dna.svg",
@@ -201,10 +203,10 @@ class _ResultScreenState extends State<ResultScreen> {
                             ? AppColors.purpleDark
                             : Colors.white,
                       ),
-                      height: 50,
+                      height: 40,
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 12.0, vertical: 8),
+                            horizontal: 9.0, vertical: 8),
                         child: Row(
                           children: [
                             SvgPicture.asset("assets/monitor.svg",

@@ -51,7 +51,7 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                       color:
                           indexItem == 0 ? AppColors.purpleDark : Colors.white,
                     ),
-                    height: 50,
+                    height: 40,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 18, vertical: 8),
@@ -80,10 +80,10 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                       color:
                           indexItem == 1 ? AppColors.purpleDark : Colors.white,
                     ),
-                    height: 50,
+                    height: 40,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 8),
+                          horizontal: 9.0, vertical: 8),
                       child: Row(
                         children: [
                           SvgPicture.asset("assets/weight.svg",
@@ -118,10 +118,10 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                       color:
                           indexItem == 2 ? AppColors.purpleDark : Colors.white,
                     ),
-                    height: 50,
+                    height: 40,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 8),
+                          horizontal: 9.0, vertical: 8),
                       child: Row(
                         children: [
                           SvgPicture.asset("assets/dna.svg",
@@ -156,10 +156,10 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                       color:
                           indexItem == 3 ? AppColors.purpleDark : Colors.white,
                     ),
-                    height: 50,
+                    height: 40,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 8),
+                          horizontal: 9.0, vertical: 8),
                       child: Row(
                         children: [
                           SvgPicture.asset("assets/monitor.svg",
@@ -194,10 +194,10 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                       color:
                           indexItem == 4 ? AppColors.purpleDark : Colors.white,
                     ),
-                    height: 50,
+                    height: 40,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 5.0, vertical: 8),
+                          horizontal: 9.0, vertical: 8),
                       child: Row(
                         children: [
                           SvgPicture.asset("assets/monitor.svg",
@@ -247,7 +247,7 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                   children: [
                     NormalGauges(
                       picAddress: "assets/apple.svg",
-                      value: 50,
+                      value: 40,
                       colorGauge: Colors.pinkAccent,
                     ),
                     const SizedBox(
@@ -255,7 +255,7 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                     ),
                     NormalGauges(
                       picAddress: "assets/apple.svg",
-                      value: 50,
+                      value: 40,
                       colorGauge: Colors.pinkAccent,
                     )
                   ],
@@ -272,7 +272,7 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                   children: [
                     NormalGauges(
                       picAddress: "assets/apple.svg",
-                      value: 50,
+                      value: 40,
                       colorGauge: Colors.pinkAccent,
                     ),
                     SizedBox(
@@ -280,7 +280,7 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
                     ),
                     NormalGauges(
                       picAddress: "assets/apple.svg",
-                      value: 50,
+                      value: 40,
                       colorGauge: Colors.pinkAccent,
                     )
                   ],
