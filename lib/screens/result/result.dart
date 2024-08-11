@@ -280,35 +280,35 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
             GestureDetector(
               onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CholesterolScreen())),
-              child: Cardresultscreen(),
+              child: Cardresultscreen(colorBadge: AppColors.greenBega, badgeText: 'Normal', title: 'Ldl cholesterol ',),
             ),
             const SizedBox(
               height: 20,
             ),
             GestureDetector(
               onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CholesterolScreen())),
-              child: Cardresultscreen(),
+              child: Cardresultscreen(colorBadge: AppColors.yellowBegaDarker, badgeText: 'Borderline', title: 'Ldl cholesterol ',),
             ),
             const SizedBox(
               height: 20,
             ),
             GestureDetector(
               onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CholesterolScreen())),
-              child: Cardresultscreen(),
+              child: Cardresultscreen(colorBadge: AppColors.greenBega, badgeText: 'Normal', title: 'Ldl cholesterol ',),
             ),
             const SizedBox(
               height: 20,
             ),
             GestureDetector(
               onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CholesterolScreen())),
-              child: Cardresultscreen(),
+              child: Cardresultscreen(colorBadge: AppColors.yellowBegaDarker, badgeText: 'Borderline', title: 'Ldl cholesterol ',),
             ),
             const SizedBox(
               height: 20,
             ),
             GestureDetector(
               onTap: () => Navigator.pushReplacementNamed(context, "/ldl"),
-              child: Cardresultscreen(),
+              child: Cardresultscreen(colorBadge: AppColors.red, badgeText: 'Critical', title: 'Ldl cholesterol ',),
             ),
             const SizedBox(
               height: 40,

@@ -10,15 +10,20 @@ import '../utility/switchValueBloc/PageIndex_Bloc.dart';
 import '../utility/switchValueBloc/PageIndex_states.dart';
 
 class Cardresultscreen extends StatefulWidget {
-  const Cardresultscreen({super.key});
+  late Color colorBadge;
+  late String badgeText;
+  late String title;
+  Cardresultscreen(
+      {super.key,
+      required this.colorBadge,
+      required this.badgeText,
+      required this.title});
 
   @override
   State<Cardresultscreen> createState() => _CardresultscreenState();
 }
 
 class _CardresultscreenState extends State<Cardresultscreen> {
-  String title = "LDL Cholesterol";
-  String badgeText = "Borderline";
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SwitchValueGraphBloc, SwitchValueState>(
@@ -26,9 +31,8 @@ class _CardresultscreenState extends State<Cardresultscreen> {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
           decoration: BoxDecoration(
-              border: Border(
-                  left:
-                      BorderSide(color: AppColors.yellowBegaDarker, width: 3)),
+              border:
+                  Border(left: BorderSide(color: widget.colorBadge, width: 3)),
               borderRadius: BorderRadius.all(Radius.circular(15)),
               color: Colors.white,
               boxShadow: [
@@ -49,11 +53,11 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        title,
+                        widget.title,
                         style: AppTextStyles.title1,
                       ),
                       Text(
-                        title,
+                        widget.title,
                         style: AppTextStyles.hint,
                       ),
                     ],
@@ -63,16 +67,18 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Container(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                        decoration:const  BoxDecoration(
-                            color: AppColors.yellowBegaDarker,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 5),
+                        decoration: BoxDecoration(
+                            color: widget.colorBadge,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(15))),
                         child: Center(
                           child: Text(
-                            badgeText,
-                            style: AppTextStyles.hint,
+                            widget.badgeText,
+                            style: widget.badgeText == "Borderline"
+                                ? AppTextStyles.hint
+                                : AppTextStyles.hintWhite,
                           ),
                         ),
                       ),
@@ -82,10 +88,10 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                           const SizedBox(
                             width: 5,
                           ),
-                          const Text(
+                          Text(
                             "Need to work",
                             style: TextStyle(
-                                color: AppColors.yellowBegaDarker,
+                                color: widget.colorBadge,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 12),
                           )
@@ -95,7 +101,7 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                   )
                 ],
               ),
-             const  SizedBox(
+              const SizedBox(
                 height: 15,
               ),
               Row(
@@ -116,7 +122,7 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                               width: 5,
                             ),
                             Text(
-                              badgeText,
+                              widget.badgeText,
                               style: AppTextStyles.hint,
                             ),
                           ],
