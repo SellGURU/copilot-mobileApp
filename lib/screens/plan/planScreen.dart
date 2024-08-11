@@ -25,15 +25,15 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
       child: Column(
         children: [
           Container(
-            decoration: BoxDecoration(
-                borderRadius: const BorderRadius.all(Radius.circular(15)),
+            decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(15)),
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.grey.withOpacity(.1),
-                    spreadRadius: 2,
-                    blurRadius: 2,
-                    offset: const Offset(0, 1), // changes position of shadow
+                    color: Color.fromRGBO(202, 202, 215, 0.2),
+                    // spreadRadius: 0,
+                    blurRadius: 10,
+                    offset: Offset(4, 0), // changes position of shadow
                   ),
                 ]),
             child: Row(
@@ -354,16 +354,16 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
       onTap: () => Navigator.of(context).push(MaterialPageRoute(builder:(context)=>detailedPlan()) ),
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 5),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.all(Radius.circular(10)),
             boxShadow: [
               BoxShadow(
                 blurStyle: BlurStyle.solid,
-                color: Colors.grey.withOpacity(.2),
-                spreadRadius: 1,
-                blurRadius: 5,
-                offset: const Offset(1, 1), // changes position of shadow
+                color: Color.fromRGBO(202, 202, 215, 0.3),
+                // spreadRadius: 1,
+                blurRadius: 10,
+                offset: Offset(4, 0), // changes position of shadow
               ),
             ]),
         child: Padding(

@@ -86,10 +86,10 @@ class CheckInWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.0),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: Offset(0, 3),
+            color: Color.fromRGBO(202, 202, 215, 0.3),
+            // spreadRadius: 2,
+            blurRadius: 10,
+            offset: Offset(4, 0),
           ),
         ],
       ),
