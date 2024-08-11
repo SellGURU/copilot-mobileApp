@@ -35,12 +35,12 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                   Border(left: BorderSide(color: widget.colorBadge, width: 3)),
               borderRadius: BorderRadius.all(Radius.circular(15)),
               color: Colors.white,
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
-                  color: Colors.grey.withOpacity(.1),
-                  spreadRadius: 2,
-                  blurRadius: 2,
-                  offset: const Offset(3, 1), // changes position of shadow
+                  color: Color.fromRGBO(202, 202, 215, 0.2),
+                  // spreadRadius: 0,
+                  blurRadius: 10,
+                  offset: Offset(4, 0), // changes position of shadow
                 ),
               ]),
           child: Column(

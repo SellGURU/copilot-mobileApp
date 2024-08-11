@@ -30,6 +30,13 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
+      appBar: AppBar(backgroundColor: AppColors.bgScreen,actions: [
+        Text(
+          "LDL Cholesterol",
+          style: AppTextStyles.title1,
+        ),
+      ]),
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
