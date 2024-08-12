@@ -53,7 +53,7 @@ class _MoodState extends State<Mood> {
               ),
             ),
             SizedBox(
-              height: 100,
+              height: 150,
               child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {

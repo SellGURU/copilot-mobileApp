@@ -61,7 +61,7 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15),
+            padding:  EdgeInsets.symmetric(horizontal: 25.0, vertical: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -97,8 +97,8 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                           ),
                           height: 50,
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12.0, vertical: 8),
+                            padding:  EdgeInsets.symmetric(
+                                horizontal:size.height*0.03, vertical: 8),
                             child: Row(
                               children: [
                                 SvgPicture.asset("assets/drops.svg",
@@ -136,8 +136,8 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                           ),
                           height: 50,
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12.0, vertical: 8),
+                            padding:  EdgeInsets.symmetric(
+                                horizontal:size.height*0.03, vertical: 8),
                             child: Row(
                               children: [
                                 SvgPicture.asset("assets/message-question.svg",
@@ -175,8 +175,8 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                           ),
                           height: 50,
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12.0, vertical: 8),
+                            padding:  EdgeInsets.symmetric(
+                                horizontal:size.height*0.03, vertical: 8),
                             child: Row(
                               children: [
                                 SvgPicture.asset("assets/lamp-on.svg",
