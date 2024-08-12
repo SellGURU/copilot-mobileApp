@@ -29,13 +29,33 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+    var size=MediaQuery.of(context).size;
     return Scaffold(
 
-      appBar: AppBar(backgroundColor: AppColors.bgScreen,actions: [
+      appBar: AppBar(
+          backgroundColor: AppColors.bgScreen,actions: [
         Text(
           "LDL Cholesterol",
           style: AppTextStyles.title1,
         ),
+        SizedBox(width: size.width*.45,),
+        Row(
+          children: [
+            SvgPicture.asset(
+              "assets/notificationIcon.svg",
+              width: 25,
+              height: 25,
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            const Icon(
+              Icons.notifications_none_outlined,
+              color: AppColors.purpleDark,
+            ),
+          ],
+        )
+
       ]),
       backgroundColor: Colors.white,
       body: SafeArea(

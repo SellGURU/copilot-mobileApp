@@ -307,7 +307,7 @@ class _ResultScreenState extends State<ResultScreen> {
               height: 20,
             ),
             GestureDetector(
-              onTap: () => Navigator.pushReplacementNamed(context, "/ldl"),
+              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CholesterolScreen())),
               child: Cardresultscreen(colorBadge: AppColors.red, badgeText: 'Critical', title: 'Ldl cholesterol ',),
             ),
             const SizedBox(

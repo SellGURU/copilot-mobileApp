@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:popover/popover.dart';
 import 'package:test_copilet/res/colors.dart';
 
 import '../../utility/changeScreanBloc/PageIndex_Bloc.dart';
@@ -81,7 +82,19 @@ class _MainscreenState extends State<Mainscreen> {
                                   builder: (context) => const ResultScreen(),
                                 ),
                               ),
-                              SizedBox(),
+                              GestureDetector(
+                                child: Center(child: Text("hi")),
+                                onTap: ()=>showPopover(
+                                  context: context,
+                                  bodyBuilder: (context) => const ListItems(),
+                                  onPop: () => print('Popover was popped!'),
+                                  direction: PopoverDirection.top,
+                                  width: 200,
+                                  height: 400,
+                                  arrowHeight: 0,
+                                  arrowWidth: 0,
+                                ),
+                              ),
                               Navigator(
                                 key: _healthPlanScreenKey,
                                 onGenerateRoute: (settings) =>
@@ -100,5 +113,66 @@ class _MainscreenState extends State<Mainscreen> {
             }
           }
         });
+  }
+}
+class ListItems extends StatelessWidget {
+  const ListItems({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: ListView(
+        padding: const EdgeInsets.all(8),
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.of(context)
+                ..pop()
+                ..push(
+                  MaterialPageRoute<SecondRoute>(
+                    builder: (context) => SecondRoute(),
+                  ),
+                );
+            },
+            child: Container(
+              height: 50,
+              color: Colors.amber[100],
+              child: const Center(child: Text('Entry A')),
+            ),
+          ),
+          const Divider(),
+          Container(
+            height: 50,
+            color: Colors.amber[200],
+            child: const Center(child: Text('Entry B')),
+          ),
+          const Divider(),
+          Container(
+            height: 50,
+            color: Colors.amber[300],
+            child: const Center(child: Text('Entry C')),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SecondRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Second Route'),
+        automaticallyImplyLeading: false,
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () => Navigator.pop(context),
+          child: const Text('Go back!'),
+        ),
+      ),
+    );
   }
 }
