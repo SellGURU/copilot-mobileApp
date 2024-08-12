@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:test_copilet/components/text_style.dart';
 
@@ -24,6 +25,36 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
       padding:  EdgeInsets.symmetric(vertical: size.height*.03, horizontal: 20),
       child: Column(
         children: [
+          Row(
+            crossAxisAlignment:CrossAxisAlignment.center ,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "LDL Cholesterol",
+                style: AppTextStyles.title1,
+              ),
+              Row(
+                children: [
+                  SvgPicture.asset(
+                    "assets/notificationIcon.svg",
+                    width: 25,
+                    height: 25,
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  const Icon(
+                    Icons.notifications_none_outlined,
+                    color: AppColors.purpleDark,
+                  ),
+                ],
+              )
+
+            ],
+          ),
+          const SizedBox(
+            height: 30,
+          ),
           Container(
             decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(15)),
