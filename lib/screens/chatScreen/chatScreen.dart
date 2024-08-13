@@ -79,7 +79,10 @@ class _ChatscreenState extends State<Chatscreen> {
                   decoration: InputDecoration(
                     hintStyle: AppTextStyles.hint,
                     hintText: "Ask me anything...",
-                    prefixIcon: const Icon(Icons.access_alarm),
+                    suffixIcon: Icon(
+                      Icons.send,
+                      color: AppColors.purpleDark,
+                    ),
                     border: const OutlineInputBorder(
                         borderSide: BorderSide(
                           color: Colors.transparent,
