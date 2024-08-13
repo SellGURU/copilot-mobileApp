@@ -162,7 +162,7 @@ class _CardresultscreenState extends State<Cardresultscreen> {
               const SizedBox(
                 height: 15,
               ),
-              state.switchValue ? Chart() : const SizedBox()
+              state.switchValue ? ChartDot() : const SizedBox()
             ],
           ),
         );

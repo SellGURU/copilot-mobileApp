@@ -113,7 +113,7 @@ class ItemCard extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            Chart(),
+            ChartDot(),
             // Row(
             //   children:[
             //     LineChart(mainData())

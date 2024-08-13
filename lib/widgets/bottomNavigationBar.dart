@@ -1,4 +1,3 @@
-
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,16 +30,17 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
       child: ConvexAppBar(
         shadowColor: Color.fromRGBO(153, 171, 198, 0.18),
         onTap: (index) => setState(() {
-          if(index!=2) {
+          if (index != 2) {
             setState(() {
               pageIndex = index;
             });
+
             BlocProvider.of<PageIndexBloc>(context).add(UpdatePageIndex(index));
-          }
-          else{
+          } else {
             showPopover(
+
               context: context,
-              bodyBuilder: (context) => const ListItems(),
+              bodyBuilder: (contextBodyBuilder) => ListItems(context1: context),
               onPop: () => print('Popover was popped!'),
               direction: PopoverDirection.bottom,
               width: 600,
@@ -101,8 +101,12 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
               decoration: BoxDecoration(
                   color: AppColors.iconPurpleDark,
                   borderRadius: BorderRadius.circular(99),
-                boxShadow: [BoxShadow(color: Color.fromRGBO(97, 62, 234, 0.5),offset: Offset(0,4),blurRadius: 12)]
-              ),
+                  boxShadow: [
+                    BoxShadow(
+                        color: Color.fromRGBO(97, 62, 234, 0.5),
+                        offset: Offset(0, 4),
+                        blurRadius: 12)
+                  ]),
               child: Image.asset("assets/codie.png"),
             ),
           ),
@@ -114,7 +118,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                 child: SvgPicture.asset("assets/planIcon.svg",
                     width: 5,
                     height: 5,
-                    alignment:Alignment.center ,
+                    alignment: Alignment.center,
                     colorFilter: pageIndex == 3
                         ? const ColorFilter.mode(
                             AppColors.purpleDark, BlendMode.srcIn)
@@ -156,15 +160,17 @@ class Style extends StyleHook {
     return AppTextStyles.hint;
   }
 }
+
 class ListItems extends StatefulWidget {
-  const ListItems({Key? key}) : super(key: key);
+  var context1;
+  ListItems({Key? key, this.context1}) : super(key: key);
 
   @override
   State<ListItems> createState() => _ListItemsState();
 }
 
 class _ListItemsState extends State<ListItems> {
-  var itemSelect=1;
+  var itemSelect = 1;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -174,66 +180,104 @@ class _ListItemsState extends State<ListItems> {
         children: [
           // itemSelect=1;
           GestureDetector(
+            onTap: () {
+              print("object");
+              BlocProvider.of<PageIndexBloc>(widget.context1)
+                  .add(UpdatePageIndex(5));
+            },
             child: Container(
-              padding: const EdgeInsets.only(left: 3.5,right: 3.5,top: 8,bottom: 13),
+              padding: const EdgeInsets.only(
+                  left: 3.5, right: 3.5, top: 8, bottom: 13),
               alignment: Alignment.center,
               height: 75,
               width: 75,
-              decoration: BoxDecoration(            color: AppColors.mainBg,
+              decoration: BoxDecoration(
+                  color: AppColors.mainBg,
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               child: Column(
-
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SvgPicture.asset("assets/message-text.svg",width: 24,height: 24,),
-                  SizedBox(height: 5,),
-                  Text('Chat',style: AppTextStyles.hint,),
+                  SvgPicture.asset(
+                    "assets/message-text.svg",
+                    width: 24,
+                    height: 24,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'Chat',
+                    style: AppTextStyles.hint,
+                  ),
                 ],
               ),
             ),
           ),
-          SizedBox(width: 15,),
+          SizedBox(
+            width: 15,
+          ),
           // itemSelect=2;
           GestureDetector(
             child: Container(
-              padding: const EdgeInsets.only(left: 3.5,right: 3.5,top: 8,bottom: 13),
+              padding: const EdgeInsets.only(
+                  left: 3.5, right: 3.5, top: 8, bottom: 13),
               alignment: Alignment.center,
               height: 75,
               width: 75,
-
-              decoration: BoxDecoration(            color: AppColors.mainBg,
+              decoration: BoxDecoration(
+                  color: AppColors.mainBg,
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               child: Column(
-            
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SvgPicture.asset("assets/Screenshot.svg",width: 24,height: 24,),
-                  SizedBox(height: 5,),
-                  Text('Screenshot',style: AppTextStyles.hint,),
+                  SvgPicture.asset(
+                    "assets/Screenshot.svg",
+                    width: 24,
+                    height: 24,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'Screenshot',
+                    style: AppTextStyles.hint,
+                  ),
                 ],
               ),
             ),
           ),
-          SizedBox(width: 15,),
+          SizedBox(
+            width: 15,
+          ),
           // itemSelect=3;
           GestureDetector(
             child: Container(
-              padding: const EdgeInsets.only(left: 3.5,right: 3.5,top: 8,bottom: 13),
-            alignment: Alignment.center,
+              padding: const EdgeInsets.only(
+                  left: 3.5, right: 3.5, top: 8, bottom: 13),
+              alignment: Alignment.center,
               width: 80,
               height: 75,
-              decoration: BoxDecoration(            color: AppColors.mainBg,
+              decoration: BoxDecoration(
+                  color: AppColors.mainBg,
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               child: Column(
-
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SvgPicture.asset("assets/camera.svg",width: 24,height: 24,),
-                  SizedBox(height: 5,),
-                  Text('Take Picture',style: AppTextStyles.hint,),
+                  SvgPicture.asset(
+                    "assets/camera.svg",
+                    width: 24,
+                    height: 24,
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    'Take Picture',
+                    style: AppTextStyles.hint,
+                  ),
                 ],
               ),
             ),

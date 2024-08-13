@@ -11,6 +11,7 @@ import '../../utility/changeScreanBloc/PageIndex_states.dart';
 import '../../utility/token/getTokenLocaly.dart';
 import '../../widgets/bottomNavigationBar.dart';
 import '../Detailed Plan/detailedPlan.dart';
+import '../chatScreen/chatScreen.dart';
 import '../home/home.dart';
 import '../login/login.dart';
 import '../plan/planScreen.dart';
@@ -41,7 +42,6 @@ class _MainscreenState extends State<Mainscreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return FutureBuilder<String?>(
         future: getTokenLocally(),
         builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
@@ -89,7 +89,8 @@ class _MainscreenState extends State<Mainscreen> {
                                   builder: (context) => HealthPlanScreen(),
                                 ),
                               ),
-                              detailedPlan()
+                              detailedPlan(),
+                              Chatscreen(),
                             ],
                           );
                         },

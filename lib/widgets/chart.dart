@@ -7,8 +7,8 @@ import 'package:test_copilet/components/text_style.dart';
 
 import '../res/colors.dart';
 
-class Chart extends StatelessWidget {
-  Chart({super.key});
+class ChartDot extends StatelessWidget {
+  ChartDot({super.key});
   // const SettingPage({super.key});
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
 
