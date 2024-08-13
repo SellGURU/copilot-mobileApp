@@ -15,6 +15,7 @@ class AppTextStyles {
   static TextStyle titleMedium = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 14, color: Colors.black, fontWeight: FontWeight.w400));
   static TextStyle title2 =GoogleFonts.roboto( textStyle:TextStyle(fontSize: 14, color: AppColors.text),fontWeight: FontWeight.w500);
   static TextStyle hint = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 12, color: AppColors.textLite,fontWeight: FontWeight.w400));
+  static TextStyle hintVerySmale = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 8, color: AppColors.textLite,fontWeight: FontWeight.w400));
   static TextStyle hintBlack = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 12, color: Colors.black,fontWeight: FontWeight.w400));
   static TextStyle hintWhite = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 12, color: Colors.white,fontWeight: FontWeight.w500));
   static TextStyle hintSmale = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 10, color: AppColors.textLite));

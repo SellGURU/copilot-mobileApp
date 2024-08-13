@@ -1,5 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:test_copilet/components/text_style.dart';
 
@@ -9,57 +11,60 @@ class Chart extends StatelessWidget {
   Chart({super.key});
   // const SettingPage({super.key});
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
+
     switch (value.toInt()) {
       case 1:
         return Text(
           'MAR',
-          style: AppTextStyles.hint,
+          style: AppTextStyles.hintVerySmale,
+        );
+      case 2:
+        return Text(
+          'MAR',
+          style: AppTextStyles.hintVerySmale,
         );
       case 3:
         return Text(
           'SEP',
-          style: AppTextStyles.hint,
+          style: AppTextStyles.hintVerySmale,
+        );
+      case 4:
+        return Text(
+          'JUN',
+          style: AppTextStyles.hintVerySmale,
         );
       case 5:
         return Text(
           'JUN',
-          style: AppTextStyles.hint,
+          style: AppTextStyles.hintVerySmale,
         );
       default:
         return Text(
           "",
-          style: AppTextStyles.hint,
+          style: AppTextStyles.hintVerySmale,
         );
     }
   }
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
-    switch (value.toInt()) {
-      case 1:
-        return Container(
-            width: 50,
-            child: Text(
-              '10',
-              style: AppTextStyles.hint,
-            ));
-      case 3:
-        return Container(
-            width: 100,
-            child: Text(
-              '30',
-              style: AppTextStyles.hint,
-            ));
-      case 2:
-        return Container(
-            child: Text(
-          '50',
-          style: AppTextStyles.hint,
-        ));
-      default:
-        return SizedBox(
-          width: 0,
-        );
+    // value.toInt()
+    // Container(
+    //     width: 100,
+    //     child: Text(
+    //       '30',
+    //       style: AppTextStyles.hintVerySmale,
+    //     ));
+    if (value.toInt() == 40 || value.toInt() == 160) {
+      return Container(
+          width: 100,
+          child: Text(
+            "${value.toInt()}",
+            style: AppTextStyles.hintVerySmale,
+          ));
     }
+    print(meta.axisPosition);
+    // if(meta.axisPosition.isFinite)
+    return SizedBox();
   }
 
   List<Color> gradientColors = [
@@ -69,11 +74,11 @@ class Chart extends StatelessWidget {
 
   LineChartData mainData() {
     return LineChartData(
-      clipData: FlClipData.none(),
-      gridData: FlGridData(
+      clipData: const FlClipData.none(),
+      gridData: const FlGridData(
         show: false,
-        // drawVerticalLine: false,
-        // horizontalInterval: 1,
+        drawVerticalLine: false,
+        horizontalInterval: 4,
         // verticalInterval: 1,
         // getDrawingVerticalLine: (value) {
         //   return const FlLine(
@@ -84,9 +89,12 @@ class Chart extends StatelessWidget {
       ),
       borderData: FlBorderData(
           border: const Border(
-        right: BorderSide(width: 0, color: Colors.transparent),
-        left:
-            BorderSide(width: 10, color: Colors.red, style: BorderStyle.solid),
+        // right: BorderSide(width: 0, color: Colors.transparent),
+        // left: BorderSide(
+        //   width: 0,
+        //   color: Colors.red,
+        //   style: BorderStyle.solid,
+        // ),
         bottom: BorderSide(width: 1),
       )),
       titlesData: FlTitlesData(
@@ -117,11 +125,11 @@ class Chart extends StatelessWidget {
       lineBarsData: [
         LineChartBarData(
           spots: const [
-            FlSpot(0, 1),
-            FlSpot(2, 2),
-            FlSpot(2, 3),
-            FlSpot(3, 4),
-            FlSpot(4, 5),
+            FlSpot(1, 45),
+            FlSpot(2, 55),
+            FlSpot(3, 65),
+            FlSpot(4, 100),
+            FlSpot(5, 160),
           ],
           isCurved: true,
           shadow: BoxShadow(
