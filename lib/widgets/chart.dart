@@ -26,7 +26,10 @@ class Chart extends StatelessWidget {
           style: AppTextStyles.hint,
         );
       default:
-        return Text("",style: AppTextStyles.hint,);
+        return Text(
+          "",
+          style: AppTextStyles.hint,
+        );
     }
   }
 
@@ -80,9 +83,10 @@ class Chart extends StatelessWidget {
         // },
       ),
       borderData: FlBorderData(
-          border: Border(
-        right: BorderSide(width: 0),
-        left: BorderSide(width: 0),
+          border: const Border(
+        right: BorderSide(width: 0, color: Colors.transparent),
+        left:
+            BorderSide(width: 10, color: Colors.red, style: BorderStyle.solid),
         bottom: BorderSide(width: 1),
       )),
       titlesData: FlTitlesData(
@@ -133,8 +137,12 @@ class Chart extends StatelessWidget {
           isStrokeCapRound: false,
           dotData: FlDotData(
             show: true,
-            // dotColor: Colors.white,
-            // dotSize: 6,
+            getDotPainter: (spot, percent, barData, index) =>
+                FlDotCirclePainter(
+                    radius: 1,
+                    color: Colors.white,
+                    strokeWidth: 3,
+                    strokeColor: AppColors.brandSecondaryColor),
             checkToShowDot: (spot, barData) {
               return true;
             },
