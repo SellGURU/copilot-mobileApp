@@ -23,5 +23,6 @@ class AppColors {
   static const Color pinkBorder = Color.fromRGBO(161, 163, 246, 1);
   static const Color redBorder = Color.fromRGBO(238, 193, 193, 1);
   static const Color blueBorder = Color.fromRGBO(166, 208, 238, 1);
+  static const Color mainShadow = Color.fromRGBO(202, 202, 215, 0.25);
 
 }

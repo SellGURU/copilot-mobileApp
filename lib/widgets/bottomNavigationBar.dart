@@ -39,7 +39,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
           } else {
             showPopover(
               context: context,
-              bodyBuilder: (contextBodyBuilder) => ListItems(context1: context),
+              bodyBuilder: (contextBodyBuilder) => ListItems(Parentcontext: context),
               onPop: () => print('Popover was popped!'),
               direction: PopoverDirection.bottom,
               width: 600,
@@ -161,8 +161,8 @@ class Style extends StyleHook {
 }
 
 class ListItems extends StatefulWidget {
-  var context1;
-  ListItems({Key? key, this.context1}) : super(key: key);
+  var Parentcontext;
+  ListItems({Key? key, this.Parentcontext}) : super(key: key);
 
   @override
   State<ListItems> createState() => _ListItemsState();
@@ -177,23 +177,15 @@ class _ListItemsState extends State<ListItems> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          InkWell(
-            onTap: () {
-              Navigator.pop(context);
-            },
-            child: Container(
-              height: 50,
-              color: Colors.amber[100],
-              child: const Center(child: Text('Entry A')),
-            ),
-          ),
           // itemSelect=1;
           GestureDetector(
             onTap: () {
               print("object");
-              BlocProvider.of<PageIndexBloc>(widget.context1)
+              // to navigate to Chat Screen
+              BlocProvider.of<PageIndexBloc>(widget.Parentcontext)
                   .add(UpdatePageIndex(5));
-              Navigator.pop(widget.context1);
+              // to close the background black
+              Navigator.pop(widget.Parentcontext);
             },
             child: Container(
               padding: const EdgeInsets.only(
