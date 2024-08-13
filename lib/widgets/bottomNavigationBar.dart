@@ -38,7 +38,6 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
             BlocProvider.of<PageIndexBloc>(context).add(UpdatePageIndex(index));
           } else {
             showPopover(
-
               context: context,
               bodyBuilder: (contextBodyBuilder) => ListItems(context1: context),
               onPop: () => print('Popover was popped!'),
@@ -178,12 +177,23 @@ class _ListItemsState extends State<ListItems> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Container(
+              height: 50,
+              color: Colors.amber[100],
+              child: const Center(child: Text('Entry A')),
+            ),
+          ),
           // itemSelect=1;
           GestureDetector(
             onTap: () {
               print("object");
               BlocProvider.of<PageIndexBloc>(widget.context1)
                   .add(UpdatePageIndex(5));
+              Navigator.pop(widget.context1);
             },
             child: Container(
               padding: const EdgeInsets.only(
