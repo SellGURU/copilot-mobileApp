@@ -5,4 +5,5 @@ class ScreenNames {
   static const login = "/login";
   static const LDL = "/ldl";
   static const detailedPlan = "/detailedPlan";
+  static const cameraScreen = "/camera";
 }

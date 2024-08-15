@@ -5,11 +5,13 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:popover/popover.dart';
+import 'package:test_copilet/screens/camera/camaraScreen.dart';
 import 'package:test_copilet/utility/changeScreanBloc/PageIndex_Bloc.dart';
 import 'package:test_copilet/utility/changeScreanBloc/PageIndex_events.dart';
 
 import '../components/text_style.dart';
 import '../res/colors.dart';
+import '../route/names.dart';
 
 class BottomNavigationBarCustom extends StatefulWidget {
   BottomNavigationBarCustom({super.key});
@@ -257,10 +259,16 @@ class _ListItemsState extends State<ListItems> {
           GestureDetector(
             onTap: () {
               // to navigate to Chat Screen
-              BlocProvider.of<PageIndexBloc>(widget.Parentcontext)
-                  .add(UpdatePageIndex(6));
+              // BlocProvider.of<PageIndexBloc>(widget.Parentcontext)
+              //     .add(UpdatePageIndex(6));
               // to close the background black
-              Navigator.pop(widget.Parentcontext);
+              // Navigator.of(context).push(
+              //   MaterialPageRoute<void>(
+              //     builder: (BuildContext context) => CameraScreen(),
+              //   ),
+              // );
+              Navigator.pushNamed(context,ScreenNames.cameraScreen);
+              // Navigator.pop(widget.Parentcontext);
             },
             child: Container(
               padding: const EdgeInsets.only(

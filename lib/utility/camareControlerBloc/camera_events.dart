@@ -4,7 +4,6 @@ abstract class CameraEvents {}
 
 class CameraInitialize extends CameraEvents {
   final CameraDescription camera;
-
   CameraInitialize(this.camera);
 }
 

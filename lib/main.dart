@@ -11,18 +11,22 @@ import 'package:test_copilet/utility/camareControlerBloc/camera_events.dart';
 import 'package:test_copilet/utility/changeScreanBloc/PageIndex_Bloc.dart';
 import 'package:test_copilet/utility/switchValueBloc/PageIndex_Bloc.dart';
 import 'package:test_copilet/utility/token/updateToken.dart';
+// import 'dart:io'; // Import this to use the Platform class
+// import 'package:flutter/material.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
+// import 'camera_bloc.dart';  // Import your CameraBloc
+// import 'mainscreen.dart';  // Import your main screen
+// import 'package:camera/camera.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Update the token
   await UpdateToken("token");
-  // Get available cameras
-  if (Platform.isAndroid || Platform.isIOS) {
-    final cameras = await availableCameras();
-    final camera = cameras.first;
-    runApp(MyApp(camera: camera));
-  }
+
+  // Initialize the cameras
+  final cameras = await availableCameras();
+  final camera = cameras.first;
+
+  runApp(MyApp(camera: camera));
 }
 
 class MyApp extends StatefulWidget {
@@ -35,13 +39,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  var pageIndex = 0;
-  bool contishen = true;
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'copilot demo',
+      title: 'Copilot Demo',
       debugShowCheckedModeBanner: false,
       routes: routes,
       home: MultiBlocProvider(
