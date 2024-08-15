@@ -48,15 +48,15 @@ class _MyAppState extends State<MyApp> {
         providers: [
           BlocProvider(create: (_) => PageIndexBloc()),
           BlocProvider(create: (_) => SwitchValueGraphBloc()),
-         // Platform.isAndroid || Platform.isIOS) ?
-          BlocProvider(
-            create: (context) {
-              // Create the CameraBlocBloc and immediately add the CameraInitialize event
-              final cameraBloc = CameraBlocBloc();
-              cameraBloc.add(CameraInitialize(widget.camera));
-              return cameraBloc;
-            },
-          ),:""
+          if (Platform.isAndroid || Platform.isIOS)
+            BlocProvider(
+              create: (context) {
+                // Create the CameraBlocBloc and immediately add the CameraInitialize event
+                final cameraBloc = CameraBlocBloc();
+                cameraBloc.add(CameraInitialize(widget.camera));
+                return cameraBloc;
+              },
+            ),
         ],
         child: const Mainscreen(),
       ),
