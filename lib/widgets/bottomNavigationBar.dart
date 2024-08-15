@@ -39,7 +39,8 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
           } else {
             showPopover(
               context: context,
-              bodyBuilder: (contextBodyBuilder) => ListItems(Parentcontext: context),
+              bodyBuilder: (contextBodyBuilder) =>
+                  ListItems(Parentcontext: context),
               onPop: () => print('Popover was popped!'),
               direction: PopoverDirection.bottom,
               width: 600,
@@ -180,7 +181,6 @@ class _ListItemsState extends State<ListItems> {
           // itemSelect=1;
           GestureDetector(
             onTap: () {
-              print("object");
               // to navigate to Chat Screen
               BlocProvider.of<PageIndexBloc>(widget.Parentcontext)
                   .add(UpdatePageIndex(5));
@@ -216,7 +216,7 @@ class _ListItemsState extends State<ListItems> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 15,
           ),
           // itemSelect=2;
@@ -227,7 +227,7 @@ class _ListItemsState extends State<ListItems> {
               alignment: Alignment.center,
               height: 75,
               width: 75,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: AppColors.mainBg,
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               child: Column(
@@ -239,7 +239,7 @@ class _ListItemsState extends State<ListItems> {
                     width: 24,
                     height: 24,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Text(
@@ -250,18 +250,25 @@ class _ListItemsState extends State<ListItems> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             width: 15,
           ),
           // itemSelect=3;
           GestureDetector(
+            onTap: () {
+              // to navigate to Chat Screen
+              BlocProvider.of<PageIndexBloc>(widget.Parentcontext)
+                  .add(UpdatePageIndex(6));
+              // to close the background black
+              Navigator.pop(widget.Parentcontext);
+            },
             child: Container(
               padding: const EdgeInsets.only(
                   left: 3.5, right: 3.5, top: 8, bottom: 13),
               alignment: Alignment.center,
               width: 80,
               height: 75,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   color: AppColors.mainBg,
                   borderRadius: BorderRadius.all(Radius.circular(5))),
               child: Column(
@@ -273,7 +280,7 @@ class _ListItemsState extends State<ListItems> {
                     width: 24,
                     height: 24,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 5,
                   ),
                   Text(

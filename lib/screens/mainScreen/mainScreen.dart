@@ -11,6 +11,7 @@ import '../../utility/changeScreanBloc/PageIndex_states.dart';
 import '../../utility/token/getTokenLocaly.dart';
 import '../../widgets/bottomNavigationBar.dart';
 import '../Detailed Plan/detailedPlan.dart';
+import '../camera/camaraScreen.dart';
 import '../chatScreen/chatScreen.dart';
 import '../home/home.dart';
 import '../login/login.dart';
@@ -90,7 +91,8 @@ class _MainscreenState extends State<Mainscreen> {
                                 ),
                               ),
                               detailedPlan(),
-                              Chatscreen(),
+                              const Chatscreen(),
+                              CameraScreen(),
                             ],
                           );
                         },

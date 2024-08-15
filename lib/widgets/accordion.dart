@@ -40,7 +40,6 @@ class DynamicAccordion extends StatelessWidget {
       sectionClosingHapticFeedback: SectionHapticFeedback.light,
       children: sections.map((section) {
         return AccordionSection(
-
           isOpen: false,
           // leftIcon: const Icon(Icons.circle, color: Colors.white),
           headerBackgroundColor: AppColors.mainBg,
