@@ -28,7 +28,6 @@ class Mainscreen extends StatefulWidget {
 class _MainscreenState extends State<Mainscreen> {
   final GlobalKey<NavigatorState> _healthPlanScreenKey = GlobalKey();
   final GlobalKey<NavigatorState> _resultScreenKey = GlobalKey();
-  var pageIndex=0;
 
   // override the back btn
   Future<bool> _onWillPop() async {
@@ -86,7 +85,7 @@ class _MainscreenState extends State<Mainscreen> {
                                   builder: (context) => const ResultScreen(),
                                 ),
                               ),
-                              SizedBox(),
+                              const SizedBox(),
                               Navigator(
                                 key: _healthPlanScreenKey,
                                 onGenerateRoute: (settings) =>
@@ -102,9 +101,7 @@ class _MainscreenState extends State<Mainscreen> {
                         },
                       ),
                     ),
-                    bottomNavigationBar: pageIndex != 6
-                        ? BottomNavigationBarCustom()
-                        : SizedBox()),
+                    bottomNavigationBar:  BottomNavigationBarCustom()),
               );
             }
           }
