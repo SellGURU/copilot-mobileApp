@@ -260,20 +260,14 @@ class _ListItemsState extends State<ListItems> {
           // itemSelect=3;
           GestureDetector(
             onTap: () {
-              // to navigate to Chat Screen
-              // BlocProvider.of<PageIndexBloc>(widget.Parentcontext)
-              //     .add(UpdatePageIndex(6));
-              // to close the background black
               Navigator.of(widget.Parentcontext).push(
                 MaterialPageRoute<void>(
-                  builder: (BuildContext context) => BlocProvider.value(
+                  // provide the Bloc to other screen
+                  builder: (_) => BlocProvider.value(
                       value: BlocProvider.of<CameraBloc>(widget.Parentcontext),
                       child: CameraScreen()),
                 ),
               );
-              // Navigator.of(context)
-              //     .pushNamed(ScreenNames.cameraScreen, arguments: context);
-              // Navigator.pop(widget.Parentcontext);
             },
             child: Container(
               padding: const EdgeInsets.only(
