@@ -6,8 +6,8 @@ import 'package:path_provider/path_provider.dart';
 import 'camera_events.dart';
 import 'camera_states.dart';
 
-class CameraBlocBloc extends Bloc<CameraEvents, CameraStates> {
-  CameraBlocBloc() : super(CameraStates()) {
+class CameraBloc extends Bloc<CameraEvents, CameraStates> {
+  CameraBloc() : super(CameraStates()) {
     on<CameraInitialize>((event, emit) async {
       try {
         final controller = CameraController(

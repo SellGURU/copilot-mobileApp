@@ -51,9 +51,10 @@ class _MyAppState extends State<MyApp> {
           BlocProvider(create: (_) => SwitchValueGraphBloc()),
           if (Platform.isAndroid || Platform.isIOS)
             BlocProvider(
+              lazy: false,
               create: (context) {
                 // Create the CameraBlocBloc and immediately add the CameraInitialize event
-                final cameraBloc = CameraBlocBloc();
+                final cameraBloc = CameraBloc();
                 cameraBloc.add(CameraInitialize(widget.camera));
                 return cameraBloc;
               },

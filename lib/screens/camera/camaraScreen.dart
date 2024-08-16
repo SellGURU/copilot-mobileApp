@@ -10,7 +10,7 @@ import '../../utility/camareControlerBloc/camera_states.dart';
 class CameraScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CameraBlocBloc, CameraStates>(
+    return BlocBuilder<CameraBloc, CameraStates>(
       // create: (context) => CameraBlocBloc()..add(CameraInitialize(camera)),
       builder: (context, state) {
         if (state.isInitialized) {
@@ -19,7 +19,7 @@ class CameraScreen extends StatelessWidget {
             body: CameraPreview(state.controller!),
             floatingActionButton: FloatingActionButton(
               onPressed: () {
-                context.read<CameraBlocBloc>().add(CameraCapture());
+                context.read<CameraBloc>().add(CameraCapture());
               },
               child: Icon(Icons.camera_alt),
             ),

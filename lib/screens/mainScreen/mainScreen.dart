@@ -28,6 +28,7 @@ class Mainscreen extends StatefulWidget {
 class _MainscreenState extends State<Mainscreen> {
   final GlobalKey<NavigatorState> _healthPlanScreenKey = GlobalKey();
   final GlobalKey<NavigatorState> _resultScreenKey = GlobalKey();
+  var pageIndex=0;
 
   // override the back btn
   Future<bool> _onWillPop() async {
@@ -71,6 +72,9 @@ class _MainscreenState extends State<Mainscreen> {
                     body: SafeArea(
                       child: BlocBuilder<PageIndexBloc, PageIndexState>(
                         builder: (context, state) {
+                          // setState(() {
+                          //   pageIndex = state.pageIndex;
+                          // });
                           return IndexedStack(
                             index: state.pageIndex,
                             children: [
@@ -98,7 +102,9 @@ class _MainscreenState extends State<Mainscreen> {
                         },
                       ),
                     ),
-                    bottomNavigationBar: BottomNavigationBarCustom()),
+                    bottomNavigationBar: pageIndex != 6
+                        ? BottomNavigationBarCustom()
+                        : SizedBox()),
               );
             }
           }

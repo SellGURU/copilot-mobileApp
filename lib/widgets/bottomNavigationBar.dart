@@ -12,6 +12,7 @@ import 'package:test_copilet/utility/changeScreanBloc/PageIndex_events.dart';
 import '../components/text_style.dart';
 import '../res/colors.dart';
 import '../route/names.dart';
+import '../utility/camareControlerBloc/camera_Bloc.dart';
 
 class BottomNavigationBarCustom extends StatefulWidget {
   BottomNavigationBarCustom({super.key});
@@ -27,6 +28,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+
     return StyleProvider(
       style: Style(),
       child: ConvexAppBar(
@@ -262,12 +264,15 @@ class _ListItemsState extends State<ListItems> {
               // BlocProvider.of<PageIndexBloc>(widget.Parentcontext)
               //     .add(UpdatePageIndex(6));
               // to close the background black
-              // Navigator.of(context).push(
-              //   MaterialPageRoute<void>(
-              //     builder: (BuildContext context) => CameraScreen(),
-              //   ),
-              // );
-              Navigator.pushNamed(context,ScreenNames.cameraScreen);
+              Navigator.of(widget.Parentcontext).push(
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) => BlocProvider.value(
+                      value: BlocProvider.of<CameraBloc>(widget.Parentcontext),
+                      child: CameraScreen()),
+                ),
+              );
+              // Navigator.of(context)
+              //     .pushNamed(ScreenNames.cameraScreen, arguments: context);
               // Navigator.pop(widget.Parentcontext);
             },
             child: Container(
