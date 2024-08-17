@@ -40,7 +40,7 @@ class AuthCubit extends Cubit<AuthState> {
           'client_secret': ''
         },
       ).then((value) async {
-        print(value.toString());
+        // print(value.toString());
         if (value.statusCode == 200) {
           await UpdateToken("token");
           emit(SuccessState());

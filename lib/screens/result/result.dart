@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,10 +31,13 @@ class _ResultScreenState extends State<ResultScreen> {
     var size = MediaQuery.of(context).size;
     return BlocBuilder<BiomarkerCubit, BiomarkerState>(
       builder: (context, state) {
-        if (state is LoadingBiomarkerState)
+        if (state is LoadingBiomarkerState) {
           return Center(
             child: CircularProgressIndicator(),
           );
+        }
+        var data = state.getBiomarkerData();
+        print("data:${data["data"][0]["label"]}");
         return SingleChildScrollView(
           child: Container(
             margin: EdgeInsets.only(top: size.height * .02),
@@ -288,71 +293,48 @@ class _ResultScreenState extends State<ResultScreen> {
                 const SizedBox(
                   height: 20,
                 ),
-                GestureDetector(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CholesterolScreen())),
-                  child: Cardresultscreen(
-                    colorBadge: AppColors.greenBega,
-                    badgeText: 'Normal',
-                    title: 'Ldl cholesterol ',
+                Container(
+                  width: size.width,
+                  height: size.height * .8,
+                  child: ListView.separated(
+                    itemCount: data["data"].length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return BioMarkerCard(label: data["data"][index]["label"]);
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      return const SizedBox(
+                        height: 20,
+                      );
+                    },
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                GestureDetector(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CholesterolScreen())),
-                  child: Cardresultscreen(
-                    colorBadge: AppColors.yellowBegaDarker,
-                    badgeText: 'Borderline',
-                    title: 'Ldl cholesterol ',
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                GestureDetector(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CholesterolScreen())),
-                  child: Cardresultscreen(
-                    colorBadge: AppColors.greenBega,
-                    badgeText: 'Normal',
-                    title: 'Ldl cholesterol ',
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                GestureDetector(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CholesterolScreen())),
-                  child: Cardresultscreen(
-                    colorBadge: AppColors.yellowBegaDarker,
-                    badgeText: 'Borderline',
-                    title: 'Ldl cholesterol ',
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                GestureDetector(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => CholesterolScreen())),
-                  child: Cardresultscreen(
-                    colorBadge: AppColors.red,
-                    badgeText: 'Critical',
-                    title: 'Ldl cholesterol ',
-                  ),
-                ),
-                const SizedBox(
-                  height: 40,
                 ),
               ],
             ),
           ),
         );
       },
+    );
+  }
+}
+
+class BioMarkerCard extends StatelessWidget {
+  String label = "";
+  String level = "";
+  String status = "";
+  String unit = "";
+  BioMarkerCard({required this.label});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: GestureDetector(
+        onTap: () => Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => CholesterolScreen())),
+        child: Cardresultscreen(
+          colorBadge: AppColors.greenBega,
+          badgeText: 'Normal',
+          title: label,
+        ),
+      ),
     );
   }
 }
