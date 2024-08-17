@@ -25,29 +25,29 @@ class _LoginPageState extends State<LoginPage> {
   var isLoading = null;
 
   // TODO: need validation form
-  Future<void> _handleLogin(BuildContext context) async {
-    print("login handler");
-    if (_userNameController.value.text.isEmpty) return;
-    try {
-      String token = await getTokenHttp(
-          _userNameController.value.text, _passwordController.value.text);
-      if (token.isNotEmpty) {
-        await UpdateToken(token); // Assuming UpdateToken is an async function
-        Navigator.pushNamed(context, "/HomeScreen");
-      } else {
-        // Handle empty token case
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Failed to retrieve token')),
-        );
-      }
-    } catch (e) {
-      // Handle errors
-      print("error login page ${e.toString()}");
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: ${e.toString()}')),
-      );
-    }
-  }
+  // Future<void> _handleLogin(BuildContext context) async {
+  //   print("login handler");
+  //   if (_userNameController.value.text.isEmpty) return;
+  //   try {
+  //     String token = await getTokenHttp(
+  //         _userNameController.value.text, _passwordController.value.text);
+  //     if (token.isNotEmpty) {
+  //       await UpdateToken(token); // Assuming UpdateToken is an async function
+  //       Navigator.pushNamed(context, "/HomeScreen");
+  //     } else {
+  //       // Handle empty token case
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         const SnackBar(content: Text('Failed to retrieve token')),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     // Handle errors
+  //     print("error login page ${e.toString()}");
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text('Error: ${e.toString()}')),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

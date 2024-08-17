@@ -1,14 +1,26 @@
+import 'dart:ffi';
+
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:test_copilet/constants/endPoints.dart';
 
+import '../../../utility/token/getTokenLocaly.dart';
+import '../../../utility/token/updateToken.dart';
 import 'state.dart';
 
 class BiomarkerCubit extends Cubit<BiomarkerState> {
   BiomarkerCubit() : super(BiomarkerState()) {
+    _initialize();
+  }
+  Future<void> _initialize() async {
+    var token = await getTokenLocally();
+    if (token!.isNotEmpty) emit(LoggedInState());
     emit(LoggedOutState());
   }
+
   Dio _dio = Dio();
+
   getBiomarker() async {
     emit(LoadingState());
     try {
@@ -39,9 +51,10 @@ class BiomarkerCubit extends Cubit<BiomarkerState> {
           'client_id': '',
           'client_secret': ''
         },
-      ).then((value) {
+      ).then((value) async {
         print(value.toString());
         if (value.statusCode == 200) {
+          await UpdateToken("token");
           emit(SuccessState());
         } else {
           emit(ErrorState());
