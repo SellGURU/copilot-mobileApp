@@ -3,7 +3,7 @@ import 'dart:convert';
 
 Future<String> getTokenHttp(String username, String password) async {
   final response = await http.post(
-      Uri.parse('http://51.142.20.137:5052/auth/token'),
+      Uri.parse('http://51.142.20.137:5052/'),
       headers: <String, String>{
         'Content-Type': 'application/x-www-form-urlencoded',
       },

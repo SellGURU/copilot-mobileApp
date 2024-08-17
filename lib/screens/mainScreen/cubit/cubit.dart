@@ -24,4 +24,31 @@ class BiomarkerCubit extends Cubit<BiomarkerState> {
       emit(ErrorState());
     }
   }
+
+  logIn(username, password) async {
+    emit(LoadingState());
+    _dio.options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    try {
+      await _dio.post(
+        Endpoints.login,
+        data: {
+          'grant_type': '',
+          'username': username,
+          'password': password,
+          'scope': '',
+          'client_id': '',
+          'client_secret': ''
+        },
+      ).then((value) {
+        print(value.toString());
+        if (value.statusCode == 200) {
+          emit(SuccessState());
+        } else {
+          emit(ErrorState());
+        }
+      });
+    } catch (e) {
+      emit(ErrorState());
+    }
+  }
 }
