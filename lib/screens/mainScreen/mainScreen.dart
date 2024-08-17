@@ -43,68 +43,42 @@ class _MainscreenState extends State<Mainscreen> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<String?>(
-        future: getTokenLocally(),
-        builder: (BuildContext context, AsyncSnapshot<String?> snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            // if (false) {
-            return const Center(
-                child: Scaffold(
-              body: CircularProgressIndicator(),
-            ));
-          } else if (snapshot.hasError) {
-            // } else if (false) {
-            print("$snapshot.error");
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            String? token = snapshot.data;
-            print(token);
-            if (token == null) {
-              // if (false) {
-              return LoginPage();
-            } else {
-              // TODO: replace with new version of widget
-              return WillPopScope(
-                onWillPop: _onWillPop,
-                child: Scaffold(
-                    backgroundColor: AppColors.bgScreen,
-                    body: SafeArea(
-                      child: BlocBuilder<PageIndexBloc, PageIndexState>(
-                        builder: (context, state) {
-                          // setState(() {
-                          //   pageIndex = state.pageIndex;
-                          // });
-                          return IndexedStack(
-                            index: state.pageIndex,
-                            children: [
-                              const HomeScreen(),
-                              Navigator(
-                                key: _resultScreenKey,
-                                onGenerateRoute: (settings) =>
-                                    MaterialPageRoute(
-                                  builder: (context) => const ResultScreen(),
-                                ),
-                              ),
-                              const SizedBox(),
-                              Navigator(
-                                key: _healthPlanScreenKey,
-                                onGenerateRoute: (settings) =>
-                                    MaterialPageRoute(
-                                  builder: (context) => HealthPlanScreen(),
-                                ),
-                              ),
-                              detailedPlan(),
-                              const Chatscreen(),
-                              CameraScreen(),
-                            ],
-                          );
-                        },
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+          backgroundColor: AppColors.bgScreen,
+          body: SafeArea(
+            child: BlocBuilder<PageIndexBloc, PageIndexState>(
+              builder: (context, state) {
+                // setState(() {
+                //   pageIndex = state.pageIndex;
+                // });
+                return IndexedStack(
+                  index: state.pageIndex,
+                  children: [
+                    const HomeScreen(),
+                    Navigator(
+                      key: _resultScreenKey,
+                      onGenerateRoute: (settings) => MaterialPageRoute(
+                        builder: (context) => const ResultScreen(),
                       ),
                     ),
-                    bottomNavigationBar:  BottomNavigationBarCustom()),
-              );
-            }
-          }
-        });
+                    const SizedBox(),
+                    Navigator(
+                      key: _healthPlanScreenKey,
+                      onGenerateRoute: (settings) => MaterialPageRoute(
+                        builder: (context) => HealthPlanScreen(),
+                      ),
+                    ),
+                    detailedPlan(),
+                    const Chatscreen(),
+                    CameraScreen(),
+                  ],
+                );
+              },
+            ),
+          ),
+          bottomNavigationBar: BottomNavigationBarCustom()),
+    );
   }
 }

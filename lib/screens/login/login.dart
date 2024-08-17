@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_copilet/route/names.dart';
+import 'package:test_copilet/screens/home/home.dart';
 import 'package:test_copilet/screens/mainScreen/cubit/cubit.dart';
 import 'package:test_copilet/screens/mainScreen/cubit/cubit.dart';
+import 'package:test_copilet/screens/mainScreen/mainScreen.dart';
 import 'package:test_copilet/utility/token/getTokenHttp.dart';
 import 'package:test_copilet/utility/token/updateToken.dart';
 
@@ -80,7 +82,10 @@ class _LoginPageState extends State<LoginPage> {
                 BlocConsumer<BiomarkerCubit, BiomarkerState>(
                   listener: (context, state) {
                     if (state is SuccessState) {
-                      Navigator.pushNamed(context, ScreenNames.home);
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => Mainscreen()),
+                      );
                     }
                     if (state is ErrorState) {
                       ScaffoldMessenger.of(context).showSnackBar(
