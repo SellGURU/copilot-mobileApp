@@ -5,31 +5,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:test_copilet/route/routes.dart';
+import 'package:test_copilet/screens/home/cubit/cubit.dart';
+import 'package:test_copilet/screens/login/cubit/cubit.dart';
 import 'package:test_copilet/screens/login/login.dart';
-import 'package:test_copilet/screens/mainScreen/cubit/cubit.dart';
-import 'package:test_copilet/screens/mainScreen/cubit/state.dart';
+import 'package:test_copilet/screens/login/cubit/state.dart';
 import 'package:test_copilet/screens/mainScreen/mainScreen.dart';
 import 'package:test_copilet/utility/camareControlerBloc/camera_Bloc.dart';
 import 'package:test_copilet/utility/camareControlerBloc/camera_events.dart';
 import 'package:test_copilet/utility/changeScreanBloc/PageIndex_Bloc.dart';
 import 'package:test_copilet/utility/switchValueBloc/PageIndex_Bloc.dart';
+import 'package:test_copilet/utility/token/getTokenLocaly.dart';
 import 'package:test_copilet/utility/token/updateToken.dart';
-
-// import 'dart:io'; // Import this to use the Platform class
-// import 'package:flutter/material.dart';
-// import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'camera_bloc.dart';  // Import your CameraBloc
-// import 'mainscreen.dart';  // Import your main screen
-// import 'package:camera/camera.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await UpdateToken("token");
 
   // Initialize the cameras
   final cameras = await availableCameras();
   final camera = cameras.first;
-
   runApp(MyApp(camera: camera));
 }
 
@@ -49,6 +42,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         BlocProvider(create: (_) => PageIndexBloc()),
         BlocProvider(create: (_) => SwitchValueGraphBloc()),
+        BlocProvider(create: (_) => AuthCubit()),
         BlocProvider(create: (_) => BiomarkerCubit()),
         if (Platform.isAndroid || Platform.isIOS)
           BlocProvider(
@@ -65,12 +59,12 @@ class _MyAppState extends State<MyApp> {
         title: 'Copilot Demo',
         debugShowCheckedModeBanner: false,
         routes: routes,
-        home: BlocBuilder<BiomarkerCubit, BiomarkerState>(
+        home: BlocBuilder<AuthCubit, AuthState>(
           builder: (BuildContext context, state) {
             if (state is LoggedInState) {
-              return Mainscreen();
+              return const Mainscreen();
             } else {
-              return LoginPage();
+              return const LoginPage();
             }
           },
         ),

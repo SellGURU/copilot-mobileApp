@@ -1,16 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:test_copilet/route/names.dart';
-import 'package:test_copilet/screens/home/home.dart';
-import 'package:test_copilet/screens/mainScreen/cubit/cubit.dart';
-import 'package:test_copilet/screens/mainScreen/cubit/cubit.dart';
+
+import 'package:test_copilet/screens/login/cubit/cubit.dart';
 import 'package:test_copilet/screens/mainScreen/mainScreen.dart';
-import 'package:test_copilet/utility/token/getTokenHttp.dart';
-import 'package:test_copilet/utility/token/updateToken.dart';
 
 import '../../widgets/text_field.dart';
-import '../mainScreen/cubit/state.dart';
+import '../login/cubit/state.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -79,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                 const SizedBox(
                   height: 30,
                 ),
-                BlocConsumer<BiomarkerCubit, BiomarkerState>(
+                BlocConsumer<AuthCubit, AuthState>(
                   listener: (context, state) {
                     if (state is SuccessState) {
                       Navigator.pushReplacement(
@@ -100,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                     }
                     return ElevatedButton(
                         onPressed: () async {
-                          BlocProvider.of<BiomarkerCubit>(context).logIn(
+                          BlocProvider.of<AuthCubit>(context).logIn(
                               _userNameController.value.text,
                               _passwordController.value.text);
                         },

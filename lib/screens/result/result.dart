@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:test_copilet/components/text_style.dart';
+import 'package:test_copilet/screens/home/cubit/cubit.dart';
+import 'package:test_copilet/screens/home/cubit/state.dart';
 
 import '../../res/colors.dart';
 import '../../utility/switchValueBloc/PageIndex_Bloc.dart';
@@ -24,298 +26,333 @@ class _ResultScreenState extends State<ResultScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var size=MediaQuery.of(context).size;
-    return SingleChildScrollView(
-      child: Container(
-        margin: EdgeInsets.only(top: size.height*.02),
-        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "Your Results",
-                  style: AppTextStyles.title1,
-                ),
-                Row(
-                  children: [
-                    const Icon(
-                      Icons.notifications_none_outlined,
-                      color: AppColors.purpleDark,
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    SvgPicture.asset(
-                      "assets/notificationIcon.svg",
-                      width: 25,
-                      height: 25,
-                    ),
-                  ],
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(15)),
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(.1),
-                      spreadRadius: 2,
-                      blurRadius: 2,
-                      offset: const Offset(0, 1), // changes position of shadow
-                    ),
-                  ]),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        indexItem = 0;
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        color: indexItem == 0
-                            ? AppColors.purpleDark
-                            : Colors.white,
-                      ),
-                      height: 40,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 9.0, vertical: 8),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset("assets/drops.svg",
-                                colorFilter: ColorFilter.mode(
-                                    indexItem == 0
-                                        ? AppColors.mainBg
-                                        : AppColors.textLite,
-                                    BlendMode.srcIn)),
-                            const SizedBox(
-                              width: 7,
-                            ),
-                            Text(
-                              "Blood",
-                              style: indexItem == 0
-                                  ? AppTextStyles.hintWhite
-                                  : AppTextStyles.hint,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        indexItem = 1;
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        color: indexItem == 1
-                            ? AppColors.purpleDark
-                            : Colors.white,
-                      ),
-                      height: 40,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 9.0, vertical: 8),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset("assets/weight.svg",
-                                colorFilter: ColorFilter.mode(
-                                    indexItem == 1
-                                        ? AppColors.mainBg
-                                        : AppColors.textLite,
-                                    BlendMode.srcIn)),
-                            const SizedBox(
-                              width: 7,
-                            ),
-                            Text(
-                              "Activity",
-                              style: indexItem == 1
-                                  ? AppTextStyles.hintWhite
-                                  : AppTextStyles.hint,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        indexItem = 2;
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        color: indexItem == 2
-                            ? AppColors.purpleDark
-                            : Colors.white,
-                      ),
-                      height: 40,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 9.0, vertical: 8),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset("assets/dna.svg",
-                                colorFilter: ColorFilter.mode(
-                                    indexItem == 2
-                                        ? AppColors.mainBg
-                                        : AppColors.textLite,
-                                    BlendMode.srcIn)),
-                            const SizedBox(
-                              width: 7,
-                            ),
-                            Text(
-                              "DNA",
-                              style: indexItem == 2
-                                  ? AppTextStyles.hintWhite
-                                  : AppTextStyles.hint,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () {
-                      setState(() {
-                        indexItem = 3;
-                      });
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                        color: indexItem == 3
-                            ? AppColors.purpleDark
-                            : Colors.white,
-                      ),
-                      height: 40,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 9.0, vertical: 8),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset("assets/monitor.svg",
-                                colorFilter: ColorFilter.mode(
-                                    indexItem == 3
-                                        ? AppColors.mainBg
-                                        : AppColors.textLite,
-                                    BlendMode.srcIn)),
-                            const SizedBox(
-                              width: 7,
-                            ),
-                            Text(
-                              "AGING",
-                              style: indexItem == 3
-                                  ? AppTextStyles.hintWhite
-                                  : AppTextStyles.hint,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    var size = MediaQuery.of(context).size;
+    return BlocBuilder<BiomarkerCubit, BiomarkerState>(
+      builder: (context, state) {
+        if (state is LoadingBiomarkerState)
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        return SingleChildScrollView(
+          child: Container(
+            margin: EdgeInsets.only(top: size.height * .02),
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+            child: Column(
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "Last Update:",
-                      style: AppTextStyles.hint,
+                      "Your Results",
+                      style: AppTextStyles.title1,
                     ),
-                    Text(
-                      "May 12 , 2024",
-                      style: AppTextStyles.title2,
-                    ),
+                    Row(
+                      children: [
+                        const Icon(
+                          Icons.notifications_none_outlined,
+                          color: AppColors.purpleDark,
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        SvgPicture.asset(
+                          "assets/notificationIcon.svg",
+                          width: 25,
+                          height: 25,
+                        ),
+                      ],
+                    )
                   ],
                 ),
-                SizedBox(
-                  height: 30,
-                  width: 50,
-                  child: FittedBox(
-                    fit: BoxFit.fill,
-                    child: BlocBuilder<SwitchValueGraphBloc, SwitchValueState>(
-                      builder: (context, state) {
-                        return CupertinoSwitch(
-                          autofocus: false,
-                          activeColor: AppColors.iconPurpleDark,
-                          value: state.switchValue,
-                          onChanged: (value) {
-                            print(state.switchValue);
-                            BlocProvider.of<SwitchValueGraphBloc>(context)
-                                .add(UpdateSwitchValueGraph(value));
-                            // valueSwitch = value;
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(.1),
+                          spreadRadius: 2,
+                          blurRadius: 2,
+                          offset:
+                              const Offset(0, 1), // changes position of shadow
+                        ),
+                      ]),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            indexItem = 0;
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            color: indexItem == 0
+                                ? AppColors.purpleDark
+                                : Colors.white,
+                          ),
+                          height: 40,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 9.0, vertical: 8),
+                            child: Row(
+                              children: [
+                                SvgPicture.asset("assets/drops.svg",
+                                    colorFilter: ColorFilter.mode(
+                                        indexItem == 0
+                                            ? AppColors.mainBg
+                                            : AppColors.textLite,
+                                        BlendMode.srcIn)),
+                                const SizedBox(
+                                  width: 7,
+                                ),
+                                Text(
+                                  "Blood",
+                                  style: indexItem == 0
+                                      ? AppTextStyles.hintWhite
+                                      : AppTextStyles.hint,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            indexItem = 1;
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            color: indexItem == 1
+                                ? AppColors.purpleDark
+                                : Colors.white,
+                          ),
+                          height: 40,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 9.0, vertical: 8),
+                            child: Row(
+                              children: [
+                                SvgPicture.asset("assets/weight.svg",
+                                    colorFilter: ColorFilter.mode(
+                                        indexItem == 1
+                                            ? AppColors.mainBg
+                                            : AppColors.textLite,
+                                        BlendMode.srcIn)),
+                                const SizedBox(
+                                  width: 7,
+                                ),
+                                Text(
+                                  "Activity",
+                                  style: indexItem == 1
+                                      ? AppTextStyles.hintWhite
+                                      : AppTextStyles.hint,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            indexItem = 2;
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            color: indexItem == 2
+                                ? AppColors.purpleDark
+                                : Colors.white,
+                          ),
+                          height: 40,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 9.0, vertical: 8),
+                            child: Row(
+                              children: [
+                                SvgPicture.asset("assets/dna.svg",
+                                    colorFilter: ColorFilter.mode(
+                                        indexItem == 2
+                                            ? AppColors.mainBg
+                                            : AppColors.textLite,
+                                        BlendMode.srcIn)),
+                                const SizedBox(
+                                  width: 7,
+                                ),
+                                Text(
+                                  "DNA",
+                                  style: indexItem == 2
+                                      ? AppTextStyles.hintWhite
+                                      : AppTextStyles.hint,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            indexItem = 3;
+                          });
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            color: indexItem == 3
+                                ? AppColors.purpleDark
+                                : Colors.white,
+                          ),
+                          height: 40,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 9.0, vertical: 8),
+                            child: Row(
+                              children: [
+                                SvgPicture.asset("assets/monitor.svg",
+                                    colorFilter: ColorFilter.mode(
+                                        indexItem == 3
+                                            ? AppColors.mainBg
+                                            : AppColors.textLite,
+                                        BlendMode.srcIn)),
+                                const SizedBox(
+                                  width: 7,
+                                ),
+                                Text(
+                                  "AGING",
+                                  style: indexItem == 3
+                                      ? AppTextStyles.hintWhite
+                                      : AppTextStyles.hint,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          "Last Update:",
+                          style: AppTextStyles.hint,
+                        ),
+                        Text(
+                          "May 12 , 2024",
+                          style: AppTextStyles.title2,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 30,
+                      width: 50,
+                      child: FittedBox(
+                        fit: BoxFit.fill,
+                        child:
+                            BlocBuilder<SwitchValueGraphBloc, SwitchValueState>(
+                          builder: (context, state) {
+                            return CupertinoSwitch(
+                              autofocus: false,
+                              activeColor: AppColors.iconPurpleDark,
+                              value: state.switchValue,
+                              onChanged: (value) {
+                                print(state.switchValue);
+                                BlocProvider.of<SwitchValueGraphBloc>(context)
+                                    .add(UpdateSwitchValueGraph(value));
+                                // valueSwitch = value;
+                              },
+                            );
                           },
-                        );
-                      },
+                        ),
+                      ),
                     ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CholesterolScreen())),
+                  child: Cardresultscreen(
+                    colorBadge: AppColors.greenBega,
+                    badgeText: 'Normal',
+                    title: 'Ldl cholesterol ',
                   ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CholesterolScreen())),
+                  child: Cardresultscreen(
+                    colorBadge: AppColors.yellowBegaDarker,
+                    badgeText: 'Borderline',
+                    title: 'Ldl cholesterol ',
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CholesterolScreen())),
+                  child: Cardresultscreen(
+                    colorBadge: AppColors.greenBega,
+                    badgeText: 'Normal',
+                    title: 'Ldl cholesterol ',
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CholesterolScreen())),
+                  child: Cardresultscreen(
+                    colorBadge: AppColors.yellowBegaDarker,
+                    badgeText: 'Borderline',
+                    title: 'Ldl cholesterol ',
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                GestureDetector(
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => CholesterolScreen())),
+                  child: Cardresultscreen(
+                    colorBadge: AppColors.red,
+                    badgeText: 'Critical',
+                    title: 'Ldl cholesterol ',
+                  ),
+                ),
+                const SizedBox(
+                  height: 40,
                 ),
               ],
             ),
-            const SizedBox(
-              height: 20,
-            ),
-            GestureDetector(
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CholesterolScreen())),
-              child: Cardresultscreen(colorBadge: AppColors.greenBega, badgeText: 'Normal', title: 'Ldl cholesterol ',),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            GestureDetector(
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CholesterolScreen())),
-              child: Cardresultscreen(colorBadge: AppColors.yellowBegaDarker, badgeText: 'Borderline', title: 'Ldl cholesterol ',),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            GestureDetector(
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CholesterolScreen())),
-              child: Cardresultscreen(colorBadge: AppColors.greenBega, badgeText: 'Normal', title: 'Ldl cholesterol ',),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            GestureDetector(
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CholesterolScreen())),
-              child: Cardresultscreen(colorBadge: AppColors.yellowBegaDarker, badgeText: 'Borderline', title: 'Ldl cholesterol ',),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            GestureDetector(
-              onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CholesterolScreen())),
-              child: Cardresultscreen(colorBadge: AppColors.red, badgeText: 'Critical', title: 'Ldl cholesterol ',),
-            ),
-            const SizedBox(
-              height: 40,
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }
