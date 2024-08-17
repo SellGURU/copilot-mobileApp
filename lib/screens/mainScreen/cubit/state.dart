@@ -14,5 +14,6 @@ final class LoadingState extends BiomarkerState{}
 final class ErrorState extends BiomarkerState{}
 final class SuccessState extends BiomarkerState{}
 final class LoggedInState extends BiomarkerState{}
+final class LoggedOutState extends BiomarkerState{}
 
 
