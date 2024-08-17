@@ -7,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import '../../components/text_style.dart';
 import '../../res/colors.dart';
 import '../../widgets/accordion.dart';
+import '../../widgets/chart.dart';
 
 class CholesterolScreen extends StatefulWidget {
   @override
@@ -37,7 +38,7 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
           style: AppTextStyles.title1,
         ),
         SizedBox(
-          width: size.width * .45,
+          width: size.width * .40,
         ),
         Row(
           children: [
@@ -52,6 +53,9 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
             const Icon(
               Icons.notifications_none_outlined,
               color: AppColors.purpleDark,
+            ),
+            SizedBox(
+              width: 15,
             ),
           ],
         )
@@ -97,7 +101,7 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                           height: 50,
                           child: Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: size.height * 0.03, vertical: 8),
+                                horizontal: size.height * 0.02, vertical: 8),
                             child: Row(
                               children: [
                                 SvgPicture.asset("assets/drops.svg",
@@ -136,7 +140,7 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                           height: 50,
                           child: Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: size.height * 0.03, vertical: 8),
+                                horizontal: size.height * 0.02, vertical: 8),
                             child: Row(
                               children: [
                                 SvgPicture.asset("assets/message-question.svg",
@@ -175,7 +179,7 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                           height: 50,
                           child: Padding(
                             padding: EdgeInsets.symmetric(
-                                horizontal: size.height * 0.03, vertical: 8),
+                                horizontal: size.height * 0.02, vertical: 8),
                             child: Row(
                               children: [
                                 SvgPicture.asset("assets/lamp-on.svg",
@@ -302,85 +306,7 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                         const SizedBox(height: 16),
                         AspectRatio(
                           aspectRatio: 1.5,
-                          child: LineChart(
-                            LineChartData(
-                              gridData: const FlGridData(show: false),
-                              titlesData: FlTitlesData(
-                                leftTitles: AxisTitles(
-                                  sideTitles: SideTitles(
-                                    showTitles: true,
-                                    reservedSize: 28,
-                                    getTitlesWidget: (value, meta) {
-                                      switch (value.toInt()) {
-                                        case 0:
-                                          return Text('0');
-                                        case 84:
-                                          return Text('84');
-                                        case 159:
-                                          return Text('159');
-                                        default:
-                                          return Text('');
-                                      }
-                                    },
-                                  ),
-                                ),
-                                bottomTitles: AxisTitles(
-                                  sideTitles: SideTitles(
-                                    showTitles: true,
-                                    getTitlesWidget: (value, meta) {
-                                      switch (value.toInt()) {
-                                        case 0:
-                                          return Text('Nov');
-                                        case 1:
-                                          return Text('Feb');
-                                        case 2:
-                                          return Text('Feb');
-                                        case 3:
-                                          return Text('Mar');
-                                        case 4:
-                                          return Text('Jun');
-                                        case 5:
-                                          return Text('Sep');
-                                        default:
-                                          return Text('');
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ),
-                              borderData: FlBorderData(show: false),
-                              minX: 0,
-                              maxX: 5,
-                              minY: 0,
-                              maxY: 160,
-                              lineBarsData: [
-                                LineChartBarData(
-                                  spots: [
-                                    FlSpot(0, 159),
-                                    FlSpot(1, 84),
-                                    FlSpot(2, 74),
-                                    FlSpot(3, 76),
-                                    FlSpot(4, 92),
-                                    FlSpot(5, 112),
-                                  ],
-                                  isCurved: true,
-                                  barWidth: 3,
-                                  gradient: LinearGradient(
-                                    colors: [
-                                      Colors.green,
-                                      Colors.yellow,
-                                      Colors.orange,
-                                      Colors.red,
-                                    ],
-                                    stops: [0.1, 0.4, 0.7, 1.0],
-                                  ),
-                                  belowBarData: BarAreaData(
-                                    show: true,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+                          child: ChartDot(),
                         ),
                       ],
                     ),
