@@ -25,6 +25,7 @@ class ResultScreen extends StatefulWidget {
 class _ResultScreenState extends State<ResultScreen> {
   bool valueSwitch = false;
   int indexItem = 0;
+  String itemSelectedFiltered = "all";
 
   @override
   Widget build(BuildContext context) {
@@ -92,6 +93,7 @@ class _ResultScreenState extends State<ResultScreen> {
                         onTap: () {
                           setState(() {
                             indexItem = 0;
+                            itemSelectedFiltered = "blood";
                           });
                         },
                         child: Container(
@@ -131,6 +133,7 @@ class _ResultScreenState extends State<ResultScreen> {
                         onTap: () {
                           setState(() {
                             indexItem = 1;
+                            itemSelectedFiltered = "activity";
                           });
                         },
                         child: Container(
@@ -170,6 +173,7 @@ class _ResultScreenState extends State<ResultScreen> {
                         onTap: () {
                           setState(() {
                             indexItem = 2;
+                            itemSelectedFiltered = "dna";
                           });
                         },
                         child: Container(
@@ -209,6 +213,7 @@ class _ResultScreenState extends State<ResultScreen> {
                         onTap: () {
                           setState(() {
                             indexItem = 3;
+                            itemSelectedFiltered = "AGING";
                           });
                         },
                         child: Container(
@@ -299,11 +304,27 @@ class _ResultScreenState extends State<ResultScreen> {
                   child: ListView.separated(
                     itemCount: data["data"].length,
                     itemBuilder: (BuildContext context, int index) {
-                      return BioMarkerCard(label: data["data"][index]["label"]);
+                      if (itemSelectedFiltered == data["data"][index]["tag"] ||
+                          itemSelectedFiltered == "all") {
+                        return BioMarkerCard(
+                          label: data["data"][index]["label"],
+                          colorBadge: data["data"][index]["colorBadge"],
+                        );
+                      } else {
+                        return const SizedBox(
+                          height: 0,
+                        );
+                      }
                     },
                     separatorBuilder: (BuildContext context, int index) {
+                      if (itemSelectedFiltered == data["data"][index]["tag"] ||
+                          itemSelectedFiltered == "all") {
+                        return const SizedBox(
+                          height: 20,
+                        );
+                      }
                       return const SizedBox(
-                        height: 20,
+                        height: 0,
                       );
                     },
                   ),
@@ -319,10 +340,21 @@ class _ResultScreenState extends State<ResultScreen> {
 
 class BioMarkerCard extends StatelessWidget {
   String label = "";
-  String level = "";
-  String status = "";
   String unit = "";
-  BioMarkerCard({required this.label});
+  String colorBadge = "";
+  BioMarkerCard({required this.label, required this.colorBadge});
+  getColorBadge(color) {
+    if (color == "red") {
+      return AppColors.red;
+    }
+    if (color == "yellow") {
+      return AppColors.yellowBegaDarker;
+    }
+    if (color == "green") {
+      return AppColors.greenBorder;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -330,7 +362,7 @@ class BioMarkerCard extends StatelessWidget {
         onTap: () => Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => CholesterolScreen())),
         child: Cardresultscreen(
-          colorBadge: AppColors.greenBega,
+          colorBadge: getColorBadge(colorBadge),
           badgeText: 'Normal',
           title: label,
         ),
