@@ -21,15 +21,16 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize the cameras
-  final cameras = await availableCameras();
-  final camera = cameras.first;
+  // final cameras = await availableCameras();
+  // final camera = cameras.first;
 
-  runApp(MyApp(camera: camera));
+  // runApp(MyApp(camera: camera));
+  runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
-    final CameraDescription camera;
-    MyApp({Key? key, required this.camera}) : super(key: key);
+    // final CameraDescription camera;
+    MyApp({Key? key}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -45,15 +46,15 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => AuthCubit()),
         BlocProvider(create: (_) => BiomarkerCubit()),
         // if (Platform.isAndroid || Platform.isIOS)
-          BlocProvider(
-            lazy: false,
-            create: (context) {
-              // Create the CameraBlocBloc and immediately add the CameraInitialize event
-              final cameraBloc = CameraBloc();
-              cameraBloc.add(CameraInitialize(widget.camera));
-              return cameraBloc;
-            },
-          ),
+        //   BlocProvider(
+        //     lazy: false,
+        //     create: (context) {
+        //       // Create the CameraBlocBloc and immediately add the CameraInitialize event
+        //       final cameraBloc = CameraBloc();
+        //       cameraBloc.add(CameraInitialize(widget.camera));
+        //       return cameraBloc;
+        //     },
+        //   ),
       ],
       child: MaterialApp(
         title: 'Copilot Demo',
