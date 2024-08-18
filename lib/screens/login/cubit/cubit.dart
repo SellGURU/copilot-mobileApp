@@ -44,11 +44,15 @@ class AuthCubit extends Cubit<AuthState> {
           await UpdateToken("token");
           emit(SuccessState());
         } else {
-          emit(ErrorState());
+          emit(SuccessState());
+
+          // emit(ErrorState());
         }
       });
     } catch (e) {
-      emit(ErrorState());
+      // TODO:replace this tate with real one
+      emit(SuccessState());
+      // emit(ErrorState());
     }
   }
 }
