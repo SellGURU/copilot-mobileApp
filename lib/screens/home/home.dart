@@ -12,8 +12,8 @@ import '../../widgets/gauges.dart';
 import '../../widgets/longevity.dart';
 import '../../widgets/radioBtn.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+class Overview extends StatelessWidget {
+  const Overview({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -91,19 +91,20 @@ class HomeScreen extends StatelessWidget {
                 SizedBox(
                     height: 280,
                     child: ListView.separated(
-                      itemCount: 10,
+                      itemCount: 3,
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       padding: const EdgeInsets.only(
                           top: 20, bottom: 20, left: 8, right: 10),
                       itemBuilder: (BuildContext context, int index) {
                         return ItemCard(
-                            title: "Heart Rate",
+                            title:
+                                index % 2 == 0 ? "Heart Rate" : "Cholesterol",
                             average: "84",
                             icon: SvgPicture.asset(
-                              "assets/heart.svg",
-                              colorFilter: const ColorFilter.mode(
-                                  Colors.blue, BlendMode.srcIn),
+                              index % 2 == 0
+                                  ? "assets/Hrate.svg"
+                                  : "assets/ldlRate.svg",
                               width: 40,
                               height: 40,
                             ),

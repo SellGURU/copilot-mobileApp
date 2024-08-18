@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,12 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:test_copilet/components/text_style.dart';
 
 import '../res/colors.dart';
+import 'dart:math';
 
 class ChartDot extends StatelessWidget {
   ChartDot({super.key});
+  double getRandomX() => Random().nextDouble() * 5;
+  double getRandomY() => Random().nextDouble() * 160 + 50;
   // const SettingPage({super.key});
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
-
     switch (value.toInt()) {
       case 1:
         return Text(
@@ -124,12 +128,14 @@ class ChartDot extends StatelessWidget {
       ),
       lineBarsData: [
         LineChartBarData(
-          spots: const [
-            FlSpot(1, 45),
-            FlSpot(2, 55),
-            FlSpot(3, 65),
-            FlSpot(4, 100),
-            FlSpot(5, 160),
+          spots: [
+            FlSpot(0, 0),
+            FlSpot(1, 70),
+            FlSpot(2, getRandomY()),
+            FlSpot(3, getRandomY()),
+            FlSpot(4, getRandomY()),
+            FlSpot(5, getRandomY()),
+
           ],
           isCurved: true,
           shadow: BoxShadow(
