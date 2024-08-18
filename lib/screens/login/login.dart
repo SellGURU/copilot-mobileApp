@@ -2,11 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:test_copilet/screens/login/cubit/cubit.dart';
-import 'package:test_copilet/screens/mainScreen/mainScreen.dart';
-
 import '../../widgets/text_field.dart';
 import '../login/cubit/state.dart';
+import '../mainScreen/mainScreen.dart';
+import 'cubit/cubit.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:test_copilet/widgets/text_field.dart';
 
 import '../../components/text_style.dart';
 import '../../res/colors.dart';

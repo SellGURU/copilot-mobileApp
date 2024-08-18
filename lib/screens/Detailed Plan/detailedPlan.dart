@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:test_copilet/components/text_style.dart';
-import 'package:test_copilet/res/colors.dart';
 
+import '../../components/text_style.dart';
+import '../../res/colors.dart';
 import '../../widgets/accordion.dart';
 
 class detailedPlan extends StatelessWidget {

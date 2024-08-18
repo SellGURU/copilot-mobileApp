@@ -1,21 +1,18 @@
 import 'dart:io';
 
 import 'package:camera/camera.dart';
+import 'package:copilet/route/routes.dart';
+import 'package:copilet/screens/home/cubit/cubit.dart';
+import 'package:copilet/screens/login/cubit/cubit.dart';
+import 'package:copilet/screens/login/cubit/state.dart';
+import 'package:copilet/screens/login/login.dart';
+import 'package:copilet/screens/mainScreen/mainScreen.dart';
+import 'package:copilet/utility/changeScreanBloc/PageIndex_Bloc.dart';
+import 'package:copilet/utility/switchValueBloc/PageIndex_Bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:test_copilet/route/routes.dart';
-import 'package:test_copilet/screens/home/cubit/cubit.dart';
-import 'package:test_copilet/screens/login/cubit/cubit.dart';
-import 'package:test_copilet/screens/login/login.dart';
-import 'package:test_copilet/screens/login/cubit/state.dart';
-import 'package:test_copilet/screens/mainScreen/mainScreen.dart';
-import 'package:test_copilet/utility/camareControlerBloc/camera_Bloc.dart';
-import 'package:test_copilet/utility/camareControlerBloc/camera_events.dart';
-import 'package:test_copilet/utility/changeScreanBloc/PageIndex_Bloc.dart';
-import 'package:test_copilet/utility/switchValueBloc/PageIndex_Bloc.dart';
-import 'package:test_copilet/utility/token/getTokenLocaly.dart';
-import 'package:test_copilet/utility/token/updateToken.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

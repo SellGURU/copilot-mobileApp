@@ -5,14 +5,15 @@ import 'package:flutter/painting.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:popover/popover.dart';
-import 'package:test_copilet/screens/camera/camaraScreen.dart';
-import 'package:test_copilet/utility/changeScreanBloc/PageIndex_Bloc.dart';
-import 'package:test_copilet/utility/changeScreanBloc/PageIndex_events.dart';
+
 
 import '../components/text_style.dart';
 import '../res/colors.dart';
 import '../route/names.dart';
+import '../screens/camera/camaraScreen.dart';
 import '../utility/camareControlerBloc/camera_Bloc.dart';
+import '../utility/changeScreanBloc/PageIndex_Bloc.dart';
+import '../utility/changeScreanBloc/PageIndex_events.dart';
 
 class BottomNavigationBarCustom extends StatefulWidget {
   BottomNavigationBarCustom({super.key});

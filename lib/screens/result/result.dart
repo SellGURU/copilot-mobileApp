@@ -4,16 +4,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:test_copilet/components/text_style.dart';
-import 'package:test_copilet/screens/home/cubit/cubit.dart';
-import 'package:test_copilet/screens/home/cubit/state.dart';
 
+
+import '../../components/text_style.dart';
 import '../../res/colors.dart';
 import '../../utility/switchValueBloc/PageIndex_Bloc.dart';
 import '../../utility/switchValueBloc/PageIndex_events.dart';
 import '../../utility/switchValueBloc/PageIndex_states.dart';
 import '../../widgets/cardResultscreen.dart';
 import '../CholesterolScreen/CholesterolScreen.dart';
+import '../home/cubit/cubit.dart';
+import '../home/cubit/state.dart';
 
 class ResultScreen extends StatefulWidget {
   const ResultScreen({super.key});

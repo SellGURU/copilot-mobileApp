@@ -2,12 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:test_copilet/components/text_style.dart';
-import 'package:test_copilet/res/colors.dart';
-import 'package:test_copilet/widgets/chart.dart';
 
+
+import '../components/text_style.dart';
+import '../res/colors.dart';
 import '../utility/switchValueBloc/PageIndex_Bloc.dart';
 import '../utility/switchValueBloc/PageIndex_states.dart';
+import 'chart.dart';
 
 class Cardresultscreen extends StatefulWidget {
   late Color colorBadge;

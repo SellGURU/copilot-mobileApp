@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:test_copilet/components/text_style.dart';
 
+import '../../components/text_style.dart';
 import '../../res/colors.dart';
 import '../../route/names.dart';
 import '../../widgets/gauges.dart';

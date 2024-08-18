@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:test_copilet/components/text_style.dart';
 
+import '../components/text_style.dart';
 import '../res/colors.dart';
 
 class ChartDot extends StatelessWidget {

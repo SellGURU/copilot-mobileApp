@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
-import 'package:test_copilet/components/text_style.dart';
+
+import '../components/text_style.dart';
 
 class Totalscoregauge extends StatelessWidget {
   late double value;

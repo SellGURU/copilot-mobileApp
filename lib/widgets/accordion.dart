@@ -3,8 +3,8 @@ import 'package:accordion/controllers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:test_copilet/components/text_style.dart';
 
+import '../components/text_style.dart';
 import '../res/colors.dart'; // Assuming you are using an Accordion package
 
 class DynamicAccordion extends StatelessWidget {

@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:popover/popover.dart';
-import 'package:test_copilet/res/colors.dart';
 
+import '../../res/colors.dart';
 import '../../utility/changeScreanBloc/PageIndex_Bloc.dart';
 import '../../utility/changeScreanBloc/PageIndex_states.dart';
 import '../../utility/token/getTokenLocaly.dart';

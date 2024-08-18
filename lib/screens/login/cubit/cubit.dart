@@ -1,8 +1,8 @@
 
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
-import 'package:test_copilet/constants/endPoints.dart';
 
+import '../../../constants/endPoints.dart';
 import '../../../utility/token/getTokenLocaly.dart';
 import '../../../utility/token/updateToken.dart';
 import 'state.dart';

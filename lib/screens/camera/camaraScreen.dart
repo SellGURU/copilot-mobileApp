@@ -1,8 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:test_copilet/res/colors.dart';
-
 import '../../utility/camareControlerBloc/camera_Bloc.dart';
 import '../../utility/camareControlerBloc/camera_events.dart';
 import '../../utility/camareControlerBloc/camera_states.dart';

@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:test_copilet/utility/token/clearToken.dart';
-import 'package:test_copilet/utility/token/getTokenHttp.dart';
-import 'package:test_copilet/widgets/chart.dart';
+
+import '../../utility/token/clearToken.dart';
 
 class SettingPage extends StatelessWidget {
   SettingPage({super.key});

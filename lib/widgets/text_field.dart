@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:test_copilet/components/extention.dart';
 
 import '../components/text_style.dart';
 import '../res/dimens.dart';
