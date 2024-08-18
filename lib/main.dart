@@ -23,13 +23,13 @@ void main() async {
   // Initialize the cameras
   final cameras = await availableCameras();
   final camera = cameras.first;
+
   runApp(MyApp(camera: camera));
 }
 
 class MyApp extends StatefulWidget {
-  final CameraDescription camera;
-
-  const MyApp({Key? key, required this.camera}) : super(key: key);
+    final CameraDescription camera;
+    MyApp({Key? key, required this.camera}) : super(key: key);
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -44,7 +44,7 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => SwitchValueGraphBloc()),
         BlocProvider(create: (_) => AuthCubit()),
         BlocProvider(create: (_) => BiomarkerCubit()),
-        if (Platform.isAndroid || Platform.isIOS)
+        // if (Platform.isAndroid || Platform.isIOS)
           BlocProvider(
             lazy: false,
             create: (context) {
