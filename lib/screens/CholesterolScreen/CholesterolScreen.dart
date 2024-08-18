@@ -11,6 +11,8 @@ import '../../widgets/chart.dart';
 
 class CholesterolScreen extends StatefulWidget {
   @override
+  String title = "";
+  CholesterolScreen({Key? key, required this.title}) : super(key: key);
   State<CholesterolScreen> createState() => _CholesterolScreenState();
 }
 
@@ -34,7 +36,7 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
     return Scaffold(
       appBar: AppBar(backgroundColor: AppColors.bgScreen, actions: [
         Text(
-          "LDL Cholesterol",
+          "",
           style: AppTextStyles.title1,
         ),
         SizedBox(
@@ -277,7 +279,7 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                             const SizedBox(
                               width: 10,
                             ),
-                            Text('LDL Cholesterol',
+                            Text(widget.title,
                                 style: AppTextStyles.title1),
                           ],
                         ),

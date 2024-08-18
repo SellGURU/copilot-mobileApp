@@ -10,7 +10,7 @@ import 'names.dart';
 Map<String, Widget Function(BuildContext)> routes = {
   ScreenNames.home: (context) => const HomeScreen(),
   ScreenNames.login: (context) => const LoginPage(),
-  ScreenNames.LDL: (context) => CholesterolScreen(),
+  ScreenNames.LDL: (context) => CholesterolScreen(title: '',),
   ScreenNames.detailedPlan: (context) => detailedPlan(),
   ScreenNames.cameraScreen: (context) => CameraScreen(),
 };

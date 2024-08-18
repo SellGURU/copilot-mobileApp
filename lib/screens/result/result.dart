@@ -310,7 +310,8 @@ class _ResultScreenState extends State<ResultScreen> {
                     child: ListView.separated(
                       itemCount: data["data"].length,
                       itemBuilder: (BuildContext context, int index) {
-                        if (itemSelectedFiltered == data["data"][index]["tag"] ||
+                        if (itemSelectedFiltered ==
+                                data["data"][index]["tag"] ||
                             itemSelectedFiltered == "all") {
                           return BioMarkerCard(
                             label: data["data"][index]["label"],
@@ -323,7 +324,8 @@ class _ResultScreenState extends State<ResultScreen> {
                         }
                       },
                       separatorBuilder: (BuildContext context, int index) {
-                        if (itemSelectedFiltered == data["data"][index]["tag"] ||
+                        if (itemSelectedFiltered ==
+                                data["data"][index]["tag"] ||
                             itemSelectedFiltered == "all") {
                           return const SizedBox(
                             height: 20,
@@ -370,8 +372,10 @@ class BioMarkerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: GestureDetector(
-        onTap: () => Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => CholesterolScreen())),
+        onTap: () => Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => CholesterolScreen(
+                  title: label,
+                ))),
         child: Cardresultscreen(
           colorBadge: getColorBadge(colorBadge),
           badgeText: 'Normal',
