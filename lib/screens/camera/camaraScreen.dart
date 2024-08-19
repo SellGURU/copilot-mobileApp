@@ -50,21 +50,24 @@ class _CameraScreenState extends State<CameraScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[900], // Example background color
-      body: widget.isCameraStart
-          ? _cameraController != null && _cameraController!.value.isInitialized
-          ? CameraPreview(_cameraController!)
-          : Center(child: CircularProgressIndicator())
-          : Center(child: Text('Camera is not started')),
-      floatingActionButton: widget.isCameraStart
-          ? FloatingActionButton(
-        onPressed: () {
-          // Implement the camera capture or other functionality here
-        },
-        child: Icon(Icons.camera_alt),
-      )
-          : null,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.grey[900], // Example background color
+        body: widget.isCameraStart
+            ? _cameraController != null &&
+                    _cameraController!.value.isInitialized
+                ? CameraPreview(_cameraController!)
+                : Center(child: CircularProgressIndicator())
+            : Center(child: Text('Camera is not started')),
+        floatingActionButton: widget.isCameraStart
+            ? FloatingActionButton(
+                onPressed: () {
+                  // Implement the camera capture or other functionality here
+                },
+                child: Icon(Icons.camera_alt),
+              )
+            : null,
+      ),
     );
   }
 }

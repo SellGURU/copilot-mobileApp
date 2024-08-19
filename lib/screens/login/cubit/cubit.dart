@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 
@@ -44,16 +43,16 @@ class AuthCubit extends Cubit<AuthState> {
           await UpdateToken("token");
           emit(SuccessState());
         } else {
-          print("else");
-          emit(SuccessState());
+          // print("else");
+          // emit(SuccessState());
 
-          // emit(ErrorState());
+          emit(ErrorState());
         }
       });
     } catch (e) {
       print(e);
-      emit(SuccessState());
-      // emit(ErrorState());
+      // emit(SuccessState());
+      emit(ErrorState());
     }
   }
 }

@@ -1,6 +1,8 @@
+import 'package:copilet/res/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../widgets/text_field.dart';
 import '../login/cubit/state.dart';
@@ -49,15 +51,24 @@ class _LoginPageState extends State<LoginPage> {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
+      backgroundColor: AppColors.bgScreen,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(
             height: size.height,
-            padding: EdgeInsets.symmetric(horizontal: 40),
-            alignment: Alignment.center,
+            padding:
+                EdgeInsets.only(top: size.height * .2, left: 40, right: 40),
+            alignment: Alignment.topCenter,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
+                Container(
+                  padding: EdgeInsets.all(50),
+                  child: Image.asset(
+                    'assets/codie.png',
+                    scale: .4,
+                  ),
+                ),
                 AppTextField(
                   lable: 'username',
                   hint: 'username',
@@ -94,6 +105,8 @@ class _LoginPageState extends State<LoginPage> {
                       );
                     }
                     return ElevatedButton(
+                        style: ButtonStyle(
+                            backgroundColor: WidgetStateColor.transparent),
                         onPressed: () async {
                           BlocProvider.of<AuthCubit>(context).logIn(
                               _userNameController.value.text,
