@@ -72,7 +72,9 @@ class _MainscreenState extends State<Mainscreen> {
                     ),
                     detailedPlan(),
                     const Chatscreen(),
-                    CameraScreen(),
+                    CameraScreen(
+                      isCameraStart: false,
+                    ),
                   ],
                 );
               },

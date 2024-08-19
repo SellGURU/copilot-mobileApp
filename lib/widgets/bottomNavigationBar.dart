@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:popover/popover.dart';
 
-
 import '../components/text_style.dart';
 import '../res/colors.dart';
 import '../route/names.dart';
@@ -176,6 +175,7 @@ class ListItems extends StatefulWidget {
 
 class _ListItemsState extends State<ListItems> {
   var itemSelect = 1;
+  bool isCameraStart = false;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -261,12 +261,17 @@ class _ListItemsState extends State<ListItems> {
           // itemSelect=3;
           GestureDetector(
             onTap: () {
+              setState(() {
+                isCameraStart = true;
+              });
               Navigator.of(widget.Parentcontext).push(
                 MaterialPageRoute<void>(
                   // provide the Bloc to other screen
                   builder: (_) => BlocProvider.value(
                       value: BlocProvider.of<CameraBloc>(widget.Parentcontext),
-                      child: CameraScreen()),
+                      child: CameraScreen(
+                        isCameraStart: isCameraStart,
+                      )),
                 ),
               );
             },
