@@ -1,29 +1,29 @@
 import 'package:camera/camera.dart';
+import 'package:equatable/equatable.dart';
 
-class CameraStates {
-  final CameraController? controller;
+class CameraStates extends Equatable {
+  final List<CameraDescription>? cameras;
   final bool isInitialized;
-  final String? imagePath;
   final String? error;
 
-  CameraStates({
-    this.controller,
+  const CameraStates({
+    this.cameras,
     this.isInitialized = false,
-    this.imagePath,
     this.error,
   });
 
   CameraStates copyWith({
-    CameraController? controller,
+    List<CameraDescription>? cameras,
     bool? isInitialized,
-    String? imagePath,
     String? error,
   }) {
     return CameraStates(
-      controller: controller ?? this.controller,
+      cameras: cameras ?? this.cameras,
       isInitialized: isInitialized ?? this.isInitialized,
-      imagePath: imagePath ?? this.imagePath,
       error: error ?? this.error,
     );
   }
+
+  @override
+  List<Object?> get props => [cameras, isInitialized, error];
 }

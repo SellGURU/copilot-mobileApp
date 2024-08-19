@@ -1,44 +1,46 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../utility/camareControlerBloc/camera_Bloc.dart';
-import '../../utility/camareControlerBloc/camera_events.dart';
-import '../../utility/camareControlerBloc/camera_states.dart';
+import 'package:camera/camera.dart';
+import 'package:copilet/utility/camareControlerBloc/camera_Bloc.dart';
+import 'package:copilet/utility/camareControlerBloc/camera_states.dart';
 
 class CameraScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text("this is a camare screen"),
+    return Scaffold(
+      backgroundColor: Colors.grey[900], // Example background color
+      body: BlocBuilder<CameraBloc, CameraStates>(
+        builder: (context, state) {
+          if (state.isInitialized && state.cameras != null) {
+            // Create a CameraController using the first available camera
+            final cameraController = CameraController(
+              state.cameras!.first,
+              ResolutionPreset.high,
+            );
+
+            return FutureBuilder<void>(
+              future: cameraController.initialize(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return CameraPreview(cameraController);
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
+            );
+          } else if (state.error != null) {
+            return Center(child: Text('Error: ${state.error}'));
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Implement the camera capture or other functionality here
+        },
+        child: Icon(Icons.camera_alt),
+      ),
     );
   }
-// Widget build(BuildContext context) {
-  //   return BlocBuilder<CameraBloc, CameraStates>(
-  //     // create: (context) => CameraBlocBloc()..add(CameraInitialize(camera)),
-  //     builder: (context, state) {
-  //       if (state.isInitialized) {
-  //         return Scaffold(
-  //           backgroundColor: AppColors.bgScreen,
-  //           body: CameraPreview(state.controller!),
-  //           floatingActionButton: FloatingActionButton(
-  //             onPressed: () {
-  //               context.read<CameraBloc>().add(CameraCapture());
-  //             },
-  //             child: Icon(Icons.camera_alt),
-  //           ),
-  //         );
-  //       } else if (state.error != null) {
-  //         return Scaffold(
-  //           appBar: AppBar(title: Text('Camera')),
-  //           body: Center(child: Text(state.error!)),
-  //         );
-  //       } else {
-  //         return Scaffold(
-  //           appBar: AppBar(title: Text('Camera')),
-  //           body: Center(child: CircularProgressIndicator()),
-  //         );
-  //       }
-  //     },
-  //   );
-  // }
 }

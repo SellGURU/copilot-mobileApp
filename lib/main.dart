@@ -1,39 +1,28 @@
-import 'dart:io';
-
 import 'package:camera/camera.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:copilet/route/routes.dart';
 import 'package:copilet/screens/home/cubit/cubit.dart';
 import 'package:copilet/screens/login/cubit/cubit.dart';
 import 'package:copilet/screens/login/cubit/state.dart';
 import 'package:copilet/screens/login/login.dart';
 import 'package:copilet/screens/mainScreen/mainScreen.dart';
+import 'package:copilet/utility/camareControlerBloc/camera_Bloc.dart';
+import 'package:copilet/utility/camareControlerBloc/camera_events.dart';
 import 'package:copilet/utility/changeScreanBloc/PageIndex_Bloc.dart';
 import 'package:copilet/utility/switchValueBloc/PageIndex_Bloc.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize the cameras
-  // final cameras = await availableCameras();
-  // final camera = cameras.first;
-
-  // runApp(MyApp(camera: camera));
   runApp(MyApp());
 }
 
-class MyApp extends StatefulWidget {
-    // final CameraDescription camera;
-    MyApp({Key? key}) : super(key: key);
+class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
 
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -42,23 +31,21 @@ class _MyAppState extends State<MyApp> {
         BlocProvider(create: (_) => SwitchValueGraphBloc()),
         BlocProvider(create: (_) => AuthCubit()),
         BlocProvider(create: (_) => BiomarkerCubit()),
-        // if (Platform.isAndroid || Platform.isIOS)
-        //   BlocProvider(
-        //     lazy: false,
-        //     create: (context) {
-        //       // Create the CameraBlocBloc and immediately add the CameraInitialize event
-        //       final cameraBloc = CameraBloc();
-        //       cameraBloc.add(CameraInitialize(widget.camera));
-        //       return cameraBloc;
-        //     },
-        //   ),
+        BlocProvider(
+          lazy: false,
+          create: (context) {
+            final cameraBloc = CameraBloc();
+            cameraBloc.add(CameraInitialize()); // Trigger initialization
+            return cameraBloc;
+          },
+        ),
       ],
       child: MaterialApp(
         title: 'Copilot Demo',
         debugShowCheckedModeBanner: false,
         routes: routes,
         home: BlocBuilder<AuthCubit, AuthState>(
-          builder: (BuildContext context, state) {
+          builder: (context, state) {
             if (state is LoggedInState) {
               return const Mainscreen();
             } else {
