@@ -5,7 +5,8 @@ import 'package:copilet/utility/camareControlerBloc/camera_Bloc.dart';
 import 'package:copilet/utility/camareControlerBloc/camera_states.dart';
 
 class CameraScreen extends StatefulWidget {
-  late bool isCameraStart;
+  final bool isCameraStart;
+
   CameraScreen({required this.isCameraStart});
 
   @override
@@ -13,46 +14,57 @@ class CameraScreen extends StatefulWidget {
 }
 
 class _CameraScreenState extends State<CameraScreen> {
+  CameraController? _cameraController;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.isCameraStart) {
+      _initializeCamera();
+    }
+  }
+
+  void _initializeCamera() {
+    final cameraBloc = BlocProvider.of<CameraBloc>(context);
+    final state = cameraBloc.state;
+
+    if (state.isInitialized && state.cameras != null) {
+      _cameraController = CameraController(
+        state.cameras!.first,
+        ResolutionPreset.high,
+      );
+
+      _cameraController?.initialize().then((_) {
+        if (!mounted) return;
+        setState(() {}); // Refresh the UI when the controller is initialized
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    // Dispose of the CameraController when the screen is disposed
+    _cameraController?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[900], // Example background color
-      body: BlocBuilder<CameraBloc, CameraStates>(
-        builder: (context, state) {
-          if (widget.isCameraStart) if (state.isInitialized &&
-              state.cameras != null) {
-            // Create a CameraController using the first available camera
-            final cameraController = CameraController(
-              state.cameras!.first,
-              ResolutionPreset.high,
-            );
-
-            return FutureBuilder<void>(
-              future: cameraController.initialize(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return CameraPreview(cameraController);
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              },
-            );
-          } else if (state.error != null) {
-            return Center(child: Text('Error: ${state.error}'));
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-          else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
+      body: widget.isCameraStart
+          ? _cameraController != null && _cameraController!.value.isInitialized
+          ? CameraPreview(_cameraController!)
+          : Center(child: CircularProgressIndicator())
+          : Center(child: Text('Camera is not started')),
+      floatingActionButton: widget.isCameraStart
+          ? FloatingActionButton(
         onPressed: () {
           // Implement the camera capture or other functionality here
         },
         child: Icon(Icons.camera_alt),
-      ),
+      )
+          : null,
     );
   }
 }
