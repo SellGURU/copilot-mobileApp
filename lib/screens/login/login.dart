@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../widgets/text_field.dart';
+import '../home/cubit/cubit.dart';
 import '../login/cubit/state.dart';
 import '../mainScreen/mainScreen.dart';
 import 'cubit/cubit.dart';

@@ -11,7 +11,7 @@ class BiomarkerCubit extends Cubit<BiomarkerState> {
     getBiomarker();
   }
   Dio _dio = Dio();
-  getBiomarker() async {
+  Future<void> getBiomarker() async {
     emit(LoadingBiomarkerState());
     try {
       await _dio.get(Endpoints.biomarker).then((value) {

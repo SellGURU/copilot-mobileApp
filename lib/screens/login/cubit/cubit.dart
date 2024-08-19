@@ -43,9 +43,8 @@ class AuthCubit extends Cubit<AuthState> {
           await UpdateToken("token");
           emit(SuccessState());
         } else {
-          // print("else");
+          print("else");
           // emit(SuccessState());
-
           emit(ErrorState());
         }
       });
