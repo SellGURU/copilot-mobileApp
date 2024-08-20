@@ -205,6 +205,9 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                     ResultMainTab(title: widget.title),
                     HowToImproveTab(
                       title: widget.title,
+                    ),
+                    InsightTab(
+                      title: widget.title,
                     )
                   ],
                 )
@@ -408,7 +411,9 @@ class _HowToImproveTabState extends State<HowToImproveTab> {
 }
 
 class InsightTab extends StatefulWidget {
-  const InsightTab({super.key});
+  late String title;
+
+  InsightTab({super.key, required this.title});
 
   @override
   State<InsightTab> createState() => _InsightTabState();
@@ -417,6 +422,23 @@ class InsightTab extends StatefulWidget {
 class _InsightTabState extends State<InsightTab> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      color: AppColors.mainBg,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 10),
+            Text(
+                "Your genetic risk for elevated LDL cholesterol is average, but according to your latest blood test results, your LDL cholesterol levels are higher than optimal. Although your genetics may contribute to your cholesterol levels, your lifestyle choices, including diet, exercise, and weight management, have a more profound impact on your ability to reduce LDL cholesterol.By adopting a heart-healthy diet, increasing physical activity, and maintaining a healthy weight, you can effectively lower your LDL cholesterol, minimizing the influence of genetic factors and reducing your risk of heart disease.",
+                style: AppTextStyles.hintBlackWithHeight),
+          ],
+        ),
+      ),
+    );
   }
 }
