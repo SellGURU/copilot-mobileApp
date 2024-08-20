@@ -18,18 +18,7 @@ class CholesterolScreen extends StatefulWidget {
 
 class _CholesterolScreenState extends State<CholesterolScreen> {
   var indexItem = 0;
-  var toggleHistoryMod = "History";
-  var sections = [
-    {
-      'headerText': 'What Borderline LDL Cholesterol means for your health?',
-      'contentText': 'Content for the first section.',
-    },
-    {
-      'headerText': 'What you body says',
-      'contentText': 'Content for the second section.',
-    },
-    // Add more sections as needed
-  ];
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -210,115 +199,11 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                 const SizedBox(
                   height: 15,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                IndexedStack(
+                  index: indexItem,
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          toggleHistoryMod = "Latest";
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: toggleHistoryMod == "Latest"
-                            ? AppColors.yellowBegaDarker
-                            : Colors.grey.shade200,
-                      ),
-                      child: Text(
-                        'Latest',
-                        style: toggleHistoryMod == "Latest"
-                            ? AppTextStyles.hint
-                            : AppTextStyles.hintBlack,
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          toggleHistoryMod = "History";
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: toggleHistoryMod == "History"
-                            ? AppColors.yellowBegaDarker
-                            : Colors.grey.shade200,
-                      ),
-                      child: Text('History',
-                          style: toggleHistoryMod == "History"
-                              ? AppTextStyles.hint
-                              : AppTextStyles.hintBlack),
-                    ),
+                    ResultMainTab(title: widget.title)
                   ],
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                // LDL Cholesterol card description
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  color: AppColors.mainBg,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Container(
-                              width: 30,
-                              height: 30,
-                              padding: const EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(99),
-                                color: AppColors.yellowBega,
-                              ),
-                              child: SvgPicture.asset("assets/ldIcon.svg"),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Text(widget.title,
-                                style: AppTextStyles.title1),
-                          ],
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                            'LDL, or low-density lipoprotein, is often referred to as the "bad" cholesterol because high levels of it can lead to a buildup of fatty deposits in your arteries...',
-                            style: AppTextStyles.hintBlack),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                // Borderline card with chart
-                Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  color: AppColors.mainBg,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 16),
-                        AspectRatio(
-                          aspectRatio: 1.5,
-                          child: ChartDot(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                DynamicAccordion(
-                  sections: sections,
                 )
               ],
             ),
@@ -326,5 +211,172 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
         ),
       ),
     );
+  }
+}
+class ResultMainTab extends StatefulWidget {
+  late String title;
+  ResultMainTab({super.key,required this.title});
+
+  @override
+  State<ResultMainTab> createState() => _ResultMainTabState();
+}
+
+class _ResultMainTabState extends State<ResultMainTab> {
+  var toggleHistoryMod = "History";
+  var sections = [
+    {
+      'headerText': 'What Borderline LDL Cholesterol means for your health?',
+      'contentText': 'Content for the first section.',
+    },
+    {
+      'headerText': 'What you body says',
+      'contentText': 'Content for the second section.',
+    },
+    // Add more sections as needed
+  ];
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  toggleHistoryMod = "Latest";
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: toggleHistoryMod == "Latest"
+                    ? AppColors.yellowBegaDarker
+                    : Colors.grey.shade200,
+              ),
+              child: Text(
+                'Latest',
+                style: toggleHistoryMod == "Latest"
+                    ? AppTextStyles.hint
+                    : AppTextStyles.hintBlack,
+              ),
+            ),
+            SizedBox(width: 10),
+            ElevatedButton(
+              onPressed: () {
+                setState(() {
+                  toggleHistoryMod = "History";
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: toggleHistoryMod == "History"
+                    ? AppColors.yellowBegaDarker
+                    : Colors.grey.shade200,
+              ),
+              child: Text('History',
+                  style: toggleHistoryMod == "History"
+                      ? AppTextStyles.hint
+                      : AppTextStyles.hintBlack),
+            ),
+          ],
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+        // LDL Cholesterol card description
+        Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          color: AppColors.mainBg,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      width: 30,
+                      height: 30,
+                      padding: const EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(99),
+                        color: AppColors.yellowBega,
+                      ),
+                      child: SvgPicture.asset("assets/ldIcon.svg"),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Text(widget.title,
+                        style: AppTextStyles.title1),
+                  ],
+                ),
+                const SizedBox(height: 10),
+                Text(
+                    'LDL, or low-density lipoprotein, is often referred to as the "bad" cholesterol because high levels of it can lead to a buildup of fatty deposits in your arteries...',
+                    style: AppTextStyles.hintBlack),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+        // Borderline card with chart
+        Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          color: AppColors.mainBg,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 16),
+                AspectRatio(
+                  aspectRatio: 1.5,
+                  child: ChartDot(),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+        DynamicAccordion(
+          sections: sections,
+        )
+      ],
+    );
+  }
+}
+
+class HowToImproveTab extends StatefulWidget {
+  const HowToImproveTab({super.key});
+
+  @override
+  State<HowToImproveTab> createState() => _HowToImproveTabState();
+}
+
+class _HowToImproveTabState extends State<HowToImproveTab> {
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
+
+class InsightTab extends StatefulWidget {
+  const InsightTab({super.key});
+
+  @override
+  State<InsightTab> createState() => _InsightTabState();
+}
+
+class _InsightTabState extends State<InsightTab> {
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
   }
 }
