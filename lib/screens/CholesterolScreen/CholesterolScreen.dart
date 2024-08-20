@@ -202,7 +202,10 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                 IndexedStack(
                   index: indexItem,
                   children: [
-                    ResultMainTab(title: widget.title)
+                    ResultMainTab(title: widget.title),
+                    HowToImproveTab(
+                      title: widget.title,
+                    )
                   ],
                 )
               ],
@@ -213,9 +216,10 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
     );
   }
 }
+
 class ResultMainTab extends StatefulWidget {
   late String title;
-  ResultMainTab({super.key,required this.title});
+  ResultMainTab({super.key, required this.title});
 
   @override
   State<ResultMainTab> createState() => _ResultMainTabState();
@@ -307,8 +311,7 @@ class _ResultMainTabState extends State<ResultMainTab> {
                     const SizedBox(
                       width: 10,
                     ),
-                    Text(widget.title,
-                        style: AppTextStyles.title1),
+                    Text(widget.title, style: AppTextStyles.title1),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -354,7 +357,9 @@ class _ResultMainTabState extends State<ResultMainTab> {
 }
 
 class HowToImproveTab extends StatefulWidget {
-  const HowToImproveTab({super.key});
+  late String title;
+
+  HowToImproveTab({super.key, required this.title});
 
   @override
   State<HowToImproveTab> createState() => _HowToImproveTabState();
@@ -363,7 +368,42 @@ class HowToImproveTab extends StatefulWidget {
 class _HowToImproveTabState extends State<HowToImproveTab> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      color: AppColors.mainBg,
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 30,
+                  height: 30,
+                  padding: const EdgeInsets.all(5),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(99),
+                    color: AppColors.yellowBega,
+                  ),
+                  child: SvgPicture.asset("assets/ldIcon.svg"),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Text(widget.title, style: AppTextStyles.title1),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Text(
+                "Consider reviewing your diet and lifestyle choices, focusing on reducing saturated fats, trans fats, and cholesterol-rich foods. Incorporate more fiber-rich foods, such as fruits, vegetables, and whole grains, into your meals. Regular physical activity can also help lower LDL cholesterol levels. If you have been prescribed cholesterol-lowering medications, ensure you are taking them as directed by your doctor. If you experience chest pain, shortness of breath, or other symptoms of heart problems, please contact your doctor immediately, as high LDL cholesterol can increase your risk of heart disease. Set your LDL cholesterol test reminder in the Your Data section and track your levels over time.",
+                style: AppTextStyles.hintBlackWithHeight),
+          ],
+        ),
+      ),
+    );
   }
 }
 
