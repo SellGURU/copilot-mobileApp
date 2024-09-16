@@ -443,7 +443,7 @@ class WaterTaskWidget extends StatelessWidget {
                   showModalBottomSheet(
                     context: context,
                     useRootNavigator: true,
-                    isScrollControlled: true,
+                    // isScrollControlled: true,
                     builder: (BuildContext context) {
                       return SwapBottomSheet();
                     },
@@ -482,7 +482,6 @@ class SwapBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16.0),
-      height: 250,
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
@@ -491,7 +490,7 @@ class SwapBottomSheet extends StatelessWidget {
         ),
       ),
       child: Column(
-        // mainAxisSize: MainAxisSize.min,
+        mainAxisSize: MainAxisSize.min,
     
         children: [
           Row(
@@ -502,7 +501,7 @@ class SwapBottomSheet extends StatelessWidget {
                   'Swap for Water',
                   style: AppTextStyles.titleBig),
               IconButton(
-                icon: Icon(Icons.close),
+                icon: Icon(Icons.close,color: AppColors.purpleDark,),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -515,6 +514,7 @@ class SwapBottomSheet extends StatelessWidget {
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.search),
               hintText: 'Search to swap...',
+              border: InputBorder.none
             ),
           ),
           SizedBox(height: 90),
