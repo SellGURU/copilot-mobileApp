@@ -374,7 +374,6 @@ class TasksSection extends StatelessWidget {
     );
   }
 }
-
 class WaterTaskWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -385,7 +384,6 @@ class WaterTaskWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            // rgba(201, 235, 237, 1)
             color: AppColors.mainShadow.withOpacity(.25),
             spreadRadius: 3,
             blurRadius: 7,
@@ -440,24 +438,26 @@ class WaterTaskWidget extends StatelessWidget {
           // Swap and Add (+) Buttons
           Row(
             children: [
-              Column(
-                children: [
-                  SvgPicture.asset("assets/repeat-circle.svg"),
-                  GestureDetector(
-                    onTap: (){
-                      showModalBottomSheet(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return SwapBottomSheet();
-                        },
-                      );
+              GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    useRootNavigator: true,
+                    isScrollControlled: true,
+                    builder: (BuildContext context) {
+                      return SwapBottomSheet();
                     },
-                    child: Text(
+                  );
+                },
+                child: Column(
+                  children: [
+                    SvgPicture.asset("assets/repeat-circle.svg"),
+                    Text(
                       'Swap',
                       style: AppTextStyles.hint,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               const SizedBox(
                 width: 10,
@@ -474,13 +474,16 @@ class WaterTaskWidget extends StatelessWidget {
     );
   }
 }
+
+
 // Swap Bottom Sheet Content
 class SwapBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(16.0),
+      height: 250,
+      decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20.0),
@@ -488,16 +491,16 @@ class SwapBottomSheet extends StatelessWidget {
         ),
       ),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        // mainAxisSize: MainAxisSize.min,
+    
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              SizedBox(width: 50,),
               Text(
-                'Swap for Water',
-                style: TextStyle(
-                    fontSize: 18, fontWeight: FontWeight.bold),
-              ),
+                  'Swap for Water',
+                  style: AppTextStyles.titleBig),
               IconButton(
                 icon: Icon(Icons.close),
                 onPressed: () {
@@ -508,28 +511,14 @@ class SwapBottomSheet extends StatelessWidget {
           ),
           SizedBox(height: 16),
           // Search bar
-          TextField(
+          const TextField(
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.search),
               hintText: 'Search to swap...',
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
             ),
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 90),
           // Placeholder for items to swap
-          Container(
-            height: 50,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.blueAccent),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Center(
-              child: Text('Item to Swap', style: TextStyle(color: Colors.grey)),
-            ),
-          ),
         ],
       ),
     );
