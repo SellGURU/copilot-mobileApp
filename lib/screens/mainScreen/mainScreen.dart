@@ -71,7 +71,7 @@ class _MainscreenState extends State<Mainscreen> {
                         builder: (context) => ProgressScreen(),
                       ),
                     ),
-                    detailedPlan(),
+                    HealthPlanScreen(),
                     const Chatscreen(),
                     CameraScreen(
                       isCameraStart: false,
