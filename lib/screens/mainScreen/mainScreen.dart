@@ -16,6 +16,7 @@ import '../chatScreen/chatScreen.dart';
 import '../home/home.dart';
 import '../login/login.dart';
 import '../plan/planScreen.dart';
+import '../progressScreen/progress.dart';
 import '../result/result.dart';
 
 class Mainscreen extends StatefulWidget {
@@ -67,7 +68,7 @@ class _MainscreenState extends State<Mainscreen> {
                     Navigator(
                       key: _healthPlanScreenKey,
                       onGenerateRoute: (settings) => MaterialPageRoute(
-                        builder: (context) => HealthPlanScreen(),
+                        builder: (context) => ProgressScreen(),
                       ),
                     ),
                     detailedPlan(),
