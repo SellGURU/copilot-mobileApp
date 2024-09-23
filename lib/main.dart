@@ -47,7 +47,9 @@ class MyApp extends StatelessWidget {
         home: BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
             if (state is LoggedInState) {
-              return const Mainscreen();
+              // return const Mainscreen();
+              return const LoginPage();
+
             } else {
               return const LoginPage();
             }

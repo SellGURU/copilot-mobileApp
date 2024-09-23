@@ -8,7 +8,9 @@ import '../res/colors.dart';
 class AppTextStyles {
   AppTextStyles._();
 
-  static TextStyle titleBig =GoogleFonts.roboto( textStyle:TextStyle(fontSize: 24, color: AppColors.text,fontWeight: FontWeight.w700));
+  static TextStyle title2xl =GoogleFonts.roboto( textStyle:TextStyle(fontSize: 24, color: AppColors.text,fontWeight: FontWeight.w700));
+  static TextStyle titleXl =GoogleFonts.roboto( textStyle:TextStyle(fontSize: 20, color: AppColors.text,fontWeight: FontWeight.w500));
+
   // --------------
 
   static TextStyle title1 =GoogleFonts.roboto( textStyle:TextStyle(fontSize: 16, color: AppColors.text,fontWeight: FontWeight.w500));
@@ -16,6 +18,7 @@ class AppTextStyles {
   // --------------
 
   static TextStyle titleMedium = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 14, color: AppColors.black, fontWeight: FontWeight.w400));
+  static TextStyle titleMediumWhite = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w400));
   static TextStyle title2 =GoogleFonts.roboto( textStyle:TextStyle(fontSize: 14, color: AppColors.text),fontWeight: FontWeight.w500);
   // -----------
   static TextStyle hintBlackWithHeight = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 12, color: AppColors.black,fontWeight: FontWeight.w400,height: 2));

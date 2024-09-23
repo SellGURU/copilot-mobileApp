@@ -54,7 +54,7 @@ class Totalscoregauge extends StatelessWidget {
                         SizedBox(height: 8),
                         Text(
                           "$value",
-                          style: AppTextStyles.titleBig,
+                          style: AppTextStyles.title2xl,
                         ),
                       ],
                     ),

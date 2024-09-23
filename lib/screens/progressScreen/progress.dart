@@ -499,7 +499,7 @@ class SwapBottomSheet extends StatelessWidget {
               SizedBox(width: 50,),
               Text(
                   'Swap for Water',
-                  style: AppTextStyles.titleBig),
+                  style: AppTextStyles.title2xl),
               IconButton(
                 icon: Icon(Icons.close,color: AppColors.purpleDark,),
                 onPressed: () {
