@@ -5,11 +5,13 @@ import '../screens/Detailed Plan/detailedPlan.dart';
 import '../screens/camera/camaraScreen.dart';
 import '../screens/home/home.dart';
 import '../screens/login/login.dart';
+import '../screens/onBoardingLogin.dart';
 import 'names.dart';
 
 Map<String, Widget Function(BuildContext)> routes = {
   ScreenNames.home: (context) => const Overview(),
   ScreenNames.login: (context) => const LoginPage(),
+  ScreenNames.onboarddinglogin: (context) => onboarddinglogin(),
   ScreenNames.LDL: (context) => CholesterolScreen(
         title: '',
       ),
