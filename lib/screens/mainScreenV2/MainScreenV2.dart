@@ -145,6 +145,7 @@ class Overview2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: AppColors.bgScreen,
         body: SingleChildScrollView(
@@ -234,7 +235,7 @@ class Overview2 extends StatelessWidget {
                 const Longevity2(),
                 Container(
                   padding: const EdgeInsets.only(top: 20, bottom: 10),
-                  child: SvgPicture.asset("assets/Group20.svg"),
+                  child: SvgPicture.asset("assets/Group20.svg",width: size.width,),
                 ),
               ],
             ),

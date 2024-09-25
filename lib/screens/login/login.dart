@@ -228,7 +228,7 @@ class _LoginPageState extends State<LoginPage> {
                     }
                     if (state is ErrorState) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text("Error in server")));
+                          SnackBar(content: Text(state.errorText)));
                     }
                   },
                   builder: (context, state) {

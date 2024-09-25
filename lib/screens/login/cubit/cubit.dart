@@ -34,20 +34,20 @@ class AuthCubit extends Cubit<AuthState> {
         },
       ).then((value) async {
         print("value.toString():"+value.toString());
-        if (value.statusCode == 200) {
+        if (value.statusCode == 200&&value.data["detail"]==null) {
           print("token $value");
           await UpdateToken(value.data["access_token"]);
           emit(SuccessState());
         } else {
           print("else");
           // emit(SuccessState());
-          emit(ErrorState());
+          emit(ErrorState(value.data["detail"]));
         }
       });
     } catch (e) {
       print("catch: $e");
       // emit(SuccessState());
-      emit(ErrorState());
+      emit(ErrorState("server error"));
     }
   }
   logOut() async {
