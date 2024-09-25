@@ -1,6 +1,8 @@
 import 'package:camera/camera.dart';
 import 'package:copilet/screens/mainScreenV2/MainScreenV2.dart';
 import 'package:copilet/screens/mainScreenV2/cubit/cubit.dart';
+import 'package:copilet/screens/mainScreenV2/downloadReport/cubit.dart';
+import 'package:copilet/screens/mainScreenV2/downloadReport/state.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,6 +36,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => AuthCubit()),
         BlocProvider(create: (_) => BiomarkerCubit()),
         BlocProvider(create: (_) => HealthScoreCubit()),
+        BlocProvider(create: (_) => DownloadReportPdfCubit()),
         BlocProvider(
           lazy: false,
           create: (context) {

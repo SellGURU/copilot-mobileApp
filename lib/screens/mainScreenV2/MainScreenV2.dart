@@ -1,6 +1,7 @@
 import 'package:copilet/constants/endPoints.dart';
 import 'package:copilet/screens/mainScreenV2/cubit/cubit.dart';
 import 'package:copilet/screens/mainScreenV2/cubit/state.dart';
+import 'package:copilet/screens/mainScreenV2/downloadReport/state.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,12 +20,14 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'downloadReport/cubit.dart';
+
 Future<void> downloadAndSavePdf(BuildContext context, String base64Pdf) async {
   // Request permission
   if (await Permission.storage.request().isGranted) {
     try {
       // Decode base64 string to bytes
-      final bytes = base64Decode(base64Pdf);
+      final bytes = base64Decode("data:application/pdf;base64,$base64Pdf");
 
       // Get the directory to save the file (external storage for Android)
       final directory = await getExternalStorageDirectory();
@@ -113,7 +116,6 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
 
 class Overview2 extends StatelessWidget {
   const Overview2({super.key});
-  final String base64Pdf = "your_base64_encoded_pdf_string_here";
 
   @override
   Widget build(BuildContext context) {
@@ -155,30 +157,46 @@ class Overview2 extends StatelessWidget {
                     ),
                     Row(
                       children: [
-                        GestureDetector(
-                          onTap: () async {
-                            await downloadAndSavePdf(context, base64Pdf);
+                        BlocConsumer<DownloadReportPdfCubit, DownloadPdfState>(
+                          listener: (context, state) {
+                            // TODO: implement listener
                           },
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                "assets/document-download.svg",
-                                width: 16,
-                                height: 16,
-                                colorFilter: const ColorFilter.mode(
-                                  AppColors.purpleLite,
-                                  BlendMode.srcIn,
-                                ),
+                          builder: (context, state) {
+                            if(state is SuccessDownloadPdf) {
+                            print("state.pdfUrl:${state.pdfUrl}");
+                              return GestureDetector(
+                              onTap: () async {
+                                await downloadAndSavePdf(context,state.pdfUrl);
+                              },
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/document-download.svg",
+                                    width: 16,
+                                    height: 16,
+                                    colorFilter: const ColorFilter.mode(
+                                      AppColors.purpleLite,
+                                      BlendMode.srcIn,
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "Report",
+                                    style: AppTextStyles.hintPurple,
+                                  ),
+                                ],
                               ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                "Report",
-                                style: AppTextStyles.hintPurple,
-                              ),
-                            ],
-                          ),
+                            );
+                            }
+                            if(state is LoadingDownloadPdf) {
+                                return const CircularProgressIndicator();
+                            }
+                            else{
+                              return const SizedBox();
+                            }
+                          },
                         ),
                       ],
                     )
@@ -212,14 +230,14 @@ class _Longevity2State extends State<Longevity2> {
     return BlocConsumer<HealthScoreCubit, HealthScoreState>(
       listener: (BuildContext context, HealthScoreState state) {
         if (state is ErrorHealthScore) {
-          ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Error in server")));
+          ScaffoldMessenger.of(context)
+              .showSnackBar(const SnackBar(content: Text("Error in server")));
         }
       },
-      builder: (context,HealthScoreState state) {
-
+      builder: (context, HealthScoreState state) {
         if (state is SuccessHealthScore) {
-          print("SuccessHealthScore: ${(state as SuccessHealthScore).scoreData}");
+          print(
+              "SuccessHealthScore: ${(state).scoreData}");
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -288,12 +306,12 @@ class _Longevity2State extends State<Longevity2> {
                                   padding: const EdgeInsets.only(
                                       bottom: 5, top: 5, left: 12, right: 12),
                                   child: Text(
-                                    "${(state as SuccessHealthScore).scoreData['Physiological']}/100",
+                                    "${(state).scoreData['Physiological']}/100",
                                     style: AppTextStyles.gradeGreen,
                                   ),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 width: 5,
                               ),
                               const Icon(
@@ -466,8 +484,7 @@ class _Longevity2State extends State<Longevity2> {
               )
             ],
           );
-        }
-        else{
+        } else {
           return SizedBox();
         }
       },
