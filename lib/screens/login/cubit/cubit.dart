@@ -50,4 +50,9 @@ class AuthCubit extends Cubit<AuthState> {
       emit(ErrorState());
     }
   }
+  logOut() async {
+    await UpdateToken("");
+    emit(LoggedOutState());
+  }
+
 }

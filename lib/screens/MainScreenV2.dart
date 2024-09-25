@@ -8,7 +8,8 @@ import '../utility/changeScreanBloc/PageIndex_Bloc.dart';
 import '../utility/changeScreanBloc/PageIndex_states.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
+import 'login/cubit/cubit.dart';
+import 'login/cubit/state.dart';
 
 class Mainscreenv2 extends StatefulWidget {
   const Mainscreenv2({super.key});
@@ -18,6 +19,7 @@ class Mainscreenv2 extends StatefulWidget {
 }
 
 class _Mainscreenv2State extends State<Mainscreenv2> {
+  void logOut() {}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,10 +30,37 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
               // setState(() {
               //   pageIndex = state.pageIndex;
               // });
-              return const IndexedStack(
-                index: 0,
+              return Stack(
                 children: [
-                  Overview2(),
+                  const Overview2(),
+                  BlocBuilder<AuthCubit, AuthState>(
+                    builder: (context, state) {
+                      return GestureDetector(
+                        onTap: () {
+                          BlocProvider.of<AuthCubit>(context).logOut();
+                        },
+                        child: Positioned(
+                            bottom: 30,
+                            right: 40,
+                            child: Row(
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/logout.svg",
+                                  width: 30,
+                                  height: 16,
+                                ),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  "Log out",
+                                  style: AppTextStyles.hint,
+                                )
+                              ],
+                            )),
+                      );
+                    },
+                  ),
                 ],
               );
             },
@@ -39,6 +68,7 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
         ));
   }
 }
+
 class Overview2 extends StatelessWidget {
   const Overview2({super.key});
 
@@ -90,13 +120,19 @@ class Overview2 extends StatelessWidget {
                               width: 16,
                               height: 16,
                               colorFilter: const ColorFilter.mode(
-                                AppColors.purpleLite,                 // The color you want to apply
-                                BlendMode.srcIn,            // Blend mode to apply the color
+                                AppColors
+                                    .purpleLite, // The color you want to apply
+                                BlendMode
+                                    .srcIn, // Blend mode to apply the color
                               ),
                             ),
-                            const SizedBox(width: 5,),
-                            Text("Weekly Report",style: AppTextStyles.hintLitePurple,),
-
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "Weekly Report",
+                              style: AppTextStyles.hintLitePurple,
+                            ),
                           ],
                         ),
                         const SizedBox(
@@ -109,8 +145,13 @@ class Overview2 extends StatelessWidget {
                               width: 16,
                               height: 16,
                             ),
-                            const SizedBox(width: 5,),
-                            Text("Report",style: AppTextStyles.hintPurple,),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "Report",
+                              style: AppTextStyles.hintPurple,
+                            ),
                           ],
                         ),
                       ],
@@ -131,6 +172,7 @@ class Overview2 extends StatelessWidget {
         ));
   }
 }
+
 class Longevity2 extends StatefulWidget {
   const Longevity2({super.key});
 
@@ -144,9 +186,18 @@ class _Longevity2State extends State<Longevity2> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(height: 20,),
-        Container(alignment: Alignment.centerLeft,child: Text("Longevity2 Theme",style: AppTextStyles.title1,)),
-        SizedBox(height: 10,),
+        SizedBox(
+          height: 20,
+        ),
+        Container(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              "Longevity2 Theme",
+              style: AppTextStyles.title1,
+            )),
+        SizedBox(
+          height: 10,
+        ),
         Column(
           children: [
             Container(
@@ -175,12 +226,14 @@ class _Longevity2State extends State<Longevity2> {
                           width: 30,
                           height: 30,
                         ),
-                        SizedBox(width: 5,),
+                        SizedBox(
+                          width: 5,
+                        ),
                         Center(
                             child: Text(
-                              "Physiological",
-                              style: AppTextStyles.title2,
-                            )),
+                          "Physiological",
+                          style: AppTextStyles.title2,
+                        )),
                       ],
                     ),
                     Row(
@@ -190,21 +243,34 @@ class _Longevity2State extends State<Longevity2> {
                           style: AppTextStyles.hint,
                         ),
                         Container(
-                          decoration: BoxDecoration(color: Color.fromRGBO(6, 199, 141, .4),borderRadius: BorderRadius.circular(20)),
+                          decoration: BoxDecoration(
+                              color: Color.fromRGBO(6, 199, 141, .4),
+                              borderRadius: BorderRadius.circular(20)),
                           child: Padding(
-                            padding: const EdgeInsets.only(bottom: 5,top: 5,left: 12,right: 12),
-                            child: Text("${"90"}/100",style: AppTextStyles.gradeGreen,),
+                            padding: const EdgeInsets.only(
+                                bottom: 5, top: 5, left: 12, right: 12),
+                            child: Text(
+                              "${"90"}/100",
+                              style: AppTextStyles.gradeGreen,
+                            ),
                           ),
                         ),
-                        SizedBox(width: 5,),
-                        const Icon(Icons.arrow_forward_ios_outlined,color: AppColors.textLite,)
+                        SizedBox(
+                          width: 5,
+                        ),
+                        const Icon(
+                          Icons.arrow_forward_ios_outlined,
+                          color: AppColors.textLite,
+                        )
                       ],
                     )
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
@@ -231,16 +297,18 @@ class _Longevity2State extends State<Longevity2> {
                           width: 30,
                           height: 30,
                           colorFilter: const ColorFilter.mode(
-                            AppColors.purpleDark,                 // The color you want to apply
-                            BlendMode.srcIn,            // Blend mode to apply the color
+                            AppColors.purpleDark, // The color you want to apply
+                            BlendMode.srcIn, // Blend mode to apply the color
                           ),
                         ),
-                        SizedBox(width: 5,),
+                        SizedBox(
+                          width: 5,
+                        ),
                         Center(
                             child: Text(
-                              "Activity",
-                              style: AppTextStyles.title2,
-                            )),
+                          "Activity",
+                          style: AppTextStyles.title2,
+                        )),
                       ],
                     ),
                     Row(
@@ -250,21 +318,34 @@ class _Longevity2State extends State<Longevity2> {
                           style: AppTextStyles.hint,
                         ),
                         Container(
-                          decoration: BoxDecoration(color: Color.fromRGBO(6, 199, 141, .4),borderRadius: BorderRadius.circular(20)),
+                          decoration: BoxDecoration(
+                              color: Color.fromRGBO(6, 199, 141, .4),
+                              borderRadius: BorderRadius.circular(20)),
                           child: Padding(
-                            padding: const EdgeInsets.only(bottom: 5,top: 5,left: 12,right: 12),
-                            child: Text("${"89"}/100",style: AppTextStyles.gradeGreen,),
+                            padding: const EdgeInsets.only(
+                                bottom: 5, top: 5, left: 12, right: 12),
+                            child: Text(
+                              "${"89"}/100",
+                              style: AppTextStyles.gradeGreen,
+                            ),
                           ),
                         ),
-                        SizedBox(width: 5,),
-                        const Icon(Icons.arrow_forward_ios_outlined,color: AppColors.textLite,)
+                        SizedBox(
+                          width: 5,
+                        ),
+                        const Icon(
+                          Icons.arrow_forward_ios_outlined,
+                          color: AppColors.textLite,
+                        )
                       ],
                     )
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 10,),
+            const SizedBox(
+              height: 10,
+            ),
             Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
@@ -291,16 +372,18 @@ class _Longevity2State extends State<Longevity2> {
                           width: 30,
                           height: 30,
                           colorFilter: const ColorFilter.mode(
-                            AppColors.purpleDark,                 // The color you want to apply
-                            BlendMode.srcIn,            // Blend mode to apply the color
+                            AppColors.purpleDark, // The color you want to apply
+                            BlendMode.srcIn, // Blend mode to apply the color
                           ),
                         ),
-                        SizedBox(width: 5,),
+                        SizedBox(
+                          width: 5,
+                        ),
                         Center(
                             child: Text(
-                              "Mind",
-                              style: AppTextStyles.title2,
-                            )),
+                          "Mind",
+                          style: AppTextStyles.title2,
+                        )),
                       ],
                     ),
                     Row(
@@ -310,14 +393,25 @@ class _Longevity2State extends State<Longevity2> {
                           style: AppTextStyles.hintSmale,
                         ),
                         Container(
-                          decoration: BoxDecoration(color: AppColors.yellowBega.withOpacity(.2),borderRadius: BorderRadius.circular(20)),
+                          decoration: BoxDecoration(
+                              color: AppColors.yellowBega.withOpacity(.2),
+                              borderRadius: BorderRadius.circular(20)),
                           child: Padding(
-                            padding: const EdgeInsets.only(bottom: 5,top: 5,left: 12,right: 12),
-                            child: Text("${"56"}/100",style: AppTextStyles.gradeYellow,),
+                            padding: const EdgeInsets.only(
+                                bottom: 5, top: 5, left: 12, right: 12),
+                            child: Text(
+                              "${"56"}/100",
+                              style: AppTextStyles.gradeYellow,
+                            ),
                           ),
                         ),
-                        SizedBox(width: 5,),
-                        const Icon(Icons.arrow_forward_ios_outlined,color: AppColors.textLite,)
+                        SizedBox(
+                          width: 5,
+                        ),
+                        const Icon(
+                          Icons.arrow_forward_ios_outlined,
+                          color: AppColors.textLite,
+                        )
                       ],
                     )
                   ],
