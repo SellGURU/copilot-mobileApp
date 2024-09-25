@@ -184,13 +184,34 @@ class Overview2 extends StatelessWidget {
                     ),
                     Row(
                       children: [
+                        Row(
+                          children: [
+                            SvgPicture.asset(
+                              "assets/document-download.svg",
+                              width: 16,
+                              height: 16,
+                              colorFilter: const ColorFilter.mode(
+                                AppColors.purpleLite,
+                                BlendMode.srcIn,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              "Weekly Report",
+                              style: AppTextStyles.hintLitePurple,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(width: 10,),
+
                         BlocConsumer<DownloadReportPdfCubit, DownloadPdfState>(
                           listener: (context, state) {
                             // TODO: implement listener
                           },
                           builder: (context, state) {
                             if(state is SuccessDownloadPdf) {
-                            print("state.pdfUrl:${state.pdfUrl}");
                               return GestureDetector(
                               onTap: () async {
                                 await downloadAndSavePdf(context,state.pdfUrl);
@@ -202,7 +223,7 @@ class Overview2 extends StatelessWidget {
                                     width: 16,
                                     height: 16,
                                     colorFilter: const ColorFilter.mode(
-                                      AppColors.purpleLite,
+                                      AppColors.purpleDark,
                                       BlendMode.srcIn,
                                     ),
                                   ),
@@ -225,6 +246,7 @@ class Overview2 extends StatelessWidget {
                             }
                           },
                         ),
+
                       ],
                     )
                   ],
