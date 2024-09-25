@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:copilet/components/text_style.dart';
 import 'package:copilet/res/colors.dart';
-import 'package:copilet/screens/MainScreenV2.dart';
+import 'package:copilet/screens/mainScreenV2/MainScreenV2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
