@@ -1,9 +1,12 @@
+
 import 'package:copilet/constants/endPoints.dart';
 import 'package:copilet/screens/mainScreenV2/cubit/cubit.dart';
 import 'package:copilet/screens/mainScreenV2/cubit/state.dart';
 import 'package:copilet/screens/mainScreenV2/downloadReport/state.dart';
-import 'package:dio/dio.dart';
+import 'dart:io' as io; // For Android file handling
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -12,47 +15,70 @@ import '../../res/colors.dart';
 import '../../utility/changeScreanBloc/PageIndex_Bloc.dart';
 import '../../utility/changeScreanBloc/PageIndex_states.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:universal_html/html.dart' as html;
 import '../login/cubit/cubit.dart';
 import '../login/cubit/state.dart';
 import 'dart:convert';
-import 'dart:io';
-import 'package:path_provider/path_provider.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import 'downloadReport/cubit.dart';
 
 Future<void> downloadAndSavePdf(BuildContext context, String base64Pdf) async {
-  // Request permission
-  if (await Permission.storage.request().isGranted) {
-    try {
-      // Decode base64 string to bytes
-      final bytes = base64Decode("data:application/pdf;base64,$base64Pdf");
+  // Decode base64 string to bytes
+  final bytes = base64Decode(base64Pdf);
 
-      // Get the directory to save the file (external storage for Android)
-      final directory = await getExternalStorageDirectory();
+  if (kIsWeb) {
+    // Web logic for downloading the PDF
+    _downloadPdfWeb(bytes);
+  } else {
+    // Android logic for saving the PDF
+    await _downloadPdfAndroid(context, bytes);
+  }
+}
 
-      // Define the file path and name
-      final path = '${directory!.path}/report.pdf';
+/// Web: Download the PDF using the browser's download mechanism
+void _downloadPdfWeb(Uint8List bytes) {
+  // Create a Blob object from the bytes
+  final blob = html.Blob([bytes], 'application/pdf');
 
-      // Create the file and write the bytes
-      final file = File(path);
+  // Create a URL for the Blob and set it as the href of an anchor element
+  final url = html.Url.createObjectUrlFromBlob(blob);
+  final anchor = html.AnchorElement(href: url)
+    ..setAttribute("download", "report.pdf")
+    ..click(); // Trigger a download by clicking the link
+
+  // Revoke the object URL to avoid memory leaks
+  html.Url.revokeObjectUrl(url);
+}
+
+/// Android: Save the PDF file using app-specific storage or SAF (File Picker)
+Future<void> _downloadPdfAndroid(BuildContext context, Uint8List bytes) async {
+  try {
+    // Use File Picker to allow the user to choose a location for saving the file
+    String? outputFilePath = await FilePicker.platform.saveFile(
+      dialogTitle: 'Save PDF',
+      fileName: 'report.pdf',
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+
+    if (outputFilePath != null) {
+      // Create a file and write the bytes
+      final file = io.File(outputFilePath);
       await file.writeAsBytes(bytes);
 
-      print('PDF saved at $path');
+      print('PDF saved at $outputFilePath');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('PDF saved at $path')),
+        SnackBar(content: Text('PDF saved at $outputFilePath')),
       );
-    } catch (e) {
-      print('Error saving file: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error saving PDF')),
-      );
+    } else {
+      // Handle case where the user cancels the file picker
+      print('User canceled the save dialog');
     }
-  } else {
-    print('Storage permission denied');
+  } catch (e) {
+    // Handle any errors that occur during the file saving process
+    print('Error saving PDF: $e');
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Storage permission denied')),
+      SnackBar(content: Text('Error saving PDF')),
     );
   }
 }
