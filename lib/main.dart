@@ -1,4 +1,5 @@
 import 'package:camera/camera.dart';
+import 'package:copilet/screens/MainScreenV2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,8 +48,8 @@ class MyApp extends StatelessWidget {
         home: BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
             if (state is LoggedInState) {
-              // return const Mainscreen();
-              return const LoginPage();
+              return const Mainscreenv2();
+              // return const LoginPage();
 
             } else {
               return const LoginPage();

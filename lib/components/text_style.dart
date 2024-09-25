@@ -26,6 +26,8 @@ class AppTextStyles {
   static TextStyle hintMedium = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 12, color: AppColors.black,fontWeight: FontWeight.w500));
   static TextStyle hintBlack = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 12, color: AppColors.black,fontWeight: FontWeight.w400));
   static TextStyle hint = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 12, color: AppColors.textLite,fontWeight: FontWeight.w400));
+  static TextStyle hintPurple = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 12, color: AppColors.purpleDark,fontWeight: FontWeight.w400));
+  static TextStyle hintLitePurple = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 12, color: AppColors.purpleLite,fontWeight: FontWeight.w400));
   // --------------
 
   static TextStyle gradeGreen = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 11,fontWeight: FontWeight.w500, color: AppColors.greenBega));

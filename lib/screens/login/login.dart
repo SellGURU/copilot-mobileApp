@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:copilet/components/text_style.dart';
 import 'package:copilet/res/colors.dart';
+import 'package:copilet/screens/MainScreenV2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -72,11 +73,6 @@ class _LoginPageState extends State<LoginPage> {
       }
     });
 
-    // In the web, _googleSignIn.signInSilently() triggers the One Tap UX.
-    //
-    // It is recommended by Google Identity Services to render both the One Tap UX
-    // and the Google Sign In button together to "reduce friction and improve
-    // sign-in rates" ([docs](https://developers.google.com/identity/gsi/web/guides/display-button#html)).
     _googleSignIn.signInSilently();
   }
 
@@ -135,10 +131,10 @@ class _LoginPageState extends State<LoginPage> {
       await _googleSignIn.signIn();
       _handleAuthorizeScopes();
     } catch (error) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => Mainscreen()),
-      );
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => Mainscreen()),
+      // );
       print(error);
     }
   }
@@ -154,10 +150,10 @@ class _LoginPageState extends State<LoginPage> {
     if (isAuthorized) {
       unawaited(_handleGetContact(_currentUser!));
     }
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => Mainscreen()),
-    );
+    // Navigator.pushReplacement(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => Mainscreenv2()),
+    // );
     // #enddocregion RequestScopes
   }
 
@@ -209,8 +205,6 @@ class _LoginPageState extends State<LoginPage> {
                   lable: 'Email',
                   hint: 'Email Address',
                   controller: _emailController,
-                  // Pass the error message to the AppTextField
-                  // errorText: _errorMessage,  // <-- Added this
                 ),
                 if (_errorMessage !=
                     null) // If there's an error, show error message
@@ -229,14 +223,10 @@ class _LoginPageState extends State<LoginPage> {
                     if (state is SuccessState) {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => Mainscreen()),
+                        MaterialPageRoute(builder: (context) => Mainscreenv2()),
                       );
                     }
                     if (state is ErrorState) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => Mainscreen()),
-                      );
                       ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text("Error in server")));
                     }
@@ -252,11 +242,11 @@ class _LoginPageState extends State<LoginPage> {
                           _validateEmail(_emailController.text);
                           if (_errorMessage == null) {
                             // Email is valid, perform the action
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Email is valid')),
-                            );
+                            // ScaffoldMessenger.of(context).showSnackBar(
+                            //   SnackBar(content: Text('Email is valid')),
+                            // );
                             BlocProvider.of<AuthCubit>(context)
-                                .logIn(_emailController.value.text, "");
+                                .logIn(_emailController.value.text);
                           }
                         },
                         child: Container(

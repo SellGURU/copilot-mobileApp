@@ -23,24 +23,20 @@ class AuthCubit extends Cubit<AuthState> {
 
   Dio _dio = Dio();
 
-  logIn(username, password) async {
+  logIn(email) async {
     emit(LoadingState());
-    _dio.options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    // _dio.options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
     try {
       await _dio.post(
         Endpoints.login,
         data: {
-          'grant_type': '',
-          'username': username,
-          'password': password,
-          'scope': '',
-          'client_id': '',
-          'client_secret': ''
+          "email":email
         },
       ).then((value) async {
-        // print(value.toString());
+        print("value.toString():"+value.toString());
         if (value.statusCode == 200) {
-          await UpdateToken("token");
+          print("token $value");
+          await UpdateToken(value.data["access_token"]);
           emit(SuccessState());
         } else {
           print("else");
@@ -49,7 +45,7 @@ class AuthCubit extends Cubit<AuthState> {
         }
       });
     } catch (e) {
-      print(e);
+      print("catch: $e");
       // emit(SuccessState());
       emit(ErrorState());
     }
