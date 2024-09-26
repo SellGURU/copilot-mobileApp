@@ -185,110 +185,117 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: AppColors.bgScreen,
       body: SafeArea(
-        child: SingleChildScrollView(
+        child: Container(
+          width: size.width,
+          alignment: Alignment.center,
           child: Container(
-            height: size.height,
-            padding:
-                EdgeInsets.only(top: size.height * .35, left: 40, right: 40),
-            alignment: Alignment.topCenter,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text(
-                  "Enter Your Email Address to Log in",
-                  style: AppTextStyles.titleXl,
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                AppTextField(
-                  lable: 'Email',
-                  hint: 'Email Address',
-                  controller: _emailController,
-                ),
-                if (_errorMessage !=
-                    null) // If there's an error, show error message
-                  Padding(
-                    padding: const EdgeInsets.only(top: 5),
-                    child: Text(
-                      _errorMessage!,
-                      style: TextStyle(color: Colors.red, fontSize: 12),
+            width: size.width>420?420:size.width,
+            child: SingleChildScrollView(
+              child: Container(
+                height: size.height,
+                padding:
+                    EdgeInsets.only(top: size.height * .35, left: 40, right: 40),
+                alignment: Alignment.topCenter,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Enter Your Email Address to Log in",
+                      style: AppTextStyles.titleXl,
                     ),
-                  ),
-                const SizedBox(
-                  height: 30,
-                ),
-                BlocConsumer<AuthCubit, AuthState>(
-                  listener: (context, state) {
-                    if (state is SuccessState) {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => Mainscreenv2()),
-                      );
-                    }
-                    if (state is ErrorState) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(state.errorText)));
-                    }
-                  },
-                  builder: (context, state) {
-                    if (state is LoadingState) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    return GestureDetector(
-                        onTap: () async {
-                          _validateEmail(_emailController.text);
-                          if (_errorMessage == null) {
-                            // Email is valid, perform the action
-                            // ScaffoldMessenger.of(context).showSnackBar(
-                            //   SnackBar(content: Text('Email is valid')),
-                            // );
-                            BlocProvider.of<AuthCubit>(context)
-                                .logIn(_emailController.value.text);
-                          }
-                        },
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          decoration: BoxDecoration(
-                              color: AppColors.purpleDark,
-                              borderRadius: BorderRadius.circular(10)),
-                          width: size.width,
-                          child: Text(
-                            "login",
-                            style: AppTextStyles.titleMediumWhite,
-                          ),
-                        ));
-                  },
-                ),
-                const SizedBox(height: 15,),
-                GestureDetector(
-                  onTap: ()=>_handleSignIn(context),
-                  child: Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.only(top: 10, bottom: 10),
-                    decoration: BoxDecoration(
-                      border: Border.all(width: 2,color: AppColors.black),
-                        color: AppColors.mainBg,
-                        borderRadius: BorderRadius.circular(10)),
-                    width: size.width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset("assets/Google.svg"),
-                        const SizedBox(width: 10,),
-                        Text(
-                          "Continue with Google",
-                          style: AppTextStyles.titleMedium,
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    AppTextField(
+                      lable: 'Email',
+                      hint: 'Email Address',
+                      controller: _emailController,
+                    ),
+                    if (_errorMessage !=
+                        null) // If there's an error, show error message
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Text(
+                          _errorMessage!,
+                          style: TextStyle(color: Colors.red, fontSize: 12),
                         ),
-                      ],
+                      ),
+                    const SizedBox(
+                      height: 30,
                     ),
-                  ),
-                )
-                // The user is NOT Authenticated
-              ],
+                    BlocConsumer<AuthCubit, AuthState>(
+                      listener: (context, state) {
+                        if (state is SuccessState) {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => Mainscreenv2()),
+                          );
+                        }
+                        if (state is ErrorState) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(state.errorText)));
+                        }
+                      },
+                      builder: (context, state) {
+                        if (state is LoadingState) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return GestureDetector(
+                            onTap: () async {
+                              _validateEmail(_emailController.text);
+                              if (_errorMessage == null) {
+                                // Email is valid, perform the action
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //   SnackBar(content: Text('Email is valid')),
+                                // );
+                                BlocProvider.of<AuthCubit>(context)
+                                    .logIn(_emailController.value.text);
+                              }
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.only(top: 10, bottom: 10),
+                              decoration: BoxDecoration(
+                                  color: AppColors.purpleDark,
+                                  borderRadius: BorderRadius.circular(10)),
+                              width: size.width,
+                              child: Text(
+                                "login",
+                                style: AppTextStyles.titleMediumWhite,
+                              ),
+                            ));
+                      },
+                    ),
+                    const SizedBox(height: 15,),
+                    GestureDetector(
+                      onTap: ()=>_handleSignIn(context),
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.only(top: 10, bottom: 10),
+                        decoration: BoxDecoration(
+                          border: Border.all(width: 2,color: AppColors.black),
+                            color: AppColors.mainBg,
+                            borderRadius: BorderRadius.circular(10)),
+                        width: size.width,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SvgPicture.asset("assets/Google.svg"),
+                            const SizedBox(width: 10,),
+                            Text(
+                              "Continue with Google",
+                              style: AppTextStyles.titleMedium,
+                            ),
+                          ],
+                        ),
+                      ),
+                    )
+                    // The user is NOT Authenticated
+                  ],
+                ),
+              ),
             ),
           ),
         ),
