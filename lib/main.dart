@@ -29,7 +29,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size=MediaQuery.of(context).size;
     return MultiBlocProvider(
+
       providers: [
         BlocProvider(create: (_) => PageIndexBloc()),
         BlocProvider(create: (_) => SwitchValueGraphBloc()),
@@ -47,7 +49,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'Copilot Demo',
+        title: 'CodieHealth',
         debugShowCheckedModeBanner: false,
         routes: routes,
         home: BlocBuilder<AuthCubit, AuthState>(

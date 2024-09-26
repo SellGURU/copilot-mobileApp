@@ -1,4 +1,3 @@
-
 import 'package:copilet/constants/endPoints.dart';
 import 'package:copilet/screens/mainScreenV2/cubit/cubit.dart';
 import 'package:copilet/screens/mainScreenV2/cubit/state.dart';
@@ -95,44 +94,53 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Scaffold(
         backgroundColor: AppColors.bgScreen,
         body: SafeArea(
           child: BlocBuilder<PageIndexBloc, PageIndexState>(
             builder: (context, state) {
-              return Stack(
-                children: [
-                  const Overview2(),
-                  BlocBuilder<AuthCubit, AuthState>(
-                    builder: (context, state) {
-                      return Positioned(
-                        bottom: 30,
-                        right: 40,
-                        child: GestureDetector(
-                          onTap: () {
-                            BlocProvider.of<AuthCubit>(context).logOut();
-                          },
-                          child: Row(
-                            children: [
-                              SvgPicture.asset(
-                                "assets/logout.svg",
-                                width: 30,
-                                height: 16,
+              return Container(
+                  alignment: Alignment.center,
+                  height: size.height,
+                  width: size.width,
+                child: Container(
+                  width: size.width > 420 ? 420 : size.width,
+                  child: Stack(
+                    children: [
+                      const Overview2(),
+                      BlocBuilder<AuthCubit, AuthState>(
+                        builder: (context, state) {
+                          return Positioned(
+                            bottom: 30,
+                            right: 40,
+                            child: GestureDetector(
+                              onTap: () {
+                                BlocProvider.of<AuthCubit>(context).logOut();
+                              },
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/logout.svg",
+                                    width: 30,
+                                    height: 16,
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "Log out",
+                                    style: AppTextStyles.hint,
+                                  ),
+                                ],
                               ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                "Log out",
-                                style: AppTextStyles.hint,
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
-                ],
+                ),
               );
             },
           ),
@@ -146,6 +154,7 @@ class Overview2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+
     return Scaffold(
         backgroundColor: AppColors.bgScreen,
         body: SingleChildScrollView(
@@ -204,49 +213,73 @@ class Overview2 extends StatelessWidget {
                             ),
                           ],
                         ),
-                        const SizedBox(width: 10,),
-
-                        BlocConsumer<DownloadReportPdfCubit, DownloadPdfState>(
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        BlocConsumer<DownloadReportPdfCubit,
+                            DownloadPdfState>(
                           listener: (context, state) {
                             // TODO: implement listener
                           },
                           builder: (context, state) {
-                            if(state is SuccessDownloadPdf) {
+                            if (state is SuccessDownloadPdf) {
                               return GestureDetector(
-                              onTap: () async {
-                                await downloadAndSavePdf(context,state.pdfUrl);
-                              },
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/document-download.svg",
-                                    width: 16,
-                                    height: 16,
-                                    colorFilter: const ColorFilter.mode(
-                                      AppColors.purpleDark,
-                                      BlendMode.srcIn,
+                                onTap: () async {
+                                  await downloadAndSavePdf(
+                                      context, state.pdfUrl);
+                                },
+                                child: Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/document-download.svg",
+                                      width: 16,
+                                      height: 16,
+                                      colorFilter: const ColorFilter.mode(
+                                        AppColors.purpleDark,
+                                        BlendMode.srcIn,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    "Report",
-                                    style: AppTextStyles.hintPurple,
-                                  ),
-                                ],
-                              ),
-                            );
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "Report",
+                                      style: AppTextStyles.hintPurple,
+                                    ),
+                                  ],
+                                ),
+                              );
                             }
-                            if(state is LoadingDownloadPdf) {
-                                return const CircularProgressIndicator();
+                            if (state is LoadingDownloadPdf) {
+                              return const CircularProgressIndicator();
                             }
-                            else{
+                            if (state is ErrorDownloadPdf) {
+                              return Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/document-download.svg",
+                                      width: 16,
+                                      height: 16,
+                                      colorFilter: const ColorFilter.mode(
+                                        AppColors.purpleLite,
+                                        BlendMode.srcIn,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "Report",
+                                      style: AppTextStyles.hintLitePurple,
+                                    ),
+                                  ],
+                                );
+                            }
+                            else {
                               return const SizedBox();
                             }
                           },
                         ),
-
                       ],
                     )
                   ],
@@ -257,7 +290,10 @@ class Overview2 extends StatelessWidget {
                 const Longevity2(),
                 Container(
                   padding: const EdgeInsets.only(top: 20, bottom: 10),
-                  child: SvgPicture.asset("assets/Group20.svg",width: size.width,),
+                  child: SvgPicture.asset(
+                    "assets/Group20.svg",
+                    width: size.width,
+                  ),
                 ),
               ],
             ),
@@ -285,8 +321,7 @@ class _Longevity2State extends State<Longevity2> {
       },
       builder: (context, HealthScoreState state) {
         if (state is SuccessHealthScore) {
-          print(
-              "SuccessHealthScore: ${(state).scoreData}");
+          print("SuccessHealthScore: ${(state).scoreData}");
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -296,7 +331,7 @@ class _Longevity2State extends State<Longevity2> {
               Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Longevity",
+                    "Your Score",
                     style: AppTextStyles.title1,
                   )),
               const SizedBox(
@@ -344,8 +379,8 @@ class _Longevity2State extends State<Longevity2> {
                           Row(
                             children: [
                               Text(
-                                "Health Score: ",
-                                style: AppTextStyles.hint,
+                                "Your Score",
+                                style: AppTextStyles.hintSmale,
                               ),
                               Container(
                                 decoration: BoxDecoration(
@@ -355,7 +390,7 @@ class _Longevity2State extends State<Longevity2> {
                                   padding: const EdgeInsets.only(
                                       bottom: 5, top: 5, left: 12, right: 12),
                                   child: Text(
-                                    "${(state).scoreData['Physiological']}/100",
+                                    "${state.scoreData['Physiological']==null?0:state.scoreData['Physiological']}/100",
                                     style: AppTextStyles.gradeGreen,
                                   ),
                                 ),
@@ -363,10 +398,10 @@ class _Longevity2State extends State<Longevity2> {
                               const SizedBox(
                                 width: 5,
                               ),
-                              const Icon(
-                                Icons.arrow_forward_ios_outlined,
-                                color: AppColors.textLite,
-                              )
+                              // const Icon(
+                              //   Icons.arrow_forward_ios_outlined,
+                              //   color: AppColors.textLite,
+                              // )
                             ],
                           )
                         ],
@@ -422,8 +457,8 @@ class _Longevity2State extends State<Longevity2> {
                           Row(
                             children: [
                               Text(
-                                "Health Score: ",
-                                style: AppTextStyles.hint,
+                                "Your Score",
+                                style: AppTextStyles.hintSmale,
                               ),
                               Container(
                                 decoration: BoxDecoration(
@@ -433,7 +468,7 @@ class _Longevity2State extends State<Longevity2> {
                                   padding: const EdgeInsets.only(
                                       bottom: 5, top: 5, left: 12, right: 12),
                                   child: Text(
-                                    "${(state as SuccessHealthScore).scoreData['Physiological']}/100",
+                                    "${state.scoreData['Fitness']==null?0:state.scoreData['Fitness']}/100",
                                     style: AppTextStyles.gradeGreen,
                                   ),
                                 ),
@@ -441,10 +476,10 @@ class _Longevity2State extends State<Longevity2> {
                               const SizedBox(
                                 width: 5,
                               ),
-                              const Icon(
-                                Icons.arrow_forward_ios_outlined,
-                                color: AppColors.textLite,
-                              )
+                              // const Icon(
+                              //   Icons.arrow_forward_ios_outlined,
+                              //   color: AppColors.textLite,
+                              // )
                             ],
                           )
                         ],
@@ -500,7 +535,7 @@ class _Longevity2State extends State<Longevity2> {
                           Row(
                             children: [
                               Text(
-                                "Health Score: ",
+                                "Your Score",
                                 style: AppTextStyles.hintSmale,
                               ),
                               Container(
@@ -511,7 +546,7 @@ class _Longevity2State extends State<Longevity2> {
                                   padding: const EdgeInsets.only(
                                       bottom: 5, top: 5, left: 12, right: 12),
                                   child: Text(
-                                    "${(state as SuccessHealthScore).scoreData['Physiological']}/100",
+                                    "${state.scoreData['Emotional']==null?0:state.scoreData['Emotional']}/100",
                                     style: AppTextStyles.gradeYellow,
                                   ),
                                 ),
@@ -519,10 +554,10 @@ class _Longevity2State extends State<Longevity2> {
                               const SizedBox(
                                 width: 5,
                               ),
-                              const Icon(
-                                Icons.arrow_forward_ios_outlined,
-                                color: AppColors.textLite,
-                              )
+                              // const Icon(
+                              //   Icons.arrow_forward_ios_outlined,
+                              //   color: AppColors.textLite,
+                              // )
                             ],
                           )
                         ],
