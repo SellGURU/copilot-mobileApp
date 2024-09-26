@@ -1,7 +1,10 @@
 import 'package:copilet/constants/endPoints.dart';
+import 'package:copilet/screens/login/login.dart';
 import 'package:copilet/screens/mainScreenV2/cubit/cubit.dart';
 import 'package:copilet/screens/mainScreenV2/cubit/state.dart';
 import 'package:copilet/screens/mainScreenV2/downloadReport/state.dart';
+import 'package:copilet/screens/mainScreenV2/userinfoCubit/cubit.dart';
+import 'package:copilet/screens/mainScreenV2/userinfoCubit/state.dart';
 import 'dart:io' as io; // For Android file handling
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,12 +27,15 @@ import 'downloadReport/cubit.dart';
 Future<void> downloadAndSavePdf(BuildContext context, String base64Pdf) async {
   // Decode base64 string to bytes
   final bytes = base64Decode(base64Pdf);
-
+  print("test gbv");
   if (kIsWeb) {
     // Web logic for downloading the PDF
+    print("test pdf");
     _downloadPdfWeb(bytes);
   } else {
     // Android logic for saving the PDF
+    print("test pdf mobile");
+
     await _downloadPdfAndroid(context, bytes);
   }
 }
@@ -101,9 +107,9 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
           child: BlocBuilder<PageIndexBloc, PageIndexState>(
             builder: (context, state) {
               return Container(
-                  alignment: Alignment.center,
-                  height: size.height,
-                  width: size.width,
+                alignment: Alignment.center,
+                height: size.height,
+                width: size.width,
                 child: Container(
                   width: size.width > 420 ? 420 : size.width,
                   child: Stack(
@@ -117,6 +123,11 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                             child: GestureDetector(
                               onTap: () {
                                 BlocProvider.of<AuthCubit>(context).logOut();
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginPage()),
+                                );
                               },
                               child: Row(
                                 children: [
@@ -164,6 +175,7 @@ class Overview2 extends StatelessWidget {
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       children: [
@@ -178,14 +190,26 @@ class Overview2 extends StatelessWidget {
                         Column(
                           textDirection: TextDirection.ltr,
                           mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               "Good morning",
                               style: AppTextStyles.hint,
                             ),
-                            Text(
-                              "Alexander",
-                              style: AppTextStyles.title1,
+                            BlocConsumer<ClientInformationMobileCubit,
+                                ClientInformationMobileState>(
+                              listener: (context, state) {
+                                // TODO: implement listener
+                              },
+                              builder: (context, state) {
+                                if (state is SuccessClientInformation) {
+                                  return Text(
+                                    state.userInfo["name"],
+                                    style: AppTextStyles.title1,
+                                  );
+                                }
+                                return const SizedBox();
+                              },
                             ),
                           ],
                         ),
@@ -216,8 +240,7 @@ class Overview2 extends StatelessWidget {
                         const SizedBox(
                           width: 10,
                         ),
-                        BlocConsumer<DownloadReportPdfCubit,
-                            DownloadPdfState>(
+                        BlocConsumer<DownloadReportPdfCubit, DownloadPdfState>(
                           listener: (context, state) {
                             // TODO: implement listener
                           },
@@ -225,6 +248,7 @@ class Overview2 extends StatelessWidget {
                             if (state is SuccessDownloadPdf) {
                               return GestureDetector(
                                 onTap: () async {
+                                  print("test on tab");
                                   await downloadAndSavePdf(
                                       context, state.pdfUrl);
                                 },
@@ -235,7 +259,7 @@ class Overview2 extends StatelessWidget {
                                       width: 16,
                                       height: 16,
                                       colorFilter: const ColorFilter.mode(
-                                        AppColors.purpleDark,
+                                        AppColors.purpleLite,
                                         BlendMode.srcIn,
                                       ),
                                     ),
@@ -255,27 +279,26 @@ class Overview2 extends StatelessWidget {
                             }
                             if (state is ErrorDownloadPdf) {
                               return Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      "assets/document-download.svg",
-                                      width: 16,
-                                      height: 16,
-                                      colorFilter: const ColorFilter.mode(
-                                        AppColors.purpleLite,
-                                        BlendMode.srcIn,
-                                      ),
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/document-download.svg",
+                                    width: 16,
+                                    height: 16,
+                                    colorFilter: const ColorFilter.mode(
+                                      AppColors.purpleLite,
+                                      BlendMode.srcIn,
                                     ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      "Report",
-                                      style: AppTextStyles.hintLitePurple,
-                                    ),
-                                  ],
-                                );
-                            }
-                            else {
+                                  ),
+                                  const SizedBox(
+                                    width: 5,
+                                  ),
+                                  Text(
+                                    "Report",
+                                    style: AppTextStyles.hintLitePurple,
+                                  ),
+                                ],
+                              );
+                            } else {
                               return const SizedBox();
                             }
                           },
@@ -289,7 +312,11 @@ class Overview2 extends StatelessWidget {
                 ),
                 const Longevity2(),
                 Container(
-                  padding: const EdgeInsets.only(top: 20, bottom: 10),
+                  padding: const EdgeInsets.only(top: 1, bottom: 10),
+                  height: size.height * .2,
+                  // decoration: BoxDecoration(
+                  //     border: Border.all(width: 20)
+                  // ),
                   child: SvgPicture.asset(
                     "assets/Group20.svg",
                     width: size.width,
@@ -382,6 +409,9 @@ class _Longevity2State extends State<Longevity2> {
                                 "Your Score",
                                 style: AppTextStyles.hintSmale,
                               ),
+                              const SizedBox(
+                                width: 5,
+                              ),
                               Container(
                                 decoration: BoxDecoration(
                                     color: Color.fromRGBO(6, 199, 141, .4),
@@ -390,7 +420,7 @@ class _Longevity2State extends State<Longevity2> {
                                   padding: const EdgeInsets.only(
                                       bottom: 5, top: 5, left: 12, right: 12),
                                   child: Text(
-                                    "${state.scoreData['Physiological']==null?0:state.scoreData['Physiological']}/100",
+                                    "${state.scoreData['Physiological'] == null ? 0 : state.scoreData['Physiological']}/100",
                                     style: AppTextStyles.gradeGreen,
                                   ),
                                 ),
@@ -460,6 +490,10 @@ class _Longevity2State extends State<Longevity2> {
                                 "Your Score",
                                 style: AppTextStyles.hintSmale,
                               ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+
                               Container(
                                 decoration: BoxDecoration(
                                     color: Color.fromRGBO(6, 199, 141, .4),
@@ -468,7 +502,7 @@ class _Longevity2State extends State<Longevity2> {
                                   padding: const EdgeInsets.only(
                                       bottom: 5, top: 5, left: 12, right: 12),
                                   child: Text(
-                                    "${state.scoreData['Fitness']==null?0:state.scoreData['Fitness']}/100",
+                                    "${state.scoreData['Fitness'] == null ? 0 : state.scoreData['Fitness']}/100",
                                     style: AppTextStyles.gradeGreen,
                                   ),
                                 ),
@@ -538,6 +572,9 @@ class _Longevity2State extends State<Longevity2> {
                                 "Your Score",
                                 style: AppTextStyles.hintSmale,
                               ),
+                              const SizedBox(
+                                width: 5,
+                              ),
                               Container(
                                 decoration: BoxDecoration(
                                     color: AppColors.yellowBega.withOpacity(.2),
@@ -546,7 +583,7 @@ class _Longevity2State extends State<Longevity2> {
                                   padding: const EdgeInsets.only(
                                       bottom: 5, top: 5, left: 12, right: 12),
                                   child: Text(
-                                    "${state.scoreData['Emotional']==null?0:state.scoreData['Emotional']}/100",
+                                    "${state.scoreData['Emotional'] == null ? 0 : state.scoreData['Emotional']}/100",
                                     style: AppTextStyles.gradeYellow,
                                   ),
                                 ),
