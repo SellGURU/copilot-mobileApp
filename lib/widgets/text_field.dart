@@ -62,7 +62,6 @@ class _AppTextFieldState extends State<AppTextField> {
               const OutlineInputBorder( // This ensures the border turns red when there's an error
                 borderSide: BorderSide(color: Colors.red, width: 6.5),
               ),
-
             ),
           ),
         ),

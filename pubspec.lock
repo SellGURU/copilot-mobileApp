@@ -272,6 +272,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  focus_detector_v2:
+    dependency: "direct main"
+    description:
+      name: focus_detector_v2
+      sha256: d4abc4c755ba894238ab92f42f6eee7ade78aa285199e112f45926c7053f90c6
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0+1"
   get:
     dependency: transitive
     description:
@@ -616,6 +624,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.4.1"
+  rook_sdk_health_connect:
+    dependency: "direct main"
+    description:
+      name: rook_sdk_health_connect
+      sha256: "9254a7ceffe63929a5f08aa6accb88487daa98688c0af0e6662c5b16544efd48"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.3.0"
   scroll_to_index:
     dependency: transitive
     description:
@@ -885,6 +901,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.4"
+  visibility_detector:
+    dependency: "direct main"
+    description:
+      name: visibility_detector
+      sha256: dd5cc11e13494f432d15939c3aa8ae76844c42b723398643ce9addb88a5ed420
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.0+2"
   vm_service:
     dependency: transitive
     description:

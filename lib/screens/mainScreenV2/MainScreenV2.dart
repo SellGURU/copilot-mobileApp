@@ -12,6 +12,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:focus_detector_v2/focus_detector_v2.dart';
+import 'package:rook_sdk_health_connect/rook_sdk_health_connect.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../components/text_style.dart';
 import '../../res/colors.dart';
@@ -164,68 +167,152 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
 
 class Overview2 extends StatelessWidget {
   const Overview2({super.key});
-  void initializeRook()async {
-    const environment = kDebugMode
-        ? RookEnvironment.sandbox
-        : RookEnvironment.production;
 
-    final rookConfiguration =RookConfiguration(
+  void initialize() {
+    // Determine the environment (sandbox for debugging, production for release)
+    const environment = kDebugMode ? RookEnvironment.sandbox : RookEnvironment
+        .production;
+
+    // Create the configuration for Rook
+    final rookConfiguration = RookConfiguration(
       clientUUID: "b0eb1473-44ed-4c93-8d90-eb15deb20bb7",
       secretKey: "FFybi3eZefYV8ZMhLOeAuT8724oO3ybMkgdR",
       environment: environment,
       enableBackgroundSync: true,
     );
 
-    // Enable native logs in debug mode
+    // Enable native logs only in debug mode
     if (kDebugMode) {
-      AHRookConfigurationManager.enableNativeLogs();
+      HCRookConfigurationManager.enableNativeLogs();
     }
 
-    // Set up Rook configuration
-    AHRookConfigurationManager.setConfiguration(rookConfiguration);
+    // Set the Rook configuration
+    HCRookConfigurationManager.setConfiguration(rookConfiguration);
 
-    // Initialize the SDK
-    AHRookConfigurationManager.initRook().then((_) {
-      print('Rook SDK Initialized');
-      updateUserID("amin9@gmail.com");
-    }).catchError((error) {
-      print('Failed to initialize Rook SDK: $error');
-
+    // Initialize Rook and handle success or error
+    HCRookConfigurationManager.initRook().then((_) {
+      // Success: Initialization succeeded
+      print('Rook initialized successfully');
+      updateUserID("amir12@gmail.com");
+      checkAvailability();
+    }).catchError((exception) {
+      // Handle error during initialization
+      print('Error during Rook initialization: $exception');
     });
   }
 
-  void updateUserID(String NewUserID) {
-    AHRookConfigurationManager.getUserID().then((userID) {
-      if (userID != null) {
-          print(userID);
-          requestPermissions();
+  void updateUserID(String userID) {
+    // Update the user ID in Rook and handle success or error
+    HCRookConfigurationManager.updateUserID(userID).then((_) {
+      // Success: UserID updated
+      print('UserID updated successfully');
+    }).catchError((exception) {
+      // Handle error while updating UserID
+      print('Error updating UserID: $exception');
+    });
+  }
+
+  void checkAvailability() {
+    // Check Health Connect availability and handle the result
+    HCRookHealthPermissionsManager.checkHealthConnectAvailability().then((
+        availability) {
+      // Success: Health Connect availability checked
+      print('Health Connect available: $availability');
+    }).catchError((exception) {
+      // Handle error during availability check
+      print('Error checking Health Connect availability: $exception');
+    });
+  }
+
+  void checkHealthConnectPermissions() {
+    // Check Health Connect permissions and handle the result
+    HCRookHealthPermissionsManager.checkHealthConnectPermissions().then((
+        permissionsGranted) {
+      // Success: Permissions checked
+      print('Permissions granted: $permissionsGranted');
+      // Update your UI based on permissions
+    }).catchError((exception) {
+      // Handle error during permission check
+      print('Error checking Health Connect permissions: $exception');
+    });
+  }
+
+  void requestHealthConnectPermissions() {
+    // Request Health Connect permissions and handle the result
+    HCRookHealthPermissionsManager.requestHealthConnectPermissions().then((
+        requestPermissionsStatus) {
+      if (requestPermissionsStatus == RequestPermissionsStatus.alreadyGranted) {
+        // Permissions already granted, update your UI
+        print('Permissions already granted');
       } else {
-        AHRookConfigurationManager.updateUserID(NewUserID).then((_) {
-          print('User ID updated');
-        }).catchError((error) {
-          print('Error updating User ID: $error');
-        });      }
-    });
-
-  }
-
-  void requestPermissions() {
-    AHRookHealthPermissionsManager.requestPermissions().then((_) {
-      print('Permissions granted');
+        // Wait for result in stream
+        print('Permissions requested, waiting for result');
+      }
     }).catchError((error) {
-      print('Failed to request permissions: $error');
+      // Handle error during permission request
+      print('Error requesting Health Connect permissions: $error');
     });
   }
 
-
+  // void initializeRook() async {
+  //   const environment =
+  //       kDebugMode ? RookEnvironment.sandbox : RookEnvironment.production;
+  //
+  //   final rookConfiguration = RookConfiguration(
+  //     clientUUID: "b0eb1473-44ed-4c93-8d90-eb15deb20bb7",
+  //     secretKey: "FFybi3eZefYV8ZMhLOeAuT8724oO3ybMkgdR",
+  //     environment: environment,
+  //     enableBackgroundSync: true,
+  //   );
+  //
+  //   // Enable native logs in debug mode
+  //   if (kDebugMode) {
+  //     AHRookConfigurationManager.enableNativeLogs();
+  //   }
+  //
+  //   // Set up Rook configuration
+  //   AHRookConfigurationManager.setConfiguration(rookConfiguration);
+  //
+  //   // Initialize the SDK
+  //   AHRookConfigurationManager.initRook().then((_) {
+  //     print('Rook SDK Initialized');
+  //     updateUserID("amin9@gmail.com");
+  //   }).catchError((error) {
+  //     print('Failed to initialize Rook SDK: $error');
+  //   });
+  // }
+  //
+  // void updateUserID(String NewUserID) {
+  //   AHRookConfigurationManager.getUserID().then((userID) {
+  //     if (userID != null) {
+  //       print(userID);
+  //       requestPermissions();
+  //     } else {
+  //       AHRookConfigurationManager.updateUserID(NewUserID).then((_) {
+  //         print('User ID updated');
+  //       }).catchError((error) {
+  //         print('Error updating User ID: $error');
+  //       });
+  //     }
+  //   });
+  // }
+  //
+  // void requestPermissions() {
+  //   AHRookHealthPermissionsManager.requestPermissions().then((_) {
+  //     print('Permissions granted');
+  //   }).catchError((error) {
+  //     print('Failed to request permissions: $error');
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var size = MediaQuery
+        .of(context)
+        .size;
 
     return Scaffold(
         backgroundColor: AppColors.bgScreen,
-
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20),
@@ -384,14 +471,31 @@ class Overview2 extends StatelessWidget {
                   ),
                 ),
                 GestureDetector(
-                  onTap: () => _launchURL(
-                      'https://connections.rook-connect.com/client_uuid/d2c34b45-51ff-4ef0-95dc-d87c39136469/user_id/aUniqueUserIdABCD1234/'),
+                  onTap: () =>
+                      _launchURL(
+                          'https://connections.rook-connect.com/client_uuid/d2c34b45-51ff-4ef0-95dc-d87c39136469/user_id/aUniqueUserIdABCD1234/'),
                   child: const Text("click to request"),
                 ),
                 GestureDetector(
-                  onTap: initializeRook,
+                  onTap: initialize,
                   child: const Text("init"),
-                )
+                ),
+                GestureDetector(
+                  onTap: requestHealthConnectPermissions,
+                  child: const Text("permission"),
+                ),
+                GestureDetector(
+                  onTap: attemptToEnableYesterdaySync,
+                  child: const Text("attemptToEnableYesterdaySync"),
+                ),
+                FocusDetector(
+                  onFocusGained: attemptToEnableYesterdaySync,
+                  child: const Column(
+                    children: [
+                    ],
+                  ),
+                ),
+
               ],
             ),
           ),
@@ -405,8 +509,43 @@ class Overview2 extends StatelessWidget {
       throw '$url';
     }
   }
-}
 
+  void attemptToEnableYesterdaySync() {
+    SharedPreferences.getInstance().then((prefs) {
+      final userAcceptedYesterdaySync = prefs.getBool(
+          "ACCEPTED_YESTERDAY_SYNC") ?? false;
+      const environment = kDebugMode ? RookEnvironment.sandbox : RookEnvironment
+          .production;
+      requestAndroidPermissions();
+      // Create the configuration for Rook
+      if (true) {
+        print("if run");
+        HCRookYesterdaySyncManager.scheduleYesterdaySync(
+          enableNativeLogs: true,
+          clientUUID: "b0eb1473-44ed-4c93-8d90-eb15deb20bb7",
+          secretKey: "FFybi3eZefYV8ZMhLOeAuT8724oO3ybMkgdR",
+          environment: environment,
+        );
+      } else {
+        print("else");
+        // The user did not accept the yesterday sync feature
+      }
+    });
+  }
+  void requestAndroidPermissions() async {
+    try {
+      final requestPermissionsStatus = await HCRookHealthPermissionsManager.requestAndroidPermissions();
+
+      if (requestPermissionsStatus == RequestPermissionsStatus.alreadyGranted) {
+        // Permissions already granted, update your UI
+      } else {
+        // Wait for result in stream
+      }
+    } catch (error) {
+      // Handle error
+    }
+  }
+}
 class Longevity2 extends StatefulWidget {
   const Longevity2({super.key});
 
