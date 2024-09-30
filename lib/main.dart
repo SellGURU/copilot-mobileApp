@@ -18,12 +18,15 @@ import 'package:copilet/utility/camareControlerBloc/camera_Bloc.dart';
 import 'package:copilet/utility/camareControlerBloc/camera_events.dart';
 import 'package:copilet/utility/changeScreanBloc/PageIndex_Bloc.dart';
 import 'package:copilet/utility/switchValueBloc/PageIndex_Bloc.dart';
+import 'package:flutter/foundation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+
   runApp(MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

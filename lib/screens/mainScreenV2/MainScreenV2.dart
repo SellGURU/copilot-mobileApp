@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../components/text_style.dart';
 import '../../res/colors.dart';
 import '../../utility/changeScreanBloc/PageIndex_Bloc.dart';
@@ -21,6 +22,8 @@ import 'package:universal_html/html.dart' as html;
 import '../login/cubit/cubit.dart';
 import '../login/cubit/state.dart';
 import 'dart:convert';
+import 'package:rook_sdk_apple_health/rook_sdk_apple_health.dart';
+import 'package:rook_sdk_core/rook_sdk_core.dart'; // For kDebugMode
 
 import 'downloadReport/cubit.dart';
 
@@ -161,6 +164,60 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
 
 class Overview2 extends StatelessWidget {
   const Overview2({super.key});
+  void initializeRook()async {
+    const environment = kDebugMode
+        ? RookEnvironment.sandbox
+        : RookEnvironment.production;
+
+    final rookConfiguration =RookConfiguration(
+      clientUUID: "b0eb1473-44ed-4c93-8d90-eb15deb20bb7",
+      secretKey: "FFybi3eZefYV8ZMhLOeAuT8724oO3ybMkgdR",
+      environment: environment,
+      enableBackgroundSync: true,
+    );
+
+    // Enable native logs in debug mode
+    if (kDebugMode) {
+      AHRookConfigurationManager.enableNativeLogs();
+    }
+
+    // Set up Rook configuration
+    AHRookConfigurationManager.setConfiguration(rookConfiguration);
+
+    // Initialize the SDK
+    AHRookConfigurationManager.initRook().then((_) {
+      print('Rook SDK Initialized');
+      updateUserID("amin9@gmail.com");
+    }).catchError((error) {
+      print('Failed to initialize Rook SDK: $error');
+
+    });
+  }
+
+  void updateUserID(String NewUserID) {
+    AHRookConfigurationManager.getUserID().then((userID) {
+      if (userID != null) {
+          print(userID);
+          requestPermissions();
+      } else {
+        AHRookConfigurationManager.updateUserID(NewUserID).then((_) {
+          print('User ID updated');
+        }).catchError((error) {
+          print('Error updating User ID: $error');
+        });      }
+    });
+
+  }
+
+  void requestPermissions() {
+    AHRookHealthPermissionsManager.requestPermissions().then((_) {
+      print('Permissions granted');
+    }).catchError((error) {
+      print('Failed to request permissions: $error');
+    });
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -168,91 +225,120 @@ class Overview2 extends StatelessWidget {
 
     return Scaffold(
         backgroundColor: AppColors.bgScreen,
+
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          "assets/avatar.svg",
-                          width: 50,
-                          height: 50,
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        Column(
-                          textDirection: TextDirection.ltr,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Good morning",
-                              style: AppTextStyles.hint,
-                            ),
-                            BlocConsumer<ClientInformationMobileCubit,
-                                ClientInformationMobileState>(
-                              listener: (context, state) {
-                                // TODO: implement listener
-                              },
-                              builder: (context, state) {
-                                if (state is SuccessClientInformation) {
-                                  return Text(
-                                    state.userInfo["name"],
-                                    style: AppTextStyles.title1,
-                                  );
-                                }
-                                return const SizedBox();
-                              },
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Row(
-                          children: [
-                            SvgPicture.asset(
-                              "assets/document-download.svg",
-                              width: 16,
-                              height: 16,
-                              colorFilter: const ColorFilter.mode(
-                                AppColors.purpleLite,
-                                BlendMode.srcIn,
+                SingleChildScrollView(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            "assets/avatar.svg",
+                            width: 50,
+                            height: 50,
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            textDirection: TextDirection.ltr,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Good morning",
+                                style: AppTextStyles.hint,
                               ),
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "Weekly Report",
-                              style: AppTextStyles.hintLitePurple,
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        BlocConsumer<DownloadReportPdfCubit, DownloadPdfState>(
-                          listener: (context, state) {
-                            // TODO: implement listener
-                          },
-                          builder: (context, state) {
-                            if (state is SuccessDownloadPdf) {
-                              return GestureDetector(
-                                onTap: () async {
-                                  print("test on tab");
-                                  await downloadAndSavePdf(
-                                      context, state.pdfUrl);
+                              BlocConsumer<ClientInformationMobileCubit,
+                                  ClientInformationMobileState>(
+                                listener: (context, state) {
+                                  // TODO: implement listener
                                 },
-                                child: Row(
+                                builder: (context, state) {
+                                  if (state is SuccessClientInformation) {
+                                    return Text(
+                                      state.userInfo["name"],
+                                      style: AppTextStyles.title1,
+                                    );
+                                  }
+                                  return const SizedBox();
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                "assets/document-download.svg",
+                                width: 16,
+                                height: 16,
+                                colorFilter: const ColorFilter.mode(
+                                  AppColors.purpleLite,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                "Weekly Report",
+                                style: AppTextStyles.hintLitePurple,
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          BlocConsumer<DownloadReportPdfCubit,
+                              DownloadPdfState>(
+                            listener: (context, state) {
+                              // TODO: implement listener
+                            },
+                            builder: (context, state) {
+                              if (state is SuccessDownloadPdf) {
+                                return GestureDetector(
+                                  onTap: () async {
+                                    print("test on tab");
+                                    await downloadAndSavePdf(
+                                        context, state.pdfUrl);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/document-download.svg",
+                                        width: 16,
+                                        height: 16,
+                                        colorFilter: const ColorFilter.mode(
+                                          AppColors.purpleLite,
+                                          BlendMode.srcIn,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        "Report",
+                                        style: AppTextStyles.hintPurple,
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                              if (state is LoadingDownloadPdf) {
+                                return const CircularProgressIndicator();
+                              }
+                              if (state is ErrorDownloadPdf) {
+                                return Row(
                                   children: [
                                     SvgPicture.asset(
                                       "assets/document-download.svg",
@@ -268,44 +354,19 @@ class Overview2 extends StatelessWidget {
                                     ),
                                     Text(
                                       "Report",
-                                      style: AppTextStyles.hintPurple,
+                                      style: AppTextStyles.hintLitePurple,
                                     ),
                                   ],
-                                ),
-                              );
-                            }
-                            if (state is LoadingDownloadPdf) {
-                              return const CircularProgressIndicator();
-                            }
-                            if (state is ErrorDownloadPdf) {
-                              return Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/document-download.svg",
-                                    width: 16,
-                                    height: 16,
-                                    colorFilter: const ColorFilter.mode(
-                                      AppColors.purpleLite,
-                                      BlendMode.srcIn,
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    "Report",
-                                    style: AppTextStyles.hintLitePurple,
-                                  ),
-                                ],
-                              );
-                            } else {
-                              return const SizedBox();
-                            }
-                          },
-                        ),
-                      ],
-                    )
-                  ],
+                                );
+                              } else {
+                                return const SizedBox();
+                              }
+                            },
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   height: 30,
@@ -322,10 +383,27 @@ class Overview2 extends StatelessWidget {
                     width: size.width,
                   ),
                 ),
+                GestureDetector(
+                  onTap: () => _launchURL(
+                      'https://connections.rook-connect.com/client_uuid/d2c34b45-51ff-4ef0-95dc-d87c39136469/user_id/aUniqueUserIdABCD1234/'),
+                  child: const Text("click to request"),
+                ),
+                GestureDetector(
+                  onTap: initializeRook,
+                  child: const Text("init"),
+                )
               ],
             ),
           ),
         ));
+  }
+
+  void _launchURL(String url) async {
+    if (await launch(url)) {
+      await launch(url);
+    } else {
+      throw '$url';
+    }
   }
 }
 
