@@ -449,12 +449,12 @@ class Overview2 extends StatelessWidget {
                     width: size.width,
                   ),
                 ),
-                // GestureDetector(
-                //   onTap: () =>
-                //       _launchURL(
-                //           'https://connections.rook-connect.com/client_uuid/d2c34b45-51ff-4ef0-95dc-d87c39136469/user_id/aUniqueUserIdABCD1234/'),
-                //   child: const Text("click to request"),
-                // ),
+                GestureDetector(
+                  onTap: () =>
+                      _launchURL(
+                          'https://connections.rook-connect.review/client_uuid/d2c34b45-51ff-4ef0-95dc-d87c39136469/user_id/aUniqueUserIdABCD1234/'),
+                  child: const Text("click to request"),
+                ),
                 GestureDetector(
                   onTap: ()=>initialize(context),
                   child: const Text("init"),
