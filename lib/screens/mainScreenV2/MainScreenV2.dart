@@ -168,12 +168,9 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
 class Overview2 extends StatelessWidget {
   const Overview2({super.key});
 
-  void initialize() {
-    // Determine the environment (sandbox for debugging, production for release)
-    const environment = kDebugMode ? RookEnvironment.sandbox : RookEnvironment
-        .production;
+  void initialize(BuildContext context) {
+    const environment = kDebugMode ? RookEnvironment.sandbox : RookEnvironment.production;
 
-    // Create the configuration for Rook
     final rookConfiguration = RookConfiguration(
       clientUUID: "b0eb1473-44ed-4c93-8d90-eb15deb20bb7",
       secretKey: "FFybi3eZefYV8ZMhLOeAuT8724oO3ybMkgdR",
@@ -181,77 +178,59 @@ class Overview2 extends StatelessWidget {
       enableBackgroundSync: true,
     );
 
-    // Enable native logs only in debug mode
     if (kDebugMode) {
       HCRookConfigurationManager.enableNativeLogs();
     }
 
-    // Set the Rook configuration
     HCRookConfigurationManager.setConfiguration(rookConfiguration);
 
-    // Initialize Rook and handle success or error
     HCRookConfigurationManager.initRook().then((_) {
-      // Success: Initialization succeeded
-      print('Rook initialized successfully');
-      updateUserID("amir12@gmail.com");
-      checkAvailability();
+      _showSnackbar(context, 'Rook initialized successfully');
+      updateUserID(context, "amir12@gmail.com");
+      checkAvailability(context);
     }).catchError((exception) {
-      // Handle error during initialization
-      print('Error during Rook initialization: $exception');
+      _showSnackbar(context, 'Error during Rook initialization: $exception');
     });
   }
 
-  void updateUserID(String userID) {
-    // Update the user ID in Rook and handle success or error
+  void updateUserID(BuildContext context, String userID) {
     HCRookConfigurationManager.updateUserID(userID).then((_) {
-      // Success: UserID updated
-      print('UserID updated successfully');
+      _showSnackbar(context, 'UserID updated successfully');
     }).catchError((exception) {
-      // Handle error while updating UserID
-      print('Error updating UserID: $exception');
+      _showSnackbar(context, 'Error updating UserID: $exception');
     });
   }
 
-  void checkAvailability() {
-    // Check Health Connect availability and handle the result
-    HCRookHealthPermissionsManager.checkHealthConnectAvailability().then((
-        availability) {
-      // Success: Health Connect availability checked
-      print('Health Connect available: $availability');
+  void checkAvailability(BuildContext context) {
+    HCRookHealthPermissionsManager.checkHealthConnectAvailability().then((availability) {
+      _showSnackbar(context, 'Health Connect available: $availability');
     }).catchError((exception) {
-      // Handle error during availability check
-      print('Error checking Health Connect availability: $exception');
+      _showSnackbar(context, 'Error checking Health Connect availability: $exception');
     });
   }
 
-  void checkHealthConnectPermissions() {
-    // Check Health Connect permissions and handle the result
-    HCRookHealthPermissionsManager.checkHealthConnectPermissions().then((
-        permissionsGranted) {
-      // Success: Permissions checked
-      print('Permissions granted: $permissionsGranted');
-      // Update your UI based on permissions
+  void checkHealthConnectPermissions(BuildContext context) {
+    HCRookHealthPermissionsManager.checkHealthConnectPermissions().then((permissionsGranted) {
+      _showSnackbar(context, 'Permissions granted: $permissionsGranted');
     }).catchError((exception) {
-      // Handle error during permission check
-      print('Error checking Health Connect permissions: $exception');
+      _showSnackbar(context, 'Error checking Health Connect permissions: $exception');
     });
   }
 
-  void requestHealthConnectPermissions() {
-    // Request Health Connect permissions and handle the result
-    HCRookHealthPermissionsManager.requestHealthConnectPermissions().then((
-        requestPermissionsStatus) {
+  void requestHealthConnectPermissions(BuildContext context) {
+    HCRookHealthPermissionsManager.requestHealthConnectPermissions().then((requestPermissionsStatus) {
       if (requestPermissionsStatus == RequestPermissionsStatus.alreadyGranted) {
-        // Permissions already granted, update your UI
-        print('Permissions already granted');
+        _showSnackbar(context, 'Permissions already granted');
       } else {
-        // Wait for result in stream
-        print('Permissions requested, waiting for result');
+        _showSnackbar(context, 'Permissions requested, waiting for result');
       }
     }).catchError((error) {
-      // Handle error during permission request
-      print('Error requesting Health Connect permissions: $error');
+      _showSnackbar(context, 'Error requesting Health Connect permissions: $error');
     });
+  }
+
+  void _showSnackbar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
   }
 
   // void initializeRook() async {
@@ -470,26 +449,26 @@ class Overview2 extends StatelessWidget {
                     width: size.width,
                   ),
                 ),
+                // GestureDetector(
+                //   onTap: () =>
+                //       _launchURL(
+                //           'https://connections.rook-connect.com/client_uuid/d2c34b45-51ff-4ef0-95dc-d87c39136469/user_id/aUniqueUserIdABCD1234/'),
+                //   child: const Text("click to request"),
+                // ),
                 GestureDetector(
-                  onTap: () =>
-                      _launchURL(
-                          'https://connections.rook-connect.com/client_uuid/d2c34b45-51ff-4ef0-95dc-d87c39136469/user_id/aUniqueUserIdABCD1234/'),
-                  child: const Text("click to request"),
-                ),
-                GestureDetector(
-                  onTap: initialize,
+                  onTap: ()=>initialize(context),
                   child: const Text("init"),
                 ),
                 GestureDetector(
-                  onTap: requestHealthConnectPermissions,
+                  onTap: ()=>requestHealthConnectPermissions(context),
                   child: const Text("permission"),
                 ),
                 GestureDetector(
-                  onTap: attemptToEnableYesterdaySync,
+                  onTap: ()=>attemptToEnableYesterdaySync(context),
                   child: const Text("attemptToEnableYesterdaySync"),
                 ),
                 FocusDetector(
-                  onFocusGained: attemptToEnableYesterdaySync,
+                  onFocusGained: ()=>attemptToEnableYesterdaySync(context),
                   child: const Column(
                     children: [
                     ],
@@ -510,16 +489,16 @@ class Overview2 extends StatelessWidget {
     }
   }
 
-  void attemptToEnableYesterdaySync() {
+  void attemptToEnableYesterdaySync(BuildContext context) {
     SharedPreferences.getInstance().then((prefs) {
-      final userAcceptedYesterdaySync = prefs.getBool(
-          "ACCEPTED_YESTERDAY_SYNC") ?? false;
-      const environment = kDebugMode ? RookEnvironment.sandbox : RookEnvironment
-          .production;
-      requestAndroidPermissions();
+      final userAcceptedYesterdaySync = prefs.getBool("ACCEPTED_YESTERDAY_SYNC") ?? false;
+      const environment = kDebugMode ? RookEnvironment.sandbox : RookEnvironment.production;
+
+      requestAndroidPermissions(context);
+
       // Create the configuration for Rook
-      if (true) {
-        print("if run");
+      if (userAcceptedYesterdaySync) {
+        _showSnackbar(context, "Yesterday sync enabled");
         HCRookYesterdaySyncManager.scheduleYesterdaySync(
           enableNativeLogs: true,
           clientUUID: "b0eb1473-44ed-4c93-8d90-eb15deb20bb7",
@@ -527,24 +506,28 @@ class Overview2 extends StatelessWidget {
           environment: environment,
         );
       } else {
-        print("else");
+        _showSnackbar(context, "User has not accepted yesterday sync");
         // The user did not accept the yesterday sync feature
       }
+    }).catchError((error) {
+      _showSnackbar(context, 'Error accessing SharedPreferences: $error');
     });
   }
-  void requestAndroidPermissions() async {
+
+  void requestAndroidPermissions(BuildContext context) async {
     try {
       final requestPermissionsStatus = await HCRookHealthPermissionsManager.requestAndroidPermissions();
 
       if (requestPermissionsStatus == RequestPermissionsStatus.alreadyGranted) {
-        // Permissions already granted, update your UI
+        _showSnackbar(context, "Permissions already granted");
       } else {
-        // Wait for result in stream
+        _showSnackbar(context, "Permissions requested, waiting for result");
       }
     } catch (error) {
-      // Handle error
+      _showSnackbar(context, 'Error requesting Android permissions: $error');
     }
   }
+
 }
 class Longevity2 extends StatefulWidget {
   const Longevity2({super.key});
