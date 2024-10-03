@@ -5,20 +5,18 @@ import 'package:copilet/screens/mainScreenV2/cubit/state.dart';
 import 'package:copilet/screens/mainScreenV2/downloadReport/state.dart';
 import 'package:copilet/screens/mainScreenV2/userinfoCubit/cubit.dart';
 import 'package:copilet/screens/mainScreenV2/userinfoCubit/state.dart';
-import 'dart:io' as io; // For Android file handling
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../components/text_style.dart';
 import '../../res/colors.dart';
 import '../../utility/changeScreanBloc/PageIndex_Bloc.dart';
 import '../../utility/changeScreanBloc/PageIndex_states.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:universal_html/html.dart' as html;
 import '../login/cubit/cubit.dart';
 import '../login/cubit/state.dart';
 import 'dart:convert';
@@ -26,69 +24,69 @@ import 'dart:convert';
 import 'childComponents/permishenHandlerHealth.dart';
 import 'downloadReport/cubit.dart';
 
-Future<void> downloadAndSavePdf(BuildContext context, String base64Pdf) async {
-  // Decode base64 string to bytes
-  final bytes = base64Decode(base64Pdf);
-  print("test gbv");
-  if (kIsWeb) {
-    // Web logic for downloading the PDF
-    print("test pdf");
-    _downloadPdfWeb(bytes);
-  } else {
-    // Android logic for saving the PDF
-    print("test pdf mobile");
-
-    await _downloadPdfAndroid(context, bytes);
-  }
-}
-
-/// Web: Download the PDF using the browser's download mechanism
-void _downloadPdfWeb(Uint8List bytes) {
-  // Create a Blob object from the bytes
-  final blob = html.Blob([bytes], 'application/pdf');
-
-  // Create a URL for the Blob and set it as the href of an anchor element
-  final url = html.Url.createObjectUrlFromBlob(blob);
-  final anchor = html.AnchorElement(href: url)
-    ..setAttribute("download", "report.pdf")
-    ..click(); // Trigger a download by clicking the link
-
-  // Revoke the object URL to avoid memory leaks
-  html.Url.revokeObjectUrl(url);
-}
-
-/// Android: Save the PDF file using app-specific storage or SAF (File Picker)
-Future<void> _downloadPdfAndroid(BuildContext context, Uint8List bytes) async {
-  try {
-    // Use File Picker to allow the user to choose a location for saving the file
-    String? outputFilePath = await FilePicker.platform.saveFile(
-      dialogTitle: 'Save PDF',
-      fileName: 'report.pdf',
-      type: FileType.custom,
-      allowedExtensions: ['pdf'],
-    );
-
-    if (outputFilePath != null) {
-      // Create a file and write the bytes
-      final file = io.File(outputFilePath);
-      await file.writeAsBytes(bytes);
-
-      print('PDF saved at $outputFilePath');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('PDF saved at $outputFilePath')),
-      );
-    } else {
-      // Handle case where the user cancels the file picker
-      print('User canceled the save dialog');
-    }
-  } catch (e) {
-    // Handle any errors that occur during the file saving process
-    print('Error saving PDF: $e');
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Error saving PDF')),
-    );
-  }
-}
+// Future<void> downloadAndSavePdf(BuildContext context, String base64Pdf) async {
+//   // Decode base64 string to bytes
+//   final bytes = base64Decode(base64Pdf);
+//   print("test gbv");
+//   if (kIsWeb) {
+//     // Web logic for downloading the PDF
+//     print("test pdf");
+//     // _downloadPdfWeb(bytes);
+//   } else {
+//     // Android logic for saving the PDF
+//     print("test pdf mobile");
+//
+//     // await _downloadPdfAndroid(context, bytes);
+//   }
+// }
+//
+// /// Web: Download the PDF using the browser's download mechanism
+// void _downloadPdfWeb(Uint8List bytes) {
+//   // Create a Blob object from the bytes
+//   final blob = html.Blob([bytes], 'application/pdf');
+//
+//   // Create a URL for the Blob and set it as the href of an anchor element
+//   final url = html.Url.createObjectUrlFromBlob(blob);
+//   final anchor = html.AnchorElement(href: url)
+//     ..setAttribute("download", "report.pdf")
+//     ..click(); // Trigger a download by clicking the link
+//
+//   // Revoke the object URL to avoid memory leaks
+//   html.Url.revokeObjectUrl(url);
+// }
+//
+// /// Android: Save the PDF file using app-specific storage or SAF (File Picker)
+// Future<void> _downloadPdfAndroid(BuildContext context, Uint8List bytes) async {
+//   try {
+//     // Use File Picker to allow the user to choose a location for saving the file
+//     String? outputFilePath = await FilePicker.platform.saveFile(
+//       dialogTitle: 'Save PDF',
+//       fileName: 'report.pdf',
+//       type: FileType.custom,
+//       allowedExtensions: ['pdf'],
+//     );
+//
+//     if (outputFilePath != null) {
+//       // Create a file and write the bytes
+//       final file = io.File(outputFilePath);
+//       await file.writeAsBytes(bytes);
+//
+//       print('PDF saved at $outputFilePath');
+//       ScaffoldMessenger.of(context).showSnackBar(
+//         SnackBar(content: Text('PDF saved at $outputFilePath')),
+//       );
+//     } else {
+//       // Handle case where the user cancels the file picker
+//       print('User canceled the save dialog');
+//     }
+//   } catch (e) {
+//     // Handle any errors that occur during the file saving process
+//     print('Error saving PDF: $e');
+//     ScaffoldMessenger.of(context).showSnackBar(
+//       SnackBar(content: Text('Error saving PDF')),
+//     );
+//   }
+// }
 
 class Mainscreenv2 extends StatefulWidget {
   const Mainscreenv2({super.key});
@@ -102,6 +100,13 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
     setState(() {
       isShowDropDown = !isShowDropDown;
     });
+  }
+  void _launchURL(String url) async {
+    if (await launch(url)) {
+      await launch(url);
+    } else {
+      throw '$url';
+    }
   }
   // Example base64 PDF string (you need to replace this with your actual base64 string)
   bool isShowDropDown = false;
@@ -123,7 +128,8 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                     children: [
                       Overview2(
                         isShowDropDown: isShowDropDown,
-                        onToggleDropDown: toggleDropDown,                      ),
+                        onToggleDropDown: toggleDropDown,
+                      ),
                       if (isShowDropDown)
                         Positioned(
                             top: 70,
@@ -159,10 +165,21 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                                       const SizedBox(
                                         width: 5,
                                       ),
-                                      Text(
-                                        "Wearable Device",
-                                        style:
-                                            AppTextStyles.hintBlackWithHeight,
+                                      GestureDetector(
+                                        onTap: () => {
+                                          _launchURL("https://connections.rook-connect.review/client_uuid/b0eb1473-44ed-4c93-8d90-eb15deb20bb7/user_id/am/")
+                                          // Navigator.pushReplacement(
+                                          //   context,
+                                          //   MaterialPageRoute(
+                                          //       builder: (context) =>
+                                          //           Permishenhandlerhealth()),
+                                          // )
+                                        },
+                                        child: Text(
+                                          "Wearable Device",
+                                          style:
+                                              AppTextStyles.hintBlackWithHeight,
+                                        ),
                                       )
                                     ],
                                   ),
@@ -215,10 +232,7 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
   }
 }
 
-
-
 class Overview2 extends StatelessWidget {
-
   // void initializeRook() async {
   final bool isShowDropDown;
   final Function onToggleDropDown;
@@ -228,6 +242,7 @@ class Overview2 extends StatelessWidget {
     required this.isShowDropDown,
     required this.onToggleDropDown,
   });
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -247,9 +262,7 @@ class Overview2 extends StatelessWidget {
                       Row(
                         children: [
                           GestureDetector(
-                            onTap: () => {
-                              onToggleDropDown()
-                            },
+                            onTap: () => {onToggleDropDown()},
                             child: SvgPicture.asset(
                               "assets/avatar.svg",
                               width: 50,
@@ -276,9 +289,7 @@ class Overview2 extends StatelessWidget {
                                 builder: (context, state) {
                                   if (state is SuccessClientInformation) {
                                     return GestureDetector(
-                                      onTap: () => {
-                                          onToggleDropDown()
-                                      },
+                                      onTap: () => {onToggleDropDown()},
                                       child: Text(
                                         state.userInfo["name"],
                                         style: AppTextStyles.title1,
@@ -327,8 +338,8 @@ class Overview2 extends StatelessWidget {
                                 return GestureDetector(
                                   onTap: () async {
                                     print("test on tab");
-                                    await downloadAndSavePdf(
-                                        context, state.pdfUrl);
+                                    // await downloadAndSavePdf(
+                                    //     context, state.pdfUrl);
                                   },
                                   child: Row(
                                     children: [
@@ -401,7 +412,6 @@ class Overview2 extends StatelessWidget {
                     width: size.width,
                   ),
                 ),
-                Permishenhandlerhealth(),
               ],
             ),
           ),

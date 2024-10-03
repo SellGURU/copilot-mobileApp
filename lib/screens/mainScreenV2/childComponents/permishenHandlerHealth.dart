@@ -1,4 +1,3 @@
-import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -7,12 +6,12 @@ import 'package:rook_sdk_core/rook_sdk_core.dart';
 import 'package:rook_sdk_health_connect/rook_sdk_health_connect.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:focus_detector_v2/focus_detector_v2.dart';
-import 'package:rook_sdk_health_connect/rook_sdk_health_connect.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart';
-import 'package:rook_sdk_apple_health/rook_sdk_apple_health.dart';
-import 'package:rook_sdk_core/rook_sdk_core.dart'; // For kDebugMode
+// import 'package:focus_detector_v2/focus_detector_v2.dart';
+// import 'package:rook_sdk_health_connect/rook_sdk_health_connect.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:url_launcher/url_launcher.dart';
+// import 'package:rook_sdk_apple_health/rook_sdk_apple_health.dart';
+// import 'package:rook_sdk_core/rook_sdk_core.dart'; // For kDebugMode
 
 class Permishenhandlerhealth extends StatefulWidget {
   const Permishenhandlerhealth({super.key});
@@ -38,7 +37,8 @@ class _PermishenhandlerhealthState extends State<Permishenhandlerhealth> {
   @override
   void initState() {
     super.initState();
-    initialize(context);
+    // initialize(context);
+    requestAndroidPermissions(context);
   }
 
   void initialize(BuildContext context)async {
@@ -63,7 +63,7 @@ class _PermishenhandlerhealthState extends State<Permishenhandlerhealth> {
         _showSnackbar(context, 'Rook initialized successfully');
         updateUserID(context, "amir12@gmail.com");
         var permissionAndroid = checkAndroidPermissions();
-        if (!permissionAndroid) requestAndroidPermissions(context);
+        if (permissionAndroid) requestAndroidPermissions(context);
         if (checkAvailability(context) == HCAvailabilityStatus.installed) {
           checkHealthConnectPermissions(context);
           attemptToEnableYesterdaySync(context);
@@ -213,31 +213,27 @@ class _PermishenhandlerhealthState extends State<Permishenhandlerhealth> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          // GestureDetector(
-          //   onTap: () {
-          //     if (false) {
-          //       _launchURL(
-          //           'https://connections.rook-connect.review/client_uuid/d2c34b45-51ff-4ef0-95dc-d87c39136469/user_id/aUniqueUserIdABCD1234/');
-          //     } else {
-          //       initialize(context);
-          //     }
-          //   },
-          //   child: const Text("init the device"),
-          // ),
-          // GestureDetector(
-          //   onTap: checkUserIDRegistered,
-          //   child: Text("checkUserIDRegistered"),
-          // ),
-          // GestureDetector(
-          //   onTap: () => attemptToEnableYesterdaySync(context),
-          //   child: Text("attemptToEnableYesterdaySync"),
-          // )
-        ],
-      ),
-    );
+    return
+      Scaffold(
+        body: Center(
+            child:
+              GestureDetector(
+                onTap: () {
+                  initialize(context);
+                },
+                child: const Text("init the device"),
+              ),
+              // GestureDetector(
+              //   onTap: checkUserIDRegistered,
+              //   child: Text("checkUserIDRegistered"),
+              // ),
+              // GestureDetector(
+              //   onTap: () => attemptToEnableYesterdaySync(context),
+              //   child: Text("attemptToEnableYesterdaySync"),
+              // )
+        ),
+
+      );
   }
 }
 //GestureDetector(
