@@ -98,8 +98,13 @@ class Mainscreenv2 extends StatefulWidget {
 }
 
 class _Mainscreenv2State extends State<Mainscreenv2> {
+  void toggleDropDown() {
+    setState(() {
+      isShowDropDown = !isShowDropDown;
+    });
+  }
   // Example base64 PDF string (you need to replace this with your actual base64 string)
-
+  bool isShowDropDown = false;
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -116,41 +121,90 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                   width: size.width > 420 ? 420 : size.width,
                   child: Stack(
                     children: [
-                      const Overview2(),
-                      BlocBuilder<AuthCubit, AuthState>(
-                        builder: (context, state) {
-                          return Positioned(
-                            bottom: 30,
-                            right: 40,
-                            child: GestureDetector(
-                              onTap: () {
-                                BlocProvider.of<AuthCubit>(context).logOut();
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginPage()),
-                                );
-                              },
-                              child: Row(
+                      Overview2(
+                        isShowDropDown: isShowDropDown,
+                        onToggleDropDown: toggleDropDown,                      ),
+                      if (isShowDropDown)
+                        Positioned(
+                            top: 70,
+                            left: 50,
+                            child: Container(
+                              padding: EdgeInsets.all(5),
+                              width: 133,
+                              height: 92,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(.1),
+                                      spreadRadius: 2,
+                                      blurRadius: 2,
+                                      offset: const Offset(
+                                          0, 1), // changes position of shadow
+                                    ),
+                                  ]),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  SvgPicture.asset(
-                                    "assets/logout.svg",
-                                    width: 30,
-                                    height: 16,
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/watch-status.svg",
+                                        width: 30,
+                                        height: 16,
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        "Wearable Device",
+                                        style:
+                                            AppTextStyles.hintBlackWithHeight,
+                                      )
+                                    ],
                                   ),
                                   const SizedBox(
-                                    width: 5,
+                                    height: 10,
                                   ),
-                                  Text(
-                                    "Log out",
-                                    style: AppTextStyles.hint,
+                                  BlocBuilder<AuthCubit, AuthState>(
+                                    builder: (context, state) {
+                                      return GestureDetector(
+                                        onTap: () {
+                                          BlocProvider.of<AuthCubit>(context)
+                                              .logOut();
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    LoginPage()),
+                                          );
+                                        },
+                                        child: Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              "assets/logout.svg",
+                                              width: 30,
+                                              height: 16,
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              "Log out",
+                                              style: AppTextStyles
+                                                  .hintBlackWithHeight,
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
                                   ),
                                 ],
                               ),
-                            ),
-                          );
-                        },
-                      ),
+                            )),
                     ],
                   ),
                 ),
@@ -161,66 +215,22 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
   }
 }
 
-class Overview2 extends StatelessWidget {
-  const Overview2({super.key});
 
+
+class Overview2 extends StatelessWidget {
 
   // void initializeRook() async {
-  //   const environment =
-  //       kDebugMode ? RookEnvironment.sandbox : RookEnvironment.production;
-  //
-  //   final rookConfiguration = RookConfiguration(
-  //     clientUUID: "b0eb1473-44ed-4c93-8d90-eb15deb20bb7",
-  //     secretKey: "FFybi3eZefYV8ZMhLOeAuT8724oO3ybMkgdR",
-  //     environment: environment,
-  //     enableBackgroundSync: true,
-  //   );
-  //
-  //   // Enable native logs in debug mode
-  //   if (kDebugMode) {
-  //     AHRookConfigurationManager.enableNativeLogs();
-  //   }
-  //
-  //   // Set up Rook configuration
-  //   AHRookConfigurationManager.setConfiguration(rookConfiguration);
-  //
-  //   // Initialize the SDK
-  //   AHRookConfigurationManager.initRook().then((_) {
-  //     print('Rook SDK Initialized');
-  //     updateUserID("amin9@gmail.com");
-  //   }).catchError((error) {
-  //     print('Failed to initialize Rook SDK: $error');
-  //   });
-  // }
-  //
-  // void updateUserID(String NewUserID) {
-  //   AHRookConfigurationManager.getUserID().then((userID) {
-  //     if (userID != null) {
-  //       print(userID);
-  //       requestPermissions();
-  //     } else {
-  //       AHRookConfigurationManager.updateUserID(NewUserID).then((_) {
-  //         print('User ID updated');
-  //       }).catchError((error) {
-  //         print('Error updating User ID: $error');
-  //       });
-  //     }
-  //   });
-  // }
-  //
-  // void requestPermissions() {
-  //   AHRookHealthPermissionsManager.requestPermissions().then((_) {
-  //     print('Permissions granted');
-  //   }).catchError((error) {
-  //     print('Failed to request permissions: $error');
-  //   });
-  // }
+  final bool isShowDropDown;
+  final Function onToggleDropDown;
 
+  Overview2({
+    super.key,
+    required this.isShowDropDown,
+    required this.onToggleDropDown,
+  });
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery
-        .of(context)
-        .size;
+    var size = MediaQuery.of(context).size;
 
     return Scaffold(
         backgroundColor: AppColors.bgScreen,
@@ -236,10 +246,15 @@ class Overview2 extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          SvgPicture.asset(
-                            "assets/avatar.svg",
-                            width: 50,
-                            height: 50,
+                          GestureDetector(
+                            onTap: () => {
+                              onToggleDropDown()
+                            },
+                            child: SvgPicture.asset(
+                              "assets/avatar.svg",
+                              width: 50,
+                              height: 50,
+                            ),
                           ),
                           const SizedBox(
                             width: 10,
@@ -260,9 +275,14 @@ class Overview2 extends StatelessWidget {
                                 },
                                 builder: (context, state) {
                                   if (state is SuccessClientInformation) {
-                                    return Text(
-                                      state.userInfo["name"],
-                                      style: AppTextStyles.title1,
+                                    return GestureDetector(
+                                      onTap: () => {
+                                          onToggleDropDown()
+                                      },
+                                      child: Text(
+                                        state.userInfo["name"],
+                                        style: AppTextStyles.title1,
+                                      ),
                                     );
                                   }
                                   return const SizedBox();
@@ -387,9 +407,8 @@ class Overview2 extends StatelessWidget {
           ),
         ));
   }
-
-
 }
+
 class Longevity2 extends StatefulWidget {
   const Longevity2({super.key});
 
