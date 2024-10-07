@@ -323,9 +323,8 @@ class Overview2 extends StatelessWidget {
                               if (state is SuccessDownloadWeaklyReportState) {
                                 return GestureDetector(
                                   onTap: () async {
-                                    print("test on tab");
-                                    // await downloadAndSavePdf(
-                                    //     context, state.pdfUrl);
+                                    await downloadAndSavePdf(
+                                        context, state.pdfUrlWeakly);
                                   },
                                   child: Row(
                                     children: [
@@ -391,9 +390,9 @@ class Overview2 extends StatelessWidget {
                               if (state is SuccessDownloadPdf) {
                                 return GestureDetector(
                                   onTap: () async {
-                                    print("test on tab");
-                                    // await downloadAndSavePdf(
-                                    //     context, state.pdfUrl);
+                                    // print("test on tab");
+                                    await downloadAndSavePdf(
+                                        context, state.pdfUrl);
                                   },
                                   child: Row(
                                     children: [

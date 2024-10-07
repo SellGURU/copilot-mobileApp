@@ -18,10 +18,18 @@ class DownloadWeaklyReportCubit extends Cubit<DownloadWeaklyReportState> {
     _dio.options.headers['Authorization'] = "bearer $token";
 
     try {
-      _dio.post(Endpoints.downloadPdfReportWeakly).then((res) {
+      _dio.post(Endpoints.downloadPdfReportWeakly,data: {
+        "from_date": "2024-10-1",
+        "to_date": "2024-10-7"
+      }).then((res) {
+        print("res.data: ttttt${res.data}");
+
         if(res.data!=null){
           emit(SuccessDownloadWeaklyReportState(pdfUrlWeakly: res.data));
           print("res.data:${res.data}");
+        }
+        if(res.data==null){
+          emit(ErrorDownloadWeaklyReportState());
         }
         else{
           print("pdf weakly be null");

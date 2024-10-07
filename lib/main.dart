@@ -3,6 +3,8 @@ import 'package:copilet/screens/mainScreenV2/MainScreenV2.dart';
 import 'package:copilet/screens/mainScreenV2/cubit/cubit.dart';
 import 'package:copilet/screens/mainScreenV2/downloadReport/cubit.dart';
 import 'package:copilet/screens/mainScreenV2/downloadReport/state.dart';
+import 'package:copilet/screens/mainScreenV2/downloadWeaklyReportState/cubit.dart';
+import 'package:copilet/screens/mainScreenV2/downloadWeaklyReportState/state.dart';
 import 'package:copilet/screens/mainScreenV2/userinfoCubit/cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +40,7 @@ class MyApp extends StatelessWidget {
 
       providers: [
         BlocProvider(create: (_) => PageIndexBloc()),
+        BlocProvider(create: (_) => DownloadWeaklyReportCubit()),
         BlocProvider(create: (_) => SwitchValueGraphBloc()),
         BlocProvider(create: (_) => AuthCubit()),
         BlocProvider(create: (_) => BiomarkerCubit()),
