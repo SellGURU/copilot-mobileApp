@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
           lazy: false,
           create: (context) {
             final cameraBloc = CameraBloc();
-            cameraBloc.add(CameraInitialize()); // Trigger initialization
+            // cameraBloc.add(CameraInitialize()); // Trigger initialization
             return cameraBloc;
           },
         ),
