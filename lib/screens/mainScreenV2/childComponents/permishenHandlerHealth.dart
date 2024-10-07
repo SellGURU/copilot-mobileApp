@@ -42,13 +42,14 @@ class _PermishenhandlerhealthState extends State<Permishenhandlerhealth> {
   }
 
   void initialize(BuildContext context)async {
-    const environment =
-        kDebugMode ? RookEnvironment.sandbox : RookEnvironment.production;
 
+    // const environment =
+    //     kDebugMode ? RookEnvironment.sandbox : RookEnvironment.production;
+    // const environment = ;
     final rookConfiguration = RookConfiguration(
       clientUUID: "b0eb1473-44ed-4c93-8d90-eb15deb20bb7",
       secretKey: "FFybi3eZefYV8ZMhLOeAuT8724oO3ybMkgdR",
-      environment: environment,
+      environment: RookEnvironment.sandbox,
       enableBackgroundSync: true,
     );
 
@@ -113,16 +114,16 @@ class _PermishenhandlerhealthState extends State<Permishenhandlerhealth> {
     SharedPreferences.getInstance().then((prefs) {
       final userAcceptedYesterdaySync =
           prefs.getBool("ACCEPTED_YESTERDAY_SYNC") ?? false;
-      const environment =
-          kDebugMode ? RookEnvironment.sandbox : RookEnvironment.production;
-
+      // const environment =
+      //     kDebugMode ? RookEnvironment.sandbox : RookEnvironment.production;
+      // const environment = ;
       // Create the configuration for Rook
       if (true) {
         HCRookYesterdaySyncManager.scheduleYesterdaySync(
           enableNativeLogs: true,
           clientUUID: "b0eb1473-44ed-4c93-8d90-eb15deb20bb7",
           secretKey: "FFybi3eZefYV8ZMhLOeAuT8724oO3ybMkgdR",
-          environment: environment,
+          environment: RookEnvironment.sandbox,
         );
         _showSnackbar(context, "Yesterday sync do");
       } else {

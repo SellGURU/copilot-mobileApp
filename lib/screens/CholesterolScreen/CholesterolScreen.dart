@@ -45,7 +45,7 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
               Icons.notifications_none_outlined,
               color: AppColors.purpleDark,
             ),
-            SizedBox(
+            const SizedBox(
               width: 15,
             ),
           ],
@@ -55,7 +55,7 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15),
+            padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -123,7 +123,7 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            borderRadius: const BorderRadius.all(Radius.circular(15)),
                             color: indexItem == 1
                                 ? AppColors.purpleDark
                                 : Colors.white,
@@ -162,7 +162,7 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
+                            borderRadius: const BorderRadius.all(Radius.circular(15)),
                             color: indexItem == 2
                                 ? AppColors.purpleDark
                                 : Colors.white,
@@ -402,7 +402,8 @@ class _HowToImproveTabState extends State<HowToImproveTab> {
             const SizedBox(height: 10),
             Text(
                 "Consider reviewing your diet and lifestyle choices, focusing on reducing saturated fats, trans fats, and cholesterol-rich foods. Incorporate more fiber-rich foods, such as fruits, vegetables, and whole grains, into your meals. Regular physical activity can also help lower LDL cholesterol levels. If you have been prescribed cholesterol-lowering medications, ensure you are taking them as directed by your doctor. If you experience chest pain, shortness of breath, or other symptoms of heart problems, please contact your doctor immediately, as high LDL cholesterol can increase your risk of heart disease. Set your LDL cholesterol test reminder in the Your Data section and track your levels over time.",
-                style: AppTextStyles.hintBlackWithHeight),
+                style: AppTextStyles.hintBlackWithHeight
+            ),
           ],
         ),
       ),

@@ -344,7 +344,7 @@ class _ResultScreenState extends State<ResultScreen> {
           );
         } else {
           return Center(
-            child: Text("internat Error"),
+            child: Text("internat Error",style: AppTextStyles.hint,),
           );
         }
       },
