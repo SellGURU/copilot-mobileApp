@@ -7,11 +7,13 @@ import 'package:copilet/screens/mainScreenV2/downloadWeaklyReportState/cubit.dar
 import 'package:copilet/screens/mainScreenV2/downloadWeaklyReportState/state.dart';
 import 'package:copilet/screens/mainScreenV2/userinfoCubit/cubit.dart';
 import 'package:copilet/screens/mainScreenV2/userinfoCubit/state.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../components/text_style.dart';
@@ -22,6 +24,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../login/cubit/cubit.dart';
 import '../login/cubit/state.dart';
 import 'dart:convert';
+import 'package:universal_html/html.dart' as html;
+import 'dart:io' as io; // For Android file handling
 
 import 'childComponents/permishenHandlerHealth.dart';
 import 'downloadReport/cubit.dart';
@@ -29,17 +33,16 @@ import 'downloadReport/cubit.dart';
 Future<void> downloadAndSavePdf(BuildContext context, String base64Pdf) async {
   // Decode base64 string to bytes
   final bytes = base64Decode(base64Pdf);
-  _downloadPdfWeb(bytes);
-
   print("test gbv");
   if (kIsWeb) {
     // Web logic for downloading the PDF
     print("test pdf");
+    _downloadPdfWeb(bytes);
   } else {
     // Android logic for saving the PDF
     print("test pdf mobile");
 
-    // await _downloadPdfAndroid(context, bytes);
+    await _downloadPdfAndroid(context, bytes);
   }
 }
 
@@ -59,37 +62,37 @@ void _downloadPdfWeb(Uint8List bytes) {
 }
 
 /// Android: Save the PDF file using app-specific storage or SAF (File Picker)
-// Future<void> _downloadPdfAndroid(BuildContext context, Uint8List bytes) async {
-//   try {
-//     // Use File Picker to allow the user to choose a location for saving the file
-//     String? outputFilePath = await FilePicker.platform.saveFile(
-//       dialogTitle: 'Save PDF',
-//       fileName: 'report.pdf',
-//       type: FileType.custom,
-//       allowedExtensions: ['pdf'],
-//     );
-//
-//     if (outputFilePath != null) {
-//       // Create a file and write the bytes
-//       final file = io.File(outputFilePath);
-//       await file.writeAsBytes(bytes);
-//
-//       print('PDF saved at $outputFilePath');
-//       ScaffoldMessenger.of(context).showSnackBar(
-//         SnackBar(content: Text('PDF saved at $outputFilePath')),
-//       );
-//     } else {
-//       // Handle case where the user cancels the file picker
-//       print('User canceled the save dialog');
-//     }
-//   } catch (e) {
-//     // Handle any errors that occur during the file saving process
-//     print('Error saving PDF: $e');
-//     ScaffoldMessenger.of(context).showSnackBar(
-//       SnackBar(content: Text('Error saving PDF')),
-//     );
-//   }
-// }
+Future<void> _downloadPdfAndroid(BuildContext context, Uint8List bytes) async {
+  try {
+    // Use File Picker to allow the user to choose a location for saving the file
+    String? outputFilePath = await FilePicker.platform.saveFile(
+      dialogTitle: 'Save PDF',
+      fileName: 'report.pdf',
+      type: FileType.custom,
+      allowedExtensions: ['pdf'],
+    );
+
+    if (outputFilePath != null) {
+      // Create a file and write the bytes
+      final file = io.File(outputFilePath);
+      await file.writeAsBytes(bytes);
+
+      print('PDF saved at $outputFilePath');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('PDF saved at $outputFilePath')),
+      );
+    } else {
+      // Handle case where the user cancels the file picker
+      print('User canceled the save dialog');
+    }
+  } catch (e) {
+    // Handle any errors that occur during the file saving process
+    print('Error saving PDF: $e');
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Error saving PDF')),
+    );
+  }
+}
 
 class Mainscreenv2 extends StatefulWidget {
   const Mainscreenv2({super.key});
@@ -116,6 +119,7 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    SharedPreferences _prefs;
     return Scaffold(
         backgroundColor: AppColors.bgScreen,
         body: SafeArea(
@@ -169,8 +173,10 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                                         width: 5,
                                       ),
                                       GestureDetector(
-                                        onTap: () => {
-                                          // _launchURL("https://connections.rook-connect.review/client_uuid/b0eb1473-44ed-4c93-8d90-eb15deb20bb7/user_id/am/")
+                                        onTap: () async => {
+                                          _prefs = await SharedPreferences.getInstance(),
+
+                                          _launchURL("https://connections.rook-connect.review/client_uuid/b0eb1473-44ed-4c93-8d90-eb15deb20bb7/user_id/${_prefs.getString("email")}/")
                                           Navigator.pushReplacement(
                                             context,
                                             MaterialPageRoute(
@@ -373,7 +379,6 @@ class Overview2 extends StatelessWidget {
                               }
                             },
                           ),
-
                           const SizedBox(
                             width: 10,
                           ),

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../widgets/text_field.dart';
 import '../home/cubit/cubit.dart';
@@ -39,6 +40,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
   final _passwordController = TextEditingController();
   final _userNameController = TextEditingController();
   var isLoading = null;
@@ -138,13 +140,12 @@ class _LoginPageState extends State<LoginPage> {
       print(error);
     }
   }
+
   Future<void> _handleAuthorizeScopes() async {
     final bool isAuthorized = await _googleSignIn.requestScopes(scopes);
     // #enddocregion RequestScopes
     setState(() {
-
       _isAuthorized = isAuthorized;
-
     });
     // #docregion RequestScopes
     if (isAuthorized) {
@@ -189,12 +190,12 @@ class _LoginPageState extends State<LoginPage> {
           width: size.width,
           alignment: Alignment.center,
           child: Container(
-            width: size.width>420?420:size.width,
+            width: size.width > 420 ? 420 : size.width,
             child: SingleChildScrollView(
               child: Container(
                 height: size.height,
-                padding:
-                    EdgeInsets.only(top: size.height * .35, left: 40, right: 40),
+                padding: EdgeInsets.only(
+                    top: size.height * .35, left: 40, right: 40),
                 alignment: Alignment.topCenter,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -224,11 +225,14 @@ class _LoginPageState extends State<LoginPage> {
                       height: 30,
                     ),
                     BlocConsumer<AuthCubit, AuthState>(
-                      listener: (context, state) {
+                      listener: (context, state) async {
                         if (state is SuccessState) {
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          prefs.setString('email', _emailController.value.text);
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => Mainscreenv2()),
+                            MaterialPageRoute(
+                                builder: (context) => Mainscreenv2()),
                           );
                         }
                         if (state is ErrorState) {
@@ -256,7 +260,8 @@ class _LoginPageState extends State<LoginPage> {
                             },
                             child: Container(
                               alignment: Alignment.center,
-                              padding: const EdgeInsets.only(top: 10, bottom: 10),
+                              padding:
+                                  const EdgeInsets.only(top: 10, bottom: 10),
                               decoration: BoxDecoration(
                                   color: AppColors.purpleDark,
                                   borderRadius: BorderRadius.circular(10)),
@@ -268,14 +273,17 @@ class _LoginPageState extends State<LoginPage> {
                             ));
                       },
                     ),
-                    const SizedBox(height: 15,),
+                    const SizedBox(
+                      height: 15,
+                    ),
                     GestureDetector(
-                      onTap: ()=>_handleSignIn(context),
+                      onTap: () => _handleSignIn(context),
                       child: Container(
                         alignment: Alignment.center,
                         padding: const EdgeInsets.only(top: 10, bottom: 10),
                         decoration: BoxDecoration(
-                          border: Border.all(width: 2,color: AppColors.black),
+                            border:
+                                Border.all(width: 2, color: AppColors.black),
                             color: AppColors.mainBg,
                             borderRadius: BorderRadius.circular(10)),
                         width: size.width,
@@ -283,7 +291,9 @@ class _LoginPageState extends State<LoginPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SvgPicture.asset("assets/Google.svg"),
-                            const SizedBox(width: 10,),
+                            const SizedBox(
+                              width: 10,
+                            ),
                             Text(
                               "Continue with Google",
                               style: AppTextStyles.titleMedium,
