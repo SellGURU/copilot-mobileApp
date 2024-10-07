@@ -11,6 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../components/text_style.dart';
@@ -116,6 +117,7 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    SharedPreferences _prefs;
     return Scaffold(
         backgroundColor: AppColors.bgScreen,
         body: SafeArea(
@@ -169,8 +171,10 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                                         width: 5,
                                       ),
                                       GestureDetector(
-                                        onTap: () => {
-                                          _launchURL("https://connections.rook-connect.review/client_uuid/b0eb1473-44ed-4c93-8d90-eb15deb20bb7/user_id/am/")
+                                        onTap: () async => {
+                                          _prefs = await SharedPreferences.getInstance(),
+
+                                          _launchURL("https://connections.rook-connect.review/client_uuid/b0eb1473-44ed-4c93-8d90-eb15deb20bb7/user_id/${_prefs.getString("email")}/")
                                           // Navigator.pushReplacement(
                                           //   context,
                                           //   MaterialPageRoute(
