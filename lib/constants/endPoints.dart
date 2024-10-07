@@ -5,5 +5,6 @@ class Endpoints {
   static const login = "${baseUrlCodie}auth/mobile_token";
   static const healthScore = "${baseUrlCodie}health_score_mobile";
   static const downloadPdfReport = "${baseUrlCodie}download_report_mobile";
+  static const downloadPdfReportWeakly = "${baseUrlCodie}download_weekly_report_mobile";
   static const clientInformationMobile = "${baseUrlCodie}client_information_mobile";
 }

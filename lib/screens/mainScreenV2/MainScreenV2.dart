@@ -3,6 +3,8 @@ import 'package:copilet/screens/login/login.dart';
 import 'package:copilet/screens/mainScreenV2/cubit/cubit.dart';
 import 'package:copilet/screens/mainScreenV2/cubit/state.dart';
 import 'package:copilet/screens/mainScreenV2/downloadReport/state.dart';
+import 'package:copilet/screens/mainScreenV2/downloadWeaklyReportState/cubit.dart';
+import 'package:copilet/screens/mainScreenV2/downloadWeaklyReportState/state.dart';
 import 'package:copilet/screens/mainScreenV2/userinfoCubit/cubit.dart';
 import 'package:copilet/screens/mainScreenV2/userinfoCubit/state.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,38 +26,39 @@ import 'dart:convert';
 import 'childComponents/permishenHandlerHealth.dart';
 import 'downloadReport/cubit.dart';
 
-// Future<void> downloadAndSavePdf(BuildContext context, String base64Pdf) async {
-//   // Decode base64 string to bytes
-//   final bytes = base64Decode(base64Pdf);
-//   print("test gbv");
-//   if (kIsWeb) {
-//     // Web logic for downloading the PDF
-//     print("test pdf");
-//     // _downloadPdfWeb(bytes);
-//   } else {
-//     // Android logic for saving the PDF
-//     print("test pdf mobile");
-//
-//     // await _downloadPdfAndroid(context, bytes);
-//   }
-// }
-//
-// /// Web: Download the PDF using the browser's download mechanism
-// void _downloadPdfWeb(Uint8List bytes) {
-//   // Create a Blob object from the bytes
-//   final blob = html.Blob([bytes], 'application/pdf');
-//
-//   // Create a URL for the Blob and set it as the href of an anchor element
-//   final url = html.Url.createObjectUrlFromBlob(blob);
-//   final anchor = html.AnchorElement(href: url)
-//     ..setAttribute("download", "report.pdf")
-//     ..click(); // Trigger a download by clicking the link
-//
-//   // Revoke the object URL to avoid memory leaks
-//   html.Url.revokeObjectUrl(url);
-// }
-//
-// /// Android: Save the PDF file using app-specific storage or SAF (File Picker)
+Future<void> downloadAndSavePdf(BuildContext context, String base64Pdf) async {
+  // Decode base64 string to bytes
+  final bytes = base64Decode(base64Pdf);
+  _downloadPdfWeb(bytes);
+
+  print("test gbv");
+  if (kIsWeb) {
+    // Web logic for downloading the PDF
+    print("test pdf");
+  } else {
+    // Android logic for saving the PDF
+    print("test pdf mobile");
+
+    // await _downloadPdfAndroid(context, bytes);
+  }
+}
+
+/// Web: Download the PDF using the browser's download mechanism
+void _downloadPdfWeb(Uint8List bytes) {
+  // Create a Blob object from the bytes
+  final blob = html.Blob([bytes], 'application/pdf');
+
+  // Create a URL for the Blob and set it as the href of an anchor element
+  final url = html.Url.createObjectUrlFromBlob(blob);
+  final anchor = html.AnchorElement(href: url)
+    ..setAttribute("download", "report.pdf")
+    ..click(); // Trigger a download by clicking the link
+
+  // Revoke the object URL to avoid memory leaks
+  html.Url.revokeObjectUrl(url);
+}
+
+/// Android: Save the PDF file using app-specific storage or SAF (File Picker)
 // Future<void> _downloadPdfAndroid(BuildContext context, Uint8List bytes) async {
 //   try {
 //     // Use File Picker to allow the user to choose a location for saving the file
@@ -305,26 +308,72 @@ class Overview2 extends StatelessWidget {
                       ),
                       Row(
                         children: [
-                          Row(
-                            children: [
-                              SvgPicture.asset(
-                                "assets/document-download.svg",
-                                width: 16,
-                                height: 16,
-                                colorFilter: const ColorFilter.mode(
-                                  AppColors.purpleLite,
-                                  BlendMode.srcIn,
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                "Weekly Report",
-                                style: AppTextStyles.hintLitePurple,
-                              ),
-                            ],
+                          BlocConsumer<DownloadWeaklyReportCubit,
+                              DownloadWeaklyReportState>(
+                            listener: (context, state) {
+                              // TODO: implement listener
+                            },
+                            builder: (context, state) {
+                              if (state is SuccessDownloadWeaklyReportState) {
+                                return GestureDetector(
+                                  onTap: () async {
+                                    print("test on tab");
+                                    // await downloadAndSavePdf(
+                                    //     context, state.pdfUrl);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/document-download.svg",
+                                        width: 16,
+                                        height: 16,
+                                        colorFilter: const ColorFilter.mode(
+                                          AppColors.purpleLite,
+                                          BlendMode.srcIn,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        "Report",
+                                        style: AppTextStyles.hintPurple,
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                              if (state is LoadingDownloadWeaklyReportState) {
+                                return const CircularProgressIndicator();
+                              }
+                              if (state is ErrorDownloadWeaklyReportState) {
+                                return
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/document-download.svg",
+                                        width: 16,
+                                        height: 16,
+                                        colorFilter: const ColorFilter.mode(
+                                          AppColors.purpleLite,
+                                          BlendMode.srcIn,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        "Weekly Report",
+                                        style: AppTextStyles.hintLitePurple,
+                                      ),
+                                    ],
+                                  );
+                              } else {
+                                return const SizedBox();
+                              }
+                            },
                           ),
+
                           const SizedBox(
                             width: 10,
                           ),
