@@ -608,8 +608,8 @@ class _Longevity2State extends State<Longevity2> {
                             children: [
                               SvgPicture.asset(
                                 "assets/activityIcon.svg",
-                                width: 30,
-                                height: 30,
+                                width: 22,
+                                height: 22,
                                 colorFilter: const ColorFilter.mode(
                                   AppColors
                                       .purpleDark, // The color you want to apply
@@ -690,8 +690,8 @@ class _Longevity2State extends State<Longevity2> {
                             children: [
                               SvgPicture.asset(
                                 "assets/mid.svg",
-                                width: 30,
-                                height: 30,
+                                width: 20,
+                                height: 20,
                                 colorFilter: const ColorFilter.mode(
                                   AppColors
                                       .purpleDark, // The color you want to apply
