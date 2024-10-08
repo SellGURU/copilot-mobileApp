@@ -601,13 +601,13 @@ class _Longevity2State extends State<Longevity2> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.white,
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(.1),
+                            color: Color.fromRGBO(153, 171, 198, 0.2),
                             spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(
-                                3, 0), // changes position of shadow
+                            blurRadius: 10,
+                            offset: Offset(
+                                0, 4), // changes position of shadow
                           ),
                         ]),
                     child: Padding(
@@ -676,13 +676,13 @@ class _Longevity2State extends State<Longevity2> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.white,
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(.1),
+                            color: Color.fromRGBO(153, 171, 198, 0.2),
                             spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(
-                                0, 2), // changes position of shadow
+                            blurRadius: 10,
+                            offset: Offset(
+                                0, 4), // changes position of shadow
                           ),
                         ]),
                     child: Padding(
@@ -696,8 +696,8 @@ class _Longevity2State extends State<Longevity2> {
                             children: [
                               SvgPicture.asset(
                                 "assets/activityIcon.svg",
-                                width: 22,
-                                height: 22,
+                                width: 15,
+                                height: 15,
                                 colorFilter: const ColorFilter.mode(
                                   AppColors
                                       .purpleDark, // The color you want to apply
@@ -758,13 +758,13 @@ class _Longevity2State extends State<Longevity2> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.white,
-                        boxShadow: [
+                        boxShadow: const [
                           BoxShadow(
-                            color: Colors.grey.withOpacity(.1),
+                            color: Color.fromRGBO(153, 171, 198, 0.2),
                             spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(
-                                0, 2), // changes position of shadow
+                            blurRadius: 10,
+                            offset: Offset(
+                                0, 4), // changes position of shadow
                           ),
                         ]),
                     child: Padding(
