@@ -473,10 +473,13 @@ class Overview2 extends StatelessWidget {
                     if (state is SuccessGoogleFormState) {
                       return
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Text("Survey",style: AppTextStyles.title1,),
+                            const SizedBox(height: 10,),
                             SurveyCard(
                               imagePath:
-                                  '/Surveys/Medical-Specialty-Rehabilitation--Streamline-Ultimate.png',
+                                  'assets/Medical-Specialty-Rehabilitation--Streamline-Ultimate.png',
                               Minutes: state.googleFormData["Back Pain Surveys"]["Average_response_time"],
                               Questions: state.googleFormData['Back Pain Surveys']["number_of_questions"],
                               Title: 'Back Pain Surveys',
@@ -484,7 +487,7 @@ class Overview2 extends StatelessWidget {
                             ),
                             SurveyCard(
                               imagePath:
-                              '/Surveys/heart-rate-strong--Streamline-Ultimate.png',
+                              'assets/heart-rate-strong--Streamline-Ultimate.png',
                               Minutes: state.googleFormData["Fitness test results"]["Average_response_time"],
                               Questions: state.googleFormData['Fitness test results']["number_of_questions"],
                               Title: 'Fitness test results',
@@ -492,24 +495,24 @@ class Overview2 extends StatelessWidget {
                             ),
                             SurveyCard(
                               imagePath:
-                              '/Surveys/herbal-medicine-2--Streamline-Ultimate.png',
+                              'assets/herbal-medicine-2--Streamline-Ultimate.png',
                               Minutes: state.googleFormData["Longevity Performance Coaching Daily Survey"]["Average_response_time"],
                               Questions: state.googleFormData['Longevity Performance Coaching Daily Survey']["number_of_questions"],
-                              Title: 'Longevity Performance Coaching Daily Survey',
+                              Title: 'Longevity Performance Coaching ...',
                               Link: state.googleFormData['Longevity Performance Coaching Daily Survey']["link"],
                             ),
                             SurveyCard(
                               imagePath:
-                              '/Surveys/brain-head-1--Streamline-Ultimate.png',
+                              'assets/brain-head-1--Streamline-Ultimate.png',
                               Minutes: state.googleFormData["Emotional Health and Motivation Survey"]["Average_response_time"],
                               Questions: state.googleFormData['Emotional Health and Motivation Survey']["number_of_questions"],
-                              Title: 'Emotional Health and Motivation Survey',
+                              Title: 'Emotional Health and Motivation',
                               Link: state.googleFormData['Emotional Health and Motivation Survey']["link"],
                             ),
                         
                             SurveyCard(
                               imagePath:
-                              '/Surveys/heart-approve-1--Streamline-Ultimate.png',
+                              'assets/heart-approve-1--Streamline-Ultimate.png',
                               Minutes: state.googleFormData["Stability, Mobility and Flexibility tests"]["Average_response_time"],
                               Questions: state.googleFormData['Stability, Mobility and Flexibility tests']["number_of_questions"],
                               Title: 'Stability, Mobility and Flexibility tests',
@@ -517,7 +520,7 @@ class Overview2 extends StatelessWidget {
                             ),
                             SurveyCard(
                               imagePath:
-                              '/Surveys/Blood-Drops-Positive--Streamline-Ultimate.png',
+                              'assets/Blood-Drops-Positive--Streamline-Ultimate.png',
                               Minutes: state.googleFormData["Blood test"]["Average_response_time"],
                               Questions: state.googleFormData['Blood test']["number_of_questions"],
                               Title: 'Blood test',
@@ -525,7 +528,7 @@ class Overview2 extends StatelessWidget {
                             ),
                             SurveyCard(
                               imagePath:
-                              '/Surveys/Medical-Data-Cross--Streamline-Ultimate.png',
+                              'assets/Medical-Data-Cross--Streamline-Ultimate.png',
                               Minutes: state.googleFormData["Clinet info"]["Average_response_time"],
                               Questions: state.googleFormData['Clinet info']["number_of_questions"],
                               Title: 'Clinet info',
