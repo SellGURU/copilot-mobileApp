@@ -35,7 +35,7 @@ class AppTextStyles {
   static TextStyle gradeYellow = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 11,fontWeight: FontWeight.w500, color: Color.fromARGB(255,255, 228, 94)));
 
   // --------------
-  static TextStyle hintSmale = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 10, color: AppColors.textLite));
+  static TextStyle hintSmale = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 10, color: AppColors.textLite, fontWeight: FontWeight.w400));
   static TextStyle titleSmale = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 10, color: AppColors.black, fontWeight: FontWeight.w500));
   // --------------
 

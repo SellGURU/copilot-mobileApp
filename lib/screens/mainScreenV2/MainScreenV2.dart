@@ -7,6 +7,9 @@ import 'package:copilet/screens/mainScreenV2/downloadWeaklyReportState/cubit.dar
 import 'package:copilet/screens/mainScreenV2/downloadWeaklyReportState/state.dart';
 import 'package:copilet/screens/mainScreenV2/userinfoCubit/cubit.dart';
 import 'package:copilet/screens/mainScreenV2/userinfoCubit/state.dart';
+import 'package:copilet/widgets/SurveysCard/SurveysCard.dart';
+import 'package:copilet/widgets/SurveysCard/googleForm/cubit.dart';
+import 'package:copilet/widgets/SurveysCard/googleForm/state.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -107,6 +110,7 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
       isShowDropDown = !isShowDropDown;
     });
   }
+
   void _launchURL(String url) async {
     if (await launch(url)) {
       await launch(url);
@@ -114,6 +118,7 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
       throw '$url';
     }
   }
+
   // Example base64 PDF string (you need to replace this with your actual base64 string)
   bool isShowDropDown = false;
   @override
@@ -125,113 +130,117 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
         body: SafeArea(
           child: BlocBuilder<PageIndexBloc, PageIndexState>(
             builder: (context, state) {
-              return Container(
-                alignment: Alignment.center,
-                height: size.height,
-                width: size.width,
+              return SingleChildScrollView(
                 child: Container(
-                  width: size.width > 420 ? 420 : size.width,
-                  child: Stack(
-                    children: [
-                      Overview2(
-                        isShowDropDown: isShowDropDown,
-                        onToggleDropDown: toggleDropDown,
-                      ),
-                      if (isShowDropDown)
-                        Positioned(
-                            top: 70,
-                            left: 50,
-                            child: Container(
-                              padding: EdgeInsets.all(5),
-                              width: 133,
-                              height: 92,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10)),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.grey.withOpacity(.1),
-                                      spreadRadius: 2,
-                                      blurRadius: 2,
-                                      offset: const Offset(
-                                          0, 1), // changes position of shadow
+                  alignment: Alignment.center,
+                  height: size.height,
+                  width: size.width,
+                  child: Container(
+                    width: size.width > 420 ? 420 : size.width,
+                    child: Stack(
+                      children: [
+                        Overview2(
+                          isShowDropDown: isShowDropDown,
+                          onToggleDropDown: toggleDropDown,
+                        ),
+                        if (isShowDropDown)
+                          Positioned(
+                              top: 70,
+                              left: 50,
+                              child: Container(
+                                padding: EdgeInsets.all(5),
+                                width: 133,
+                                height: 92,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10)),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.grey.withOpacity(.1),
+                                        spreadRadius: 2,
+                                        blurRadius: 2,
+                                        offset: const Offset(
+                                            0, 1), // changes position of shadow
+                                      ),
+                                    ]),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          "assets/watch-status.svg",
+                                          width: 30,
+                                          height: 16,
+                                        ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () async => {
+                                            _prefs = await SharedPreferences
+                                                .getInstance(),
+                
+                                            _launchURL(
+                                                "https://connections.rook-connect.review/client_uuid/b0eb1473-44ed-4c93-8d90-eb15deb20bb7/user_id/${_prefs.getString("email")}/")
+                                            // Navigator.pushReplacement(
+                                            //   context,
+                                            //   MaterialPageRoute(
+                                            //       builder: (context) =>
+                                            //           Permishenhandlerhealth()),
+                                            // )
+                                          },
+                                          child: Text(
+                                            "Wearable Device",
+                                            style:
+                                                AppTextStyles.hintBlackWithHeight,
+                                          ),
+                                        )
+                                      ],
                                     ),
-                                  ]),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        "assets/watch-status.svg",
-                                        width: 30,
-                                        height: 16,
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      GestureDetector(
-                                        onTap: () async => {
-                                          _prefs = await SharedPreferences.getInstance(),
-
-                                          _launchURL("https://connections.rook-connect.review/client_uuid/b0eb1473-44ed-4c93-8d90-eb15deb20bb7/user_id/${_prefs.getString("email")}/")
-                                          // Navigator.pushReplacement(
-                                          //   context,
-                                          //   MaterialPageRoute(
-                                          //       builder: (context) =>
-                                          //           Permishenhandlerhealth()),
-                                          // )
-                                        },
-                                        child: Text(
-                                          "Wearable Device",
-                                          style:
-                                              AppTextStyles.hintBlackWithHeight,
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  BlocBuilder<AuthCubit, AuthState>(
-                                    builder: (context, state) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          BlocProvider.of<AuthCubit>(context)
-                                              .logOut();
-                                          Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    LoginPage()),
-                                          );
-                                        },
-                                        child: Row(
-                                          children: [
-                                            SvgPicture.asset(
-                                              "assets/logout.svg",
-                                              width: 30,
-                                              height: 16,
-                                            ),
-                                            const SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              "Log out",
-                                              style: AppTextStyles
-                                                  .hintBlackWithHeight,
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
-                            )),
-                    ],
+                                    const SizedBox(
+                                      height: 10,
+                                    ),
+                                    BlocBuilder<AuthCubit, AuthState>(
+                                      builder: (context, state) {
+                                        return GestureDetector(
+                                          onTap: () {
+                                            BlocProvider.of<AuthCubit>(context)
+                                                .logOut();
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      LoginPage()),
+                                            );
+                                          },
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                "assets/logout.svg",
+                                                width: 30,
+                                                height: 16,
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                "Log out",
+                                                style: AppTextStyles
+                                                    .hintBlackWithHeight,
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              )),
+                      ],
+                    ),
                   ),
                 ),
               );
@@ -352,27 +361,26 @@ class Overview2 extends StatelessWidget {
                                 return const CircularProgressIndicator();
                               }
                               if (state is ErrorDownloadWeaklyReportState) {
-                                return
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        "assets/document-download.svg",
-                                        width: 16,
-                                        height: 16,
-                                        colorFilter: const ColorFilter.mode(
-                                          AppColors.purpleLite,
-                                          BlendMode.srcIn,
-                                        ),
+                                return Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/document-download.svg",
+                                      width: 16,
+                                      height: 16,
+                                      colorFilter: const ColorFilter.mode(
+                                        AppColors.purpleLite,
+                                        BlendMode.srcIn,
                                       ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        "Weekly Report",
-                                        style: AppTextStyles.hintLitePurple,
-                                      ),
-                                    ],
-                                  );
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "Weekly Report",
+                                      style: AppTextStyles.hintLitePurple,
+                                    ),
+                                  ],
+                                );
                               } else {
                                 return const SizedBox();
                               }
@@ -454,17 +462,97 @@ class Overview2 extends StatelessWidget {
                   height: 30,
                 ),
                 const Longevity2(),
-                Container(
-                  padding: const EdgeInsets.only(top: 1, bottom: 10),
-                  height: size.height * .2,
-                  // decoration: BoxDecoration(
-                  //     border: Border.all(width: 20)
-                  // ),
-                  child: SvgPicture.asset(
-                    "assets/Group20.svg",
-                    width: size.width,
-                  ),
+                const SizedBox(
+                  height: 20,
                 ),
+                BlocConsumer<GoogleFormCubit, GoogleFormState>(
+                  listener: (context, state) {
+                    // TODO: implement listener
+                  },
+                  builder: (context, state) {
+                    if (state is SuccessGoogleFormState) {
+                      return
+                        Column(
+                          children: [
+                            SurveyCard(
+                              imagePath:
+                                  '/Surveys/Medical-Specialty-Rehabilitation--Streamline-Ultimate.png',
+                              Minutes: state.googleFormData["Back Pain Surveys"]["Average_response_time"],
+                              Questions: state.googleFormData['Back Pain Surveys']["number_of_questions"],
+                              Title: 'Back Pain Surveys',
+                              Link: state.googleFormData['Back Pain Surveys']["link"],
+                            ),
+                            SurveyCard(
+                              imagePath:
+                              '/Surveys/heart-rate-strong--Streamline-Ultimate.png',
+                              Minutes: state.googleFormData["Fitness test results"]["Average_response_time"],
+                              Questions: state.googleFormData['Fitness test results']["number_of_questions"],
+                              Title: 'Fitness test results',
+                              Link: state.googleFormData['Fitness test results']["link"],
+                            ),
+                            SurveyCard(
+                              imagePath:
+                              '/Surveys/herbal-medicine-2--Streamline-Ultimate.png',
+                              Minutes: state.googleFormData["Longevity Performance Coaching Daily Survey"]["Average_response_time"],
+                              Questions: state.googleFormData['Longevity Performance Coaching Daily Survey']["number_of_questions"],
+                              Title: 'Longevity Performance Coaching Daily Survey',
+                              Link: state.googleFormData['Longevity Performance Coaching Daily Survey']["link"],
+                            ),
+                            SurveyCard(
+                              imagePath:
+                              '/Surveys/brain-head-1--Streamline-Ultimate.png',
+                              Minutes: state.googleFormData["Emotional Health and Motivation Survey"]["Average_response_time"],
+                              Questions: state.googleFormData['Emotional Health and Motivation Survey']["number_of_questions"],
+                              Title: 'Emotional Health and Motivation Survey',
+                              Link: state.googleFormData['Emotional Health and Motivation Survey']["link"],
+                            ),
+                        
+                            SurveyCard(
+                              imagePath:
+                              '/Surveys/heart-approve-1--Streamline-Ultimate.png',
+                              Minutes: state.googleFormData["Stability, Mobility and Flexibility tests"]["Average_response_time"],
+                              Questions: state.googleFormData['Stability, Mobility and Flexibility tests']["number_of_questions"],
+                              Title: 'Stability, Mobility and Flexibility tests',
+                              Link: state.googleFormData['Stability, Mobility and Flexibility tests']["link"],
+                            ),
+                            SurveyCard(
+                              imagePath:
+                              '/Surveys/Blood-Drops-Positive--Streamline-Ultimate.png',
+                              Minutes: state.googleFormData["Blood test"]["Average_response_time"],
+                              Questions: state.googleFormData['Blood test']["number_of_questions"],
+                              Title: 'Blood test',
+                              Link: state.googleFormData['Blood test']["link"],
+                            ),
+                            SurveyCard(
+                              imagePath:
+                              '/Surveys/Medical-Data-Cross--Streamline-Ultimate.png',
+                              Minutes: state.googleFormData["Clinet info"]["Average_response_time"],
+                              Questions: state.googleFormData['Clinet info']["number_of_questions"],
+                              Title: 'Clinet info',
+                              Link: state.googleFormData['Clinet info']["link"],
+                            ),
+                          ],
+                        );
+                    }
+                    if (state is LoadingGoogleFormState){
+                      return const  CircularProgressIndicator();
+                    }
+                    else{
+                      return const Text("have error");
+                    }
+                  },
+                )
+                // Container(
+                //   padding: const EdgeInsets.only(top: 1, bottom: 10),
+                //   height: size.height * .2,
+                //   // decoration: BoxDecoration(
+                //   //     border: Border.all(width: 20)
+                //   // ),
+                //   child: SvgPicture.asset(
+                //     "assets/Group20.svg",
+                //     width: size.width,
+                //   ),
+                // ),
               ],
             ),
           ),

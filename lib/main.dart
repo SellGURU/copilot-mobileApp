@@ -6,6 +6,7 @@ import 'package:copilet/screens/mainScreenV2/downloadReport/state.dart';
 import 'package:copilet/screens/mainScreenV2/downloadWeaklyReportState/cubit.dart';
 import 'package:copilet/screens/mainScreenV2/downloadWeaklyReportState/state.dart';
 import 'package:copilet/screens/mainScreenV2/userinfoCubit/cubit.dart';
+import 'package:copilet/widgets/SurveysCard/googleForm/cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => SwitchValueGraphBloc()),
         BlocProvider(create: (_) => AuthCubit()),
         BlocProvider(create: (_) => BiomarkerCubit()),
+        BlocProvider(create: (_) => GoogleFormCubit()),
         BlocProvider(create: (_) => HealthScoreCubit()),
         BlocProvider(create: (_) => DownloadReportPdfCubit()),
         BlocProvider(create: (_) => ClientInformationMobileCubit()),

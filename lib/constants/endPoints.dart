@@ -7,4 +7,5 @@ class Endpoints {
   static const downloadPdfReport = "${baseUrlCodie}download_report_mobile";
   static const downloadPdfReportWeakly = "${baseUrlCodie}download_weekly_report_mobile";
   static const clientInformationMobile = "${baseUrlCodie}client_information_mobile";
+  static const google_form = "${baseUrlCodie}google_form";
 }
