@@ -29,73 +29,107 @@ import '../login/cubit/state.dart';
 import 'dart:convert';
 import 'package:universal_html/html.dart' as html;
 import 'dart:io' as io; // For Android file handling
+import 'package:http/http.dart' as http;
+import 'package:file_picker/file_picker.dart';
+import 'dart:io' as io;
 
 import 'childComponents/permishenHandlerHealth.dart';
 import 'downloadReport/cubit.dart';
 
-Future<void> downloadAndSavePdf(BuildContext context, String base64Pdf) async {
-  // Decode base64 string to bytes
-  final bytes = base64Decode(base64Pdf);
-  print("test gbv");
-  if (kIsWeb) {
-    // Web logic for downloading the PDF
-    print("test pdf");
-    _downloadPdfWeb(bytes);
-  } else {
-    // Android logic for saving the PDF
-    print("test pdf mobile");
+// Future<void> downloadAndSavePdf(BuildContext context, String base64Pdf) async {
+//   // Decode base64 string to bytes
+//   final bytes = base64Decode(base64Pdf);
+//   print("test gbv");
+//   if (kIsWeb) {
+//     // Web logic for downloading the PDF
+//     print("test pdf");
+//     _downloadPdfWeb(bytes);
+//   } else {
+//     // Android logic for saving the PDF
+//     print("test pdf mobile");
+//
+//     await _downloadPdfAndroid(context, bytes);
+//   }
+// }
+//
+// /// Web: Download the PDF using the browser's download mechanism
+// void _downloadPdfWeb(Uint8List bytes) {
+//   // Create a Blob object from the bytes
+//   final blob = html.Blob([bytes], 'application/pdf');
+//
+//   // Create a URL for the Blob and set it as the href of an anchor element
+//   final url = html.Url.createObjectUrlFromBlob(blob);
+//   final anchor = html.AnchorElement(href: url)
+//     ..setAttribute("download", "report.pdf")
+//     ..click(); // Trigger a download by clicking the link
+//
+//   // Revoke the object URL to avoid memory leaks
+//   html.Url.revokeObjectUrl(url);
+// }
 
-    await _downloadPdfAndroid(context, bytes);
+Future<void> downloadPdf(BuildContext context, String pdfUrl) async {
+  if (kIsWeb) {
+    // Web: Trigger download via browser
+    print("test is web");
+    _downloadPdfWebFromUrl(pdfUrl);
+  } else {
+    // Android: Download the file and save it via file picker
+    await _downloadPdfAndroidFromUrl(context, pdfUrl);
   }
 }
 
-/// Web: Download the PDF using the browser's download mechanism
-void _downloadPdfWeb(Uint8List bytes) {
-  // Create a Blob object from the bytes
-  final blob = html.Blob([bytes], 'application/pdf');
-
-  // Create a URL for the Blob and set it as the href of an anchor element
-  final url = html.Url.createObjectUrlFromBlob(blob);
-  final anchor = html.AnchorElement(href: url)
+/// Web: Download the PDF using the browser's download mechanism from URL
+void _downloadPdfWebFromUrl(String pdfUrl) {
+  // Using the AnchorElement to download in the browser
+  final anchor = html.AnchorElement(href: pdfUrl)
     ..setAttribute("download", "report.pdf")
     ..click(); // Trigger a download by clicking the link
-
-  // Revoke the object URL to avoid memory leaks
-  html.Url.revokeObjectUrl(url);
 }
 
-/// Android: Save the PDF file using app-specific storage or SAF (File Picker)
-Future<void> _downloadPdfAndroid(BuildContext context, Uint8List bytes) async {
+/// Android: Download the PDF from a URL and save it using app-specific storage or SAF (File Picker)
+Future<void> _downloadPdfAndroidFromUrl(BuildContext context, String pdfUrl) async {
   try {
-    // Use File Picker to allow the user to choose a location for saving the file
-    String? outputFilePath = await FilePicker.platform.saveFile(
-      dialogTitle: 'Save PDF',
-      fileName: 'report.pdf',
-      type: FileType.custom,
-      allowedExtensions: ['pdf'],
-    );
+    // Send an HTTP request to get the PDF file from the URL
+    final response = await http.get(Uri.parse(pdfUrl));
 
-    if (outputFilePath != null) {
-      // Create a file and write the bytes
-      final file = io.File(outputFilePath);
-      await file.writeAsBytes(bytes);
-
-      print('PDF saved at $outputFilePath');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('PDF saved at $outputFilePath')),
+    if (response.statusCode == 200) {
+      // Use File Picker to allow the user to choose a location for saving the file
+      String? outputFilePath = await FilePicker.platform.saveFile(
+        dialogTitle: 'Save PDF',
+        fileName: 'report.pdf',
+        type: FileType.custom,
+        allowedExtensions: ['pdf'],
       );
+
+      if (outputFilePath != null) {
+        // Create a file and write the bytes to it
+        final file = io.File(outputFilePath);
+        await file.writeAsBytes(response.bodyBytes);
+
+        print('PDF saved at $outputFilePath');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('PDF saved at $outputFilePath')),
+        );
+      } else {
+        // Handle case where the user cancels the file picker
+        print('User canceled the save dialog');
+      }
     } else {
-      // Handle case where the user cancels the file picker
-      print('User canceled the save dialog');
+      // Handle the case where the file could not be downloaded
+      print('Failed to download PDF: ${response.statusCode}');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to download PDF')),
+      );
     }
   } catch (e) {
-    // Handle any errors that occur during the file saving process
-    print('Error saving PDF: $e');
+    // Handle any errors that occur during the file downloading and saving process
+    print('Error downloading or saving PDF: $e');
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Error saving PDF')),
+      SnackBar(content: Text('Error downloading or saving PDF')),
     );
   }
 }
+
 
 class Mainscreenv2 extends StatefulWidget {
   const Mainscreenv2({super.key});
@@ -331,9 +365,8 @@ class Overview2 extends StatelessWidget {
                             builder: (context, state) {
                               if (state is SuccessDownloadWeaklyReportState) {
                                 return GestureDetector(
-                                  onTap: () async {
-                                    await downloadAndSavePdf(
-                                        context, state.pdfUrlWeakly);
+                                  onTap: ()  {
+                                    _downloadPdfWebFromUrl(state.pdfUrlWeakly);
                                   },
                                   child: Row(
                                     children: [
@@ -399,8 +432,7 @@ class Overview2 extends StatelessWidget {
                                 return GestureDetector(
                                   onTap: () async {
                                     // print("test on tab");
-                                    await downloadAndSavePdf(
-                                        context, state.pdfUrl);
+                                    _downloadPdfWebFromUrl(state.pdfUrl);
                                   },
                                   child: Row(
                                     children: [
