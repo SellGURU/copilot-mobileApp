@@ -15,9 +15,11 @@ class SurveyCard extends StatefulWidget {
   int Minutes;
   String Title;
   String Link;
+  bool fill;
 
   SurveyCard(
       {super.key,
+      required this.fill,
       required this.Link,
       required this.imagePath,
       required this.Minutes,
@@ -30,98 +32,98 @@ class SurveyCard extends StatefulWidget {
 class _SurveyCardState extends State<SurveyCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20.0),
-        boxShadow: const [
-          BoxShadow(
-            color: Color.fromRGBO(153, 171, 198, 0.2),
-            spreadRadius: 1,
-            blurRadius: 22,
-            offset: Offset(0, 4), // changes position of shadow
-          ),
-        ],
-      ),
-      child: Stack(children: [
-        Positioned(
-          right: 0,
-          child: Image.asset("assets/bg_survey_card.png"),
+    if (!widget.fill) {
+      return Container(
+        margin: const EdgeInsets.only(bottom: 10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20.0),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromRGBO(153, 171, 198, 0.2),
+              spreadRadius: 1,
+              blurRadius: 22,
+              offset: Offset(0, 4), // changes position of shadow
+            ),
+          ],
         ),
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  // Icon and Text
-                  Row(
-                    children: [
-                      SvgPicture.asset(widget.imagePath,width: 35,height: 35,),
-                      // Image.asset(widget.imagePath,
-                      //     width: 35, height: 35, fit: BoxFit.fitWidth),
-                      const SizedBox(width: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(widget.Title, style: AppTextStyles.hintMedium),
-                          SizedBox(height: 5),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.help_outline,
-                                size: 15,
-                                color: AppColors.hintLite,
-                              ),
-                              const SizedBox(width: 5),
-                              Text("${widget.Questions} Questions",
-                                  style: AppTextStyles.hintSmaleLite),
-                              const SizedBox(width: 20),
-                               const Icon(
-                                Icons.timer,
-                                size: 15,
-                                color: AppColors.hintLite,
-                              ),
-                              const SizedBox(width: 5),
-                              Text("${widget.Minutes} Minutes",
-                                  style: AppTextStyles.hintSmaleLite),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              // Arrow Icon
-              GestureDetector(
-                onTap: () async {
-                  Dio _dio = Dio();
-                  await _dio.post(Endpoints.add_event, data: {
-                    "event_type": "clicked",
-                    "event_name": widget.Title
-                  });
-                  rediractUrl(widget.Link);
-                },
-                child: Container(
-                    padding: const EdgeInsets.all(8.0),
-                    decoration: const BoxDecoration(
-                      color: AppColors.pinkBorder,
-                      shape: BoxShape.circle,
+        child: Stack(children: [
+          Positioned(
+            right: 0,
+            child: Image.asset("assets/bg_survey_card.png"),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    // Icon and Text
+                    Row(
+                      children: [
+                        SvgPicture.asset(
+                          widget.imagePath,
+                          width: 35,
+                          height: 35,
+                        ),
+                        // Image.asset(widget.imagePath,
+                        //     width: 35, height: 35, fit: BoxFit.fitWidth),
+                        const SizedBox(width: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(widget.Title, style: AppTextStyles.hintMedium),
+                            SizedBox(height: 5),
+                            Row(
+                              children: [
+                                SvgPicture.asset("assets/message-question1.svg"),
+                                const SizedBox(width: 5),
+                                Text("${widget.Questions} Questions",
+                                    style: AppTextStyles.hintSmaleLite),
+                                const SizedBox(width: 20),
+                                SvgPicture.asset("assets/timer.svg"),
+                                const SizedBox(width: 5),
+                                Text("${widget.Minutes} Minutes",
+                                    style: AppTextStyles.hintSmaleLite),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
-                    child: SvgPicture.asset(
-                      "assets/arrow-down.svg",
-                      width: 15,
-                      height: 15,
-                    )),
-              ),
-            ],
+                  ],
+                ),
+                // Arrow Icon
+                GestureDetector(
+                  onTap: () async {
+                    Dio _dio = Dio();
+                    await _dio.post(Endpoints.add_event, data: {
+                      "event_type": "clicked",
+                      "event_name": widget.Title
+                    });
+                    rediractUrl(widget.Link);
+                  },
+                  child: Container(
+                      padding: const EdgeInsets.all(8.0),
+                      decoration: const BoxDecoration(
+                        color: AppColors.pinkBorder,
+                        shape: BoxShape.circle,
+                      ),
+                      child: SvgPicture.asset(
+                        "assets/arrow-down.svg",
+                        width: 15,
+                        height: 15,
+                      )),
+                ),
+              ],
+            ),
           ),
-        ),
-      ]),
-    );
+        ]),
+      );
+    } else {
+      return const SizedBox();
+    }
   }
 
   void rediractUrl(String url) async {

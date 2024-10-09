@@ -245,7 +245,7 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                                         builder: (context, state) {
                                           return GestureDetector(
                                             onTap: () async {
-                                             await BlocProvider.of<AuthCubit>(
+                                              await BlocProvider.of<AuthCubit>(
                                                       context)
                                                   .logOut();
                                               Navigator.pushReplacement(
@@ -403,7 +403,8 @@ class Overview2 extends StatelessWidget {
                                 return const SizedBox(
                                     width: 15,
                                     height: 15,
-                                    child: CircularProgressIndicator());;
+                                    child: CircularProgressIndicator());
+                                ;
                               }
                               if (state is ErrorDownloadWeaklyReportState) {
                                 return Row(
@@ -538,6 +539,8 @@ class Overview2 extends StatelessWidget {
                             Title: 'Back Pain Surveys',
                             Link: state.googleFormData['Back Pain Surveys']
                                 ["link"],
+                            fill: state.googleFormData['Back Pain Surveys']
+                                ["filled"],
                           ),
                           SurveyCard(
                             imagePath:
@@ -551,6 +554,8 @@ class Overview2 extends StatelessWidget {
                             Title: 'Fitness Test Results',
                             Link: state.googleFormData['Fitness test results']
                                 ["link"],
+                            fill: state.googleFormData['Fitness test results']
+                                ["filled"],
                           ),
                           SurveyCard(
                             imagePath:
@@ -561,10 +566,11 @@ class Overview2 extends StatelessWidget {
                             Questions: state.googleFormData[
                                     'Longevity Performance Coaching Daily Survey']
                                 ["number_of_questions"],
-                            Title: 'Longevity Performance Coaching ...',
+                            Title: 'Longevity Performance Coaching',
                             Link: state.googleFormData[
                                     'Longevity Performance Coaching Daily Survey']
-                                ["link"],
+                                ["link"], fill: state.googleFormData['Longevity Performance Coaching Daily Survey']
+                          ["filled"],
                           ),
                           SurveyCard(
                             imagePath:
@@ -578,7 +584,9 @@ class Overview2 extends StatelessWidget {
                             Title: 'Emotional Health and Motivation',
                             Link: state.googleFormData[
                                     'Emotional Health and Motivation Survey']
-                                ["link"],
+                                ["link"], fill: state.googleFormData[
+                          'Emotional Health and Motivation Survey']
+                          ["filled"],
                           ),
                           SurveyCard(
                             imagePath:
@@ -592,7 +600,9 @@ class Overview2 extends StatelessWidget {
                             Title: 'Stability, Mobility and Flexibility',
                             Link: state.googleFormData[
                                     'Stability, Mobility and Flexibility tests']
-                                ["link"],
+                                ["link"], fill: state.googleFormData[
+                          'Stability, Mobility and Flexibility tests']
+                          ["filled"],
                           ),
                           SurveyCard(
                             imagePath:
@@ -602,7 +612,7 @@ class Overview2 extends StatelessWidget {
                             Questions: state.googleFormData['Blood test']
                                 ["number_of_questions"],
                             Title: 'Blood Test',
-                            Link: state.googleFormData['Blood test']["link"],
+                            Link: state.googleFormData['Blood test']["link"], fill: state.googleFormData['Blood test']["filled"],
                           ),
                           SurveyCard(
                             imagePath:
@@ -612,7 +622,7 @@ class Overview2 extends StatelessWidget {
                             Questions: state.googleFormData['Clinet info']
                                 ["number_of_questions"],
                             Title: 'Clinet info',
-                            Link: state.googleFormData['Clinet info']["link"],
+                            Link: state.googleFormData['Clinet info']["link"], fill: state.googleFormData['Clinet info']["filled"],
                           ),
                         ],
                       );
@@ -621,7 +631,8 @@ class Overview2 extends StatelessWidget {
                       return const SizedBox(
                           width: 15,
                           height: 15,
-                          child: CircularProgressIndicator());;
+                          child: CircularProgressIndicator());
+                      ;
                     } else {
                       return const Text("have error");
                     }
