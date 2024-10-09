@@ -1,5 +1,6 @@
 import 'package:copilet/components/text_style.dart';
 import 'package:copilet/res/colors.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -30,7 +31,6 @@ class _SurveyCardState extends State<SurveyCard> {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 10),
-
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20.0),
@@ -43,9 +43,11 @@ class _SurveyCardState extends State<SurveyCard> {
           ),
         ],
       ),
-      child: Stack(
-        children: [
-          Positioned(right: 0,child:Image.asset("assets/bg_survey_card.png"),),
+      child: Stack(children: [
+        Positioned(
+          right: 0,
+          child: Image.asset("assets/bg_survey_card.png"),
+        ),
         Container(
           padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 10),
           child: Row(
@@ -94,7 +96,12 @@ class _SurveyCardState extends State<SurveyCard> {
               ),
               // Arrow Icon
               GestureDetector(
-                onTap: () {
+                onTap: () async {
+                  Dio _dio = Dio();
+                  await _dio.post("path", data: {
+                    "event_type": "clicked",
+                    "event_name": widget.Title
+                  });
                   rediractUrl(widget.Link);
                 },
                 child: Container(
@@ -112,8 +119,7 @@ class _SurveyCardState extends State<SurveyCard> {
             ],
           ),
         ),
-      ]
-      ),
+      ]),
     );
   }
 
