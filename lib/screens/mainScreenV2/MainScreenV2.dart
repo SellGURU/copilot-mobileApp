@@ -244,8 +244,8 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                                       BlocBuilder<AuthCubit, AuthState>(
                                         builder: (context, state) {
                                           return GestureDetector(
-                                            onTap: () {
-                                              BlocProvider.of<AuthCubit>(
+                                            onTap: () async {
+                                             await BlocProvider.of<AuthCubit>(
                                                       context)
                                                   .logOut();
                                               Navigator.pushReplacement(

@@ -15,6 +15,7 @@ import '../../widgets/text_field.dart';
 import '../home/cubit/cubit.dart';
 import '../login/cubit/state.dart';
 import '../mainScreen/mainScreen.dart';
+import '../mainScreenV2/userinfoCubit/cubit.dart';
 import 'cubit/cubit.dart';
 
 import 'package:flutter/foundation.dart';
@@ -229,10 +230,11 @@ class _LoginPageState extends State<LoginPage> {
                         if (state is SuccessState) {
                           SharedPreferences prefs = await SharedPreferences.getInstance();
                           prefs.setString('email', _emailController.value.text);
+                          BlocProvider.of<ClientInformationMobileCubit>(context).refresh();
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => Mainscreenv2()),
+                                builder: (context) =>  Mainscreenv2()),
                           );
                         }
                         if (state is ErrorState) {

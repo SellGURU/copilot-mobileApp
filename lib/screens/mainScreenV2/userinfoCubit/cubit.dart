@@ -33,4 +33,8 @@ class ClientInformationMobileCubit extends Cubit<ClientInformationMobileState> {
       emit(ErrorClientInformationMobileState());
     }
   }
+  Future<void> refresh() async {
+    print("Refreshing data...");
+    await getPdf(); // Call the same method to refresh
+  }
 }
