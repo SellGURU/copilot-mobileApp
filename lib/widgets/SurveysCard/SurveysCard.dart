@@ -1,4 +1,5 @@
 import 'package:copilet/components/text_style.dart';
+import 'package:copilet/constants/endPoints.dart';
 import 'package:copilet/res/colors.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
@@ -98,7 +99,7 @@ class _SurveyCardState extends State<SurveyCard> {
               GestureDetector(
                 onTap: () async {
                   Dio _dio = Dio();
-                  await _dio.post("path", data: {
+                  await _dio.post(Endpoints.add_event, data: {
                     "event_type": "clicked",
                     "event_name": widget.Title
                   });

@@ -1,4 +1,3 @@
-import 'package:copilet/constants/endPoints.dart';
 import 'package:copilet/screens/login/login.dart';
 import 'package:copilet/screens/mainScreenV2/cubit/cubit.dart';
 import 'package:copilet/screens/mainScreenV2/cubit/state.dart';
@@ -26,14 +25,10 @@ import '../../utility/changeScreanBloc/PageIndex_states.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../login/cubit/cubit.dart';
 import '../login/cubit/state.dart';
-import 'dart:convert';
 import 'package:universal_html/html.dart' as html;
 import 'dart:io' as io; // For Android file handling
 import 'package:http/http.dart' as http;
-import 'package:file_picker/file_picker.dart';
-import 'dart:io' as io;
 
-import 'childComponents/permishenHandlerHealth.dart';
 import 'downloadReport/cubit.dart';
 
 // Future<void> downloadAndSavePdf(BuildContext context, String base64Pdf) async {
