@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   AppColors._();
-  // rgba(48, 68, 91, 1)
+  // rgba(147, 129, 255, 1)
   static const Color mainBg = Colors.white;
   static const Color black = Color.fromRGBO(48, 68, 91, 1);
   static const Color bgScreen = Color.fromARGB(255, 254, 254, 254);

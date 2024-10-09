@@ -82,7 +82,8 @@ void _downloadPdfWebFromUrl(String pdfUrl) {
 }
 
 /// Android: Download the PDF from a URL and save it using app-specific storage or SAF (File Picker)
-Future<void> _downloadPdfAndroidFromUrl(BuildContext context, String pdfUrl) async {
+Future<void> _downloadPdfAndroidFromUrl(
+    BuildContext context, String pdfUrl) async {
   try {
     // Send an HTTP request to get the PDF file from the URL
     final response = await http.get(Uri.parse(pdfUrl));
@@ -125,7 +126,6 @@ Future<void> _downloadPdfAndroidFromUrl(BuildContext context, String pdfUrl) asy
   }
 }
 
-
 class Mainscreenv2 extends StatefulWidget {
   const Mainscreenv2({super.key});
 
@@ -161,10 +161,10 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
             builder: (context, state) {
               return SingleChildScrollView(
                 child: GestureDetector(
-                  onTap: (){
-                    if(isShowDropDown){
+                  onTap: () {
+                    if (isShowDropDown) {
                       setState(() {
-                        isShowDropDown=false;
+                        isShowDropDown = false;
                       });
                     }
                   },
@@ -197,12 +197,13 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                                           color: Colors.grey.withOpacity(.1),
                                           spreadRadius: 2,
                                           blurRadius: 2,
-                                          offset: const Offset(
-                                              0, 1), // changes position of shadow
+                                          offset: const Offset(0,
+                                              1), // changes position of shadow
                                         ),
                                       ]),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Row(
@@ -211,7 +212,6 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                                             "assets/watch-status.svg",
                                             width: 30,
                                             height: 16,
-
                                           ),
                                           const SizedBox(
                                             width: 5,
@@ -232,8 +232,8 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                                             },
                                             child: Text(
                                               "Wearable Device",
-                                              style:
-                                                  AppTextStyles.hintBlackWithHeight,
+                                              style: AppTextStyles
+                                                  .hintBlackWithHeight,
                                             ),
                                           )
                                         ],
@@ -245,7 +245,8 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                                         builder: (context, state) {
                                           return GestureDetector(
                                             onTap: () {
-                                              BlocProvider.of<AuthCubit>(context)
+                                              BlocProvider.of<AuthCubit>(
+                                                      context)
                                                   .logOut();
                                               Navigator.pushReplacement(
                                                 context,
@@ -260,7 +261,9 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                                                   "assets/logout.svg",
                                                   width: 30,
                                                   height: 16,
-                                                  colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
+                                                  colorFilter: ColorFilter.mode(
+                                                      Colors.black,
+                                                      BlendMode.srcIn),
                                                 ),
                                                 const SizedBox(
                                                   width: 5,
@@ -328,7 +331,7 @@ class Overview2 extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(
-                            width: 10,
+                            width: 15,
                           ),
                           Column(
                             textDirection: TextDirection.ltr,
@@ -371,7 +374,7 @@ class Overview2 extends StatelessWidget {
                             builder: (context, state) {
                               if (state is SuccessDownloadWeaklyReportState) {
                                 return GestureDetector(
-                                  onTap: ()  {
+                                  onTap: () {
                                     _downloadPdfWebFromUrl(state.pdfUrlWeakly);
                                   },
                                   child: Row(
@@ -381,7 +384,7 @@ class Overview2 extends StatelessWidget {
                                         width: 16,
                                         height: 16,
                                         colorFilter: const ColorFilter.mode(
-                                          AppColors.purpleLite,
+                                          AppColors.purpleDark,
                                           BlendMode.srcIn,
                                         ),
                                       ),
@@ -397,7 +400,10 @@ class Overview2 extends StatelessWidget {
                                 );
                               }
                               if (state is LoadingDownloadWeaklyReportState) {
-                                return const CircularProgressIndicator();
+                                return const SizedBox(
+                                    width: 15,
+                                    height: 15,
+                                    child: CircularProgressIndicator());;
                               }
                               if (state is ErrorDownloadWeaklyReportState) {
                                 return Row(
@@ -426,7 +432,7 @@ class Overview2 extends StatelessWidget {
                             },
                           ),
                           const SizedBox(
-                            width: 10,
+                            width: 15,
                           ),
                           BlocConsumer<DownloadReportPdfCubit,
                               DownloadPdfState>(
@@ -447,7 +453,7 @@ class Overview2 extends StatelessWidget {
                                         width: 16,
                                         height: 16,
                                         colorFilter: const ColorFilter.mode(
-                                          AppColors.purpleLite,
+                                          AppColors.purpleDark,
                                           BlendMode.srcIn,
                                         ),
                                       ),
@@ -463,7 +469,10 @@ class Overview2 extends StatelessWidget {
                                 );
                               }
                               if (state is LoadingDownloadPdf) {
-                                return const CircularProgressIndicator();
+                                return const SizedBox(
+                                    width: 15,
+                                    height: 15,
+                                    child: CircularProgressIndicator());
                               }
                               if (state is ErrorDownloadPdf) {
                                 return Row(
@@ -509,76 +518,111 @@ class Overview2 extends StatelessWidget {
                   },
                   builder: (context, state) {
                     if (state is SuccessGoogleFormState) {
-                      return
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Surveys",style: AppTextStyles.title1,),
-                            const SizedBox(height: 10,),
-                            SurveyCard(
-                              imagePath:
-                                  'assets/Medical-Specialty-Rehabilitation--Streamline-Ultimate.svg',
-                              Minutes: state.googleFormData["Back Pain Surveys"]["Average_response_time"],
-                              Questions: state.googleFormData['Back Pain Surveys']["number_of_questions"],
-                              Title: 'Back Pain Surveys',
-                              Link: state.googleFormData['Back Pain Surveys']["link"],
-                            ),
-                            SurveyCard(
-                              imagePath:
-                              'assets/heart-rate-strong--Streamline-Ultimate.svg',
-                              Minutes: state.googleFormData["Fitness test results"]["Average_response_time"],
-                              Questions: state.googleFormData['Fitness test results']["number_of_questions"],
-                              Title: 'Fitness Test Results',
-                              Link: state.googleFormData['Fitness test results']["link"],
-                            ),
-                            SurveyCard(
-                              imagePath:
-                              'assets/herbal-medicine-2--Streamline-Ultimate.svg',
-                              Minutes: state.googleFormData["Longevity Performance Coaching Daily Survey"]["Average_response_time"],
-                              Questions: state.googleFormData['Longevity Performance Coaching Daily Survey']["number_of_questions"],
-                              Title: 'Longevity Performance Coaching ...',
-                              Link: state.googleFormData['Longevity Performance Coaching Daily Survey']["link"],
-                            ),
-                            SurveyCard(
-                              imagePath:
-                              'assets/brain-head-1--Streamline-Ultimate.svg',
-                              Minutes: state.googleFormData["Emotional Health and Motivation Survey"]["Average_response_time"],
-                              Questions: state.googleFormData['Emotional Health and Motivation Survey']["number_of_questions"],
-                              Title: 'Emotional Health and Motivation',
-                              Link: state.googleFormData['Emotional Health and Motivation Survey']["link"],
-                            ),
-                        
-                            SurveyCard(
-                              imagePath:
-                              'assets/heart-approve-1--Streamline-Ultimate.svg',
-                              Minutes: state.googleFormData["Stability, Mobility and Flexibility tests"]["Average_response_time"],
-                              Questions: state.googleFormData['Stability, Mobility and Flexibility tests']["number_of_questions"],
-                              Title: 'Stability, Mobility and Flexibility',
-                              Link: state.googleFormData['Stability, Mobility and Flexibility tests']["link"],
-                            ),
-                            SurveyCard(
-                              imagePath:
-                              'assets/Blood-Drops-Positive--Streamline-Ultimate.svg',
-                              Minutes: state.googleFormData["Blood test"]["Average_response_time"],
-                              Questions: state.googleFormData['Blood test']["number_of_questions"],
-                              Title: 'Blood Test',
-                              Link: state.googleFormData['Blood test']["link"],
-                            ),
-                            SurveyCard(
-                              imagePath:
-                              'assets/Medical-Data-Cross--Streamline-Ultimate.svg',
-                              Minutes: state.googleFormData["Clinet info"]["Average_response_time"],
-                              Questions: state.googleFormData['Clinet info']["number_of_questions"],
-                              Title: 'Clinet info',
-                              Link: state.googleFormData['Clinet info']["link"],
-                            ),
-                          ],
-                        );
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Surveys",
+                            style: AppTextStyles.title1,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          SurveyCard(
+                            imagePath:
+                                'assets/Medical-Specialty-Rehabilitation--Streamline-Ultimate.svg',
+                            Minutes: state.googleFormData["Back Pain Surveys"]
+                                ["Average_response_time"],
+                            Questions: state.googleFormData['Back Pain Surveys']
+                                ["number_of_questions"],
+                            Title: 'Back Pain Surveys',
+                            Link: state.googleFormData['Back Pain Surveys']
+                                ["link"],
+                          ),
+                          SurveyCard(
+                            imagePath:
+                                'assets/heart-rate-strong--Streamline-Ultimate.svg',
+                            Minutes:
+                                state.googleFormData["Fitness test results"]
+                                    ["Average_response_time"],
+                            Questions:
+                                state.googleFormData['Fitness test results']
+                                    ["number_of_questions"],
+                            Title: 'Fitness Test Results',
+                            Link: state.googleFormData['Fitness test results']
+                                ["link"],
+                          ),
+                          SurveyCard(
+                            imagePath:
+                                'assets/herbal-medicine-2--Streamline-Ultimate.svg',
+                            Minutes: state.googleFormData[
+                                    "Longevity Performance Coaching Daily Survey"]
+                                ["Average_response_time"],
+                            Questions: state.googleFormData[
+                                    'Longevity Performance Coaching Daily Survey']
+                                ["number_of_questions"],
+                            Title: 'Longevity Performance Coaching ...',
+                            Link: state.googleFormData[
+                                    'Longevity Performance Coaching Daily Survey']
+                                ["link"],
+                          ),
+                          SurveyCard(
+                            imagePath:
+                                'assets/brain-head-1--Streamline-Ultimate.svg',
+                            Minutes: state.googleFormData[
+                                    "Emotional Health and Motivation Survey"]
+                                ["Average_response_time"],
+                            Questions: state.googleFormData[
+                                    'Emotional Health and Motivation Survey']
+                                ["number_of_questions"],
+                            Title: 'Emotional Health and Motivation',
+                            Link: state.googleFormData[
+                                    'Emotional Health and Motivation Survey']
+                                ["link"],
+                          ),
+                          SurveyCard(
+                            imagePath:
+                                'assets/heart-approve-1--Streamline-Ultimate.svg',
+                            Minutes: state.googleFormData[
+                                    "Stability, Mobility and Flexibility tests"]
+                                ["Average_response_time"],
+                            Questions: state.googleFormData[
+                                    'Stability, Mobility and Flexibility tests']
+                                ["number_of_questions"],
+                            Title: 'Stability, Mobility and Flexibility',
+                            Link: state.googleFormData[
+                                    'Stability, Mobility and Flexibility tests']
+                                ["link"],
+                          ),
+                          SurveyCard(
+                            imagePath:
+                                'assets/Blood-Drops-Positive--Streamline-Ultimate.svg',
+                            Minutes: state.googleFormData["Blood test"]
+                                ["Average_response_time"],
+                            Questions: state.googleFormData['Blood test']
+                                ["number_of_questions"],
+                            Title: 'Blood Test',
+                            Link: state.googleFormData['Blood test']["link"],
+                          ),
+                          SurveyCard(
+                            imagePath:
+                                'assets/Medical-Data-Cross--Streamline-Ultimate.svg',
+                            Minutes: state.googleFormData["Clinet info"]
+                                ["Average_response_time"],
+                            Questions: state.googleFormData['Clinet info']
+                                ["number_of_questions"],
+                            Title: 'Clinet info',
+                            Link: state.googleFormData['Clinet info']["link"],
+                          ),
+                        ],
+                      );
                     }
-                    if (state is LoadingGoogleFormState){
-                      return const  CircularProgressIndicator();
-                    }
-                    else{
+                    if (state is LoadingGoogleFormState) {
+                      return const SizedBox(
+                          width: 15,
+                          height: 15,
+                          child: CircularProgressIndicator());;
+                    } else {
                       return const Text("have error");
                     }
                   },
@@ -647,8 +691,7 @@ class _Longevity2State extends State<Longevity2> {
                             color: Color.fromRGBO(153, 171, 198, 0.2),
                             spreadRadius: 1,
                             blurRadius: 10,
-                            offset: Offset(
-                                0, 4), // changes position of shadow
+                            offset: Offset(0, 4), // changes position of shadow
                           ),
                         ]),
                     child: Padding(
@@ -722,8 +765,7 @@ class _Longevity2State extends State<Longevity2> {
                             color: Color.fromRGBO(153, 171, 198, 0.2),
                             spreadRadius: 1,
                             blurRadius: 10,
-                            offset: Offset(
-                                0, 4), // changes position of shadow
+                            offset: Offset(0, 4), // changes position of shadow
                           ),
                         ]),
                     child: Padding(
@@ -804,8 +846,7 @@ class _Longevity2State extends State<Longevity2> {
                             color: Color.fromRGBO(153, 171, 198, 0.2),
                             spreadRadius: 1,
                             blurRadius: 10,
-                            offset: Offset(
-                                0, 4), // changes position of shadow
+                            offset: Offset(0, 4), // changes position of shadow
                           ),
                         ]),
                     child: Padding(

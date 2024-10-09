@@ -108,7 +108,7 @@ class _SurveyCardState extends State<SurveyCard> {
                 child: Container(
                     padding: const EdgeInsets.all(8.0),
                     decoration: const BoxDecoration(
-                      color: AppColors.purpleDark,
+                      color: AppColors.pinkBorder,
                       shape: BoxShape.circle,
                     ),
                     child: SvgPicture.asset(
