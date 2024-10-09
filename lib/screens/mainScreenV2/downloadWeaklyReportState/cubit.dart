@@ -22,14 +22,15 @@ class DownloadWeaklyReportCubit extends Cubit<DownloadWeaklyReportState> {
         "from_date": "2024-10-1",
         "to_date": "2024-10-7"
       }).then((res) {
-        print("res.data: ttttt${res.data}");
 
         if(res.data!=null){
+          print("res.data!=null");
+          if(res.data is String)
           emit(SuccessDownloadWeaklyReportState(pdfUrlWeakly: res.data));
-          print("res.data:${res.data}");
-        }
-        if(res.data==null){
-          emit(ErrorDownloadWeaklyReportState());
+          else{
+            emit(ErrorDownloadWeaklyReportState());
+          }
+          print("res.data: ttttt${res.data}");
         }
         else{
           print("pdf weakly be null");
