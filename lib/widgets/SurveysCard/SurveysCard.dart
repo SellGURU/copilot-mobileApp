@@ -29,6 +29,7 @@ class _SurveyCardState extends State<SurveyCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: const EdgeInsets.only(bottom: 10),
 
       decoration: BoxDecoration(
         color: Colors.white,
@@ -46,7 +47,6 @@ class _SurveyCardState extends State<SurveyCard> {
         children: [
           Positioned(right: 0,child:Image.asset("assets/bg_survey_card.png"),),
         Container(
-          margin: const EdgeInsets.only(bottom: 10),
           padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
