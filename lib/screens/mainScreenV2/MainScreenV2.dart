@@ -160,115 +160,126 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
           child: BlocBuilder<PageIndexBloc, PageIndexState>(
             builder: (context, state) {
               return SingleChildScrollView(
-                child: Container(
-                  alignment: Alignment.center,
-                  height: size.height,
-                  width: size.width,
+                child: GestureDetector(
+                  onTap: (){
+                    if(isShowDropDown){
+                      setState(() {
+                        isShowDropDown=false;
+                      });
+                    }
+                  },
                   child: Container(
-                    width: size.width > 420 ? 420 : size.width,
-                    child: Stack(
-                      children: [
-                        Overview2(
-                          isShowDropDown: isShowDropDown,
-                          onToggleDropDown: toggleDropDown,
-                        ),
-                        if (isShowDropDown)
-                          Positioned(
-                              top: 70,
-                              left: 50,
-                              child: Container(
-                                padding: EdgeInsets.all(5),
-                                width: 133,
-                                height: 92,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.withOpacity(.1),
-                                        spreadRadius: 2,
-                                        blurRadius: 2,
-                                        offset: const Offset(
-                                            0, 1), // changes position of shadow
+                    alignment: Alignment.center,
+                    height: size.height,
+                    width: size.width,
+                    child: Container(
+                      width: size.width > 420 ? 420 : size.width,
+                      child: Stack(
+                        children: [
+                          Overview2(
+                            isShowDropDown: isShowDropDown,
+                            onToggleDropDown: toggleDropDown,
+                          ),
+                          if (isShowDropDown)
+                            Positioned(
+                                top: 70,
+                                left: 50,
+                                child: Container(
+                                  padding: EdgeInsets.all(5),
+                                  width: 133,
+                                  height: 92,
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(.1),
+                                          spreadRadius: 2,
+                                          blurRadius: 2,
+                                          offset: const Offset(
+                                              0, 1), // changes position of shadow
+                                        ),
+                                      ]),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            "assets/watch-status.svg",
+                                            width: 30,
+                                            height: 16,
+
+                                          ),
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
+                                          GestureDetector(
+                                            onTap: () async => {
+                                              _prefs = await SharedPreferences
+                                                  .getInstance(),
+
+                                              _launchURL(
+                                                  "https://connections.rook-connect.review/client_uuid/b0eb1473-44ed-4c93-8d90-eb15deb20bb7/user_id/${_prefs.getString("email")}/")
+                                              // Navigator.pushReplacement(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //       builder: (context) =>
+                                              //           Permishenhandlerhealth()),
+                                              // )
+                                            },
+                                            child: Text(
+                                              "Wearable Device",
+                                              style:
+                                                  AppTextStyles.hintBlackWithHeight,
+                                            ),
+                                          )
+                                        ],
                                       ),
-                                    ]),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          "assets/watch-status.svg",
-                                          width: 30,
-                                          height: 16,
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        GestureDetector(
-                                          onTap: () async => {
-                                            _prefs = await SharedPreferences
-                                                .getInstance(),
-                
-                                            _launchURL(
-                                                "https://connections.rook-connect.review/client_uuid/b0eb1473-44ed-4c93-8d90-eb15deb20bb7/user_id/${_prefs.getString("email")}/")
-                                            // Navigator.pushReplacement(
-                                            //   context,
-                                            //   MaterialPageRoute(
-                                            //       builder: (context) =>
-                                            //           Permishenhandlerhealth()),
-                                            // )
-                                          },
-                                          child: Text(
-                                            "Wearable Device",
-                                            style:
-                                                AppTextStyles.hintBlackWithHeight,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    BlocBuilder<AuthCubit, AuthState>(
-                                      builder: (context, state) {
-                                        return GestureDetector(
-                                          onTap: () {
-                                            BlocProvider.of<AuthCubit>(context)
-                                                .logOut();
-                                            Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      LoginPage()),
-                                            );
-                                          },
-                                          child: Row(
-                                            children: [
-                                              SvgPicture.asset(
-                                                "assets/logout.svg",
-                                                width: 30,
-                                                height: 16,
-                                              ),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              Text(
-                                                "Log out",
-                                                style: AppTextStyles
-                                                    .hintBlackWithHeight,
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              )),
-                      ],
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      BlocBuilder<AuthCubit, AuthState>(
+                                        builder: (context, state) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              BlocProvider.of<AuthCubit>(context)
+                                                  .logOut();
+                                              Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        LoginPage()),
+                                              );
+                                            },
+                                            child: Row(
+                                              children: [
+                                                SvgPicture.asset(
+                                                  "assets/logout.svg",
+                                                  width: 30,
+                                                  height: 16,
+                                                  colorFilter: ColorFilter.mode(Colors.black, BlendMode.srcIn),
+                                                ),
+                                                const SizedBox(
+                                                  width: 5,
+                                                ),
+                                                Text(
+                                                  "Log out",
+                                                  style: AppTextStyles
+                                                      .hintBlackWithHeight,
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -378,7 +389,7 @@ class Overview2 extends StatelessWidget {
                                         width: 5,
                                       ),
                                       Text(
-                                        "Report",
+                                        "Weakly Report",
                                         style: AppTextStyles.hintPurple,
                                       ),
                                     ],
@@ -502,11 +513,11 @@ class Overview2 extends StatelessWidget {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Survey",style: AppTextStyles.title1,),
+                            Text("Surveys",style: AppTextStyles.title1,),
                             const SizedBox(height: 10,),
                             SurveyCard(
                               imagePath:
-                                  'assets/Medical-Specialty-Rehabilitation--Streamline-Ultimate.png',
+                                  'assets/Medical-Specialty-Rehabilitation--Streamline-Ultimate.svg',
                               Minutes: state.googleFormData["Back Pain Surveys"]["Average_response_time"],
                               Questions: state.googleFormData['Back Pain Surveys']["number_of_questions"],
                               Title: 'Back Pain Surveys',
@@ -514,15 +525,15 @@ class Overview2 extends StatelessWidget {
                             ),
                             SurveyCard(
                               imagePath:
-                              'assets/heart-rate-strong--Streamline-Ultimate.png',
+                              'assets/heart-rate-strong--Streamline-Ultimate.svg',
                               Minutes: state.googleFormData["Fitness test results"]["Average_response_time"],
                               Questions: state.googleFormData['Fitness test results']["number_of_questions"],
-                              Title: 'Fitness test results',
+                              Title: 'Fitness Test Results',
                               Link: state.googleFormData['Fitness test results']["link"],
                             ),
                             SurveyCard(
                               imagePath:
-                              'assets/herbal-medicine-2--Streamline-Ultimate.png',
+                              'assets/herbal-medicine-2--Streamline-Ultimate.svg',
                               Minutes: state.googleFormData["Longevity Performance Coaching Daily Survey"]["Average_response_time"],
                               Questions: state.googleFormData['Longevity Performance Coaching Daily Survey']["number_of_questions"],
                               Title: 'Longevity Performance Coaching ...',
@@ -530,7 +541,7 @@ class Overview2 extends StatelessWidget {
                             ),
                             SurveyCard(
                               imagePath:
-                              'assets/brain-head-1--Streamline-Ultimate.png',
+                              'assets/brain-head-1--Streamline-Ultimate.svg',
                               Minutes: state.googleFormData["Emotional Health and Motivation Survey"]["Average_response_time"],
                               Questions: state.googleFormData['Emotional Health and Motivation Survey']["number_of_questions"],
                               Title: 'Emotional Health and Motivation',
@@ -539,23 +550,23 @@ class Overview2 extends StatelessWidget {
                         
                             SurveyCard(
                               imagePath:
-                              'assets/heart-approve-1--Streamline-Ultimate.png',
+                              'assets/heart-approve-1--Streamline-Ultimate.svg',
                               Minutes: state.googleFormData["Stability, Mobility and Flexibility tests"]["Average_response_time"],
                               Questions: state.googleFormData['Stability, Mobility and Flexibility tests']["number_of_questions"],
-                              Title: 'Stability, Mobility and Flexibility tests',
+                              Title: 'Stability, Mobility and Flexibility',
                               Link: state.googleFormData['Stability, Mobility and Flexibility tests']["link"],
                             ),
                             SurveyCard(
                               imagePath:
-                              'assets/Blood-Drops-Positive--Streamline-Ultimate.png',
+                              'assets/Blood-Drops-Positive--Streamline-Ultimate.svg',
                               Minutes: state.googleFormData["Blood test"]["Average_response_time"],
                               Questions: state.googleFormData['Blood test']["number_of_questions"],
-                              Title: 'Blood test',
+                              Title: 'Blood Test',
                               Link: state.googleFormData['Blood test']["link"],
                             ),
                             SurveyCard(
                               imagePath:
-                              'assets/Medical-Data-Cross--Streamline-Ultimate.png',
+                              'assets/Medical-Data-Cross--Streamline-Ultimate.svg',
                               Minutes: state.googleFormData["Clinet info"]["Average_response_time"],
                               Questions: state.googleFormData['Clinet info']["number_of_questions"],
                               Title: 'Clinet info',
@@ -808,8 +819,8 @@ class _Longevity2State extends State<Longevity2> {
                             children: [
                               SvgPicture.asset(
                                 "assets/mid.svg",
-                                width: 20,
-                                height: 20,
+                                width: 17,
+                                height: 17,
                                 colorFilter: const ColorFilter.mode(
                                   AppColors
                                       .purpleDark, // The color you want to apply

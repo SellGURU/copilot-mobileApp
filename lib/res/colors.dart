@@ -29,5 +29,6 @@ class AppColors {
   static const Color blueBorder = Color.fromRGBO(166, 208, 238, 1);
   static const Color mainShadow = Color.fromRGBO(202, 202, 215, 0.25);
   static const Color bgChartProgress = Color.fromRGBO(248,247,255,1);
+  static const Color hintLite = Color.fromRGBO(174, 193, 218, 1);
 
 }

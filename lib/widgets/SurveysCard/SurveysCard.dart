@@ -59,9 +59,9 @@ class _SurveyCardState extends State<SurveyCard> {
                   // Icon and Text
                   Row(
                     children: [
-                      // SvgPicture.asset("assets/Blood-Drops-Positive--Streamline-Ultimate.svg",width: 30,height: 30,),
-                      Image.asset(widget.imagePath,
-                          width: 35, height: 35, fit: BoxFit.fitWidth),
+                      SvgPicture.asset(widget.imagePath,width: 35,height: 35,),
+                      // Image.asset(widget.imagePath,
+                      //     width: 35, height: 35, fit: BoxFit.fitWidth),
                       const SizedBox(width: 10),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,20 +73,20 @@ class _SurveyCardState extends State<SurveyCard> {
                               const Icon(
                                 Icons.help_outline,
                                 size: 15,
-                                color: Colors.grey,
+                                color: AppColors.hintLite,
                               ),
                               const SizedBox(width: 5),
                               Text("${widget.Questions} Questions",
-                                  style: AppTextStyles.hintSmale),
+                                  style: AppTextStyles.hintSmaleLite),
                               const SizedBox(width: 20),
-                              const Icon(
+                               const Icon(
                                 Icons.timer,
                                 size: 15,
-                                color: Colors.grey,
+                                color: AppColors.hintLite,
                               ),
                               const SizedBox(width: 5),
                               Text("${widget.Minutes} Minutes",
-                                  style: AppTextStyles.hintSmale),
+                                  style: AppTextStyles.hintSmaleLite),
                             ],
                           ),
                         ],
