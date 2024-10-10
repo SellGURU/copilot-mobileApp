@@ -421,6 +421,8 @@ class _Overview2State extends State<Overview2> {
                         ],
                       ),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           BlocConsumer<DownloadWeaklyReportCubit,
                               DownloadWeaklyReportState>(
