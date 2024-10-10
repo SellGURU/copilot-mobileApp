@@ -9,7 +9,7 @@ final class ErrorAuthorizersRookState extends AuthorizersRookState{
   ErrorAuthorizersRookState(this.errorText);
 }
 final class SuccessAuthorizersRookState extends AuthorizersRookState{
-  final String data ;
+  var data ;
   SuccessAuthorizersRookState({required this.data});
 }
 

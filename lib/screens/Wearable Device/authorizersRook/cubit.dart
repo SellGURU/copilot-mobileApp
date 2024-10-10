@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'state.dart';
 import 'package:dio/dio.dart';
@@ -13,23 +14,25 @@ class AuthorizersRookCubit extends Cubit<AuthorizersRookState> {
     _initialize();
   }
   Future<void> _initialize() async {
-
+    getDataRook();
   }
 
   final Dio _dio = Dio();
 
-  Future<void> getPdf() async {
-    const String url="https://api.rook-connect.review/api/v1/client_uuid/b0eb1473-44ed-4c93-8d90-eb15deb20bb7/user_id/amir12@gmail.com/data_sources/authorizers";
+  Future<void> getDataRook() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    var email = prefs.getString('email');
+    String url="https://api.rook-connect.review/api/v1/client_uuid/b0eb1473-44ed-4c93-8d90-eb15deb20bb7/user_id/amir12@gmail.com/data_sources/authorizers";
     print("check rook");
     emit(LoadingAuthorizersRookState());
-    var token = await getTokenLocally();
-    _dio.options.headers['Authorization'] = "bearer $token";
+    // var token = await getTokenLocally();
+    _dio.options.headers['Authorization'] = "Basic YjBlYjE0NzMtNDRlZC00YzkzLThkOTAtZWIxNWRlYjIwYmI3OkZGeWJpM2VaZWZZVjhaTWhMT2VBdVQ4NzI0b08zeWJNa2dkUg==";
 
     try {
-      _dio.post(url).then((res) {
+      _dio.get(url).then((res) {
         if(res.data!=null){
-          emit(SuccessAuthorizersRookState(data: res.data));
-          print("rook res.data:${res.data}");
+          emit(SuccessAuthorizersRookState(data: res.data["data_sources"]));
+          print("rook res.data:${res.data["data_sources"]}");
         }
         else{
           print("rook be null");

@@ -1,8 +1,14 @@
 import 'package:copilet/components/text_style.dart';
 import 'package:copilet/res/colors.dart';
+import 'package:copilet/screens/Wearable%20Device/authorizersRook/cubit.dart';
+import 'package:copilet/screens/Wearable%20Device/authorizersRook/cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'authorizersRook/state.dart';
 
 class WearableDevice extends StatefulWidget {
   const WearableDevice({super.key});
@@ -20,23 +26,46 @@ class _WearableDeviceState extends State<WearableDevice> {
         backgroundColor: Colors.white,
       ),
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          children: [
-            Text(
-              "Sync your health data effortlessly by connecting with Health Applications. By integrating, track your progress across all your devices, and make the most of your health journey.",
-              style: AppTextStyles.titleMediumHeight,
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            ConnectCard(
-              image: '',
-              link: '',
-              title: '',
-            )
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              Text(
+                "Sync your health data effortlessly by connecting with Health Applications. By integrating, track your progress across all your devices, and make the most of your health journey.",
+                style: AppTextStyles.titleMediumHeight,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              BlocBuilder<AuthorizersRookCubit, AuthorizersRookState>(
+                builder: (context, state) {
+                  if (state is SuccessAuthorizersRookState) {
+                    // Make sure that state.data is a List
+                    return Column(
+                      children: state.data.map<Widget>((item) {
+                        // Assuming 'item' is a map containing data like image, link, and title
+                        return ConnectCard(
+                          image: item['image'] ??
+                              '', // Assuming 'image' is a key in the state.data[0 map
+                          link: item['authorization_url'] ??
+                              '', // Assuming 'link' is a key in the state.data[0 map
+                          title: item['name'] ?? '',
+                          connected: item[
+                              'connected'], // Assuming 'title' is a key in the item map
+                        );
+                      }).toList(),
+                    );
+                  } else {
+                    // Show a loading spinner while loading data
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -47,11 +76,17 @@ class ConnectCard extends StatelessWidget {
   String link;
   String image;
   String title;
+  bool connected;
+
   ConnectCard(
       {super.key,
       required this.image,
+      required this.connected,
       required this.link,
       required this.title});
+  void _launchURL(String url) async {
+    await launch(url);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +115,12 @@ class ConnectCard extends StatelessWidget {
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: SvgPicture.asset("assets/fitbit.svg")),
+                child: Image.network(
+                  image,
+                  width: 40,
+                  height: 40,
+                )),
+            // child: SvgPicture.asset("assets/fitbit.svg")),
             const SizedBox(width: 16),
             // Text information
             Expanded(
@@ -96,10 +136,12 @@ class ConnectCard extends StatelessWidget {
             // Connect button
             ElevatedButton(
               onPressed: () {
-                // Handle button press
+                _launchURL(link);
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
+                backgroundColor: connected
+                    ? Colors.greenAccent.withOpacity(.3)
+                    : Colors.white,
                 // primary: Colors.transparent,
                 // onPrimary: Colors.purple,
                 side:
@@ -110,7 +152,8 @@ class ConnectCard extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),
-              child: Text('Connect', style: AppTextStyles.hintPurple),
+              child: Text(connected  ? "Connected" : 'Connect',
+                  style: AppTextStyles.hintPurple),
             ),
           ],
         ),
