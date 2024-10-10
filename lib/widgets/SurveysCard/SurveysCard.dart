@@ -77,7 +77,8 @@ class _SurveyCardState extends State<SurveyCard> {
                             SizedBox(height: 5),
                             Row(
                               children: [
-                                SvgPicture.asset("assets/message-question1.svg"),
+                                SvgPicture.asset(
+                                    "assets/message-question1.svg"),
                                 const SizedBox(width: 5),
                                 Text("${widget.Questions} Questions",
                                     style: AppTextStyles.hintSmaleLite),
@@ -127,6 +128,7 @@ class _SurveyCardState extends State<SurveyCard> {
   }
 
   void rediractUrl(String url) async {
-    await launch(url);
+    final Uri urlRedirect = Uri.parse(url);
+    await launchUrl(urlRedirect);
   }
 }

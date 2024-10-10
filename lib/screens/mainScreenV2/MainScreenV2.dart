@@ -144,7 +144,10 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
 
   void _launchURL(String url) async {
     if (await launch(url)) {
-      await launch(url);
+      await launchUrl(
+        Uri(path: url),
+        mode: LaunchMode.externalNonBrowserApplication,
+      );
     } else {
       throw '$url';
     }

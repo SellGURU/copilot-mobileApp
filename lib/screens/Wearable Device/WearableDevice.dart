@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../constants/endPoints.dart';
 import 'authorizersRook/state.dart';
@@ -29,7 +30,7 @@ class _WearableDeviceState extends State<WearableDevice> {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context);  // Navigate back when pressed
+            Navigator.pop(context); // Navigate back when pressed
           },
         ),
         backgroundColor: Colors.white,
@@ -94,7 +95,9 @@ class ConnectCard extends StatelessWidget {
       required this.link,
       required this.title});
   void _launchURL(String url) async {
-    await launch(url);
+    await launchUrl(
+      Uri(path: url),
+    );
   }
 
   @override
@@ -146,10 +149,8 @@ class ConnectCard extends StatelessWidget {
             ElevatedButton(
               onPressed: () async {
                 Dio _dio = Dio();
-                await _dio.post(Endpoints.add_event, data: {
-                  "event_type": "connected",
-                  "event_name": title
-                });
+                await _dio.post(Endpoints.add_event,
+                    data: {"event_type": "connected", "event_name": title});
                 _launchURL(link);
               },
               style: ElevatedButton.styleFrom(
@@ -166,7 +167,7 @@ class ConnectCard extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
               ),
-              child: Text(connected  ? "Connected" : 'Connect',
+              child: Text(connected ? "Connected" : 'Connect',
                   style: AppTextStyles.hintPurple),
             ),
           ],
