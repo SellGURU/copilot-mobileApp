@@ -2,12 +2,14 @@ import 'package:copilet/components/text_style.dart';
 import 'package:copilet/res/colors.dart';
 import 'package:copilet/screens/Wearable%20Device/authorizersRook/cubit.dart';
 import 'package:copilet/screens/Wearable%20Device/authorizersRook/cubit.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../constants/endPoints.dart';
 import 'authorizersRook/state.dart';
 
 class WearableDevice extends StatefulWidget {
@@ -135,8 +137,14 @@ class ConnectCard extends StatelessWidget {
             ),
             // Connect button
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
+                Dio _dio = Dio();
+                await _dio.post(Endpoints.add_event, data: {
+                  "event_type": "connected",
+                  "event_name": title
+                });
                 _launchURL(link);
+
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: connected
