@@ -225,7 +225,7 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
 
                                               // _launchURL(
                                               //     "https://connections.rook-connect.review/client_uuid/b0eb1473-44ed-4c93-8d90-eb15deb20bb7/user_id/${_prefs.getString("email")}/")
-                                              Navigator.pushReplacement(
+                                              Navigator.push(
                                                 context,
                                                 MaterialPageRoute(
                                                     builder: (context) =>

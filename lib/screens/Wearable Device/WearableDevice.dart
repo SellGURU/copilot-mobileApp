@@ -24,7 +24,14 @@ class _WearableDeviceState extends State<WearableDevice> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         title: Text("Wearable Device"),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);  // Navigate back when pressed
+          },
+        ),
         backgroundColor: Colors.white,
       ),
       backgroundColor: Colors.white,
@@ -144,7 +151,6 @@ class ConnectCard extends StatelessWidget {
                   "event_name": title
                 });
                 _launchURL(link);
-
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: connected

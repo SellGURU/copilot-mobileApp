@@ -22,7 +22,7 @@ class AuthorizersRookCubit extends Cubit<AuthorizersRookState> {
   Future<void> getDataRook() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var email = prefs.getString('email');
-    String url="https://api.rook-connect.review/api/v1/client_uuid/b0eb1473-44ed-4c93-8d90-eb15deb20bb7/user_id/amir12@gmail.com/data_sources/authorizers";
+    String url="https://api.rook-connect.review/api/v1/client_uuid/b0eb1473-44ed-4c93-8d90-eb15deb20bb7/user_id/${email}/data_sources/authorizers";
     print("check rook");
     emit(LoadingAuthorizersRookState());
     // var token = await getTokenLocally();
