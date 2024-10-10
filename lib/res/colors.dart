@@ -9,6 +9,8 @@ class AppColors {
   static const Color text = Color.fromARGB(255, 48, 68, 91);
   static const Color primary = Color.fromARGB(255, 48, 68, 91);
   static const Color textLite = Color.fromARGB(255,123, 147, 175);
+  // rgba(, 1)
+  static const Color textLiteGray = Color.fromARGB(255,174, 193, 218);
   static const Color purpleDark = Color.fromARGB(255, 147, 129, 255);
   static const Color purpleLite = Color.fromRGBO(208, 209, 255, 1);
   static const Color iconPurpleDark = Color.fromARGB(255, 147, 129, 255);

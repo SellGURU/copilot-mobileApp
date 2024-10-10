@@ -63,7 +63,10 @@ import 'downloadReport/cubit.dart';
 //   // Revoke the object URL to avoid memory leaks
 //   html.Url.revokeObjectUrl(url);
 // }
-
+void _launchURL(String url) async {
+  final Uri urlRedirect = Uri.parse(url);
+  await launchUrl(urlRedirect);
+}
 Future<void> downloadPdf(BuildContext context, String pdfUrl) async {
   if (kIsWeb) {
     // Web: Trigger download via browser
@@ -142,14 +145,7 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
     });
   }
 
-  void _launchURL(String url) async {
-    if (await launch(url)) {
-      final Uri urlRedirect = Uri.parse(url);
-      await launchUrl(urlRedirect);
-    } else {
-      throw '$url';
-    }
-  }
+
 
   // Example base64 PDF string (you need to replace this with your actual base64 string)
   bool isShowDropDown = false;
@@ -314,16 +310,37 @@ class Overview2 extends StatefulWidget {
 
 class _Overview2State extends State<Overview2> {
   DateTime? _storedTime; // To store the time locally
-  String _timePassed = ''; // To display the time passed
+  String _timePassed = '0'; // To display the time passed
   @override
   void initState()  {
-    // getTime();
+    getTime();
   }
  void getTime()async{
     print("_timePassed");
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String _timePassed = prefs.getString('buttonPressTime')!; // To display the time passed
-    print("_timePassed ");
+    String _timePassedCheck = prefs.getString('buttonPressTime')!; // To display the time passed
+    if (_timePassedCheck != null) {
+    print("_timePassed $_timePassedCheck");
+      _storedTime = DateTime.parse(_timePassedCheck);
+      final difference = DateTime.now().difference(_storedTime!);
+    print("time:'${difference.inSeconds} seconds");
+
+      setState(() {
+        if (difference.inSeconds < 60) {
+          _timePassed = '${difference.inSeconds} seconds';
+        } else if (difference.inMinutes < 60) {
+          _timePassed = '${difference.inMinutes} minutes';
+        } else if (difference.inHours < 24) {
+          _timePassed = '${difference.inHours} hours';
+        } else {
+          _timePassed = '${difference.inDays} days';
+        }
+      });
+    } else {
+      setState(() {
+        _timePassed = "No time stored.";
+      });
+    }
 
   }
   // Store the current time and show time passed automatically
@@ -335,22 +352,24 @@ class _Overview2State extends State<Overview2> {
     await prefs.setString('buttonPressTime', now.toIso8601String());
     print("Time stored: $now");
 
+
     // Calculate and show the time passed immediately
     String? storedTimeStr = prefs.getString('buttonPressTime');
 
     if (storedTimeStr != null) {
       _storedTime = DateTime.parse(storedTimeStr);
       final difference = DateTime.now().difference(_storedTime!);
+      print("time:${difference.inMinutes}");
 
       setState(() {
         if (difference.inSeconds < 60) {
-          _timePassed = '${difference.inSeconds} seconds';
+          _timePassed = "${difference.inSeconds} seconds";
         } else if (difference.inMinutes < 60) {
-          _timePassed = '${difference.inMinutes} minutes';
+          _timePassed = "${difference.inMinutes} minutes";
         } else if (difference.inHours < 24) {
-          _timePassed = '${difference.inHours} hours';
+          _timePassed = "${difference.inHours} hours";
         } else {
-          _timePassed = '${difference.inDays} days';
+          _timePassed = "${difference.inDays} days";
         }
       });
     } else {
@@ -434,7 +453,7 @@ class _Overview2State extends State<Overview2> {
                                 return GestureDetector(
                                   onTap: () {
                                     _storeTimeAndShow();
-                                    _downloadPdfWebFromUrl(state.pdfUrlWeakly);
+                                    _launchURL(state.pdfUrlWeakly);
                                   },
                                   child:
                                   Column(
@@ -459,7 +478,8 @@ class _Overview2State extends State<Overview2> {
                                           ),
                                         ],
                                       ),
-                                      Text("Last Generate: {$_timePassed} ago",style: AppTextStyles.hintSmale,)
+                                      const SizedBox(height: 2,),
+                                      Text("Last Generate: $_timePassed ago",style: AppTextStyles.hintVerySmale,)
                                     ],
                                   ),
                                 );
@@ -469,55 +489,30 @@ class _Overview2State extends State<Overview2> {
                                     width: 15,
                                     height: 15,
                                     child: CircularProgressIndicator());
-                                ;
+
                               }
                               if (state is ErrorDownloadWeaklyReportState) {
                                 return
-                                //   Row(
-                                //   children: [
-                                //     SvgPicture.asset(
-                                //       "assets/document-download.svg",
-                                //       width: 16,
-                                //       height: 16,
-                                //       colorFilter: const ColorFilter.mode(
-                                //         AppColors.purpleLite,
-                                //         BlendMode.srcIn,
-                                //       ),
-                                //     ),
-                                //     const SizedBox(
-                                //       width: 5,
-                                //     ),
-                                //     Text(
-                                //       "Weekly Report",
-                                //       style: AppTextStyles.hintLitePurple,
-                                //     ),
-                                //   ],
-                                // );
-                                  Column(
-                                    children: [
-                                      Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            "assets/document-download.svg",
-                                            width: 16,
-                                            height: 16,
-                                            colorFilter: const ColorFilter.mode(
-                                              AppColors.purpleDark,
-                                              BlendMode.srcIn,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text(
-                                            "Weakly Report",
-                                            style: AppTextStyles.hintPurple,
-                                          ),
-                                        ],
+                                  Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/document-download.svg",
+                                      width: 16,
+                                      height: 16,
+                                      colorFilter: const ColorFilter.mode(
+                                        AppColors.purpleLite,
+                                        BlendMode.srcIn,
                                       ),
-                                      Text("Last Generate: {$_timePassed} ago",style: AppTextStyles.hintSmale,)
-                                    ],
-                                  );
+                                    ),
+                                    const SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      "Weekly Report",
+                                      style: AppTextStyles.hintLitePurple,
+                                    ),
+                                  ],
+                                );
 
                               } else {
                                 return const SizedBox();
@@ -537,7 +532,7 @@ class _Overview2State extends State<Overview2> {
                                 return GestureDetector(
                                   onTap: () async {
                                     // print("test on tab");
-                                    _downloadPdfWebFromUrl(state.pdfUrl);
+                                    _launchURL(state.pdfUrl);
                                   },
                                   child: Row(
                                     children: [
@@ -724,7 +719,7 @@ class _Overview2State extends State<Overview2> {
                           width: 15,
                           height: 15,
                           child: CircularProgressIndicator());
-                      ;
+
                     } else {
                       return const Text("have error");
                     }

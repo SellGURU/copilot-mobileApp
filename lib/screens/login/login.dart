@@ -231,7 +231,6 @@ class _LoginPageState extends State<LoginPage> {
                           SharedPreferences prefs = await SharedPreferences.getInstance();
                           prefs.setString('email', _emailController.value.text);
                           BlocProvider.of<ClientInformationMobileCubit>(context).refresh();
-                          await prefs.setString('buttonPressTime', "0");
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

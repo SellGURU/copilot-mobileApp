@@ -41,5 +41,5 @@ class AppTextStyles {
   static TextStyle titleSmale = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 10, color: AppColors.black, fontWeight: FontWeight.w500));
   // --------------
 
-  static TextStyle hintVerySmale = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 8, color: AppColors.textLite,fontWeight: FontWeight.w400));
+  static TextStyle hintVerySmale = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 8, color: AppColors.hintLite,fontWeight: FontWeight.w400));
 }
