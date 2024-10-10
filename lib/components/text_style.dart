@@ -18,6 +18,7 @@ class AppTextStyles {
   // --------------
 
   static TextStyle titleMedium = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 14, color: AppColors.black, fontWeight: FontWeight.w400));
+  static TextStyle titleMediumHeight = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 14, color: AppColors.black, fontWeight: FontWeight.w400,height: 1.2));
   static TextStyle titleMediumWhite = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 14, color: Colors.white, fontWeight: FontWeight.w400));
   static TextStyle title2 =GoogleFonts.roboto( textStyle:TextStyle(fontSize: 14, color: AppColors.text),fontWeight: FontWeight.w500);
   // -----------

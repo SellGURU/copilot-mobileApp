@@ -17,12 +17,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'dart:async'; // For Timer
 
 import '../../components/text_style.dart';
 import '../../res/colors.dart';
 import '../../utility/changeScreanBloc/PageIndex_Bloc.dart';
 import '../../utility/changeScreanBloc/PageIndex_states.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../Wearable Device/WearableDevice.dart';
 import '../login/cubit/cubit.dart';
 import '../login/cubit/state.dart';
 import 'package:universal_html/html.dart' as html;
@@ -221,14 +223,14 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                                               _prefs = await SharedPreferences
                                                   .getInstance(),
 
-                                              _launchURL(
-                                                  "https://connections.rook-connect.review/client_uuid/b0eb1473-44ed-4c93-8d90-eb15deb20bb7/user_id/${_prefs.getString("email")}/")
-                                              // Navigator.pushReplacement(
-                                              //   context,
-                                              //   MaterialPageRoute(
-                                              //       builder: (context) =>
-                                              //           Permishenhandlerhealth()),
-                                              // )
+                                              // _launchURL(
+                                              //     "https://connections.rook-connect.review/client_uuid/b0eb1473-44ed-4c93-8d90-eb15deb20bb7/user_id/${_prefs.getString("email")}/")
+                                              Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        WearableDevice()),
+                                              )
                                             },
                                             child: Text(
                                               "Wearable Device",
@@ -293,7 +295,8 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
   }
 }
 
-class Overview2 extends StatelessWidget {
+class Overview2 extends StatefulWidget {
+
   // void initializeRook() async {
   final bool isShowDropDown;
   final Function onToggleDropDown;
@@ -303,6 +306,58 @@ class Overview2 extends StatelessWidget {
     required this.isShowDropDown,
     required this.onToggleDropDown,
   });
+
+  @override
+  State<Overview2> createState() => _Overview2State();
+}
+
+class _Overview2State extends State<Overview2> {
+  DateTime? _storedTime; // To store the time locally
+  String _timePassed = ''; // To display the time passed
+  @override
+  void initState()  {
+    // getTime();
+  }
+ void getTime()async{
+    print("_timePassed");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String _timePassed = prefs.getString('buttonPressTime')!; // To display the time passed
+    print("_timePassed ");
+
+  }
+  // Store the current time and show time passed automatically
+  Future<void> _storeTimeAndShow() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    DateTime now = DateTime.now();
+
+    // Store the current time
+    await prefs.setString('buttonPressTime', now.toIso8601String());
+    print("Time stored: $now");
+
+    // Calculate and show the time passed immediately
+    String? storedTimeStr = prefs.getString('buttonPressTime');
+
+    if (storedTimeStr != null) {
+      _storedTime = DateTime.parse(storedTimeStr);
+      final difference = DateTime.now().difference(_storedTime!);
+
+      setState(() {
+        if (difference.inSeconds < 60) {
+          _timePassed = '${difference.inSeconds} seconds';
+        } else if (difference.inMinutes < 60) {
+          _timePassed = '${difference.inMinutes} minutes';
+        } else if (difference.inHours < 24) {
+          _timePassed = '${difference.inHours} hours';
+        } else {
+          _timePassed = '${difference.inDays} days';
+        }
+      });
+    } else {
+      setState(() {
+        _timePassed = "No time stored.";
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -323,7 +378,7 @@ class Overview2 extends StatelessWidget {
                       Row(
                         children: [
                           GestureDetector(
-                            onTap: () => {onToggleDropDown()},
+                            onTap: () => {widget.onToggleDropDown()},
                             child: SvgPicture.asset(
                               "assets/avatar.svg",
                               width: 50,
@@ -350,7 +405,7 @@ class Overview2 extends StatelessWidget {
                                 builder: (context, state) {
                                   if (state is SuccessClientInformation) {
                                     return GestureDetector(
-                                      onTap: () => {onToggleDropDown()},
+                                      onTap: () => {widget.onToggleDropDown()},
                                       child: Text(
                                         state.userInfo["name"],
                                         style: AppTextStyles.title1,
@@ -375,26 +430,33 @@ class Overview2 extends StatelessWidget {
                               if (state is SuccessDownloadWeaklyReportState) {
                                 return GestureDetector(
                                   onTap: () {
+                                    _storeTimeAndShow();
                                     _downloadPdfWebFromUrl(state.pdfUrlWeakly);
                                   },
-                                  child: Row(
+                                  child:
+                                  Column(
                                     children: [
-                                      SvgPicture.asset(
-                                        "assets/document-download.svg",
-                                        width: 16,
-                                        height: 16,
-                                        colorFilter: const ColorFilter.mode(
-                                          AppColors.purpleDark,
-                                          BlendMode.srcIn,
-                                        ),
+                                      Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            "assets/document-download.svg",
+                                            width: 16,
+                                            height: 16,
+                                            colorFilter: const ColorFilter.mode(
+                                              AppColors.purpleDark,
+                                              BlendMode.srcIn,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            "Weakly Report",
+                                            style: AppTextStyles.hintPurple,
+                                          ),
+                                        ],
                                       ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        "Weakly Report",
-                                        style: AppTextStyles.hintPurple,
-                                      ),
+                                      Text("Last Generate: {$_timePassed} ago",style: AppTextStyles.hintSmale,)
                                     ],
                                   ),
                                 );
@@ -407,26 +469,53 @@ class Overview2 extends StatelessWidget {
                                 ;
                               }
                               if (state is ErrorDownloadWeaklyReportState) {
-                                return Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      "assets/document-download.svg",
-                                      width: 16,
-                                      height: 16,
-                                      colorFilter: const ColorFilter.mode(
-                                        AppColors.purpleLite,
-                                        BlendMode.srcIn,
+                                return
+                                //   Row(
+                                //   children: [
+                                //     SvgPicture.asset(
+                                //       "assets/document-download.svg",
+                                //       width: 16,
+                                //       height: 16,
+                                //       colorFilter: const ColorFilter.mode(
+                                //         AppColors.purpleLite,
+                                //         BlendMode.srcIn,
+                                //       ),
+                                //     ),
+                                //     const SizedBox(
+                                //       width: 5,
+                                //     ),
+                                //     Text(
+                                //       "Weekly Report",
+                                //       style: AppTextStyles.hintLitePurple,
+                                //     ),
+                                //   ],
+                                // );
+                                  Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            "assets/document-download.svg",
+                                            width: 16,
+                                            height: 16,
+                                            colorFilter: const ColorFilter.mode(
+                                              AppColors.purpleDark,
+                                              BlendMode.srcIn,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            "Weakly Report",
+                                            style: AppTextStyles.hintPurple,
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      "Weekly Report",
-                                      style: AppTextStyles.hintLitePurple,
-                                    ),
-                                  ],
-                                );
+                                      Text("Last Generate: {$_timePassed} ago",style: AppTextStyles.hintSmale,)
+                                    ],
+                                  );
+
                               } else {
                                 return const SizedBox();
                               }
