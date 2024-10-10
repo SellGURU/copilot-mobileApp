@@ -95,9 +95,8 @@ class ConnectCard extends StatelessWidget {
       required this.link,
       required this.title});
   void _launchURL(String url) async {
-    await launchUrl(
-      Uri(path: url),
-    );
+    final Uri urlRedirect = Uri.parse(url);
+    await launchUrl(urlRedirect);
   }
 
   @override
