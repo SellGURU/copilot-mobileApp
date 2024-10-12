@@ -23,58 +23,68 @@ class WearableDevice extends StatefulWidget {
 class _WearableDeviceState extends State<WearableDevice> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        title: Text("Wearable Device"),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context); // Navigate back when pressed
-          },
-        ),
-        backgroundColor: Colors.white,
-      ),
-      backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Text(
-                "Sync your health data effortlessly by connecting with Health Applications. By integrating, track your progress across all your devices, and make the most of your health journey.",
-                style: AppTextStyles.titleMediumHeight,
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              BlocBuilder<AuthorizersRookCubit, AuthorizersRookState>(
-                builder: (context, state) {
-                  if (state is SuccessAuthorizersRookState) {
-                    // Make sure that state.data is a List
-                    return Column(
-                      children: state.data.map<Widget>((item) {
-                        // Assuming 'item' is a map containing data like image, link, and title
-                        return ConnectCard(
-                          image: item['image'] ??
-                              '', // Assuming 'image' is a key in the state.data[0 map
-                          link: item['authorization_url'] ??
-                              '', // Assuming 'link' is a key in the state.data[0 map
-                          title: item['name'] ?? '',
-                          connected: item[
-                              'connected'], // Assuming 'title' is a key in the item map
+    var size=MediaQuery.of(context).size;
+    return Container(
+      alignment: Alignment.center,
+      height: size.height,
+      width: size.width,
+      child: SizedBox(
+        width: size.width > 420 ? 420 : size.width,
+
+        child: Scaffold(
+          appBar: AppBar(
+            centerTitle: false,
+            title: Text("Wearable Device"),
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context); // Navigate back when pressed
+              },
+            ),
+            backgroundColor: Colors.white,
+          ),
+          backgroundColor: Colors.white,
+          body: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: Column(
+                children: [
+                  Text(
+                    "Sync your health data effortlessly by connecting with Health Applications. By integrating, track your progress across all your devices, and make the most of your health journey.",
+                    style: AppTextStyles.titleMediumHeight,
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  BlocBuilder<AuthorizersRookCubit, AuthorizersRookState>(
+                    builder: (context, state) {
+                      if (state is SuccessAuthorizersRookState) {
+                        // Make sure that state.data is a List
+                        return Column(
+                          children: state.data.map<Widget>((item) {
+                            // Assuming 'item' is a map containing data like image, link, and title
+                            return ConnectCard(
+                              image: item['image'] ??
+                                  '', // Assuming 'image' is a key in the state.data[0 map
+                              link: item['authorization_url'] ??
+                                  '', // Assuming 'link' is a key in the state.data[0 map
+                              title: item['name'] ?? '',
+                              connected: item[
+                                  'connected'], // Assuming 'title' is a key in the item map
+                            );
+                          }).toList(),
                         );
-                      }).toList(),
-                    );
-                  } else {
-                    // Show a loading spinner while loading data
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                },
+                      } else {
+                        // Show a loading spinner while loading data
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),
@@ -101,10 +111,12 @@ class ConnectCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Container(
         padding: EdgeInsets.all(16),
+        width: size.width > 420 ? 420 : size.width,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
