@@ -810,10 +810,12 @@ class _Longevity2State extends State<Longevity2> {
                             children: [
                               SvgPicture.asset(
                                 "assets/human-body-silhouette-with-focus-on-respiratory-system-svgrepo-com 1.svg",
-                                width: 15,
-                                height: 15,
+                                width: 30,
+                                height: 25,
                               ),
-
+                              SizedBox(
+                                width: 2,
+                              ),
                               Center(
                                   child: Text(
                                 "Physiological",
@@ -827,21 +829,30 @@ class _Longevity2State extends State<Longevity2> {
                                 "Your Score:",
                                 style: AppTextStyles.hintSmale,
                               ),
+                              // rgba(245, 222, 222, 1)
+
                               const SizedBox(
                                 width: 5,
                               ),
                               Container(
                                 decoration: BoxDecoration(
-                                    color: Color.fromRGBO(6, 199, 141, .4),
+                                    color: Color.fromRGBO(201, 235, 237, 1),
                                     borderRadius: BorderRadius.circular(20)),
                                 child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: 5, top: 5, left: 12, right: 12),
-                                  child: Text(
-                                    "${state.scoreData['Physiological'] == null ? 0 : state.scoreData['Physiological']}/100",
-                                    style: AppTextStyles.gradeGreen,
-                                  ),
-                                ),
+                                    padding: const EdgeInsets.only(
+                                        bottom: 5, top: 5, left: 12, right: 12),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "${state.scoreData['Physiological'] == null ? 0 : state.scoreData['Physiological']}",
+                                          style: AppTextStyles.titleSmaleBold,
+                                        ),
+                                        Text(
+                                          "/100",
+                                          style: AppTextStyles.hintSmale,
+                                        ),
+                                      ],
+                                    )),
                               ),
                               const SizedBox(
                                 width: 5,
@@ -912,18 +923,27 @@ class _Longevity2State extends State<Longevity2> {
                               ),
 
                               Container(
-                                decoration: BoxDecoration(
-                                    color: Color.fromRGBO(6, 199, 141, .4),
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: 5, top: 5, left: 12, right: 12),
-                                  child: Text(
-                                    "${state.scoreData['Fitness'] == null ? 0 : state.scoreData['Fitness']}/100",
-                                    style: AppTextStyles.gradeGreen,
-                                  ),
-                                ),
-                              ),
+                                  decoration: BoxDecoration(
+                                      color: Color.fromRGBO(201, 235, 237, 1),
+                                      borderRadius: BorderRadius.circular(20)),
+                                  child: Padding(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 5,
+                                          top: 5,
+                                          left: 12,
+                                          right: 12),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "${state.scoreData['Fitness'] == null ? 0 : state.scoreData['Fitness']}",
+                                            style: AppTextStyles.titleSmaleBold,
+                                          ),
+                                          Text(
+                                            "/100",
+                                            style: AppTextStyles.hintSmale,
+                                          ),
+                                        ],
+                                      ))),
                               const SizedBox(
                                 width: 5,
                               ),
@@ -996,13 +1016,20 @@ class _Longevity2State extends State<Longevity2> {
                                     color: AppColors.yellowBega.withOpacity(.2),
                                     borderRadius: BorderRadius.circular(20)),
                                 child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      bottom: 5, top: 5, left: 12, right: 12),
-                                  child: Text(
-                                    "${state.scoreData['Emotional'] == null ? 0 : state.scoreData['Emotional']}/100",
-                                    style: AppTextStyles.gradeYellow,
-                                  ),
-                                ),
+                                    padding: const EdgeInsets.only(
+                                        bottom: 5, top: 5, left: 12, right: 12),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          "${state.scoreData['Emotional'] == null ? 0 : state.scoreData['Emotional']}",
+                                          style: AppTextStyles.titleSmaleBold,
+                                        ),
+                                        Text(
+                                          "/100",
+                                          style: AppTextStyles.hintSmale,
+                                        ),
+                                      ],
+                                    )),
                               ),
                               const SizedBox(
                                 width: 5,

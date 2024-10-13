@@ -67,7 +67,7 @@ class Gauges extends StatelessWidget {
         ),
         Text(
           "Photo Aging",
-          style: AppTextStyles.titleSmale,
+          style: AppTextStyles.titleSmaleBold,
         ),
         SizedBox(
           height: 5,
@@ -83,7 +83,7 @@ class Gauges extends StatelessWidget {
             ),
             Text(
               "2-5 years",
-              style: AppTextStyles.titleSmale,
+              style: AppTextStyles.titleSmaleBold,
             )
           ],
         )

@@ -51,7 +51,7 @@ class SmallGauge extends StatelessWidget {
                       children: [
                         Text(
                           "$value",
-                          style: AppTextStyles.titleSmale,
+                          style: AppTextStyles.titleSmaleBold,
                         ),
                       ],
                     ),
