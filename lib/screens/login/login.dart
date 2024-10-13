@@ -41,13 +41,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
-  final _passwordController = TextEditingController();
-  final _userNameController = TextEditingController();
+  final _passwordController = TextEditingController(); // Password controller
+  final _emailController = TextEditingController(); // Email controller
   var isLoading = null;
   GoogleSignInAccount? _currentUser;
   bool _isAuthorized = false; // has granted permissions?
   String _contactText = '';
+  String? _errorMessageEmail; // This will hold the error message
+  String? _errorMessagePass; // This will hold the error message
 
   @override
   void initState() {
@@ -55,22 +56,17 @@ class _LoginPageState extends State<LoginPage> {
 
     _googleSignIn.onCurrentUserChanged
         .listen((GoogleSignInAccount? account) async {
-// #docregion CanAccessScopes
-      // In mobile, being authenticated means being authorized...
       bool isAuthorized = account != null;
-      // However, on web...
+
       if (kIsWeb && account != null) {
         isAuthorized = await _googleSignIn.canAccessScopes(scopes);
       }
-// #enddocregion CanAccessScopes
 
       setState(() {
         _currentUser = account;
         _isAuthorized = isAuthorized;
       });
 
-      // Now that we know that the user can access the required scopes, the app
-      // can call the REST API.
       if (isAuthorized) {
         unawaited(_handleGetContact(account!));
       }
@@ -79,7 +75,6 @@ class _LoginPageState extends State<LoginPage> {
     _googleSignIn.signInSilently();
   }
 
-  // Calls the People API REST endpoint for the signed-in user to retrieve information.
   Future<void> _handleGetContact(GoogleSignInAccount user) async {
     setState(() {
       _contactText = 'Loading contact info...';
@@ -91,8 +86,8 @@ class _LoginPageState extends State<LoginPage> {
     );
     if (response.statusCode != 200) {
       setState(() {
-        _contactText = 'People API gave a ${response.statusCode} '
-            'response. Check logs for details.';
+        _contactText =
+            'People API gave a ${response.statusCode} response. Check logs for details.';
       });
       print('People API ${response.statusCode} response: ${response.body}');
       return;
@@ -134,33 +129,19 @@ class _LoginPageState extends State<LoginPage> {
       await _googleSignIn.signIn();
       _handleAuthorizeScopes();
     } catch (error) {
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(builder: (context) => Mainscreen()),
-      // );
       print(error);
     }
   }
 
   Future<void> _handleAuthorizeScopes() async {
     final bool isAuthorized = await _googleSignIn.requestScopes(scopes);
-    // #enddocregion RequestScopes
     setState(() {
       _isAuthorized = isAuthorized;
     });
-    // #docregion RequestScopes
     if (isAuthorized) {
       unawaited(_handleGetContact(_currentUser!));
     }
-    // Navigator.pushReplacement(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => Mainscreenv2()),
-    // );
-    // #enddocregion RequestScopes
   }
-
-  final TextEditingController _emailController = TextEditingController();
-  String? _errorMessage; // This will hold the error message
 
   // Email validation regex function
   void _validateEmail(String value) {
@@ -169,14 +150,34 @@ class _LoginPageState extends State<LoginPage> {
 
     setState(() {
       if (value.isEmpty) {
-        _errorMessage = 'Please enter an email';
+        _errorMessageEmail = 'Please enter an email';
       } else if (!regExp.hasMatch(value)) {
-        _errorMessage =
+        _errorMessageEmail =
             'Account not found. Check your email again.'; // Match the error in your image
       } else {
-        _errorMessage = null; // Clear error if valid
+        _errorMessageEmail = null; // Clear error if valid
       }
     });
+  }
+
+  void _validatePassword(String value) {
+    setState(() {
+      if (value.isEmpty) {
+        _errorMessagePass = 'Please enter a password'; // If password is empty
+      } else if (value.length < 6) {
+        _errorMessagePass =
+            'Password must be at least 6 characters long'; // Simple length check
+      } else {
+        _errorMessagePass = null; // Clear error if password is valid
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose(); // Dispose of password controller
+    super.dispose();
   }
 
   @override
@@ -189,122 +190,164 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea(
         child: Container(
           width: size.width,
-          alignment: Alignment.center,
+          alignment: Alignment.topCenter,
           child: Container(
             width: size.width > 420 ? 420 : size.width,
             child: SingleChildScrollView(
               child: Container(
                 height: size.height,
-                padding: EdgeInsets.only(
-                    top: size.height * .35, left: 40, right: 40),
+                width: size.width > 420 ? 420 : size.width,
                 alignment: Alignment.topCenter,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Text(
-                      "Enter Your Email Address to Log in",
-                      style: AppTextStyles.titleXl,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    AppTextField(
-                      lable: 'Email',
-                      hint: 'Email Address',
-                      controller: _emailController,
-                    ),
-                    if (_errorMessage !=
-                        null) // If there's an error, show error message
-                      Padding(
-                        padding: const EdgeInsets.only(top: 5),
-                        child: Text(
-                          _errorMessage!,
-                          style: TextStyle(color: Colors.red, fontSize: 12),
+                    Stack(
+                      children: [
+                        SvgPicture.asset(
+                          "assets/Group1000004492.svg",
+                          height: 350,
+                          width: size.width,
+                          fit: BoxFit.cover,
                         ),
-                      ),
-                    const SizedBox(
-                      height: 30,
+                        Positioned(
+                            left: (size.width/2)-40,
+                            top: 100,
+                            child: Image.asset(
+                              "assets/logoIcon.png",
+                              width: 70,
+                              height: 70,
+                            ))
+                      ],
                     ),
-                    BlocConsumer<AuthCubit, AuthState>(
-                      listener: (context, state) async {
-                        if (state is SuccessState) {
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
-                          prefs.setString('email', _emailController.value.text);
-                          BlocProvider.of<ClientInformationMobileCubit>(context).refresh();
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>  Mainscreenv2()),
-                          );
-                        }
-                        if (state is ErrorState) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(state.errorText)));
-                        }
-                      },
-                      builder: (context, state) {
-                        if (state is LoadingState) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        return GestureDetector(
-                            onTap: () async {
-                              _validateEmail(_emailController.text);
-                              if (_errorMessage == null) {
-                                // Email is valid, perform the action
-                                // ScaffoldMessenger.of(context).showSnackBar(
-                                //   SnackBar(content: Text('Email is valid')),
-                                // );
-                                BlocProvider.of<AuthCubit>(context)
-                                    .logIn(_emailController.value.text);
+                    Padding(
+                      padding: EdgeInsets.only(left: 20, right: 20),
+                      child: Column(
+                        children: [
+                          Text(
+                            "To continue, please enter your email and password. Your password can be found in the invitation email.",
+                            style: AppTextStyles.hintBlack,
+                          ),
+                          const SizedBox(height: 30),
+                          AppTextField(
+                            lable: 'Email',
+                            hint: 'Email Address',
+                            controller: _emailController,
+                            isPassword: false,
+                          ),
+                          if (_errorMessageEmail != null)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 5),
+                              child: Text(
+                                _errorMessageEmail!,
+                                style:
+                                    TextStyle(color: Colors.red, fontSize: 12),
+                              ),
+                            ),
+                          const SizedBox(height: 30),
+                          AppTextField(
+                            lable: 'Password',
+                            hint: 'Password',
+                            controller: _passwordController,
+                            isPassword: true, // Enable password obscuring
+                          ),
+                          if (_errorMessagePass != null)
+                            Padding(
+                              padding: const EdgeInsets.only(top: 5),
+                              child: Text(
+                                _errorMessagePass!,
+                                style:
+                                    TextStyle(color: Colors.red, fontSize: 12),
+                              ),
+                            ),
+                          const SizedBox(height: 30),
+                          BlocConsumer<AuthCubit, AuthState>(
+                            listener: (context, state) async {
+                              if (state is SuccessState) {
+                                SharedPreferences prefs =
+                                    await SharedPreferences.getInstance();
+                                prefs.setString(
+                                    'email', _emailController.value.text);
+                                prefs.setString(
+                                    'password',
+                                    _passwordController
+                                        .value.text); // Store password
+                                BlocProvider.of<ClientInformationMobileCubit>(
+                                        context)
+                                    .refresh();
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Mainscreenv2()),
+                                );
+                              }
+                              if (state is ErrorState) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text(state.errorText)));
                               }
                             },
-                            child: Container(
-                              alignment: Alignment.center,
-                              padding:
-                                  const EdgeInsets.only(top: 10, bottom: 10),
-                              decoration: BoxDecoration(
-                                  color: AppColors.purpleDark,
-                                  borderRadius: BorderRadius.circular(10)),
-                              width: size.width,
-                              child: Text(
-                                "login",
-                                style: AppTextStyles.titleMediumWhite,
-                              ),
-                            ));
-                      },
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    GestureDetector(
-                      onTap: () => _handleSignIn(context),
-                      child: Container(
-                        alignment: Alignment.center,
-                        padding: const EdgeInsets.only(top: 10, bottom: 10),
-                        decoration: BoxDecoration(
-                            border:
-                                Border.all(width: 2, color: AppColors.black),
-                            color: AppColors.mainBg,
-                            borderRadius: BorderRadius.circular(10)),
-                        width: size.width,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset("assets/Google.svg"),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              "Continue with Google",
-                              style: AppTextStyles.titleMedium,
-                            ),
-                          ],
-                        ),
+                            builder: (context, state) {
+                              if (state is LoadingState) {
+                                return const Center(
+                                    child: CircularProgressIndicator());
+                              }
+                              return GestureDetector(
+                                onTap: () async {
+                                  _validateEmail(_emailController.text);
+                                  _validatePassword(
+                                      _passwordController.value.text);
+                                  if (_errorMessageEmail == null &&
+                                      _errorMessagePass == null) {
+                                    BlocProvider.of<AuthCubit>(context).logIn(
+                                        _emailController.value.text,
+                                        _passwordController
+                                            .value.text // Pass the password
+                                        );
+                                  }
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.only(
+                                      top: 10, bottom: 10),
+                                  decoration: BoxDecoration(
+                                      color: AppColors.purpleDark,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  width: size.width,
+                                  child: Text(
+                                    "Login",
+                                    style: AppTextStyles.titleMediumWhite,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          const SizedBox(height: 15),
+                          // GestureDetector(
+                          //   onTap: () => _handleSignIn(context),
+                          //   child: Container(
+                          //     alignment: Alignment.center,
+                          //     padding: const EdgeInsets.only(top: 10, bottom: 10),
+                          //     decoration: BoxDecoration(
+                          //       border: Border.all(width: 2, color: AppColors.black),
+                          //       color: AppColors.mainBg,
+                          //       borderRadius: BorderRadius.circular(10),
+                          //     ),
+                          //     width: size.width,
+                          //     child: Row(
+                          //       mainAxisAlignment: MainAxisAlignment.center,
+                          //       children: [
+                          //         SvgPicture.asset("assets/Google.svg"),
+                          //         const SizedBox(width: 10),
+                          //         Text(
+                          //           "Continue with Google",
+                          //           style: AppTextStyles.titleMedium,
+                          //         ),
+                          //       ],
+                          //     ),
+                          //   ),
+                          // ),
+                        ],
                       ),
                     )
-                    // The user is NOT Authenticated
                   ],
                 ),
               ),

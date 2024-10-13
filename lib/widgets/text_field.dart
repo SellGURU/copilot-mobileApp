@@ -18,9 +18,11 @@ class AppTextField extends StatefulWidget {
   final TextAlign textAlign;
   TextInputType? inputType;
   final String? errorText; // This will hold the error message
+  bool isPassword;
 
   AppTextField({
     required this.lable,
+    required this.isPassword,
     required this.hint,
     required this.controller,
     this.icon = const SizedBox(),
@@ -33,7 +35,6 @@ class AppTextField extends StatefulWidget {
   @override
   State<AppTextField> createState() => _AppTextFieldState();
 }
-
 
 class _AppTextFieldState extends State<AppTextField> {
   @override
@@ -56,12 +57,15 @@ class _AppTextFieldState extends State<AppTextField> {
               prefixIcon: widget.icon,
               errorStyle: AppTextStyles.hint,
               errorText: widget.errorText, // Display the error message here
-              border:widget.errorText == null? const OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey, width: 1.0),
-              ):
-              const OutlineInputBorder( // This ensures the border turns red when there's an error
-                borderSide: BorderSide(color: Colors.red, width: 6.5),
-              ),
+              border: widget.errorText == null
+                  ? const OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+                      borderSide: BorderSide(color: Colors.grey, width: 1.0),
+                    )
+                  : const OutlineInputBorder(
+                      // This ensures the border turns red when there's an error
+                      borderSide: BorderSide(color: Colors.red, width: 6.5),
+                    ),
             ),
           ),
         ),

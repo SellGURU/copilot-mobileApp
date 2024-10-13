@@ -779,7 +779,7 @@ class _Longevity2State extends State<Longevity2> {
               Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Your Score",
+                    "Your Score:",
                     style: AppTextStyles.title1,
                   )),
               const SizedBox(
@@ -824,7 +824,7 @@ class _Longevity2State extends State<Longevity2> {
                           Row(
                             children: [
                               Text(
-                                "Your Score",
+                                "Your Score:",
                                 style: AppTextStyles.hintSmale,
                               ),
                               const SizedBox(
@@ -896,7 +896,7 @@ class _Longevity2State extends State<Longevity2> {
                               ),
                               Center(
                                   child: Text(
-                                "Activity",
+                                "Fitness",
                                 style: AppTextStyles.title2,
                               )),
                             ],
@@ -904,7 +904,7 @@ class _Longevity2State extends State<Longevity2> {
                           Row(
                             children: [
                               Text(
-                                "Your Score",
+                                "Your Score:",
                                 style: AppTextStyles.hintSmale,
                               ),
                               const SizedBox(
@@ -977,7 +977,7 @@ class _Longevity2State extends State<Longevity2> {
                               ),
                               Center(
                                   child: Text(
-                                "Mind",
+                                "Emotional",
                                 style: AppTextStyles.title2,
                               )),
                             ],
@@ -985,7 +985,7 @@ class _Longevity2State extends State<Longevity2> {
                           Row(
                             children: [
                               Text(
-                                "Your Score",
+                                "Your Score:",
                                 style: AppTextStyles.hintSmale,
                               ),
                               const SizedBox(

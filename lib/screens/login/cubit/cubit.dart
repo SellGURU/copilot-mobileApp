@@ -23,7 +23,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Dio _dio = Dio();
 
-  logIn(email) async {
+  logIn(email,pass) async {
     emit(LoadingState());
     // _dio.options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
     try {
