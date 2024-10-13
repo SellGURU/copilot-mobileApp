@@ -150,7 +150,7 @@ class ConnectCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Apple Health', style: AppTextStyles.hintMedium),
+                  Text(title, style: AppTextStyles.hintMedium),
                   const SizedBox(height: 4),
                   Text('Version: 1,2,3', style: AppTextStyles.hint),
                 ],

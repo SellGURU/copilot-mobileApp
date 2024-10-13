@@ -32,6 +32,7 @@ class SurveyCard extends StatefulWidget {
 class _SurveyCardState extends State<SurveyCard> {
   @override
   Widget build(BuildContext context) {
+    print("${widget.Title}:${widget.fill}");
     if (!widget.fill) {
       return Container(
         margin: const EdgeInsets.only(bottom: 10),
@@ -98,6 +99,7 @@ class _SurveyCardState extends State<SurveyCard> {
                 // Arrow Icon
                 GestureDetector(
                   onTap: () async {
+                    print("check clicked");
                     Dio _dio = Dio();
                     await _dio.post(Endpoints.add_event, data: {
                       "event_type": "clicked",

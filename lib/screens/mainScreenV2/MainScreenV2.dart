@@ -67,6 +67,7 @@ void _launchURL(String url) async {
   final Uri urlRedirect = Uri.parse(url);
   await launchUrl(urlRedirect);
 }
+
 Future<void> downloadPdf(BuildContext context, String pdfUrl) async {
   if (kIsWeb) {
     // Web: Trigger download via browser
@@ -144,8 +145,6 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
       isShowDropDown = !isShowDropDown;
     });
   }
-
-
 
   // Example base64 PDF string (you need to replace this with your actual base64 string)
   bool isShowDropDown = false;
@@ -293,7 +292,6 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
 }
 
 class Overview2 extends StatefulWidget {
-
   // void initializeRook() async {
   final bool isShowDropDown;
   final Function onToggleDropDown;
@@ -312,18 +310,20 @@ class _Overview2State extends State<Overview2> {
   DateTime? _storedTime; // To store the time locally
   String _timePassed = '0'; // To display the time passed
   @override
-  void initState()  {
+  void initState() {
     getTime();
   }
- void getTime()async{
+
+  void getTime() async {
     print("_timePassed");
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String _timePassedCheck = prefs.getString('buttonPressTime')!; // To display the time passed
+    String _timePassedCheck =
+        prefs.getString('buttonPressTime')!; // To display the time passed
     if (_timePassedCheck != null) {
-    print("_timePassed $_timePassedCheck");
+      print("_timePassed $_timePassedCheck");
       _storedTime = DateTime.parse(_timePassedCheck);
       final difference = DateTime.now().difference(_storedTime!);
-    print("time:'${difference.inSeconds} seconds");
+      print("time:'${difference.inSeconds} seconds");
 
       setState(() {
         if (difference.inSeconds < 60) {
@@ -341,8 +341,8 @@ class _Overview2State extends State<Overview2> {
         _timePassed = "No time stored.";
       });
     }
-
   }
+
   // Store the current time and show time passed automatically
   Future<void> _storeTimeAndShow() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -351,7 +351,6 @@ class _Overview2State extends State<Overview2> {
     // Store the current time
     await prefs.setString('buttonPressTime', now.toIso8601String());
     print("Time stored: $now");
-
 
     // Calculate and show the time passed immediately
     String? storedTimeStr = prefs.getString('buttonPressTime');
@@ -396,6 +395,8 @@ class _Overview2State extends State<Overview2> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           GestureDetector(
                             onTap: () => {widget.onToggleDropDown()},
@@ -455,8 +456,7 @@ class _Overview2State extends State<Overview2> {
                                     _storeTimeAndShow();
                                     _launchURL(state.pdfUrlWeakly);
                                   },
-                                  child:
-                                  Column(
+                                  child: Column(
                                     children: [
                                       Row(
                                         children: [
@@ -478,8 +478,13 @@ class _Overview2State extends State<Overview2> {
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(height: 2,),
-                                      Text("Last Generate: $_timePassed ago",style: AppTextStyles.hintVerySmale,)
+                                      const SizedBox(
+                                        height: 2,
+                                      ),
+                                      Text(
+                                        "Last Generate: $_timePassed ago",
+                                        style: AppTextStyles.hintVerySmale,
+                                      )
                                     ],
                                   ),
                                 );
@@ -489,11 +494,9 @@ class _Overview2State extends State<Overview2> {
                                     width: 15,
                                     height: 15,
                                     child: CircularProgressIndicator());
-
                               }
                               if (state is ErrorDownloadWeaklyReportState) {
-                                return
-                                  Row(
+                                return Row(
                                   children: [
                                     SvgPicture.asset(
                                       "assets/document-download.svg",
@@ -513,7 +516,6 @@ class _Overview2State extends State<Overview2> {
                                     ),
                                   ],
                                 );
-
                               } else {
                                 return const SizedBox();
                               }
@@ -656,8 +658,10 @@ class _Overview2State extends State<Overview2> {
                             Title: 'Longevity Performance Coaching',
                             Link: state.googleFormData[
                                     'Longevity Performance Coaching Daily Survey']
-                                ["link"], fill: state.googleFormData['Longevity Performance Coaching Daily Survey']
-                          ["filled"],
+                                ["link"],
+                            fill: state.googleFormData[
+                                    'Longevity Performance Coaching Daily Survey']
+                                ["filled"],
                           ),
                           SurveyCard(
                             imagePath:
@@ -671,9 +675,10 @@ class _Overview2State extends State<Overview2> {
                             Title: 'Emotional Health and Motivation',
                             Link: state.googleFormData[
                                     'Emotional Health and Motivation Survey']
-                                ["link"], fill: state.googleFormData[
-                          'Emotional Health and Motivation Survey']
-                          ["filled"],
+                                ["link"],
+                            fill: state.googleFormData[
+                                    'Emotional Health and Motivation Survey']
+                                ["filled"],
                           ),
                           SurveyCard(
                             imagePath:
@@ -687,9 +692,10 @@ class _Overview2State extends State<Overview2> {
                             Title: 'Stability, Mobility and Flexibility',
                             Link: state.googleFormData[
                                     'Stability, Mobility and Flexibility tests']
-                                ["link"], fill: state.googleFormData[
-                          'Stability, Mobility and Flexibility tests']
-                          ["filled"],
+                                ["link"],
+                            fill: state.googleFormData[
+                                    'Stability, Mobility and Flexibility tests']
+                                ["filled"],
                           ),
                           SurveyCard(
                             imagePath:
@@ -699,7 +705,8 @@ class _Overview2State extends State<Overview2> {
                             Questions: state.googleFormData['Blood test']
                                 ["number_of_questions"],
                             Title: 'Blood Test',
-                            Link: state.googleFormData['Blood test']["link"], fill: state.googleFormData['Blood test']["filled"],
+                            Link: state.googleFormData['Blood test']["link"],
+                            fill: state.googleFormData['Blood test']["filled"],
                           ),
                           SurveyCard(
                             imagePath:
@@ -709,7 +716,8 @@ class _Overview2State extends State<Overview2> {
                             Questions: state.googleFormData['Clinet info']
                                 ["number_of_questions"],
                             Title: 'Clinet info',
-                            Link: state.googleFormData['Clinet info']["link"], fill: state.googleFormData['Clinet info']["filled"],
+                            Link: state.googleFormData['Clinet info']["link"],
+                            fill: state.googleFormData['Clinet info']["filled"],
                           ),
                         ],
                       );
@@ -719,7 +727,6 @@ class _Overview2State extends State<Overview2> {
                           width: 15,
                           height: 15,
                           child: CircularProgressIndicator());
-
                     } else {
                       return const Text("have error");
                     }
@@ -762,7 +769,7 @@ class _Longevity2State extends State<Longevity2> {
       },
       builder: (context, HealthScoreState state) {
         if (state is SuccessHealthScore) {
-          print("SuccessHealthScore: ${(state).scoreData}");
+          // print("SuccessHealthScore: ${(state).scoreData}");
           return Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -798,17 +805,15 @@ class _Longevity2State extends State<Longevity2> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               SvgPicture.asset(
                                 "assets/human-body-silhouette-with-focus-on-respiratory-system-svgrepo-com 1.svg",
-                                width: 30,
-                                height: 30,
+                                width: 15,
+                                height: 15,
                               ),
-                              const SizedBox(
-                                width: 5,
-                              ),
+
                               Center(
                                   child: Text(
                                 "Physiological",
@@ -877,8 +882,8 @@ class _Longevity2State extends State<Longevity2> {
                             children: [
                               SvgPicture.asset(
                                 "assets/activityIcon.svg",
-                                width: 15,
-                                height: 15,
+                                width: 20,
+                                height: 20,
                                 colorFilter: const ColorFilter.mode(
                                   AppColors
                                       .purpleDark, // The color you want to apply
