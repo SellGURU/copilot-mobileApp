@@ -16,6 +16,7 @@ class SurveyCard extends StatefulWidget {
   String Title;
   String Link;
   bool fill;
+  String eventName;
 
   SurveyCard(
       {super.key,
@@ -24,6 +25,7 @@ class SurveyCard extends StatefulWidget {
       required this.imagePath,
       required this.Minutes,
       required this.Questions,
+      required this.eventName,
       required this.Title});
   @override
   State<SurveyCard> createState() => _SurveyCardState();
@@ -103,7 +105,7 @@ class _SurveyCardState extends State<SurveyCard> {
                     Dio _dio = Dio();
                     await _dio.post(Endpoints.add_event, data: {
                       "event_type": "clicked",
-                      "event_name": widget.Title
+                      "event_name": widget.eventName
                     });
                     rediractUrl(widget.Link);
                   },
