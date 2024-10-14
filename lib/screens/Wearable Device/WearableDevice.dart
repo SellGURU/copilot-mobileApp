@@ -51,6 +51,7 @@ class _WearableDeviceState extends State<WearableDevice> {
                 children: [
                   Text(
                     "Sync your health data effortlessly by connecting with Health Applications. By integrating, track your progress across all your devices, and make the most of your health journey.",
+                    textAlign: TextAlign.center,
                     style: AppTextStyles.titleMediumHeight,
                   ),
                   const SizedBox(

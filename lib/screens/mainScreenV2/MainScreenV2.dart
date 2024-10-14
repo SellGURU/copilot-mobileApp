@@ -779,7 +779,7 @@ class _Longevity2State extends State<Longevity2> {
               Container(
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Your Score:",
+                    "Your Score",
                     style: AppTextStyles.title1,
                   )),
               const SizedBox(

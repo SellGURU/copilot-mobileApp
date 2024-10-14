@@ -10,32 +10,40 @@ class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthState()) {
     _initialize();
   }
-  Future<void> _initialize() async {
-    var token = await getTokenLocally();
-    print("token1:${token}");
-    print(token!.isNotEmpty);
-    if (token!.isNotEmpty) {
-      emit(LoggedInState());
-    } else {
-      emit(LoggedOutState());
-    }
-  }
-
   Dio _dio = Dio();
 
-  logIn(email,pass) async {
+  Future<void> _initialize() async {
+    var token = await getTokenLocally();
+    _dio.options.headers['Authorization'] = "bearer $token";
+
+    _dio.post(Endpoints.clientInformationMobile).then((value) async {
+      if (value.data["detail"] == "Not authenticated") {
+
+        emit(LoggedOutState());
+      } else {
+        var token = await getTokenLocally();
+        print("token1:${token}");
+        print(token!.isNotEmpty);
+        if (token!.isNotEmpty) {
+          emit(LoggedInState());
+        } else {
+          emit(LoggedOutState());
+        }
+      }
+    });
+  }
+
+  logIn(email, pass) async {
     emit(LoadingState());
     // _dio.options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
     try {
       await _dio.post(
         Endpoints.login,
-        data: {
-          "email":email
-        },
+        data: {"email": email},
       ).then((value) async {
-        print("value.toString():"+value.toString());
-        if (value.statusCode == 200&&value.data["detail"]==null) {
-          print("token $value");
+        print("value.toString():" + value.toString());
+        if (value.statusCode == 200 && value.data["detail"] == null) {
+          print("token11 $value");
           await UpdateToken(value.data["access_token"]);
           emit(SuccessState());
         } else {
@@ -50,9 +58,9 @@ class AuthCubit extends Cubit<AuthState> {
       emit(ErrorState("server error"));
     }
   }
+
   logOut() async {
     await UpdateToken("");
     emit(LoggedOutState());
   }
-
 }
