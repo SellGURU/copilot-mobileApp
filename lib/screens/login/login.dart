@@ -292,7 +292,8 @@ class _LoginPageState extends State<LoginPage> {
                                 return const Center(
                                     child: CircularProgressIndicator());
                               }
-                              return GestureDetector(
+                              return
+                                GestureDetector(
                                 onTap: () async {
                                   _validateEmail(_emailController.text);
                                   _validatePassword(
