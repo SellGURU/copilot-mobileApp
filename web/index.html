@@ -1,19 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
@@ -32,8 +19,57 @@
 
   <title>test_copilet</title>
   <link rel="manifest" href="manifest.json">
+
+  <!-- Custom splash screen CSS -->
+  <style>
+    *{
+     margin: 0 !important;
+      padding: 0 !important;
+    }
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+    }
+
+    /* Fullscreen splash screen */
+    .splash-screen {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+      background-color: #ffffff; /* Customize background color */
+    }
+
+    /* Full-screen logo */
+    .splash-logo {
+      max-width: 100vw;
+      max-height: 100vh;
+      width: auto;
+      height: auto;
+    }
+  </style>
 </head>
 <body>
-  <script src="flutter_bootstrap.js" async></script>
+<!-- Splash Screen -->
+<div class="splash-screen" id="splash">
+  <!-- Replace the default Flutter logo with your custom image -->
+  <img src="assets/splashWeb.svg"
+       style="height: 100vh; width: 100vw; object-fit: cover; object-position: center;"
+       class="splash-logo"
+       alt="Custom App Logo">
+</div>
+
+<script src="flutter_bootstrap.js" async></script>
+
+<!-- JavaScript to remove the splash screen when Flutter is ready -->
+<script>
+  window.addEventListener('flutter-first-frame', function() {
+    document.getElementById('splash').style.display = 'none';
+  });
+</script>
 </body>
 </html>

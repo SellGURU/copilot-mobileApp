@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../utility/LaunchUrl.dart';
+import '../../utility/token/getTokenLocaly.dart';
 
 class SurveyCard extends StatefulWidget {
   String imagePath;
@@ -102,7 +103,10 @@ class _SurveyCardState extends State<SurveyCard> {
                 GestureDetector(
                   onTap: () async {
                     print("check clicked");
+                    var token = await getTokenLocally();
                     Dio _dio = Dio();
+                    _dio.options.headers['Authorization'] = "bearer $token";
+
                     await _dio.post(Endpoints.add_event, data: {
                       "event_type": "clicked",
                       "event_name": widget.eventName

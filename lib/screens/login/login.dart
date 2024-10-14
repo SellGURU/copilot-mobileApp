@@ -210,7 +210,7 @@ class _LoginPageState extends State<LoginPage> {
                           fit: BoxFit.cover,
                         ),
                         Positioned(
-                            left: (size.width/2)-40,
+                            left: (size.width > 420 ? 180 : size.width/2-40),
                             top: 100,
                             child: Image.asset(
                               "assets/logoIcon.png",
@@ -226,39 +226,41 @@ class _LoginPageState extends State<LoginPage> {
                           Text(
                             "To continue, please enter your email and password. Your password can be found in the invitation email.",
                             style: AppTextStyles.hintBlack,
+                            textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 30),
                           AppTextField(
-                            lable: 'Email',
-                            hint: 'Email Address',
+                            label: 'Email',
+                            hint: 'Enter your E-mail',
                             controller: _emailController,
                             isPassword: false,
+                              errorText: _errorMessageEmail,
                           ),
-                          if (_errorMessageEmail != null)
-                            Padding(
-                              padding: const EdgeInsets.only(top: 5),
-                              child: Text(
-                                _errorMessageEmail!,
-                                style:
-                                    TextStyle(color: Colors.red, fontSize: 12),
-                              ),
-                            ),
+                          // if (_errorMessageEmail != null)
+                          //   Padding(
+                          //     padding: const EdgeInsets.only(top: 5),
+                          //     child: Text(
+                          //       _errorMessageEmail!,
+                          //       style:
+                          //           TextStyle(color: Colors.red, fontSize: 12),
+                          //     ),
+                          //   ),
                           const SizedBox(height: 30),
                           AppTextField(
-                            lable: 'Password',
-                            hint: 'Password',
+                            label: 'Password',
+                            hint: 'Enter Password',
                             controller: _passwordController,
-                            isPassword: true, // Enable password obscuring
+                            isPassword: true, errorText: _errorMessagePass, // Enable password obscuring
                           ),
-                          if (_errorMessagePass != null)
-                            Padding(
-                              padding: const EdgeInsets.only(top: 5),
-                              child: Text(
-                                _errorMessagePass!,
-                                style:
-                                    TextStyle(color: Colors.red, fontSize: 12),
-                              ),
-                            ),
+                          // if (_errorMessagePass != null)
+                          //   Padding(
+                          //     padding: const EdgeInsets.only(top: 5),
+                          //     child: Text(
+                          //       _errorMessagePass!,
+                          //       style:
+                          //           TextStyle(color: Colors.red, fontSize: 12),
+                          //     ),
+                          //   ),
                           const SizedBox(height: 30),
                           BlocConsumer<AuthCubit, AuthState>(
                             listener: (context, state) async {
