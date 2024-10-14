@@ -39,7 +39,7 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       await _dio.post(
         Endpoints.login,
-        data: {"email": email},
+        data: {"email": email,"password":pass},
       ).then((value) async {
         print("value.toString():" + value.toString());
         if (value.statusCode == 200 && value.data["detail"] == null) {
