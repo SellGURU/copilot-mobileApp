@@ -24,23 +24,21 @@ import 'package:copilet/utility/camareControlerBloc/camera_events.dart';
 import 'package:copilet/utility/changeScreanBloc/PageIndex_Bloc.dart';
 import 'package:copilet/utility/switchValueBloc/PageIndex_Bloc.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-
   runApp(MyApp());
 }
-
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var size=MediaQuery.of(context).size;
+    var size = MediaQuery.of(context).size;
     return MultiBlocProvider(
-
       providers: [
         BlocProvider(create: (_) => PageIndexBloc()),
         BlocProvider(create: (_) => DownloadWeaklyReportCubit()),
@@ -70,14 +68,13 @@ class MyApp extends StatelessWidget {
             if (state is LoggedInState) {
               return const Mainscreenv2();
               // return const ();
-
             }
-            if(state is LoggedOutState){
+            if (state is LoggedOutState) {
               return const Welcomscreen();
-
-            }
-            else {
-              return Center(child: LinearProgressIndicator(),);
+            } else {
+              return Center(
+                child: SpinKitThreeBounce(),
+              );
             }
           },
         ),
