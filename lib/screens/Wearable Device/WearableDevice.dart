@@ -51,8 +51,8 @@ class _WearableDeviceState extends State<WearableDevice> {
                 children: [
                   Text(
                     "Sync your health data effortlessly by connecting with Health Applications. By integrating, track your progress across all your devices, and make the most of your health journey.",
-                    textAlign: TextAlign.center,
-                    style: AppTextStyles.titleMediumHeight,
+                    textAlign: TextAlign.start,
+                    style: AppTextStyles.titleMediumLangHeight,
                   ),
                   const SizedBox(
                     height: 20,
@@ -114,7 +114,7 @@ class ConnectCard extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.all(6.0),
       child: Container(
         padding: EdgeInsets.all(16),
         width: size.width > 420 ? 420 : size.width,

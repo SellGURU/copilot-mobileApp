@@ -42,7 +42,7 @@ class _AppTextFieldState extends State<AppTextField> {
       borderRadius: const BorderRadius.all(Radius.circular(20)),
       borderSide: BorderSide(
         color: widget.errorText == null ? AppColors.purpleDark : AppColors.red,
-        width: widget.errorText == null ? 1.0 : 2.5,
+        width: widget.errorText == null ? 1.0 : 5.5,
       ),
     );
 
@@ -53,7 +53,7 @@ class _AppTextFieldState extends State<AppTextField> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-            margin: const EdgeInsets.symmetric(horizontal: 12),
+            margin: const EdgeInsets.symmetric(horizontal: 6),
             child: Text(
               widget.label,
               style: AppTextStyles.titleLg,

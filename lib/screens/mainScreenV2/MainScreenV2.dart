@@ -171,7 +171,7 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                     height: size.height,
                     width: size.width,
                     child: Container(
-                      width: size.width > 420 ? 420 : size.width,
+                      width: size.width > 440 ? 440 : size.width,
                       child: Stack(
                         children: [
                           Overview2(
@@ -192,7 +192,7 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                                           Radius.circular(10)),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Colors.grey.withOpacity(.1),
+                                          color: Colors.grey.withOpacity(.5).withOpacity(.1),
                                           spreadRadius: 2,
                                           blurRadius: 2,
                                           offset: const Offset(0,
@@ -645,10 +645,12 @@ class _Overview2State extends State<Overview2> {
                             Link: state.googleFormData['Fitness test results']
                                 ["link"],
                             fill: state.googleFormData['Fitness test results']
-                                ["filled"], eventName: "fitness test results",
+                                ["filled"],
+                            eventName: "fitness test results",
                           ),
                           SurveyCard(
-                            eventName:"longevity performance coaching daily survey",
+                            eventName:
+                                "longevity performance coaching daily survey",
                             imagePath:
                                 'assets/herbal-medicine-2--Streamline-Ultimate.svg',
                             Minutes: state.googleFormData[
@@ -680,7 +682,8 @@ class _Overview2State extends State<Overview2> {
                                 ["link"],
                             fill: state.googleFormData[
                                     'Emotional Health and Motivation Survey']
-                                ["filled"], eventName: '',
+                                ["filled"],
+                            eventName: '',
                           ),
                           SurveyCard(
                             imagePath:
@@ -697,7 +700,9 @@ class _Overview2State extends State<Overview2> {
                                 ["link"],
                             fill: state.googleFormData[
                                     'Stability, Mobility and Flexibility tests']
-                                ["filled"], eventName: "stability, mobility and flexibility tests",
+                                ["filled"],
+                            eventName:
+                                "stability, mobility and flexibility tests",
                           ),
                           SurveyCard(
                             imagePath:
@@ -718,7 +723,7 @@ class _Overview2State extends State<Overview2> {
                                 ["Average_response_time"],
                             Questions: state.googleFormData['Clinet info']
                                 ["number_of_questions"],
-                            Title: 'Clinet info',
+                            Title: 'Clinet Info',
                             Link: state.googleFormData['Clinet info']["link"],
                             fill: state.googleFormData['Clinet info']["filled"],
                             eventName: 'clinet info',
@@ -840,7 +845,12 @@ class _Longevity2State extends State<Longevity2> {
                               ),
                               Container(
                                 decoration: BoxDecoration(
-                                    color: Color.fromRGBO(201, 235, 237, 1),
+                                    color: state.scoreData['Physiological'] > 0
+                                        ? (state.scoreData['Physiological'] <= 5
+                                            ? Color.fromRGBO(201, 235, 237, 1)
+                                            : AppColors.yellowBega
+                                                .withOpacity(.2))
+                                        : Colors.grey.withOpacity(.5),
                                     borderRadius: BorderRadius.circular(20)),
                                 child: Padding(
                                     padding: const EdgeInsets.only(
@@ -848,7 +858,7 @@ class _Longevity2State extends State<Longevity2> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          "${state.scoreData['Physiological'] == null ? 0 : state.scoreData['Physiological']}",
+                                          "${state.scoreData['Physiological'] == 0 ? "--" : state.scoreData['Physiological']}",
                                           style: AppTextStyles.titleSmaleBold,
                                         ),
                                         Text(
@@ -928,7 +938,11 @@ class _Longevity2State extends State<Longevity2> {
 
                               Container(
                                   decoration: BoxDecoration(
-                                      color: Color.fromRGBO(201, 235, 237, 1),
+                                      color: state.scoreData['Fitness'] > 0
+                                          ? (state.scoreData['Fitness'] <= 5
+                                              ? Color.fromRGBO(201, 235, 237, 1)
+                                              : AppColors.yellowBega)
+                                          : Colors.grey.withOpacity(.5),
                                       borderRadius: BorderRadius.circular(20)),
                                   child: Padding(
                                       padding: const EdgeInsets.only(
@@ -939,7 +953,7 @@ class _Longevity2State extends State<Longevity2> {
                                       child: Row(
                                         children: [
                                           Text(
-                                            "${state.scoreData['Fitness'] == null ? 0 : state.scoreData['Fitness']}",
+                                            "${state.scoreData['Fitness'] == 0 ? "--" : state.scoreData['Fitness']}",
                                             style: AppTextStyles.titleSmaleBold,
                                           ),
                                           Text(
@@ -1017,7 +1031,12 @@ class _Longevity2State extends State<Longevity2> {
                               ),
                               Container(
                                 decoration: BoxDecoration(
-                                    color: AppColors.yellowBega.withOpacity(.2),
+                                    color: state.scoreData['Emotional'] > 0
+                                        ? (state.scoreData['Emotional'] <= 5
+                                            ? Color.fromRGBO(201, 235, 237, 1)
+                                            : AppColors.yellowBega
+                                                .withOpacity(.2))
+                                        : Colors.grey.withOpacity(.5),
                                     borderRadius: BorderRadius.circular(20)),
                                 child: Padding(
                                     padding: const EdgeInsets.only(
@@ -1025,7 +1044,7 @@ class _Longevity2State extends State<Longevity2> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          "${state.scoreData['Emotional'] == null ? 0 : state.scoreData['Emotional']}",
+                                          "${state.scoreData['Emotional'] == 0 ? "--" : state.scoreData['Emotional']}",
                                           style: AppTextStyles.titleSmaleBold,
                                         ),
                                         Text(
