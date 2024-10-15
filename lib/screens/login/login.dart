@@ -210,10 +210,11 @@ class _LoginPageState extends State<LoginPage> {
                           fit: BoxFit.cover,
                         ),
                         Positioned(
-                            left: (size.width > 420 ? 180 : size.width/2-40),
+                            left:
+                                (size.width > 420 ? 180 : size.width / 2 - 40),
                             top: 100,
-                            child: Image.asset(
-                              "assets/logoIcon.png",
+                            child: SvgPicture.asset(
+                              "assets/Picture12(1).svg",
                               width: 70,
                               height: 70,
                             ))
@@ -223,9 +224,16 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.only(left: 20, right: 20),
                       child: Column(
                         children: [
+                          //
                           Text(
-                            "To continue, please enter your email and password. Your password can be found in the invitation email.",
-                            style: AppTextStyles.hintBlack,
+                            "To continue, please enter your email and password.",
+                            style: AppTextStyles.title2,
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(height: 3,),
+                          Text(
+                            " Your password can be found in the invitation email.",
+                            style: AppTextStyles.title2,
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 30),
@@ -234,7 +242,7 @@ class _LoginPageState extends State<LoginPage> {
                             hint: 'Enter your E-mail',
                             controller: _emailController,
                             isPassword: false,
-                              errorText: _errorMessageEmail,
+                            errorText: _errorMessageEmail,
                           ),
                           // if (_errorMessageEmail != null)
                           //   Padding(
@@ -250,7 +258,9 @@ class _LoginPageState extends State<LoginPage> {
                             label: 'Password',
                             hint: 'Enter Password',
                             controller: _passwordController,
-                            isPassword: true, errorText: _errorMessagePass, // Enable password obscuring
+                            isPassword: true,
+                            errorText:
+                                _errorMessagePass, // Enable password obscuring
                           ),
                           // if (_errorMessagePass != null)
                           //   Padding(
@@ -292,8 +302,7 @@ class _LoginPageState extends State<LoginPage> {
                                 return const Center(
                                     child: CircularProgressIndicator());
                               }
-                              return
-                                GestureDetector(
+                              return GestureDetector(
                                 onTap: () async {
                                   _validateEmail(_emailController.text);
                                   _validatePassword(

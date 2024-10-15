@@ -15,6 +15,7 @@ class AppTextStyles {
   // --------------
 
   static TextStyle title1 =GoogleFonts.roboto( textStyle:TextStyle(fontSize: 16, color: AppColors.text,fontWeight: FontWeight.w500));
+  static TextStyle titleLg =GoogleFonts.roboto( textStyle:TextStyle(fontSize: 16, color: AppColors.text,fontWeight: FontWeight.w400));
   static TextStyle whiteTitle1 = GoogleFonts.roboto( textStyle:TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500));
   // --------------
 

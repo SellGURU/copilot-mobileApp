@@ -30,7 +30,7 @@ class AppTextField extends StatefulWidget {
 
 class _AppTextFieldState extends State<AppTextField> {
   // Variable to track whether the password is visible or not
-  bool _isObscured = true;
+  bool _isObscured = false;
 
   @override
   Widget build(BuildContext context) {
@@ -51,12 +51,22 @@ class _AppTextFieldState extends State<AppTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Container(
+            margin: const EdgeInsets.symmetric(horizontal: 12),
+            child: Text(
+              widget.label,
+              style: AppTextStyles.titleLg,
+            )),
+        const SizedBox(
+          height: 5,
+        ),
         SizedBox(
           width: size.width,
           child: TextFormField(
             textAlign: widget.textAlign,
             controller: widget.controller,
-            obscureText: widget.isPassword && _isObscured, // Toggle password visibility
+            obscureText:
+                widget.isPassword && _isObscured, // Toggle password visibility
             keyboardType: widget.inputType,
             style: TextStyle(color: textColor),
             decoration: InputDecoration(
@@ -65,18 +75,21 @@ class _AppTextFieldState extends State<AppTextField> {
               prefixIcon: widget.icon,
               suffixIcon: widget.isPassword
                   ? IconButton(
-                icon: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Icon(
-                    _isObscured ? Icons.visibility : Icons.visibility_off,
-                  ),
-                ),
-                onPressed: () {
-                  setState(() {
-                    _isObscured = !_isObscured; // Toggle the obscureText state
-                  });
-                },
-              )
+                      icon: Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Icon(
+                            _isObscured
+                                ? Icons.visibility_outlined
+                                : Icons.visibility_off_outlined,
+                            color: Color.fromRGBO(123, 147, 175, 1)// Set the desired color here
+                          )),
+                      onPressed: () {
+                        setState(() {
+                          _isObscured =
+                              !_isObscured; // Toggle the obscureText state
+                        });
+                      },
+                    )
                   : null, // Only show suffixIcon if it's a password field
               errorStyle: AppTextStyles.gradeRed,
               errorText: widget.errorText, // Show error message if available
