@@ -211,11 +211,11 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         Positioned(
                             left:
-                                (size.width > 420 ? 180 : size.width / 2 - 40),
+                                (size.width > 420 ? 170 : size.width / 2 - 40),
                             top: 100,
-                            child: SvgPicture.asset(
-                              "assets/Picture12(1).svg",
-                              width: 70,
+                            child: Image.asset(
+                              "assets/logoIcon.png",
+                              width: 80,
                               height: 70,
                             ))
                       ],

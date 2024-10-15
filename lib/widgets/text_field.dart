@@ -30,7 +30,7 @@ class AppTextField extends StatefulWidget {
 
 class _AppTextFieldState extends State<AppTextField> {
   // Variable to track whether the password is visible or not
-  bool _isObscured = false;
+  bool _isObscured = true;
 
   @override
   Widget build(BuildContext context) {
@@ -78,11 +78,12 @@ class _AppTextFieldState extends State<AppTextField> {
                       icon: Padding(
                           padding: const EdgeInsets.only(right: 8.0),
                           child: Icon(
-                            _isObscured
-                                ? Icons.visibility_outlined
-                                : Icons.visibility_off_outlined,
-                            color: Color.fromRGBO(123, 147, 175, 1)// Set the desired color here
-                          )),
+                              _isObscured
+                                  ? Icons.visibility_off_outlined
+                                  : Icons.visibility_outlined,
+                              color: Color.fromRGBO(123, 147, 175,
+                                  1) // Set the desired color here
+                              )),
                       onPressed: () {
                         setState(() {
                           _isObscured =
