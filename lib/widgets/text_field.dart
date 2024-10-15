@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../components/text_style.dart';
+import '../res/colors.dart';
 
 class AppTextField extends StatefulWidget {
   final String label;
@@ -40,13 +41,13 @@ class _AppTextFieldState extends State<AppTextField> {
     final borderStyle = OutlineInputBorder(
       borderRadius: const BorderRadius.all(Radius.circular(20)),
       borderSide: BorderSide(
-        color: widget.errorText == null ? Colors.grey : Colors.red,
+        color: widget.errorText == null ? AppColors.purpleDark : AppColors.red,
         width: widget.errorText == null ? 1.0 : 2.5,
       ),
     );
 
     // Set up text color based on error presence
-    final textColor = widget.errorText == null ? Colors.black : Colors.red;
+    final textColor = widget.errorText == null ? Colors.black : AppColors.red;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

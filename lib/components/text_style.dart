@@ -7,7 +7,7 @@ import '../res/colors.dart';
 
 class AppTextStyles {
   AppTextStyles._();
-  static TextStyle title3xl =GoogleFonts.roboto( textStyle:TextStyle(fontSize: 32, color: AppColors.mainBg,fontWeight: FontWeight.w700));
+  static TextStyle title3xl =GoogleFonts.alice( textStyle:TextStyle(fontSize: 32, color: AppColors.mainBg,fontWeight: FontWeight.w700));
 
   static TextStyle title2xl =GoogleFonts.roboto( textStyle:TextStyle(fontSize: 24, color: AppColors.text,fontWeight: FontWeight.w700));
   static TextStyle titleXl =GoogleFonts.roboto( textStyle:TextStyle(fontSize: 20, color: AppColors.text,fontWeight: FontWeight.w500));

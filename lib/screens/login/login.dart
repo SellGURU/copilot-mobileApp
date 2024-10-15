@@ -238,7 +238,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           const SizedBox(height: 30),
                           AppTextField(
-                            label: 'Email',
+                            label: 'E-mail',
                             hint: 'Enter your E-mail',
                             controller: _emailController,
                             isPassword: false,
