@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
               return const Welcomscreen();
             } else {
               return Center(
-                child: SpinKitThreeBounce(),
+                child: SpinKitThreeBounce(color: Colors.purple,),
               );
             }
           },

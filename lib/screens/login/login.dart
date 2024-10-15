@@ -204,8 +204,8 @@ class _LoginPageState extends State<LoginPage> {
                     Stack(
                       children: [
                         SvgPicture.asset(
-                          "assets/Group1000004492.svg",
-                          height: 350,
+                          "assets/headerLogin1.svg",
+                          height: 300,
                           width: size.width,
                           fit: BoxFit.cover,
                         ),
@@ -230,7 +230,9 @@ class _LoginPageState extends State<LoginPage> {
                             style: AppTextStyles.title2,
                             textAlign: TextAlign.center,
                           ),
-                          SizedBox(height: 3,),
+                          SizedBox(
+                            height: 3,
+                          ),
                           Text(
                             " Your password can be found in the invitation email.",
                             style: AppTextStyles.title2,
