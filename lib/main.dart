@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-        title: 'CodieHealth',
+        title: 'App Holisticare',
         debugShowCheckedModeBanner: false,
         routes: routes,
         home: BlocBuilder<AuthCubit, AuthState>(
