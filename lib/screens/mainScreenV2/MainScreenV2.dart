@@ -192,7 +192,9 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                                           Radius.circular(10)),
                                       boxShadow: [
                                         BoxShadow(
-                                          color: Colors.grey.withOpacity(.5).withOpacity(.1),
+                                          color: Colors.grey
+                                              .withOpacity(.5)
+                                              .withOpacity(.1),
                                           spreadRadius: 2,
                                           blurRadius: 2,
                                           offset: const Offset(0,
@@ -391,75 +393,131 @@ class _Overview2State extends State<Overview2> {
               children: [
                 SingleChildScrollView(
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
+                      GestureDetector(
+                        onTap: () => {widget.onToggleDropDown()},
+                        child: SvgPicture.asset(
+                          "assets/avatar.svg",
+                          width: 50,
+                          height: 50,
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 15,
+                      ),
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          GestureDetector(
-                            onTap: () => {widget.onToggleDropDown()},
-                            child: SvgPicture.asset(
-                              "assets/avatar.svg",
-                              width: 50,
-                              height: 50,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          Column(
-                            textDirection: TextDirection.ltr,
-                            mainAxisAlignment: MainAxisAlignment.start,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
                                 "Good morning",
                                 style: AppTextStyles.hint,
                               ),
-                              // SizedBox(height: 30,),
-                              BlocConsumer<ClientInformationMobileCubit,
-                                  ClientInformationMobileState>(
+                              SizedBox(
+                                width: size.width * .05,
+                              ),
+                              BlocConsumer<DownloadWeaklyReportCubit,
+                                  DownloadWeaklyReportState>(
                                 listener: (context, state) {
                                   // TODO: implement listener
                                 },
                                 builder: (context, state) {
-                                  if (state is SuccessClientInformation) {
+                                  if (state
+                                      is SuccessDownloadWeaklyReportState) {
                                     return GestureDetector(
-                                      onTap: () => {widget.onToggleDropDown()},
-                                      child: Text(
-                                        state.userInfo["name"],
-                                        style: AppTextStyles.title1,
+                                      onTap: () {
+                                        _storeTimeAndShow();
+                                        _launchURL(state.pdfUrlWeakly);
+                                      },
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                "assets/document-download.svg",
+                                                width: 16,
+                                                height: 16,
+                                                colorFilter:
+                                                    const ColorFilter.mode(
+                                                  AppColors.purpleDark,
+                                                  BlendMode.srcIn,
+                                                ),
+                                              ),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                "Weakly Report",
+                                                style: AppTextStyles.hintPurple,
+                                              ),
+                                            ],
+                                          ),
+                                          const SizedBox(
+                                            height: 2,
+                                          ),
+                                          Text(
+                                            "Last Generate: $_timePassed ago",
+                                            style: AppTextStyles.hintVerySmale,
+                                          )
+                                        ],
                                       ),
                                     );
                                   }
-                                  return const SizedBox();
+                                  if (state
+                                      is LoadingDownloadWeaklyReportState) {
+                                    return const SizedBox(
+                                        width: 15,
+                                        height: 15,
+                                        child: CircularProgressIndicator());
+                                  }
+                                  if (state is ErrorDownloadWeaklyReportState) {
+                                    return Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          "assets/document-download.svg",
+                                          width: 16,
+                                          height: 16,
+                                          colorFilter: const ColorFilter.mode(
+                                            AppColors.purpleLite,
+                                            BlendMode.srcIn,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          "Weekly Report",
+                                          style: AppTextStyles.hintLitePurple,
+                                        ),
+                                      ],
+                                    );
+                                  } else {
+                                    return const SizedBox();
+                                  }
                                 },
                               ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          BlocConsumer<DownloadWeaklyReportCubit,
-                              DownloadWeaklyReportState>(
-                            listener: (context, state) {
-                              // TODO: implement listener
-                            },
-                            builder: (context, state) {
-                              if (state is SuccessDownloadWeaklyReportState) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    _storeTimeAndShow();
-                                    _launchURL(state.pdfUrlWeakly);
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Row(
+                              const SizedBox(
+                                width: 15,
+                              ),
+                              BlocConsumer<DownloadReportPdfCubit,
+                                  DownloadPdfState>(
+                                listener: (context, state) {
+                                  // TODO: implement listener
+                                },
+                                builder: (context, state) {
+                                  if (state is SuccessDownloadPdf) {
+                                    return GestureDetector(
+                                      onTap: () async {
+                                        // print("test on tab");
+                                        _launchURL(state.pdfUrl);
+                                      },
+                                      child: Row(
                                         children: [
                                           SvgPicture.asset(
                                             "assets/document-download.svg",
@@ -474,125 +532,67 @@ class _Overview2State extends State<Overview2> {
                                             width: 5,
                                           ),
                                           Text(
-                                            "Weakly Report",
+                                            "Report",
                                             style: AppTextStyles.hintPurple,
                                           ),
                                         ],
                                       ),
-                                      const SizedBox(
-                                        height: 2,
-                                      ),
-                                      Text(
-                                        "Last Generate: $_timePassed ago",
-                                        style: AppTextStyles.hintVerySmale,
-                                      )
-                                    ],
-                                  ),
-                                );
-                              }
-                              if (state is LoadingDownloadWeaklyReportState) {
-                                return const SizedBox(
-                                    width: 15,
-                                    height: 15,
-                                    child: CircularProgressIndicator());
-                              }
-                              if (state is ErrorDownloadWeaklyReportState) {
-                                return Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      "assets/document-download.svg",
-                                      width: 16,
-                                      height: 16,
-                                      colorFilter: const ColorFilter.mode(
-                                        AppColors.purpleLite,
-                                        BlendMode.srcIn,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      "Weekly Report",
-                                      style: AppTextStyles.hintLitePurple,
-                                    ),
-                                  ],
-                                );
-                              } else {
-                                return const SizedBox();
-                              }
-                            },
+                                    );
+                                  }
+                                  if (state is LoadingDownloadPdf) {
+                                    return const SizedBox(
+                                        width: 15,
+                                        height: 15,
+                                        child: CircularProgressIndicator());
+                                  }
+                                  if (state is ErrorDownloadPdf) {
+                                    return Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          "assets/document-download.svg",
+                                          width: 16,
+                                          height: 16,
+                                          colorFilter: const ColorFilter.mode(
+                                            AppColors.purpleLite,
+                                            BlendMode.srcIn,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
+                                        Text(
+                                          "Report",
+                                          style: AppTextStyles.hintLitePurple,
+                                        ),
+                                      ],
+                                    );
+                                  } else {
+                                    return const SizedBox();
+                                  }
+                                },
+                              ),
+                            ],
                           ),
-                          const SizedBox(
-                            width: 15,
-                          ),
-                          BlocConsumer<DownloadReportPdfCubit,
-                              DownloadPdfState>(
+                          BlocConsumer<ClientInformationMobileCubit,
+                              ClientInformationMobileState>(
                             listener: (context, state) {
                               // TODO: implement listener
                             },
                             builder: (context, state) {
-                              if (state is SuccessDownloadPdf) {
+                              if (state is SuccessClientInformation) {
                                 return GestureDetector(
-                                  onTap: () async {
-                                    // print("test on tab");
-                                    _launchURL(state.pdfUrl);
-                                  },
-                                  child: Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        "assets/document-download.svg",
-                                        width: 16,
-                                        height: 16,
-                                        colorFilter: const ColorFilter.mode(
-                                          AppColors.purpleDark,
-                                          BlendMode.srcIn,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        "Report",
-                                        style: AppTextStyles.hintPurple,
-                                      ),
-                                    ],
+                                  onTap: () => {widget.onToggleDropDown()},
+                                  child: Text(
+                                    state.userInfo["name"],
+                                    style: AppTextStyles.title1,
                                   ),
                                 );
                               }
-                              if (state is LoadingDownloadPdf) {
-                                return const SizedBox(
-                                    width: 15,
-                                    height: 15,
-                                    child: CircularProgressIndicator());
-                              }
-                              if (state is ErrorDownloadPdf) {
-                                return Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      "assets/document-download.svg",
-                                      width: 16,
-                                      height: 16,
-                                      colorFilter: const ColorFilter.mode(
-                                        AppColors.purpleLite,
-                                        BlendMode.srcIn,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      width: 5,
-                                    ),
-                                    Text(
-                                      "Report",
-                                      style: AppTextStyles.hintLitePurple,
-                                    ),
-                                  ],
-                                );
-                              } else {
-                                return const SizedBox();
-                              }
+                              return const SizedBox();
                             },
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),
