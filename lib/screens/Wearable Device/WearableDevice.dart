@@ -153,7 +153,7 @@ class ConnectCard extends StatelessWidget {
                 children: [
                   Text(title, style: AppTextStyles.hintMedium),
                   const SizedBox(height: 4),
-                  Text('Version: 1,2,3', style: AppTextStyles.hint),
+                  // Text('Version: 1,2,3', style: AppTextStyles.hint),
                 ],
               ),
             ),

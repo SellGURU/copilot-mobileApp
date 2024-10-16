@@ -418,6 +418,7 @@ class _Overview2State extends State<Overview2> {
                                 "Good morning",
                                 style: AppTextStyles.hint,
                               ),
+                              // SizedBox(height: 30,),
                               BlocConsumer<ClientInformationMobileCubit,
                                   ClientInformationMobileState>(
                                 listener: (context, state) {
