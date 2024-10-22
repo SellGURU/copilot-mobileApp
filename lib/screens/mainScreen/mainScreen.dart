@@ -15,6 +15,7 @@ import '../camera/camaraScreen.dart';
 import '../chatScreen/chatScreen.dart';
 import '../home/home.dart';
 import '../login/login.dart';
+import '../mainScreenV2/MainScreenV2.dart';
 import '../plan/planScreen.dart';
 import '../progressScreen/progress.dart';
 import '../result/result.dart';
@@ -57,7 +58,7 @@ class _MainscreenState extends State<Mainscreen> {
                 return IndexedStack(
                   index: state.pageIndex,
                   children: [
-                    const Overview(),
+                    const Mainscreenv2(),
                     Navigator(
                       key: _resultScreenKey,
                       onGenerateRoute: (settings) => MaterialPageRoute(
