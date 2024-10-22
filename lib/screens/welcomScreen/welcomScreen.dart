@@ -37,8 +37,11 @@ class _WelcomscreenState extends State<Welcomscreen> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset("assets/logoIcon.png"),
-                      Text("Welcome to LPC!", style: AppTextStyles.title3xl),
+                      // Image.asset("assets/logoIcon.png"),
+                      Text("Clinic Logo",
+                          style: AppTextStyles.title4xlLiteWeight),
+                      Text("Welcome to Our Clinic!",
+                          style: AppTextStyles.title3xlLiteWeight),
                       const SizedBox(
                         height: 40,
                       ),

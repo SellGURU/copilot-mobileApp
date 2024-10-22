@@ -6,9 +6,17 @@ import '../res/colors.dart';
 
 class AppTextStyles {
   AppTextStyles._();
-  static TextStyle title3xl = GoogleFonts.alice(
+  static TextStyle title4xl = GoogleFonts.alice(
       textStyle: TextStyle(
           fontSize: 32, color: AppColors.mainBg, fontWeight: FontWeight.w700));
+
+  static TextStyle title4xlLiteWeight = GoogleFonts.alice(
+      textStyle: TextStyle(
+          fontSize: 32, color: AppColors.mainBg, fontWeight: FontWeight.w400));
+
+  static TextStyle title3xlLiteWeight = GoogleFonts.alice(
+      textStyle: TextStyle(
+          fontSize: 24, color: AppColors.mainBg, fontWeight: FontWeight.w400));
 
   static TextStyle title2xl = GoogleFonts.roboto(
       textStyle: TextStyle(
@@ -91,9 +99,7 @@ class AppTextStyles {
           color: AppColors.greenBega));
   static TextStyle gradeRed = GoogleFonts.roboto(
       textStyle: TextStyle(
-          fontSize: 11,
-          fontWeight: FontWeight.w500,
-          color: AppColors.red));
+          fontSize: 11, fontWeight: FontWeight.w500, color: AppColors.red));
   static TextStyle gradeYellow = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 11,
