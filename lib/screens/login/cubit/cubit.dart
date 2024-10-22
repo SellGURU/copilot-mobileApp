@@ -21,7 +21,7 @@ class AuthCubit extends Cubit<AuthState> {
       _dio.options.headers['Authorization'] = "bearer $token";
 
       _dio.post(Endpoints.clientInformationMobile).then((value) async {
-        if (value.data["detail"] == "Not authenticated") {
+        if (value.data["detail"] == "Not authenticated"|| value.data["detail"] == "Invalid token.") {
           emit(LoggedOutState());
         } else {
           var token = await getTokenLocally();
