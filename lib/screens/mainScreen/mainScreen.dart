@@ -45,44 +45,55 @@ class _MainscreenState extends State<Mainscreen> {
 
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+
     return WillPopScope(
-      onWillPop: _onWillPop,
-      child: Scaffold(
-          backgroundColor: AppColors.bgScreen,
-          body: SafeArea(
-            child: BlocBuilder<PageIndexBloc, PageIndexState>(
-              builder: (context, state) {
-                // setState(() {
-                //   pageIndex = state.pageIndex;
-                // });
-                return IndexedStack(
-                  index: state.pageIndex,
-                  children: [
-                    const Mainscreenv2(),
-                    Navigator(
-                      key: _resultScreenKey,
-                      onGenerateRoute: (settings) => MaterialPageRoute(
-                        builder: (context) => const ResultScreen(),
-                      ),
-                    ),
-                    const SizedBox(),
-                    Navigator(
-                      key: _healthPlanScreenKey,
-                      onGenerateRoute: (settings) => MaterialPageRoute(
-                        builder: (context) => ProgressScreen(),
-                      ),
-                    ),
-                    HealthPlanScreen(),
-                    const Chatscreen(),
-                    CameraScreen(
-                      isCameraStart: false,
-                    ),
-                  ],
-                );
-              },
-            ),
+        onWillPop: _onWillPop,
+        child: Container(
+          alignment: Alignment.center,
+          height: size.height,
+          width: size.width,
+          child: Container(
+            width: size.width > 440 ? 440 : size.width,
+            child: Scaffold(
+                backgroundColor: AppColors.bgScreen,
+                body: SafeArea(
+                  child: BlocBuilder<PageIndexBloc, PageIndexState>(
+                    builder: (context, state) {
+                      // setState(() {
+                      //   pageIndex = state.pageIndex;
+                      // });
+                      return IndexedStack(
+                        index: state.pageIndex,
+                        children: [
+                          const Mainscreenv2(),
+                          Navigator(
+                            key: _resultScreenKey,
+                            onGenerateRoute: (settings) => MaterialPageRoute(
+                              builder: (context) => const ResultScreen(),
+                            ),
+                          ),
+                          const SizedBox(),
+                          Navigator(
+                            key: _healthPlanScreenKey,
+                            onGenerateRoute: (settings) => MaterialPageRoute(
+                              builder: (context) => ProgressScreen(),
+                            ),
+                          ),
+                          const SizedBox(),
+
+                          // HealthPlanScreen(),
+                          const Chatscreen(),
+                          CameraScreen(
+                            isCameraStart: false,
+                          ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+                bottomNavigationBar: BottomNavigationBarCustom()),
           ),
-          bottomNavigationBar: BottomNavigationBarCustom()),
-    );
+        ));
   }
 }
