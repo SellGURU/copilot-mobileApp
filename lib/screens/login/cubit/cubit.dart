@@ -20,7 +20,9 @@ class AuthCubit extends Cubit<AuthState> {
     else {
       _dio.options.headers['Authorization'] = "bearer $token";
 
-      _dio.post(Endpoints.clientInformationMobile).then((value) async {
+      _dio.post(Endpoints.clientInformationMobile)
+          .then((value) async {
+        print("value.data:${value.data["detail"]}");
         if (value.data["detail"] == "Not authenticated"|| value.data["detail"] == "Invalid token.") {
           emit(LoggedOutState());
         } else {
@@ -33,6 +35,10 @@ class AuthCubit extends Cubit<AuthState> {
             emit(LoggedOutState());
           }
         }
+      })
+      .catchError((_){
+        // print("check the error");
+        emit(LoggedOutState());
       });
     }
   }
