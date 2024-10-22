@@ -15,7 +15,8 @@ import '../utility/changeScreanBloc/PageIndex_Bloc.dart';
 import '../utility/changeScreanBloc/PageIndex_events.dart';
 
 class BottomNavigationBarCustom extends StatefulWidget {
-  BottomNavigationBarCustom({super.key});
+  Function takeScreenShot;
+  BottomNavigationBarCustom({super.key, required this.takeScreenShot});
 
   @override
   State<BottomNavigationBarCustom> createState() =>
@@ -24,6 +25,12 @@ class BottomNavigationBarCustom extends StatefulWidget {
 
 class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
   var pageIndex = 0;
+  String itemSelectName = "";
+  void itemSelect(newItem) {
+    setState(() {
+      itemSelectName = newItem;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +50,14 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
           } else {
             showPopover(
               context: context,
-              bodyBuilder: (contextBodyBuilder) =>
-                  ListItems(Parentcontext: context),
-              onPop: () => print('Popover was popped!'),
+              bodyBuilder: (contextBodyBuilder) => ListItems(
+                Parentcontext: context,
+                takeItem: itemSelect,
+              ),
+              onPop: () {
+                widget.takeScreenShot();
+                print("takeItem $itemSelectName");
+              },
               direction: PopoverDirection.bottom,
               width: 600,
               height: 140,
@@ -166,8 +178,10 @@ class Style extends StyleHook {
 }
 
 class ListItems extends StatefulWidget {
+  Function takeItem;
   var Parentcontext;
-  ListItems({Key? key, this.Parentcontext}) : super(key: key);
+  ListItems({Key? key, this.Parentcontext, required this.takeItem})
+      : super(key: key);
 
   @override
   State<ListItems> createState() => _ListItemsState();
@@ -226,6 +240,10 @@ class _ListItemsState extends State<ListItems> {
           ),
           // itemSelect=2;
           GestureDetector(
+            onTap: () {
+              widget.takeItem("screenShot");
+              Navigator.pop(widget.Parentcontext);
+            },
             child: Container(
               padding: const EdgeInsets.only(
                   left: 3.5, right: 3.5, top: 8, bottom: 13),

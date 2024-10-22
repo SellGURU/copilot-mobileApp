@@ -65,6 +65,7 @@ dependencies:
   focus_detector_v2: ^3.1.0+1
   introduction_screen: ^3.1.14
   flutter_spinkit: ^5.2.1
+  screenshot: ^3.0.0
 
 dev_dependencies:
   flutter_test:
