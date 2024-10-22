@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:copilet/screens/mainScreenV2/MainScreenV2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -57,7 +58,7 @@ class _MainscreenState extends State<Mainscreen> {
                 return IndexedStack(
                   index: state.pageIndex,
                   children: [
-                    const Overview(),
+                    const Mainscreenv2(),
                     Navigator(
                       key: _resultScreenKey,
                       onGenerateRoute: (settings) => MaterialPageRoute(
