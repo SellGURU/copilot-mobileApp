@@ -291,7 +291,7 @@ class _LoginPageState extends State<LoginPage> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => Mainscreenv2()),
+                                      builder: (context) => Mainscreen()),
                                 );
                               }
                               if (state is ErrorState) {
