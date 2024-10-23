@@ -59,6 +59,9 @@ class AppTextStyles {
   static TextStyle title2 = GoogleFonts.roboto(
       textStyle: TextStyle(fontSize: 14, color: AppColors.text),
       fontWeight: FontWeight.w500);
+  static TextStyle title2Purple = GoogleFonts.roboto(
+      textStyle: TextStyle(fontSize: 14, color: AppColors.purpleDark),
+      fontWeight: FontWeight.w500);
   // -----------
   static TextStyle hintBlackWithHeight = GoogleFonts.roboto(
       textStyle: TextStyle(

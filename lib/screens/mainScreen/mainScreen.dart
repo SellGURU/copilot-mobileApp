@@ -20,6 +20,7 @@ import '../login/login.dart';
 import '../plan/planScreen.dart';
 import '../progressScreen/progress.dart';
 import '../result/result.dart';
+import '../settingPage/SettingPage.dart';
 
 class Mainscreen extends StatefulWidget {
   const Mainscreen({super.key});
@@ -106,8 +107,8 @@ class _MainscreenState extends State<Mainscreen> {
                                   builder: (context) => ProgressScreen(),
                                 ),
                               ),
-                              const SizedBox(),
-
+                              // const SizedBox(),
+                              SettingPage(),
                               // HealthPlanScreen(),
                               const Chatscreen(),
                               CameraScreen(
