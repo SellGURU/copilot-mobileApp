@@ -70,33 +70,65 @@ class _ProgressScreenState extends State<ProgressScreen> {
               ChallengesSection(),
               SizedBox(height: 16),
               // Tasks Section
-              Text("Tasks" ,style: AppTextStyles.title2,),
-              const SizedBox(height: 10,),
+              Text(
+                "Tasks",
+                style: AppTextStyles.title2,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
 
               WaterTaskWidget(),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               WaterTaskWidget(),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               WaterTaskWidget(),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               WaterTaskWidget(),
-              const SizedBox(height: 10,),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               WaterTaskWidget(),
-              const SizedBox(height: 10,),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               WaterTaskWidget(),
-              const SizedBox(height: 10,),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               WaterTaskWidget(),
-              const SizedBox(height: 10,),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               WaterTaskWidget(),
-              const SizedBox(height: 10,),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
               WaterTaskWidget(),
-              const SizedBox(height: 10,),
-
+              const SizedBox(
+                height: 10,
+              ),
             ],
           ),
         ),
@@ -374,6 +406,7 @@ class TasksSection extends StatelessWidget {
     );
   }
 }
+
 class WaterTaskWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -462,10 +495,22 @@ class WaterTaskWidget extends StatelessWidget {
               const SizedBox(
                 width: 10,
               ),
-              SvgPicture.asset(
-                "assets/AddButton.svg",
-                width: 35,
-                height: 35,
+              GestureDetector(
+                onTap: () {
+                  showModalBottomSheet(
+                    context: context,
+                    useRootNavigator: true,
+                    // isScrollControlled: true,
+                    builder: (BuildContext context) {
+                      return AddBtnBottomSheet();
+                    },
+                  );
+                },
+                child: SvgPicture.asset(
+                  "assets/AddButton.svg",
+                  width: 35,
+                  height: 35,
+                ),
               )
             ],
           ),
@@ -474,7 +519,6 @@ class WaterTaskWidget extends StatelessWidget {
     );
   }
 }
-
 
 // Swap Bottom Sheet Content
 class SwapBottomSheet extends StatelessWidget {
@@ -491,17 +535,19 @@ class SwapBottomSheet extends StatelessWidget {
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-    
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(width: 50,),
-              Text(
-                  'Swap for Water',
-                  style: AppTextStyles.title2xl),
+              SizedBox(
+                width: 50,
+              ),
+              Text('Swap for Water', style: AppTextStyles.title2xl),
               IconButton(
-                icon: Icon(Icons.close,color: AppColors.purpleDark,),
+                icon: Icon(
+                  Icons.close,
+                  color: AppColors.purpleDark,
+                ),
                 onPressed: () {
                   Navigator.pop(context);
                 },
@@ -512,13 +558,121 @@ class SwapBottomSheet extends StatelessWidget {
           // Search bar
           const TextField(
             decoration: InputDecoration(
-              prefixIcon: Icon(Icons.search),
-              hintText: 'Search to swap...',
-              border: InputBorder.none
-            ),
+                prefixIcon: Icon(Icons.search),
+                hintText: 'Search to swap...',
+                border: InputBorder.none),
           ),
           SizedBox(height: 90),
           // Placeholder for items to swap
+        ],
+      ),
+    );
+  }
+}
+
+class AddBtnBottomSheet extends StatefulWidget {
+  const AddBtnBottomSheet({super.key});
+
+  @override
+  State<AddBtnBottomSheet> createState() => _AddBtnBottomSheetState();
+}
+
+class _AddBtnBottomSheetState extends State<AddBtnBottomSheet> {
+  int glasses = 0;
+  final int goal = 8;
+
+  void incrementGlasses() {
+    setState(() {
+      if (glasses < goal) {
+        glasses++;
+      }
+    });
+  }
+
+  void decrementGlasses() {
+    setState(() {
+      if (glasses > 0) {
+        glasses--;
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 15),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
+        ),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(
+            'Water for Today',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 20),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                '$glasses Glasses',
+                style: TextStyle(
+                  fontSize: 22,
+                ),
+              ),
+              SizedBox(width: 10,),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: incrementGlasses,
+                    child: Icon(Icons.add,size: 18,color: AppColors.hintLite,),
+                  ),
+                  GestureDetector(
+                    onTap: decrementGlasses,
+                    child: Icon(Icons.remove,size: 18,color: AppColors.hintLite),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          SizedBox(height: 5),
+          Text(
+            'of $goal',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey,
+            ),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: () {
+              // Add save logic here
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content:
+                      Text('Changes saved', style: AppTextStyles.hintWhite),
+                ),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.purpleDark,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30),
+              ),
+              padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+            ),
+            child: Text('Save Changes', style: AppTextStyles.hintWhite),
+          ),
         ],
       ),
     );
