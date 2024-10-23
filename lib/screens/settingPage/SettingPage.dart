@@ -67,26 +67,26 @@ class _SettingPageState extends State<SettingPage> {
                     );
                   },
                   child: WearableDevicesTile(
-                    srcImage: '',
+                    srcImage: 'watch-status.svg',
                     textTitle: 'Wearable Devices',
                   ),
                 ),
                 const SizedBox(height: 20,),
 
                 WearableDevicesTile(
-                  srcImage: '',
+                  srcImage: 'lock.svg',
                   textTitle: 'Change Password',
                 ),
                 const SizedBox(height: 20,),
 
                 WearableDevicesTile(
-                  srcImage: '',
+                  srcImage: 'lock.svg',
                   textTitle: 'Privacy Policy',
                 ),
                 const SizedBox(height: 20,),
 
                 WearableDevicesTile(
-                  srcImage: '',
+                  srcImage: 'security-safe.svg',
                   textTitle: 'Terms of Service',
                 ),
                 const SizedBox(height: 30,),
