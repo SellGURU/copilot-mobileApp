@@ -307,7 +307,7 @@ class _ResultScreenState extends State<ResultScreen> {
                   ),
                   Container(
                     width: size.width,
-                    height: size.height * .8,
+                    height: size.height * .63,
                     child: ListView.separated(
                       itemCount: data["data"].length,
                       itemBuilder: (BuildContext context, int index) {
