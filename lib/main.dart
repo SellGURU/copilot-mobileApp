@@ -78,6 +78,9 @@ class MyApp extends StatelessWidget {
               BlocProvider.of<GoogleFormCubit>(
                   context)
                   .getBiomarker();
+              BlocProvider.of<HealthScoreCubit>(
+                  context)
+                  .getBiomarker();
               return const Center(
                 child: SpinKitThreeBounce(color: Colors.purple,),
               );
