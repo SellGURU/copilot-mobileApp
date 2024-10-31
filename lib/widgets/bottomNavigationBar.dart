@@ -55,7 +55,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                 takeItem: itemSelect,
               ),
               onPop: () {
-                widget.takeScreenShot();
+                // widget.takeScreenShot();
                 print("takeItem $itemSelectName");
               },
               direction: PopoverDirection.bottom,
@@ -241,8 +241,8 @@ class _ListItemsState extends State<ListItems> {
           // itemSelect=2;
           GestureDetector(
             onTap: () {
-              widget.takeItem("screenShot");
-              Navigator.pop(widget.Parentcontext);
+              // widget.takeItem("screenShot");
+              // Navigator.pop(widget.Parentcontext);
             },
             child: Container(
               padding: const EdgeInsets.only(

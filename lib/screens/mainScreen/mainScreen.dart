@@ -110,7 +110,7 @@ class _MainscreenState extends State<Mainscreen> {
                               // const SizedBox(),
                               SettingPage(),
                               // HealthPlanScreen(),
-                              const Chatscreen(),
+                              Chatscreen(),
                               CameraScreen(
                                 isCameraStart: false,
                               ),
