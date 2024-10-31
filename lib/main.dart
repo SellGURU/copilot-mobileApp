@@ -72,7 +72,13 @@ class MyApp extends StatelessWidget {
             if (state is LoggedOutState) {
               return const Welcomscreen();
             } else {
-              return Center(
+              BlocProvider.of<ClientInformationMobileCubit>(
+                  context)
+                  .getPdf();
+              BlocProvider.of<GoogleFormCubit>(
+                  context)
+                  .getBiomarker();
+              return const Center(
                 child: SpinKitThreeBounce(color: Colors.purple,),
               );
             }

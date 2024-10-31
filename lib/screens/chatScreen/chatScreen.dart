@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../components/text_style.dart';
 import '../../res/colors.dart';
@@ -14,16 +15,23 @@ class Chatscreen extends StatefulWidget {
 class _ChatscreenState extends State<Chatscreen> {
   final TextEditingController _controller = TextEditingController();
   final List<Message> _messages = [];
+  Future<String?> getNameUser() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('name'); // Assuming 'name' is the key for the user's name
+  }
 
-  void _sendMessage() {
+  void _sendMessage() async {
     if (_controller.text.isNotEmpty) {
       final now = DateTime.now();
       final formattedTime = "${now.hour}:${now.minute.toString().padLeft(2, '0')}";
 
+      // Get the user's name from SharedPreferences
+      String? userName = await getNameUser();
+
       setState(() {
         _messages.add(Message(
           text: _controller.text,
-          sender: "Michael Gough",
+          sender: userName ?? "Unknown User", // Use a default if name is null
           time: formattedTime,
           avatarUrl: "https://via.placeholder.com/40", // Placeholder image URL
         ));
