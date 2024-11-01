@@ -24,6 +24,14 @@ class AppTextStyles {
   static TextStyle titleXl = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 20, color: AppColors.text, fontWeight: FontWeight.w500));
+  static TextStyle titleXlYellow = GoogleFonts.roboto(
+      textStyle: TextStyle(
+          fontSize: 20, color: AppColors.yellowText,
+          fontWeight: FontWeight.w500));
+  static TextStyle titleXlGreen = GoogleFonts.roboto(
+      textStyle: TextStyle(
+          fontSize: 20, color: AppColors.greenVaryLite,
+          fontWeight: FontWeight.w500));
 
   // --------------
 
@@ -115,6 +123,16 @@ class AppTextStyles {
           fontSize: 10,
           color: AppColors.textLite,
           fontWeight: FontWeight.w400));
+  static TextStyle hintSmaleYellow = GoogleFonts.roboto(
+      textStyle: TextStyle(
+          fontSize: 10,
+          color: AppColors.yellowText,
+          fontWeight: FontWeight.w400));
+  static TextStyle hintSmalePurple = GoogleFonts.roboto(
+      textStyle: TextStyle(
+          fontSize: 10,
+          color: AppColors.PurpleLiteText,
+          fontWeight: FontWeight.w400));
   static TextStyle hintSmaleLite = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 10,
@@ -124,8 +142,17 @@ class AppTextStyles {
       textStyle: TextStyle(
           fontSize: 10, color: AppColors.black, fontWeight: FontWeight.w500));
   // --------------
-
+  static TextStyle textXmLiteGray = GoogleFonts.roboto(
+      textStyle: TextStyle(
+          fontSize: 9, color: AppColors.textLiteGray, fontWeight: FontWeight.w400));
   static TextStyle hintVerySmale = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 8, color: AppColors.hintLite, fontWeight: FontWeight.w400));
+
+  static TextStyle textXs = GoogleFonts.roboto(
+      textStyle: TextStyle(
+          fontSize: 6, color: AppColors.black, fontWeight: FontWeight.w400));
+  static TextStyle textXsLiteGray = GoogleFonts.roboto(
+      textStyle: TextStyle(
+          fontSize: 6, color: AppColors.textLiteGray, fontWeight: FontWeight.w400));
 }

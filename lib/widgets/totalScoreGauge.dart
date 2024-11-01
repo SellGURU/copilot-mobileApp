@@ -43,20 +43,53 @@ class Totalscoregauge extends StatelessWidget {
                   GaugeAnnotation(
                     horizontalAlignment: GaugeAlignment.center,
                     verticalAlignment: GaugeAlignment.center,
-                    widget: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Total Score',
-                          style: AppTextStyles.hintSmale,
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          "$value",
-                          style: AppTextStyles.title2xl,
-                        ),
-                      ],
+                    widget: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Biological Age',
+                                style: AppTextStyles.textXmLiteGray,
+                              ),
+                              Container(
+                                height: 20,
+                                decoration:
+                                    BoxDecoration(border: Border.all(width: 1)),
+                              ),
+                              Text(
+                                '52',
+                                style: AppTextStyles.titleXlYellow,
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 8),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Chrono Age',
+                                style: AppTextStyles.textXmLiteGray,
+                              ),
+                              Container(
+                                height: 20,
+                                decoration:
+                                BoxDecoration(border: Border.all(width: 1)),
+                              ),
+                              Text(
+                                '48',
+                                style: AppTextStyles.titleXlGreen,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 ],

@@ -257,69 +257,69 @@ class _HealthPlanScreenState extends State<HealthPlanScreen> {
           const SizedBox(
             height: 20,
           ),
-          Container(
-            padding: const EdgeInsets.all(16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
-                  blurRadius: 8,
-                  spreadRadius: 1,
-                  offset: const Offset(0, 3),
-                ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  children: [
-                    NormalGauges(
-                      picAddress: "assets/apple.svg",
-                      value: 80,
-                      colorGauge: AppColors.greenBorder,
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    NormalGauges(
-                      picAddress: "assets/mind-pink.svg",
-                      value: 40,
-                      colorGauge: AppColors.pinkBorder,
-                    )
-                  ],
-                ),
-                Container(
-                  width: size.width * .5,
-                  // height: size.height * .1,
-                  child: Totalscoregauge(
-                    colorGauge:AppColors.pinkBorder,
-                    value: 25,
-                  ),
-                ),
-                Column(
-                  children: [
-                    NormalGauges(
-                      picAddress: "assets/weight-yellow.svg",
-                      value: 40,
-                      colorGauge: AppColors.redBorder,
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    NormalGauges(
-                      picAddress: "assets/moon.svg",
-                      value: 60,
-                      colorGauge: AppColors.blueBorder,
-                    )
-                  ],
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 16),
+          // Container(
+          //   padding: const EdgeInsets.all(16),
+          //   decoration: BoxDecoration(
+          //     color: Colors.white,
+          //     borderRadius: BorderRadius.circular(16),
+          //     boxShadow: [
+          //       BoxShadow(
+          //         color: Colors.grey.withOpacity(0.3),
+          //         blurRadius: 8,
+          //         spreadRadius: 1,
+          //         offset: const Offset(0, 3),
+          //       ),
+          //     ],
+          //   ),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.center,
+          //     children: [
+          //       Column(
+          //         children: [
+          //           NormalGauges(
+          //             picAddress: "assets/apple.svg",
+          //             value: 80,
+          //             colorGauge: AppColors.greenBorder,
+          //           ),
+          //           const SizedBox(
+          //             height: 10,
+          //           ),
+          //           NormalGauges(
+          //             picAddress: "assets/mind-pink.svg",
+          //             value: 40,
+          //             colorGauge: AppColors.pinkBorder,
+          //           )
+          //         ],
+          //       ),
+          //       Container(
+          //         width: size.width * .5,
+          //         // height: size.height * .1,
+          //         child: Totalscoregauge(
+          //           colorGauge:AppColors.pinkBorder,
+          //           value: 25,
+          //         ),
+          //       ),
+          //       Column(
+          //         children: [
+          //           NormalGauges(
+          //             picAddress: "assets/weight-yellow.svg",
+          //             value: 40,
+          //             colorGauge: AppColors.redBorder,
+          //           ),
+          //           SizedBox(
+          //             height: 10,
+          //           ),
+          //           NormalGauges(
+          //             picAddress: "assets/moon.svg",
+          //             value: 60,
+          //             colorGauge: AppColors.blueBorder,
+          //           )
+          //         ],
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // SizedBox(height: 16),
           Expanded(
             child: ListView(
               children: [

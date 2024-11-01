@@ -1,3 +1,4 @@
+import 'package:copilet/components/text_style.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -5,13 +6,18 @@ import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class NormalGauges extends StatelessWidget {
   late String picAddress;
+  late String title;
+  late String MAEText;
   late double value;
   late Color colorGauge;
-  NormalGauges({super.key, required this.picAddress, required this.colorGauge,required this.value});
+
+  NormalGauges({super.key, required this.MAEText,required this.title,required this.picAddress, required this.colorGauge,required this.value});
 
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
           width: 50,
@@ -64,6 +70,14 @@ class NormalGauges extends StatelessWidget {
               )
             ]),
           ),
+        ),
+        SizedBox(height: 10,),
+        Text(title,style: AppTextStyles.textXs,),
+        Row(
+          children: [
+            Text("MAE",style: AppTextStyles.textXsLiteGray,),
+            Text(MAEText,style: AppTextStyles.textXs,),
+          ],
         ),
       ],
     );

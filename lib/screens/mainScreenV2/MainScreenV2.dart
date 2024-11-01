@@ -26,6 +26,8 @@ import '../../utility/changeScreanBloc/PageIndex_states.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../widgets/card.dart';
 import '../../widgets/longevity.dart';
+import '../../widgets/normal-Gauges.dart';
+import '../../widgets/totalScoreGauge.dart';
 import '../Wearable Device/WearableDevice.dart';
 import '../login/cubit/cubit.dart';
 import '../login/cubit/state.dart';
@@ -601,6 +603,124 @@ class _Overview2State extends State<Overview2> {
                 const SizedBox(
                   height: 30,
                 ),
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        blurRadius: 8,
+                        spreadRadius: 1,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              NormalGauges(
+                                picAddress: "assets/apple.svg",
+                                value: 80,
+                                colorGauge: AppColors.greenVaryLite, MAEText: '2-5 years', title: 'Photo Aging',
+                              ),
+                              const SizedBox(width: 5,),
+
+                              NormalGauges(
+                                picAddress: "assets/mind-pink.svg",
+                                value: 40,
+                                colorGauge: AppColors.yellowLite, MAEText: '6-10 years', title: 'Anamnesis Aging',
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Text("Digital Clocks",style: AppTextStyles.hintSmalePurple,),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              NormalGauges(
+                                picAddress: "assets/mind-pink.svg",
+                                value: 40,
+                                colorGauge: AppColors.greenVaryLite, MAEText: '6-7 years', title: 'ECG Aging',
+                              ),
+                              const SizedBox(width: 5,),
+                              NormalGauges(
+                                picAddress: "assets/mind-pink.svg",
+                                value: 40,
+                                colorGauge: AppColors.greenVaryLite, MAEText: '7-8 years', title: 'Mind Aging',
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                      Container(
+                        width: size.width * .3,
+                        // height: size.height * .1,
+                        child: Totalscoregauge(
+                          colorGauge:AppColors.pinkBorder,
+                          value: 0,
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              NormalGauges(
+                                picAddress: "assets/weight-yellow.svg",
+                                value: 40,
+                                colorGauge: AppColors.yellowLite, MAEText: '3-10 years', title: 'Microbiome Aging',
+                              ),
+                              const SizedBox(width: 5,),
+
+                              NormalGauges(
+                                picAddress: "assets/moon.svg",
+                                value: 60,
+                                colorGauge: AppColors.greenVaryLite, MAEText: '3-6 years', title: 'Transcriptome Aging',
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                           Text("Molecular Clocks",style: AppTextStyles.hintSmaleYellow,),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              NormalGauges(
+                                picAddress: "assets/moon.svg",
+                                value: 60,
+                                colorGauge: AppColors.greenVaryLite, MAEText: '5-6 years', title: 'Blood Aging',
+                              ),
+                              const SizedBox(width: 5,),
+
+                              NormalGauges(
+                                picAddress: "assets/moon.svg",
+                                value: 60,
+                                colorGauge: AppColors.redBorder, MAEText: '2-4 years', title: 'DeepM Aging',
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 16),
                 // const Longevity2(),
                 Longevity(),
                 const SizedBox(

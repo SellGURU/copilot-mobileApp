@@ -15,8 +15,10 @@ class AppColors {
   static const Color purpleDark = Color.fromARGB(255, 147, 129, 255);
   static const Color purpleLite = Color.fromRGBO(208, 209, 255, 1);
   static const Color iconPurpleDark = Color.fromARGB(255, 147, 129, 255);
+  static const Color PurpleLiteText = Color.fromRGBO(184, 184, 255, 1);
   static const Color greenBega = Color.fromARGB(255,6, 199, 141);
   static const Color greenLite = Color.fromRGBO(201, 235, 237, 1);
+  static const Color greenVaryLite = Color.fromRGBO(153, 215, 219, 1);
   static const Color redBega = Color.fromRGBO(252, 84, 116, 0.3);
   static const Color red = Color.fromRGBO(252, 84, 116, 1);
   static const Color redLite = Color.fromRGBO(245, 222, 222, 1);
@@ -24,6 +26,7 @@ class AppColors {
   static const Color purpleBadgeLite = Color.fromRGBO(208, 209, 255, 0.5);
   static const Color yellowBegaDarker = Color.fromRGBO(255, 228, 94, 1);
   static const Color yellowLite = Color.fromRGBO(251, 236, 196, 1);
+  static const Color yellowText = Color.fromRGBO(242, 211, 130, 1);
   static const Color shadowColor = Color.fromARGB(153, 171, 198, 100);
   static const Color brandSecondaryColor = Color.fromARGB(255, 147, 129, 255);
   static const Color gray = Color.fromRGBO(245, 247, 250, 1);

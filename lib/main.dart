@@ -7,6 +7,7 @@ import 'package:copilet/screens/mainScreenV2/downloadReport/state.dart';
 import 'package:copilet/screens/mainScreenV2/downloadWeaklyReportState/cubit.dart';
 import 'package:copilet/screens/mainScreenV2/downloadWeaklyReportState/state.dart';
 import 'package:copilet/screens/mainScreenV2/userinfoCubit/cubit.dart';
+import 'package:copilet/screens/plan/planScreen.dart';
 import 'package:copilet/screens/welcomScreen/welcomScreen.dart';
 import 'package:copilet/widgets/SurveysCard/googleForm/cubit.dart';
 import 'package:flutter/cupertino.dart';
@@ -66,7 +67,7 @@ class MyApp extends StatelessWidget {
         home: BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
             if (state is LoggedInState) {
-              return const Mainscreen();
+              return const  Mainscreenv2();
               // return const ();
             }
             if (state is LoggedOutState) {
