@@ -25,6 +25,7 @@ import '../../utility/changeScreanBloc/PageIndex_Bloc.dart';
 import '../../utility/changeScreanBloc/PageIndex_states.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import '../../widgets/card.dart';
+import '../../widgets/longevity.dart';
 import '../Wearable Device/WearableDevice.dart';
 import '../login/cubit/cubit.dart';
 import '../login/cubit/state.dart';
@@ -600,7 +601,8 @@ class _Overview2State extends State<Overview2> {
                 const SizedBox(
                   height: 30,
                 ),
-                const Longevity2(),
+                // const Longevity2(),
+                Longevity(),
                 const SizedBox(
                   height: 20,
                 ),

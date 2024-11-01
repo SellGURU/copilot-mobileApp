@@ -36,6 +36,8 @@ class DownloadWeaklyReportCubit extends Cubit<DownloadWeaklyReportState> {
           print("pdf weakly be null");
           emit(ErrorDownloadWeaklyReportState());
         }
+      }).catchError((onError){
+        emit(ErrorDownloadWeaklyReportState());
       });
     } catch (e) {
       print("error download pdf weakly $e");

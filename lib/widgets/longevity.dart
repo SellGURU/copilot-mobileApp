@@ -65,10 +65,22 @@ class _LongevityState extends State<Longevity> {
                           style: AppTextStyles.hint,
                         ),
                         Container(
-                          decoration: BoxDecoration(color: Color.fromRGBO(6, 199, 141, .4),borderRadius: BorderRadius.circular(20)),
+                          decoration: BoxDecoration(color: AppColors.greenLite,borderRadius: BorderRadius.circular(20)),
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 5,top: 5,left: 12,right: 12),
-                            child: Text("${"90"}/100",style: AppTextStyles.gradeGreen,),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "90",
+                                  style: AppTextStyles.titleSmaleBold,
+                                ),
+                                Text(
+                                  "/100",
+                                  style: AppTextStyles.hintSmale,
+                                ),
+                                // Text("${"90"}/100",style: AppTextStyles.gradeGreen,),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(width: 5,),
@@ -124,7 +136,19 @@ class _LongevityState extends State<Longevity> {
                           decoration: BoxDecoration(color: AppColors.yellowBega.withOpacity(.2),borderRadius: BorderRadius.circular(20)),
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 5,top: 5,left: 12,right: 12),
-                            child: Text("${"56"}/100",style: AppTextStyles.gradeYellow,),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "56",
+                                  style: AppTextStyles.titleSmaleBold,
+                                ),
+                                Text(
+                                  "/100",
+                                  style: AppTextStyles.hintSmale,
+                                ),
+                                // Text("${"56"}/100",style: AppTextStyles.gradeYellow,),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(width: 5,),
@@ -177,10 +201,22 @@ class _LongevityState extends State<Longevity> {
                           style: AppTextStyles.hint,
                         ),
                         Container(
-                          decoration: BoxDecoration(color: Color.fromRGBO(6, 199, 141, .4),borderRadius: BorderRadius.circular(20)),
+                          decoration: BoxDecoration(color: AppColors.greenLite,borderRadius: BorderRadius.circular(20)),
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 5,top: 5,left: 12,right: 12),
-                            child: Text("${"89"}/100",style: AppTextStyles.gradeGreen,),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "89",
+                                  style: AppTextStyles.titleSmaleBold,
+                                ),
+                                Text(
+                                  "/100",
+                                  style: AppTextStyles.hintSmale,
+                                ),
+                                // Text("${"89"}/100",style: AppTextStyles.gradeGreen,),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(width: 5,),
@@ -233,10 +269,22 @@ class _LongevityState extends State<Longevity> {
                           style: AppTextStyles.hint,
                         ),
                         Container(
-                          decoration: BoxDecoration(color: AppColors.redBega,borderRadius: BorderRadius.circular(20)),
+                          decoration: BoxDecoration(color: AppColors.redLite,borderRadius: BorderRadius.circular(20)),
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 5,top: 5,left: 12,right: 12),
-                            child: Text("${"29"}/100",style: AppTextStyles.gradeRed,),
+                            child: Row(
+                              children: [
+                                Text(
+                                  "29",
+                                  style: AppTextStyles.titleSmaleBold,
+                                ),
+                                Text(
+                                  "/100",
+                                  style: AppTextStyles.hintSmale,
+                                ),
+                                // Text("${"29"}/100",style: AppTextStyles.gradeRed,),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox(width: 5,),

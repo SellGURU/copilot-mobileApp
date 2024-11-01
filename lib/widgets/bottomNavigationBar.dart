@@ -127,7 +127,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
             ),
           ),
           TabItem(
-              title: "Plan",
+              title: "Progress",
               icon: SizedBox(
                 height: (size.height),
                 // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
