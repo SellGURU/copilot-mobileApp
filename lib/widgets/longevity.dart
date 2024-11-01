@@ -49,11 +49,13 @@ class _LongevityState extends State<Longevity> {
                           "assets/apple.svg",
                           width: 30,
                           height: 30,
+                          colorFilter: ColorFilter.mode(AppColors.PurpleLiteText, BlendMode.srcIn),
+
                         ),
                         SizedBox(width: 5,),
                         Center(
                             child: Text(
-                          "Nutrition",
+                          "Diet",
                           style: AppTextStyles.title2,
                         )),
                       ],
@@ -117,6 +119,8 @@ class _LongevityState extends State<Longevity> {
                           "assets/mid.svg",
                           width: 30,
                           height: 30,
+                          colorFilter: ColorFilter.mode(AppColors.PurpleLiteText, BlendMode.srcIn),
+
                         ),
                         SizedBox(width: 5,),
                         Center(
@@ -185,6 +189,8 @@ class _LongevityState extends State<Longevity> {
                           "assets/activityIcon.svg",
                           width: 30,
                           height: 30,
+                          colorFilter: ColorFilter.mode(AppColors.PurpleLiteText, BlendMode.srcIn),
+
                         ),
                         SizedBox(width: 5,),
                         Center(
@@ -250,14 +256,14 @@ class _LongevityState extends State<Longevity> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SvgPicture.asset(
-                          "assets/sleepIcon.svg",
+                          "assets/pil.svg",
                           width: 30,
                           height: 30,
                         ),
                         SizedBox(width: 5,),
                         Center(
                             child: Text(
-                              "Sleep",
+                              "Supplement",
                               style: AppTextStyles.title2,
                             )),
                       ],

@@ -60,7 +60,7 @@ class Totalscoregauge extends StatelessWidget {
                               Container(
                                 height: 20,
                                 decoration:
-                                    BoxDecoration(border: Border.all(width: 1)),
+                                    BoxDecoration(border: Border.all(width: 1,color:Color.fromRGBO(174, 193, 218, 1) ),color: Color.fromRGBO(174, 193, 218, 1)),
                               ),
                               Text(
                                 '52',
@@ -80,7 +80,7 @@ class Totalscoregauge extends StatelessWidget {
                               Container(
                                 height: 20,
                                 decoration:
-                                BoxDecoration(border: Border.all(width: 1)),
+                                BoxDecoration(border: Border.all(width: 1,color: Color.fromRGBO(174, 193, 218, 1)),color: Color.fromRGBO(174, 193, 218, 1)),
                               ),
                               Text(
                                 '48',

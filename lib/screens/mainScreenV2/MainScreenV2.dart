@@ -604,6 +604,8 @@ class _Overview2State extends State<Overview2> {
                   height: 30,
                 ),
                 Container(
+                  width: size.width > 440 ? 440 : size.width,
+
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -626,14 +628,14 @@ class _Overview2State extends State<Overview2> {
                           Row(
                             children: [
                               NormalGauges(
-                                picAddress: "assets/apple.svg",
+                                picAddress: "assets/overview/1.svg",
                                 value: 80,
                                 colorGauge: AppColors.greenVaryLite, MAEText: '2-5 years', title: 'Photo Aging',
                               ),
                               const SizedBox(width: 5,),
 
                               NormalGauges(
-                                picAddress: "assets/mind-pink.svg",
+                                picAddress: "assets/overview/2.svg",
                                 value: 40,
                                 colorGauge: AppColors.yellowLite, MAEText: '6-10 years', title: 'Anamnesis Aging',
                               )
@@ -649,7 +651,7 @@ class _Overview2State extends State<Overview2> {
                           Row(
                             children: [
                               NormalGauges(
-                                picAddress: "assets/mind-pink.svg",
+                                picAddress: "assets/overview/3.svg",
                                 value: 40,
                                 colorGauge: AppColors.greenVaryLite, MAEText: '6-7 years', title: 'ECG Aging',
                               ),
@@ -664,7 +666,7 @@ class _Overview2State extends State<Overview2> {
                         ],
                       ),
                       Container(
-                        width: size.width * .3,
+                        width: size.width > 440 ? 120 : size.width * .25,
                         // height: size.height * .1,
                         child: Totalscoregauge(
                           colorGauge:AppColors.pinkBorder,
@@ -676,14 +678,14 @@ class _Overview2State extends State<Overview2> {
                           Row(
                             children: [
                               NormalGauges(
-                                picAddress: "assets/weight-yellow.svg",
+                                picAddress: "assets/overview/4.svg",
                                 value: 40,
                                 colorGauge: AppColors.yellowLite, MAEText: '3-10 years', title: 'Microbiome Aging',
                               ),
                               const SizedBox(width: 5,),
 
                               NormalGauges(
-                                picAddress: "assets/moon.svg",
+                                picAddress: "assets/overview/5.svg",
                                 value: 60,
                                 colorGauge: AppColors.greenVaryLite, MAEText: '3-6 years', title: 'Transcriptome Aging',
                               ),
@@ -702,14 +704,14 @@ class _Overview2State extends State<Overview2> {
                           Row(
                             children: [
                               NormalGauges(
-                                picAddress: "assets/moon.svg",
+                                picAddress: "assets/overview/6.svg",
                                 value: 60,
                                 colorGauge: AppColors.greenVaryLite, MAEText: '5-6 years', title: 'Blood Aging',
                               ),
                               const SizedBox(width: 5,),
 
                               NormalGauges(
-                                picAddress: "assets/moon.svg",
+                                picAddress: "assets/overview/7.svg",
                                 value: 60,
                                 colorGauge: AppColors.redBorder, MAEText: '2-4 years', title: 'DeepM Aging',
                               ),
