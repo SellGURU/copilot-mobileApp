@@ -24,6 +24,7 @@ import '../../res/colors.dart';
 import '../../utility/changeScreanBloc/PageIndex_Bloc.dart';
 import '../../utility/changeScreanBloc/PageIndex_states.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../widgets/card.dart';
 import '../Wearable Device/WearableDevice.dart';
 import '../login/cubit/cubit.dart';
 import '../login/cubit/state.dart';
@@ -603,6 +604,43 @@ class _Overview2State extends State<Overview2> {
                 const SizedBox(
                   height: 20,
                 ),
+                Container(
+                  padding: const EdgeInsets.only(top: 20),
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    "Blood Biomarkers",
+                    style: AppTextStyles.title1,
+                  ),
+                ),
+                SizedBox(
+                    height: 280,
+                    child: ListView.separated(
+                      itemCount: 3,
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.only(
+                          top: 20, bottom: 20, left: 8, right: 10),
+                      itemBuilder: (BuildContext context, int index) {
+                        return ItemCard(
+                            title:
+                            index % 2 == 0 ? "Heart Rate" : "Cholesterol",
+                            average: "84",
+                            icon: SvgPicture.asset(
+                              index % 2 == 0
+                                  ? "assets/Hrate.svg"
+                                  : "assets/ldlRate.svg",
+                              width: 40,
+                              height: 40,
+                            ),
+                            status: "hi",
+                            current: "81");
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const SizedBox(
+                          width: 10,
+                        );
+                      },
+                    )),
                 BlocConsumer<GoogleFormCubit, GoogleFormState>(
                   listener: (context, state) {
                     // TODO: implement listener
@@ -885,6 +923,7 @@ class _Longevity2State extends State<Longevity2> {
                   const SizedBox(
                     height: 10,
                   ),
+
                   Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),

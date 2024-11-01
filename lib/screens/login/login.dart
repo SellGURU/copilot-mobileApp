@@ -11,10 +11,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../widgets/SurveysCard/googleForm/cubit.dart';
 import '../../widgets/text_field.dart';
 import '../home/cubit/cubit.dart';
 import '../login/cubit/state.dart';
 import '../mainScreen/mainScreen.dart';
+import '../mainScreenV2/cubit/cubit.dart';
 import '../mainScreenV2/userinfoCubit/cubit.dart';
 import 'cubit/cubit.dart';
 
@@ -173,6 +175,26 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
+  bool isLoadedData = false;
+  Future<void> getInitData() async {
+    await Future.wait([
+      BlocProvider.of<ClientInformationMobileCubit>(context).getPdf(),
+      BlocProvider.of<GoogleFormCubit>(context).getBiomarker(),
+      BlocProvider.of<HealthScoreCubit>(context).getBiomarker(),
+    ]);
+    setState(() {
+      isLoadedData = true;
+    });
+    if(isLoadedData){
+      Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Mainscreen()),
+            );
+    }
+
+  }
+
   @override
   void dispose() {
     _emailController.dispose();
@@ -285,14 +307,17 @@ class _LoginPageState extends State<LoginPage> {
                                     'password',
                                     _passwordController
                                         .value.text); // Store password
-                                BlocProvider.of<ClientInformationMobileCubit>(
-                                        context)
-                                    .refresh();
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Mainscreen()),
-                                );
+                                // BlocProvider.of<ClientInformationMobileCubit>(
+                                //         context)
+                                //     .refresh();
+                                getInitData();
+                                // if (isLoadedData) {
+                                //   Navigator.pushReplacement(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => Mainscreen()),
+                                //   );
+                                // }
                               }
                               if (state is ErrorState) {
                                 ScaffoldMessenger.of(context).showSnackBar(
