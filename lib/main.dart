@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
         home: BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
             if (state is LoggedInState) {
-              return const  Mainscreenv2();
+              return const  Mainscreen();
               // return const ();
             }
             if (state is LoggedOutState) {
@@ -82,6 +82,9 @@ class MyApp extends StatelessWidget {
               BlocProvider.of<HealthScoreCubit>(
                   context)
                   .getBiomarker();
+              BlocProvider.of<DownloadReportPdfCubit>(
+                  context)
+                  .getPdf();
               return const Center(
                 child: SpinKitThreeBounce(color: Colors.purple,),
               );

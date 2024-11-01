@@ -17,6 +17,7 @@ import '../home/cubit/cubit.dart';
 import '../login/cubit/state.dart';
 import '../mainScreen/mainScreen.dart';
 import '../mainScreenV2/cubit/cubit.dart';
+import '../mainScreenV2/downloadReport/cubit.dart';
 import '../mainScreenV2/userinfoCubit/cubit.dart';
 import 'cubit/cubit.dart';
 
@@ -181,18 +182,17 @@ class _LoginPageState extends State<LoginPage> {
       BlocProvider.of<ClientInformationMobileCubit>(context).getPdf(),
       BlocProvider.of<GoogleFormCubit>(context).getBiomarker(),
       BlocProvider.of<HealthScoreCubit>(context).getBiomarker(),
+      BlocProvider.of<DownloadReportPdfCubit>(context).getPdf()
     ]);
     setState(() {
       isLoadedData = true;
     });
-    if(isLoadedData){
+    if (isLoadedData) {
       Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => Mainscreen()),
-            );
+        context,
+        MaterialPageRoute(builder: (context) => Mainscreen()),
+      );
     }
-
   }
 
   @override

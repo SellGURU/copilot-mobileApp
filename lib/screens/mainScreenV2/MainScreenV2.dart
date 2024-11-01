@@ -423,92 +423,90 @@ class _Overview2State extends State<Overview2> {
                                 "Good morning",
                                 style: AppTextStyles.hint,
                               ),
-                              SizedBox(
-                                width: size.width * .05,
-                              ),
-                              BlocConsumer<DownloadWeaklyReportCubit,
-                                  DownloadWeaklyReportState>(
-                                listener: (context, state) {
-                                  // TODO: implement listener
-                                },
-                                builder: (context, state) {
-                                  if (state
-                                      is SuccessDownloadWeaklyReportState) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        _storeTimeAndShow();
-                                        _launchURL(state.pdfUrlWeakly);
-                                      },
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              SvgPicture.asset(
-                                                "assets/document-download.svg",
-                                                width: 16,
-                                                height: 16,
-                                                colorFilter:
-                                                    const ColorFilter.mode(
-                                                  AppColors.purpleDark,
-                                                  BlendMode.srcIn,
-                                                ),
-                                              ),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              Text(
-                                                "Weakly Report",
-                                                style: AppTextStyles.hintPurple,
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(
-                                            height: 2,
-                                          ),
-                                          Text(
-                                            "Last Generate: $_timePassed ago",
-                                            style: AppTextStyles.hintVerySmale,
-                                          )
-                                        ],
-                                      ),
-                                    );
-                                  }
-                                  if (state
-                                      is LoadingDownloadWeaklyReportState) {
-                                    return const SizedBox(
-                                        width: 15,
-                                        height: 15,
-                                        child: CircularProgressIndicator());
-                                  }
-                                  if (state is ErrorDownloadWeaklyReportState) {
-                                    return Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          "assets/document-download.svg",
-                                          width: 16,
-                                          height: 16,
-                                          colorFilter: const ColorFilter.mode(
-                                            AppColors.purpleLite,
-                                            BlendMode.srcIn,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          "Weekly Report",
-                                          style: AppTextStyles.hintLitePurple,
-                                        ),
-                                      ],
-                                    );
-                                  } else {
-                                    return const SizedBox();
-                                  }
-                                },
-                              ),
-                              const SizedBox(
-                                width: 15,
-                              ),
+
+                              // BlocConsumer<DownloadWeaklyReportCubit,
+                              //     DownloadWeaklyReportState>(
+                              //   listener: (context, state) {
+                              //     // TODO: implement listener
+                              //   },
+                              //   builder: (context, state) {
+                              //     if (state
+                              //         is SuccessDownloadWeaklyReportState) {
+                              //       return GestureDetector(
+                              //         onTap: () {
+                              //           _storeTimeAndShow();
+                              //           _launchURL(state.pdfUrlWeakly);
+                              //         },
+                              //         child: Column(
+                              //           children: [
+                              //             Row(
+                              //               children: [
+                              //                 SvgPicture.asset(
+                              //                   "assets/document-download.svg",
+                              //                   width: 16,
+                              //                   height: 16,
+                              //                   colorFilter:
+                              //                       const ColorFilter.mode(
+                              //                     AppColors.purpleDark,
+                              //                     BlendMode.srcIn,
+                              //                   ),
+                              //                 ),
+                              //                 const SizedBox(
+                              //                   width: 5,
+                              //                 ),
+                              //                 Text(
+                              //                   "Weakly Report",
+                              //                   style: AppTextStyles.hintPurple,
+                              //                 ),
+                              //               ],
+                              //             ),
+                              //             const SizedBox(
+                              //               height: 2,
+                              //             ),
+                              //             Text(
+                              //               "Last Generate: $_timePassed ago",
+                              //               style: AppTextStyles.hintVerySmale,
+                              //             )
+                              //           ],
+                              //         ),
+                              //       );
+                              //     }
+                              //     if (state
+                              //         is LoadingDownloadWeaklyReportState) {
+                              //       return const SizedBox(
+                              //           width: 15,
+                              //           height: 15,
+                              //           child: CircularProgressIndicator());
+                              //     }
+                              //     if (state is ErrorDownloadWeaklyReportState) {
+                              //       return Row(
+                              //         children: [
+                              //           SvgPicture.asset(
+                              //             "assets/document-download.svg",
+                              //             width: 16,
+                              //             height: 16,
+                              //             colorFilter: const ColorFilter.mode(
+                              //               AppColors.purpleLite,
+                              //               BlendMode.srcIn,
+                              //             ),
+                              //           ),
+                              //           const SizedBox(
+                              //             width: 5,
+                              //           ),
+                              //           Text(
+                              //             "Weekly Report",
+                              //             style: AppTextStyles.hintLitePurple,
+                              //           ),
+                              //         ],
+                              //       );
+                              //     } else {
+                              //       return const SizedBox();
+                              //     }
+                              //   },
+                              // ),
+                              // const SizedBox(
+                              //   width: 15,
+                              // ),
                               BlocConsumer<DownloadReportPdfCubit,
                                   DownloadPdfState>(
                                 listener: (context, state) {

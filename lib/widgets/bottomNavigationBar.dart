@@ -15,8 +15,8 @@ import '../utility/changeScreanBloc/PageIndex_Bloc.dart';
 import '../utility/changeScreanBloc/PageIndex_events.dart';
 
 class BottomNavigationBarCustom extends StatefulWidget {
-  Function takeScreenShot;
-  BottomNavigationBarCustom({super.key, required this.takeScreenShot});
+  // Function takeScreenShot;
+  BottomNavigationBarCustom({super.key});
 
   @override
   State<BottomNavigationBarCustom> createState() =>

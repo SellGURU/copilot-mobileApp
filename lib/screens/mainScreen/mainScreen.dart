@@ -119,27 +119,25 @@ class _MainscreenState extends State<Mainscreen> {
                         },
                       ),
                     ),
-                    bottomNavigationBar: BottomNavigationBarCustom(
-                      takeScreenShot: takeScreenShot,
-                    )),
+                    bottomNavigationBar: BottomNavigationBarCustom()),
               ),
             ),
-            isTakingScreenShot
-                ? Positioned(
-                    top: 0,
-                    left: 0,
-                    child: Screenshot(
-                      controller: screenshotController,
-                      child: Container(
-                        width: size.width,
-                        height: size.height,
-                        decoration: const BoxDecoration(
-                            color: Color.fromRGBO(0, 0, 0, .0)),
-                        child: const SizedBox(),
-                      ),
-                    ),
-                  )
-                : SizedBox()
+            // isTakingScreenShot
+            //     ? Positioned(
+            //         top: 0,
+            //         left: 0,
+            //         child: Screenshot(
+            //           controller: screenshotController,
+            //           child: Container(
+            //             width: size.width,
+            //             height: size.height,
+            //             decoration: const BoxDecoration(
+            //                 color: Color.fromRGBO(0, 0, 0, .0)),
+            //             child: const SizedBox(),
+            //           ),
+            //         ),
+            //       )
+            //     : SizedBox()
           ],
         ));
   }
