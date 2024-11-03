@@ -14,16 +14,13 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> _initialize() async {
     var token = await getTokenLocally();
-    if(token==null){
+    if (token == null) {
       emit(logOut());
-    }
-    else {
+    } else {
       _dio.options.headers['Authorization'] = "bearer $token";
 
-      _dio.post(Endpoints.clientInformationMobile)
-          .then((value) async {
-        print("value.data:${value.data["detail"]}");
-        if (value.data["detail"] == "Not authenticated"|| value.data["detail"] == "Invalid token.") {
+      _dio.post(Endpoints.clientInformationMobile).then((value) async {
+        if (value.data["detail"] == "Not authenticated" ||value.data["detail"] == "Expired token."||value.data["detail"] ==  "Invalid token.") {
           emit(LoggedOutState());
         } else {
           var token = await getTokenLocally();
@@ -35,8 +32,7 @@ class AuthCubit extends Cubit<AuthState> {
             emit(LoggedOutState());
           }
         }
-      })
-      .catchError((_){
+      }).catchError((_) {
         // print("check the error");
         emit(LoggedOutState());
       });
@@ -49,7 +45,7 @@ class AuthCubit extends Cubit<AuthState> {
     try {
       await _dio.post(
         Endpoints.login,
-        data: {"email": email,"password":pass},
+        data: {"email": email, "password": pass},
       ).then((value) async {
         print("value.toString():" + value.toString());
         if (value.statusCode == 200 && value.data["detail"] == null) {
