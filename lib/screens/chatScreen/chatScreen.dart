@@ -115,6 +115,8 @@ class _ChatscreenState extends State<Chatscreen> {
                       }
                     },
                   ),
+                  const SizedBox(height: 120),
+
                 ],
               ),
               Positioned(
@@ -286,16 +288,3 @@ class _ChatscreenState extends State<Chatscreen> {
   }
 }
 
-class Message {
-  final String text;
-  final String sender;
-  final String time;
-  final String avatarUrl;
-
-  Message({
-    required this.text,
-    required this.sender,
-    required this.time,
-    required this.avatarUrl,
-  });
-}
