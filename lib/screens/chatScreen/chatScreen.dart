@@ -35,15 +35,7 @@ class _ChatscreenState extends State<Chatscreen> {
       // Get the user's name from SharedPreferences
       String? userName = await getNameUser();
 
-      setState(() {
-        _messages.add(Message(
-          text: _controller.text,
-          sender: userName ?? "Unknown User", // Use a default if name is null
-          time: formattedTime,
-          avatarUrl: "https://via.placeholder.com/40", // Placeholder image URL
-        ));
-        _controller.clear();
-      });
+      BlocProvider.of<ChatCubit>(context).sendMessage(_controller.value.text);
     }
   }
 
@@ -106,10 +98,20 @@ class _ChatscreenState extends State<Chatscreen> {
                       }
                       if (state is ChatHistoryLoading) {
                         return Text("ChatHistoryLoading");
-                      } else {
+                      }
+                      if(state is ChatLoading){
+                        return _buildMessageBubble(
+                          "message.text",
+                          "message.sender",
+                          "message.time",
+                          "message.avatarUrl",
+                        );
+                      }
+                      else {
                         return Center(
                           child: Text("have error"),
                         );
+
                       }
                     },
                   ),

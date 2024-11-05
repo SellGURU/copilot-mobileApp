@@ -23,15 +23,15 @@ class ChatCubit extends Cubit<ChatState> {
     _dio.options.headers['Authorization'] = "bearer $token";
 
     try {
-      _dio.post(Endpoints.mobile_chat,data: {
+      _dio.post(Endpoints.mobile_chat,data:
         {
           "text": message,
           "conversation_id":conversationId
         }
-      }).then((response) {
+      ).then((response) {
         if (response.statusCode == 200) {
           messages.add(Message(sender: 'Ai',  time: '', avatarUrl: '',text: response.data["answer"]));
-          emit(ChatLoaded(List.from(messages)));
+          emit(ChatHistoryLoaded(messages));
         } else {
           emit(ChatError("Failed to send message"));
         }
