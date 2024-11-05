@@ -174,7 +174,7 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                     alignment: Alignment.center,
                     height: size.height,
                     width: size.width,
-                    child: Container(
+                    child: SizedBox(
                       width: size.width > 440 ? 440 : size.width,
                       child: Stack(
                         children: [

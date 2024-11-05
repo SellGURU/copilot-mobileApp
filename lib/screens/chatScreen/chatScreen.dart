@@ -1,4 +1,8 @@
+import 'package:copilet/screens/chatScreen/cubit/cubit.dart';
+import 'package:copilet/screens/chatScreen/cubit/cubit.dart';
+import 'package:copilet/screens/chatScreen/cubit/state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,6 +19,7 @@ class Chatscreen extends StatefulWidget {
 class _ChatscreenState extends State<Chatscreen> {
   final TextEditingController _controller = TextEditingController();
   final List<Message> _messages = [];
+
   Future<String?> getNameUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs
@@ -81,19 +86,32 @@ class _ChatscreenState extends State<Chatscreen> {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  Expanded(
-                    child: ListView.builder(
-                      itemCount: _messages.length,
-                      itemBuilder: (context, index) {
-                        final message = _messages[index];
-                        return _buildMessageBubble(
-                          message.text,
-                          message.sender,
-                          message.time,
-                          message.avatarUrl,
+                  BlocBuilder<ChatCubit, ChatState>(
+                    builder: (context, state) {
+                      if (state is ChatHistoryLoaded) {
+                        return Expanded(
+                          child: ListView.builder(
+                            itemCount: state.messages.length,
+                            itemBuilder: (context, index) {
+                              final message = state.messages[index];
+                              return _buildMessageBubble(
+                                message.text,
+                                message.sender,
+                                message.time,
+                                message.avatarUrl,
+                              );
+                            },
+                          ),
                         );
-                      },
-                    ),
+                      }
+                      if (state is ChatHistoryLoading) {
+                        return Text("ChatHistoryLoading");
+                      } else {
+                        return Center(
+                          child: Text("have error"),
+                        );
+                      }
+                    },
                   ),
                 ],
               ),
@@ -147,62 +165,122 @@ class _ChatscreenState extends State<Chatscreen> {
 
   Widget _buildMessageBubble(
       String text, String sender, String time, String avatarUrl) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        textDirection: TextDirection.rtl,
-        children: [
-          CircleAvatar(
-            backgroundImage: NetworkImage(avatarUrl),
-            radius: 20,
-          ),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              textDirection: TextDirection.rtl,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  textDirection: TextDirection.rtl,
-                  children: [
-                    Text(
-                      sender,
-                      style: AppTextStyles.title2
-                          .copyWith(fontWeight: FontWeight.bold),
-                      overflow: TextOverflow.ellipsis,
-                      textDirection: TextDirection.rtl,
-                    ),
-                    const SizedBox(width: 8),
-                    Text(
-                      time,
-                      style: AppTextStyles.titleMedium
-                          .copyWith(color: Colors.grey),
-                      textDirection: TextDirection.rtl,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 5),
-                Container(
-                  width: 255,
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Text(
-                    text,
-                    style: AppTextStyles.titleMedium,
-                    textDirection: TextDirection.rtl,
-                  ),
-                ),
-              ],
+    if (sender == "User") {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          textDirection: TextDirection.rtl,
+          children: [
+            CircleAvatar(
+              backgroundImage: NetworkImage("https://via.placeholder.com/40"),
+              radius: 20,
             ),
-          ),
-        ],
-      ),
-    );
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                textDirection: TextDirection.rtl,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    textDirection: TextDirection.rtl,
+                    children: [
+                      Text(
+                        sender,
+                        style: AppTextStyles.title2
+                            .copyWith(fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis,
+                        textDirection: TextDirection.rtl,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        time,
+                        style: AppTextStyles.titleMedium
+                            .copyWith(color: Colors.grey),
+                        textDirection: TextDirection.rtl,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  Container(
+                    width: 255,
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      text,
+                      style: AppTextStyles.titleMedium,
+                      textDirection: TextDirection.rtl,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+    else {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          textDirection: TextDirection.ltr,
+          children: [
+            CircleAvatar(
+              backgroundImage: NetworkImage("https://via.placeholder.com/40"),
+              radius: 20,
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: Column(
+                textDirection: TextDirection.ltr,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    textDirection: TextDirection.ltr,
+                    children: [
+                      Text(
+                        sender,
+                        style: AppTextStyles.title2
+                            .copyWith(fontWeight: FontWeight.bold),
+                        overflow: TextOverflow.ellipsis,
+                        textDirection: TextDirection.ltr,
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        time,
+                        style: AppTextStyles.titleMedium
+                            .copyWith(color: Colors.grey),
+                        textDirection: TextDirection.ltr,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 5),
+                  Container(
+                    width: 255,
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade200,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      text,
+                      style: AppTextStyles.titleMedium,
+                      textDirection: TextDirection.ltr,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      );
+    }
   }
 }
 

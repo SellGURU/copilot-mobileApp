@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:copilet/screens/Wearable%20Device/authorizersRook/cubit.dart';
+import 'package:copilet/screens/chatScreen/cubit/cubit.dart';
 import 'package:copilet/screens/mainScreenV2/MainScreenV2.dart';
 import 'package:copilet/screens/mainScreenV2/cubit/cubit.dart';
 import 'package:copilet/screens/mainScreenV2/downloadReport/cubit.dart';
@@ -51,6 +52,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => HealthScoreCubit()),
         BlocProvider(create: (_) => DownloadReportPdfCubit()),
         BlocProvider(create: (_) => ClientInformationMobileCubit()),
+        BlocProvider(create: (_) => ChatCubit()),
         BlocProvider(
           lazy: false,
           create: (context) {

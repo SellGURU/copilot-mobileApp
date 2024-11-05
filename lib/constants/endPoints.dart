@@ -1,6 +1,9 @@
 class Endpoints {
   static const baseUrl = "https://back-copilet-app.vercel.app/";
-  static const baseUrlCodie = "https://vercel-backend-one-roan.vercel.app/clinic_copilot/";
+  // static const baseUrlCodie = "https://vercel-backend-one-roan.vercel.app/clinic_copilot/";
+  static const baseUrlCodie = "https://vercel-backend-one-roan.vercel.app/holisticare/";
+
+  // mobile/get_messages_id
   static const biomarker = "${baseUrl}api/getDate";
   static const login = "${baseUrlCodie}auth/mobile_token";
   static const healthScore = "${baseUrlCodie}health_score_mobile";
@@ -10,5 +13,5 @@ class Endpoints {
   static const clientInformationMobile = "${baseUrlCodie}client_information_mobile";
   static const google_form = "${baseUrlCodie}google_form";
   static const mobile_chat = "${baseUrlCodie}mobile_chat";
-  static const getHistoryChat = "${baseUrlCodie}get_messages_id";
+  static const getHistoryChat = "${baseUrlCodie}mobile/get_messages_id";
 }
