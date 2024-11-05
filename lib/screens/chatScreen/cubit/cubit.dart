@@ -17,25 +17,44 @@ class ChatCubit extends Cubit<ChatState> {
   var conversationId=1;
 
   Future<void> sendMessage(String message) async {
-    emit(ChatLoading());
-    messages.add(Message(sender: 'User',  time: '', avatarUrl: '',text: message,));
+    // Add the user's message to the list immediately
+    messages.add(Message(
+      sender: 'User',
+      text: message,
+      time: DateTime.now().toString(), // Set the current time for user message
+      avatarUrl: 'path/to/user/avatar', // Replace with the actual user avatar path
+    ));
+
+    // Emit updated message list to update the UI
+    emit(ChatHistoryLoaded(List.from(messages)));
+
     var token = await getTokenLocally();
-    _dio.options.headers['Authorization'] = "bearer $token";
+    _dio.options.headers['Authorization'] = "Bearer $token";
 
     try {
-      _dio.post(Endpoints.mobile_chat,data:
-        {
+      // Send the user's message to the server
+      final response = await _dio.post(
+        Endpoints.mobile_chat,
+        data: {
           "text": message,
-          "conversation_id":conversationId
-        }
-      ).then((response) {
-        if (response.statusCode == 200) {
-          messages.add(Message(sender: 'Ai',  time: '', avatarUrl: '',text: response.data["answer"]));
-          emit(ChatHistoryLoaded(messages));
-        } else {
-          emit(ChatError("Failed to send message"));
-        }
-      });
+          "conversation_id": conversationId,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // Add the AI's response to the list
+        messages.add(Message(
+          sender: 'Ai',
+          text: response.data["answer"],
+          time: DateTime.now().toString(), // Set the current time for AI response
+          avatarUrl: 'path/to/ai/avatar', // Replace with the actual AI avatar path
+        ));
+
+        // Emit the updated message list to update the UI again
+        emit(ChatHistoryLoaded(List.from(messages)));
+      } else {
+        emit(ChatError("Failed to send message"));
+      }
     } catch (e) {
       emit(ChatError("An error occurred: $e"));
     }

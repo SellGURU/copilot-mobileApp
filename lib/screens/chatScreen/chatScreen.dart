@@ -34,9 +34,34 @@ class _ChatscreenState extends State<Chatscreen> {
 
       // Get the user's name from SharedPreferences
       String? userName = await getNameUser();
-
       BlocProvider.of<ChatCubit>(context).sendMessage(_controller.value.text);
     }
+  }
+  final ScrollController _scrollController = ScrollController(); // Step 1
+
+  void _scrollToBottom() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
+  }
+  @override
+  void initState() {
+    super.initState();
+    // Add a listener to automatically scroll when messages are added
+    _scrollController.addListener(() {
+      if (_scrollController.position.atEdge &&
+          _scrollController.position.pixels != 0) {
+        // Do nothing if already at the bottom
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose(); // Don't forget to dispose of the controller
+    super.dispose();
   }
 
   @override
@@ -78,43 +103,32 @@ class _ChatscreenState extends State<Chatscreen> {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  BlocBuilder<ChatCubit, ChatState>(
-                    builder: (context, state) {
-                      if (state is ChatHistoryLoaded) {
-                        return Expanded(
-                          child: ListView.builder(
-                            itemCount: state.messages.length,
-                            itemBuilder: (context, index) {
-                              final message = state.messages[index];
-                              return _buildMessageBubble(
-                                message.text,
-                                message.sender,
-                                message.time,
-                                message.avatarUrl,
-                              );
-                            },
-                          ),
-                        );
-                      }
-                      if (state is ChatHistoryLoading) {
-                        return Text("ChatHistoryLoading");
-                      }
-                      if(state is ChatLoading){
+            BlocBuilder<ChatCubit, ChatState>(
+              builder: (context, state) {
+                if (state is ChatHistoryLoaded) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
+                  return Expanded(
+                    child: ListView.builder(
+                      controller: _scrollController, // Attach the ScrollController
+                      itemCount: state.messages.length,
+                      itemBuilder: (context, index) {
+                        final message = state.messages[index];
                         return _buildMessageBubble(
-                          "message.text",
-                          "message.sender",
-                          "message.time",
-                          "message.avatarUrl",
+                          message.text,
+                          message.sender,
+                          message.time,
+                          message.avatarUrl,
                         );
-                      }
-                      else {
-                        return Center(
-                          child: Text("have error"),
-                        );
-
-                      }
-                    },
-                  ),
+                      },
+                    ),
+                  );
+                } else if (state is ChatHistoryLoaded) {
+                  return const Center(child: CircularProgressIndicator());
+                } else {
+                  return const Center(child: Text("An error occurred"));
+                }
+              },
+            ),
                   const SizedBox(height: 120),
 
                 ],
