@@ -144,7 +144,10 @@ class AppTextStyles {
   // --------------
   static TextStyle textXmLiteGray = GoogleFonts.roboto(
       textStyle: TextStyle(
-          fontSize: 9, color: AppColors.textLiteGray, fontWeight: FontWeight.w400));
+          fontSize: 6.5, color: AppColors.textLiteGray, fontWeight: FontWeight.w400));
+  static TextStyle textXmLiteBlack = GoogleFonts.roboto(
+      textStyle: TextStyle(
+          fontSize: 6.5, color: AppColors.black, fontWeight: FontWeight.w400));
   static TextStyle hintVerySmale = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 8, color: AppColors.hintLite, fontWeight: FontWeight.w400));
@@ -152,7 +155,7 @@ class AppTextStyles {
   static TextStyle textXs = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 6, color: AppColors.black, fontWeight: FontWeight.w400));
-  static TextStyle textXsLiteGray = GoogleFonts.roboto(
+  static TextStyle hintSmaleGray = GoogleFonts.roboto(
       textStyle: TextStyle(
-          fontSize: 6, color: AppColors.textLiteGray, fontWeight: FontWeight.w400));
+          fontSize: 10, color: AppColors.textLiteGray, fontWeight: FontWeight.w400));
 }

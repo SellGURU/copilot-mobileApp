@@ -67,26 +67,28 @@ class MyApp extends StatelessWidget {
         home: BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
             if (state is LoggedInState) {
-              return const  Mainscreen();
+              return Container(
+                  alignment: Alignment.center,
+                  height: size.height,
+                  width: size.width,
+                  child: Container(
+                    width: size.width > 440 ? 440 : size.width,
+                    margin: EdgeInsets.only(top: size.height * .02),
+                    child: const Mainscreen(),
+                  ));
               // return const ();
             }
             if (state is LoggedOutState) {
               return const Welcomscreen();
             } else {
-              BlocProvider.of<ClientInformationMobileCubit>(
-                  context)
-                  .getPdf();
-              BlocProvider.of<GoogleFormCubit>(
-                  context)
-                  .getBiomarker();
-              BlocProvider.of<HealthScoreCubit>(
-                  context)
-                  .getBiomarker();
-              BlocProvider.of<DownloadReportPdfCubit>(
-                  context)
-                  .getPdf();
+              BlocProvider.of<ClientInformationMobileCubit>(context).getPdf();
+              BlocProvider.of<GoogleFormCubit>(context).getBiomarker();
+              BlocProvider.of<HealthScoreCubit>(context).getBiomarker();
+              BlocProvider.of<DownloadReportPdfCubit>(context).getPdf();
               return const Center(
-                child: SpinKitThreeBounce(color: Colors.purple,),
+                child: SpinKitThreeBounce(
+                  color: Colors.purple,
+                ),
               );
             }
           },

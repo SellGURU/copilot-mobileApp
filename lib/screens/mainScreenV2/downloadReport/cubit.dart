@@ -35,5 +35,4 @@ class DownloadReportPdfCubit extends Cubit<DownloadPdfState> {
       }
     }
     }
-
 }

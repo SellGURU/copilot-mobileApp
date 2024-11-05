@@ -696,9 +696,6 @@ class _Overview2State extends State<Overview2> {
                           const SizedBox(
                             height: 20,
                           ),
-                          const SizedBox(
-                            height: 10,
-                          ),
                           Row(
                             children: [
                               NormalGauges(

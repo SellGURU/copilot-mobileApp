@@ -9,4 +9,6 @@ class Endpoints {
   static const add_event = "${baseUrlCodie}mobile/add_event";
   static const clientInformationMobile = "${baseUrlCodie}client_information_mobile";
   static const google_form = "${baseUrlCodie}google_form";
+  static const mobile_chat = "${baseUrlCodie}mobile_chat";
+  static const getHistoryChat = "${baseUrlCodie}get_messages_id";
 }

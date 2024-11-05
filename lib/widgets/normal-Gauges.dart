@@ -72,11 +72,11 @@ class NormalGauges extends StatelessWidget {
           ),
         ),
         SizedBox(height: 10,),
-        Text(title,style: AppTextStyles.textXs,),
+        Text(title,style: AppTextStyles.textXmLiteBlack,),
         Row(
           children: [
-            Text("MAE",style: AppTextStyles.textXsLiteGray,),
-            Text(MAEText,style: AppTextStyles.textXs,),
+            Text("MAE",style: AppTextStyles.textXmLiteGray,),
+            Text(MAEText,style: AppTextStyles.textXmLiteBlack,),
           ],
         ),
       ],
