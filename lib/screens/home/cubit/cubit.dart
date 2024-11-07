@@ -15,18 +15,18 @@ class BiomarkerCubit extends Cubit<BiomarkerState> {
     emit(LoadingBiomarkerState());
     try {
       await _dio.get(Endpoints.biomarker).then((value) {
-        print("status code:${value.statusCode}");
+        // print("status code:${value.statusCode}");
         if (value.statusCode == 200) {
           // var jsonResponse = json.decode(value.data);
           // print("data:${jsonResponse["data"]}");
-          print("value.data:${value.data["data"]}");
+          // print("value.data:${value.data["data"]}");
           emit(SuccessBiomarkerState(biomarkerData: value.data));
         } else {
           emit(ErrorBiomarkerState());
         }
       });
     } catch (e) {
-      print("full error $e");
+      // print("full error $e");
       emit(ErrorBiomarkerState());
     }
   }

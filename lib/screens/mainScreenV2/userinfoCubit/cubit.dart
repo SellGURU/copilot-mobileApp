@@ -14,7 +14,7 @@ class ClientInformationMobileCubit extends Cubit<ClientInformationMobileState> {
   final Dio _dio = Dio();
   Future<void> getPdf() async {
     if (state is! SuccessClientInformation){
-      print("check123");
+      // print("check123");
       emit(LoadingClientInformationMobileState());
       var token = await getTokenLocally();
       _dio.options.headers['Authorization'] = "bearer $token";
@@ -23,7 +23,7 @@ class ClientInformationMobileCubit extends Cubit<ClientInformationMobileState> {
         _dio.post(Endpoints.clientInformationMobile).then((res) async {
           if(res.data!=null){
             emit(SuccessClientInformation(userInfo: res.data));
-            print("res.data info:${res.data}");
+            // print("res.data info:${res.data}");
             SharedPreferences prefs =
             await SharedPreferences.getInstance();
             prefs.setString(

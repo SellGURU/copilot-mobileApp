@@ -24,13 +24,13 @@ class DownloadWeaklyReportCubit extends Cubit<DownloadWeaklyReportState> {
       }).then((res) {
 
         if(res.data!=null){
-          print("res.data!=null");
+          // print("res.data!=null");
           if(res.data is String)
           emit(SuccessDownloadWeaklyReportState(pdfUrlWeakly: res.data));
           else{
             emit(ErrorDownloadWeaklyReportState());
           }
-          print("res.data: ttttt${res.data}");
+          // print("res.data: ttttt${res.data}");
         }
         else{
           print("pdf weakly be null");

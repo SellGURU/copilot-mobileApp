@@ -569,7 +569,7 @@ class _Overview2State extends State<Overview2> {
                                       ],
                                     );
                                   } else {
-                                    return const SizedBox();
+                                    return const SizedBox(child: Text("have error"),);
                                   }
                                 },
                               ),
@@ -663,14 +663,14 @@ class _Overview2State extends State<Overview2> {
                           )
                         ],
                       ),
-                      Container(
-                        width: size.width > 440 ? 120 : size.width * .25,
-                        // height: size.height * .1,
-                        child: Totalscoregauge(
-                          colorGauge:AppColors.pinkBorder,
-                          value: 0,
-                        ),
-                      ),
+                      // Container(
+                      //   width: size.width > 440 ? 120 : size.width * .25,
+                      //   // height: size.height * .1,
+                      //   child: Totalscoregauge(
+                      //     colorGauge:AppColors.pinkBorder,
+                      //     value: 0,
+                      //   ),
+                      // ),
                       Column(
                         children: [
                           Row(

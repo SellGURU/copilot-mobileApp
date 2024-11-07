@@ -24,8 +24,8 @@ class AuthCubit extends Cubit<AuthState> {
           emit(LoggedOutState());
         } else {
           var token = await getTokenLocally();
-          print("token1:${token}");
-          print(token!.isNotEmpty);
+          // print("token1:${token}");
+          // print(token!.isNotEmpty);
           if (token!.isNotEmpty) {
             emit(LoggedInState());
           } else {
@@ -47,13 +47,13 @@ class AuthCubit extends Cubit<AuthState> {
         Endpoints.login,
         data: {"email": email, "password": pass},
       ).then((value) async {
-        print("value.toString():" + value.toString());
+        // print("value.toString():" + value.toString());
         if (value.statusCode == 200 && value.data["detail"] == null) {
-          print("token11 $value");
+          // print("token11 $value");
           await UpdateToken(value.data["access_token"]);
           emit(SuccessState());
         } else {
-          print("else");
+          // print("else");
           // emit(SuccessState());
           emit(ErrorState(value.data["detail"]));
         }
