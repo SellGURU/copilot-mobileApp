@@ -20,7 +20,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
+          padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

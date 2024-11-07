@@ -211,7 +211,7 @@ class _ListItemsState extends State<ListItems> {
                   left: 3.5, right: 3.5, top: 8, bottom: 13),
               alignment: Alignment.center,
               height: 75,
-              width: 75,
+              width: 85,
               decoration: BoxDecoration(
                   color: AppColors.mainBg,
                   borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -248,8 +248,8 @@ class _ListItemsState extends State<ListItems> {
               padding: const EdgeInsets.only(
                   left: 3.5, right: 3.5, top: 8, bottom: 13),
               alignment: Alignment.center,
-              height: 75,
-              width: 75,
+              height: 90,
+              width: 85,
               decoration: const BoxDecoration(
                   color: AppColors.mainBg,
                   borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -297,7 +297,7 @@ class _ListItemsState extends State<ListItems> {
               padding: const EdgeInsets.only(
                   left: 3.5, right: 3.5, top: 8, bottom: 13),
               alignment: Alignment.center,
-              width: 80,
+              width: 90,
               height: 75,
               decoration: const BoxDecoration(
                   color: AppColors.mainBg,

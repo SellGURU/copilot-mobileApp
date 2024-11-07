@@ -9,6 +9,7 @@ import '../../res/colors.dart';
 import '../login/cubit/cubit.dart';
 import '../login/cubit/state.dart';
 import '../login/login.dart'; // For date formatting
+import 'package:flutter/foundation.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -34,8 +35,8 @@ class _SettingPageState extends State<SettingPage> {
           height: size.height,
           width: size.width,
           child: Container(
-            padding: EdgeInsets.symmetric(vertical: 30),
-            width: size.width > 420 ? 420 : size.width,
+            padding: const EdgeInsets.symmetric(vertical: 30,horizontal: 25),
+            width: kIsWeb ? (size.width > 420 ? 420 : size.width) : size.width,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,16 +55,22 @@ class _SettingPageState extends State<SettingPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: 20,),
-                Text(formattedDate,style: AppTextStyles.titleXl,),
-                const SizedBox(height: 20,),
+                const SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  formattedDate,
+                  style: AppTextStyles.titleXl,
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              const WearableDevice()),
+                          builder: (context) => const WearableDevice()),
                     );
                   },
                   child: WearableDevicesTile(
@@ -71,38 +78,38 @@ class _SettingPageState extends State<SettingPage> {
                     textTitle: 'Wearable Devices',
                   ),
                 ),
-                const SizedBox(height: 20,),
-
+                const SizedBox(
+                  height: 20,
+                ),
                 WearableDevicesTile(
                   srcImage: 'lock.svg',
                   textTitle: 'Change Password',
                 ),
-                const SizedBox(height: 20,),
-
+                const SizedBox(
+                  height: 20,
+                ),
                 WearableDevicesTile(
                   srcImage: 'lock.svg',
                   textTitle: 'Privacy Policy',
                 ),
-                const SizedBox(height: 20,),
-
+                const SizedBox(
+                  height: 20,
+                ),
                 WearableDevicesTile(
                   srcImage: 'security-safe.svg',
                   textTitle: 'Terms of Service',
                 ),
-                const SizedBox(height: 30,),
-
+                const SizedBox(
+                  height: 30,
+                ),
                 BlocBuilder<AuthCubit, AuthState>(
                   builder: (context, state) {
                     return GestureDetector(
                       onTap: () async {
-                        await BlocProvider.of<AuthCubit>(
-                            context)
-                            .logOut();
+                        await BlocProvider.of<AuthCubit>(context).logOut();
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  LoginPage()),
+                          MaterialPageRoute(builder: (context) => LoginPage()),
                         );
                       },
                       child: Row(
@@ -114,23 +121,20 @@ class _SettingPageState extends State<SettingPage> {
                             width: 30,
                             height: 16,
                             colorFilter: ColorFilter.mode(
-                                AppColors.purpleDark,
-                                BlendMode.srcIn),
+                                AppColors.purpleDark, BlendMode.srcIn),
                           ),
                           const SizedBox(
                             width: 5,
                           ),
                           Text(
                             "Log out",
-                            style: AppTextStyles
-                                .title2Purple,
+                            style: AppTextStyles.title2Purple,
                           ),
                         ],
                       ),
                     );
                   },
                 ),
-
               ],
             ),
           ),
