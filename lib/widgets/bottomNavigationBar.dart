@@ -244,12 +244,13 @@ class _ListItemsState extends State<ListItems> {
               // widget.takeItem("screenShot");
               // Navigator.pop(widget.Parentcontext);
             },
-            child: Container(
+            child:
+            Container(
               padding: const EdgeInsets.only(
                   left: 3.5, right: 3.5, top: 8, bottom: 13),
               alignment: Alignment.center,
-              height: 90,
-              width: 85,
+              width: 90,
+              height: 75,
               decoration: const BoxDecoration(
                   color: AppColors.mainBg,
                   borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -293,7 +294,8 @@ class _ListItemsState extends State<ListItems> {
                 ),
               );
             },
-            child: Container(
+            child:
+            Container(
               padding: const EdgeInsets.only(
                   left: 3.5, right: 3.5, top: 8, bottom: 13),
               alignment: Alignment.center,
