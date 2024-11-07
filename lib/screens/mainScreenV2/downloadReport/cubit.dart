@@ -12,14 +12,14 @@ class DownloadReportPdfCubit extends Cubit<DownloadPdfState> {
   }
   final Dio _dio = Dio();
   Future<void> getPdf() async {
-    if(state is SuccessDownloadPdf){
+    if(state is! SuccessDownloadPdf){
       // print("check12");
       emit(LoadingDownloadPdf());
       var token = await getTokenLocally();
       _dio.options.headers['Authorization'] = "bearer $token";
-
       try {
         _dio.post(Endpoints.downloadPdfReport).then((res) {
+          print("res.data:${res.data}");
           if(res.data!=null){
             emit(SuccessDownloadPdf(pdfUrl: res.data));
             // print("res.data:${res.data}");

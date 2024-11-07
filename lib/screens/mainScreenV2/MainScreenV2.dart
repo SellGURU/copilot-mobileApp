@@ -390,7 +390,7 @@ class _Overview2State extends State<Overview2> {
         backgroundColor: AppColors.bgScreen,
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 15),
             child: Column(
               children: [
                 Row(
@@ -408,122 +408,154 @@ class _Overview2State extends State<Overview2> {
                     const SizedBox(
                       width: 15,
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Good morning",
-                              style: AppTextStyles.hint,
-                            ),
-          
-                            // BlocConsumer<DownloadWeaklyReportCubit,
-                            //     DownloadWeaklyReportState>(
-                            //   listener: (context, state) {
-                            //     // TODO: implement listener
-                            //   },
-                            //   builder: (context, state) {
-                            //     if (state
-                            //         is SuccessDownloadWeaklyReportState) {
-                            //       return GestureDetector(
-                            //         onTap: () {
-                            //           _storeTimeAndShow();
-                            //           _launchURL(state.pdfUrlWeakly);
-                            //         },
-                            //         child: Column(
-                            //           children: [
-                            //             Row(
-                            //               children: [
-                            //                 SvgPicture.asset(
-                            //                   "assets/document-download.svg",
-                            //                   width: 16,
-                            //                   height: 16,
-                            //                   colorFilter:
-                            //                       const ColorFilter.mode(
-                            //                     AppColors.purpleDark,
-                            //                     BlendMode.srcIn,
-                            //                   ),
-                            //                 ),
-                            //                 const SizedBox(
-                            //                   width: 5,
-                            //                 ),
-                            //                 Text(
-                            //                   "Weakly Report",
-                            //                   style: AppTextStyles.hintPurple,
-                            //                 ),
-                            //               ],
-                            //             ),
-                            //             const SizedBox(
-                            //               height: 2,
-                            //             ),
-                            //             Text(
-                            //               "Last Generate: $_timePassed ago",
-                            //               style: AppTextStyles.hintVerySmale,
-                            //             )
-                            //           ],
-                            //         ),
-                            //       );
-                            //     }
-                            //     if (state
-                            //         is LoadingDownloadWeaklyReportState) {
-                            //       return const SizedBox(
-                            //           width: 15,
-                            //           height: 15,
-                            //           child: CircularProgressIndicator());
-                            //     }
-                            //     if (state is ErrorDownloadWeaklyReportState) {
-                            //       return Row(
-                            //         children: [
-                            //           SvgPicture.asset(
-                            //             "assets/document-download.svg",
-                            //             width: 16,
-                            //             height: 16,
-                            //             colorFilter: const ColorFilter.mode(
-                            //               AppColors.purpleLite,
-                            //               BlendMode.srcIn,
-                            //             ),
-                            //           ),
-                            //           const SizedBox(
-                            //             width: 5,
-                            //           ),
-                            //           Text(
-                            //             "Weekly Report",
-                            //             style: AppTextStyles.hintLitePurple,
-                            //           ),
-                            //         ],
-                            //       );
-                            //     } else {
-                            //       return const SizedBox();
-                            //     }
-                            //   },
-                            // ),
-                            // const SizedBox(
-                            //   width: 15,
-                            // ),
-                            BlocConsumer<DownloadReportPdfCubit,
-                                DownloadPdfState>(
-                              listener: (context, state) {
-                                // TODO: implement listener
-                              },
-                              builder: (context, state) {
-                                if (state is SuccessDownloadPdf) {
-                                  return GestureDetector(
-                                    onTap: () async {
-                                      // print("test on tab");
-                                      _launchURL(state.pdfUrl);
-                                    },
-                                    child: Row(
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Good morning",
+                                style: AppTextStyles.hint,
+                              ),
+                                
+                              // BlocConsumer<DownloadWeaklyReportCubit,
+                              //     DownloadWeaklyReportState>(
+                              //   listener: (context, state) {
+                              //     // TODO: implement listener
+                              //   },
+                              //   builder: (context, state) {
+                              //     if (state
+                              //         is SuccessDownloadWeaklyReportState) {
+                              //       return GestureDetector(
+                              //         onTap: () {
+                              //           _storeTimeAndShow();
+                              //           _launchURL(state.pdfUrlWeakly);
+                              //         },
+                              //         child: Column(
+                              //           children: [
+                              //             Row(
+                              //               children: [
+                              //                 SvgPicture.asset(
+                              //                   "assets/document-download.svg",
+                              //                   width: 16,
+                              //                   height: 16,
+                              //                   colorFilter:
+                              //                       const ColorFilter.mode(
+                              //                     AppColors.purpleDark,
+                              //                     BlendMode.srcIn,
+                              //                   ),
+                              //                 ),
+                              //                 const SizedBox(
+                              //                   width: 5,
+                              //                 ),
+                              //                 Text(
+                              //                   "Weakly Report",
+                              //                   style: AppTextStyles.hintPurple,
+                              //                 ),
+                              //               ],
+                              //             ),
+                              //             const SizedBox(
+                              //               height: 2,
+                              //             ),
+                              //             Text(
+                              //               "Last Generate: $_timePassed ago",
+                              //               style: AppTextStyles.hintVerySmale,
+                              //             )
+                              //           ],
+                              //         ),
+                              //       );
+                              //     }
+                              //     if (state
+                              //         is LoadingDownloadWeaklyReportState) {
+                              //       return const SizedBox(
+                              //           width: 15,
+                              //           height: 15,
+                              //           child: CircularProgressIndicator());
+                              //     }
+                              //     if (state is ErrorDownloadWeaklyReportState) {
+                              //       return Row(
+                              //         children: [
+                              //           SvgPicture.asset(
+                              //             "assets/document-download.svg",
+                              //             width: 16,
+                              //             height: 16,
+                              //             colorFilter: const ColorFilter.mode(
+                              //               AppColors.purpleLite,
+                              //               BlendMode.srcIn,
+                              //             ),
+                              //           ),
+                              //           const SizedBox(
+                              //             width: 5,
+                              //           ),
+                              //           Text(
+                              //             "Weekly Report",
+                              //             style: AppTextStyles.hintLitePurple,
+                              //           ),
+                              //         ],
+                              //       );
+                              //     } else {
+                              //       return const SizedBox();
+                              //     }
+                              //   },
+                              // ),
+                              // const SizedBox(
+                              //   width: 15,
+                              // ),
+                              const SizedBox(width: 40,),
+                              BlocConsumer<DownloadReportPdfCubit,
+                                  DownloadPdfState>(
+                                listener: (context, state) {
+                                  // TODO: implement listener
+                                },
+                                builder: (context, state) {
+                                  print("state is :${state}");
+                                  if (state is SuccessDownloadPdf) {
+                                    return GestureDetector(
+                                      onTap: () async {
+                                        // print("test on tab");
+                                        _launchURL(state.pdfUrl);
+                                      },
+                                      child: Row(
+                                        children: [
+                                          SvgPicture.asset(
+                                            "assets/document-download.svg",
+                                            width: 16,
+                                            height: 16,
+                                            colorFilter: const ColorFilter.mode(
+                                              AppColors.purpleDark,
+                                              BlendMode.srcIn,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: 5,
+                                          ),
+                                          Text(
+                                            "Report",
+                                            style: AppTextStyles.hintPurple,
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }
+                                  if (state is LoadingDownloadPdf) {
+                                    return const SizedBox(
+                                        width: 15,
+                                        height: 15,
+                                        child: CircularProgressIndicator());
+                                  }
+                                  if (state is ErrorDownloadPdf) {
+                                    return Row(
                                       children: [
                                         SvgPicture.asset(
                                           "assets/document-download.svg",
                                           width: 16,
                                           height: 16,
                                           colorFilter: const ColorFilter.mode(
-                                            AppColors.purpleDark,
+                                            AppColors.purpleLite,
                                             BlendMode.srcIn,
                                           ),
                                         ),
@@ -532,65 +564,37 @@ class _Overview2State extends State<Overview2> {
                                         ),
                                         Text(
                                           "Report",
-                                          style: AppTextStyles.hintPurple,
+                                          style: AppTextStyles.hintLitePurple,
                                         ),
                                       ],
-                                    ),
-                                  );
-                                }
-                                if (state is LoadingDownloadPdf) {
-                                  return const SizedBox(
-                                      width: 15,
-                                      height: 15,
-                                      child: CircularProgressIndicator());
-                                }
-                                if (state is ErrorDownloadPdf) {
-                                  return Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        "assets/document-download.svg",
-                                        width: 16,
-                                        height: 16,
-                                        colorFilter: const ColorFilter.mode(
-                                          AppColors.purpleLite,
-                                          BlendMode.srcIn,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        width: 5,
-                                      ),
-                                      Text(
-                                        "Report",
-                                        style: AppTextStyles.hintLitePurple,
-                                      ),
-                                    ],
-                                  );
-                                } else {
-                                  return const SizedBox(child: Text("have error"),);
-                                }
-                              },
-                            ),
-                          ],
-                        ),
-                        BlocConsumer<ClientInformationMobileCubit,
-                            ClientInformationMobileState>(
-                          listener: (context, state) {
-                            // TODO: implement listener
-                          },
-                          builder: (context, state) {
-                            if (state is SuccessClientInformation) {
-                              return GestureDetector(
-                                onTap: () => {widget.onToggleDropDown()},
-                                child: Text(
-                                  state.userInfo["name"],
-                                  style: AppTextStyles.title1,
-                                ),
-                              );
-                            }
-                            return const SizedBox();
-                          },
-                        ),
-                      ],
+                                    );
+                                  } else {
+                                    return const SizedBox(child: Text("have error"),);
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                          BlocConsumer<ClientInformationMobileCubit,
+                              ClientInformationMobileState>(
+                            listener: (context, state) {
+                              // TODO: implement listener
+                            },
+                            builder: (context, state) {
+                              if (state is SuccessClientInformation) {
+                                return GestureDetector(
+                                  onTap: () => {widget.onToggleDropDown()},
+                                  child: Text(
+                                    state.userInfo["name"],
+                                    style: AppTextStyles.title1,
+                                  ),
+                                );
+                              }
+                              return const SizedBox();
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

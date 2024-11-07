@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.copilot_mobileapp"
+    namespace = "com.copilot_mobileapp"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
