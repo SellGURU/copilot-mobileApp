@@ -123,7 +123,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                     width: 7,
                                   ),
                                   Text(
-                                    "Blood",
+                                    "Cardiovascular...",
                                     style: indexItem == 0
                                         ? AppTextStyles.hintWhite
                                         : AppTextStyles.hint,
@@ -164,7 +164,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                     width: 7,
                                   ),
                                   Text(
-                                    "Activity",
+                                    "Organ He...",
                                     style: indexItem == 1
                                         ? AppTextStyles.hintWhite
                                         : AppTextStyles.hint,
@@ -205,7 +205,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                     width: 7,
                                   ),
                                   Text(
-                                    "DNA",
+                                    "Metabolic...",
                                     style: indexItem == 2
                                         ? AppTextStyles.hintWhite
                                         : AppTextStyles.hint,
@@ -246,7 +246,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                     width: 7,
                                   ),
                                   Text(
-                                    "AGING",
+                                    "Immune...",
                                     style: indexItem == 3
                                         ? AppTextStyles.hintWhite
                                         : AppTextStyles.hint,
@@ -256,6 +256,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             ),
                           ),
                         ),
+
                       ],
                     ),
                   ),

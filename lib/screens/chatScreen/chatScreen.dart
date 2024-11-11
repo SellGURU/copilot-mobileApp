@@ -35,6 +35,7 @@ class _ChatscreenState extends State<Chatscreen> {
       // Get the user's name from SharedPreferences
       String? userName = await getNameUser();
       BlocProvider.of<ChatCubit>(context).sendMessage(_controller.value.text);
+      _controller.clear();
     }
   }
   final ScrollController _scrollController = ScrollController(); // Step 1
