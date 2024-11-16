@@ -42,7 +42,7 @@ class AppTextStyles {
       textStyle: TextStyle(
           fontSize: 16, color: AppColors.text, fontWeight: FontWeight.w400));
   static TextStyle whiteTitle1 = GoogleFonts.roboto(
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
           fontSize: 16, color: Colors.white, fontWeight: FontWeight.w500));
   // --------------
 
@@ -77,9 +77,9 @@ class AppTextStyles {
           color: AppColors.black,
           fontWeight: FontWeight.w400,
           height: 2));
-  static TextStyle hintWhite = GoogleFonts.roboto(
+  static TextStyle hintWhite = GoogleFonts.inter(
       textStyle: TextStyle(
-          fontSize: 12, color: Colors.white, fontWeight: FontWeight.w500));
+          fontSize: 12, color: Colors.white, fontWeight: FontWeight.w400));
   static TextStyle hintMedium = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 12, color: AppColors.black, fontWeight: FontWeight.w500));
@@ -108,9 +108,9 @@ class AppTextStyles {
           fontSize: 11,
           fontWeight: FontWeight.w500,
           color: AppColors.greenBega));
-  static TextStyle gradeRed = GoogleFonts.roboto(
+  static TextStyle error = GoogleFonts.inter(
       textStyle: TextStyle(
-          fontSize: 11, fontWeight: FontWeight.w500, color: AppColors.red));
+          fontSize: 11, fontWeight: FontWeight.w400, color: AppColors.red));
   static TextStyle gradeYellow = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 11,

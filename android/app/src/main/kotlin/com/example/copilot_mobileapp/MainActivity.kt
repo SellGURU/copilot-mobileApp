@@ -1,4 +1,4 @@
-package com.example.copilot_mobileapp
+package com.innovatify_ltd
 
 import io.flutter.embedding.android.FlutterActivity
 

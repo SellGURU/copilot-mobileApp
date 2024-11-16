@@ -49,10 +49,7 @@ class _SettingPageState extends State<SettingPage> {
                       "Setting",
                       style: AppTextStyles.title1,
                     ),
-                    const Icon(
-                      Icons.notifications_none_outlined,
-                      color: AppColors.purpleDark,
-                    ),
+                    SvgPicture.asset("assets/notification.svg",width: 24,height: 24,)
                   ],
                 ),
                 const SizedBox(
@@ -176,16 +173,12 @@ class WearableDevicesTile extends StatelessWidget {
               // Title
               Text(
                 textTitle,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black87,
-                ),
+                style: AppTextStyles.hintMedium
               ),
             ],
           ),
           // Right Arrow Icon
-          Icon(
+          const Icon(
             Icons.arrow_forward_ios,
             size: 20,
             color: AppColors.purpleDark,

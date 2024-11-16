@@ -85,8 +85,8 @@ class _LongevityState extends State<Longevity> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 5,),
-                        const Icon(Icons.arrow_forward_ios_outlined,color: AppColors.textLite,)
+                        SizedBox(width: 13,),
+                        SvgPicture.asset("assets/arrowHome.svg")
                       ],
                     )
                   ],
@@ -134,10 +134,10 @@ class _LongevityState extends State<Longevity> {
                       children: [
                         Text(
                           "Health Score: ",
-                          style: AppTextStyles.hintSmale,
+                          style: AppTextStyles.hint,
                         ),
                         Container(
-                          decoration: BoxDecoration(color: AppColors.yellowBega.withOpacity(.2),borderRadius: BorderRadius.circular(20)),
+                          decoration: BoxDecoration(color: AppColors.redLite,borderRadius: BorderRadius.circular(20)),
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 5,top: 5,left: 12,right: 12),
                             child: Row(
@@ -155,8 +155,8 @@ class _LongevityState extends State<Longevity> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 5,),
-                        const Icon(Icons.arrow_forward_ios_outlined,color: AppColors.textLite,)
+                        SizedBox(width: 13,),
+                        SvgPicture.asset("assets/arrowHome.svg")
                       ],
                     )
                   ],
@@ -225,8 +225,8 @@ class _LongevityState extends State<Longevity> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 5,),
-                        const Icon(Icons.arrow_forward_ios_outlined,color: AppColors.textLite,)
+                        SizedBox(width: 13,),
+                        SvgPicture.asset("assets/arrowHome.svg")
                       ],
                     )
                   ],
@@ -293,8 +293,8 @@ class _LongevityState extends State<Longevity> {
                             ),
                           ),
                         ),
-                        SizedBox(width: 5,),
-                        const Icon(Icons.arrow_forward_ios_outlined,color: AppColors.textLite,)
+                        SizedBox(width: 13,),
+                        SvgPicture.asset("assets/arrowHome.svg")
                       ],
                     )
                   ],

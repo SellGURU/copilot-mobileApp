@@ -66,12 +66,13 @@ class _WelcomscreenState extends State<Welcomscreen> {
                         child: Container(
                           alignment: Alignment.center,
                           padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          margin:
-                              EdgeInsets.symmetric(horizontal: size.width / 10),
+                          width: 350,
+                          // margin:
+                          //     EdgeInsets.symmetric(horizontal: size.width / 10),
                           decoration: BoxDecoration(
                               color: AppColors.purpleDark,
-                              borderRadius: BorderRadius.circular(10)),
-                          width: size.width,
+                              borderRadius: BorderRadius.circular(20)),
+                          // width: size.width,
                           child: Text(
                             "Continue",
                             style: AppTextStyles.hintWhite,

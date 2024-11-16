@@ -233,13 +233,14 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         Positioned(
                             left:
-                                (size.width > 420 ? 170 : size.width / 2 - 40),
+                                (size.width > 420 ? 130 : size.width / 2 - 100),
                             top: 100,
-                            child: Image.asset(
-                              "assets/logoIcon.png",
-                              width: 80,
-                              height: 70,
-                            ))
+                            // child: Image.asset(
+                            //   "assets/logoIcon.png",
+                            //   width: 80,
+                            //   height: 70,
+                            // ))
+                            child: Text("Clinic Logo",style: AppTextStyles.title4xlLiteWeight,))
                       ],
                     ),
                     Padding(
@@ -352,7 +353,7 @@ class _LoginPageState extends State<LoginPage> {
                                       borderRadius: BorderRadius.circular(10)),
                                   width: size.width,
                                   child: Text(
-                                    "Login",
+                                    "Log in",
                                     style: AppTextStyles.titleMediumWhite,
                                   ),
                                 ),

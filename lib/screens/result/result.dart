@@ -34,7 +34,7 @@ class _ResultScreenState extends State<ResultScreen> {
     return BlocBuilder<BiomarkerCubit, BiomarkerState>(
       builder: (context, state) {
         if (state is LoadingBiomarkerState) {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
@@ -57,15 +57,15 @@ class _ResultScreenState extends State<ResultScreen> {
                       ),
                       Row(
                         children: [
-                          const Icon(
-                            Icons.notifications_none_outlined,
-                            color: AppColors.purpleDark,
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
+                          // const Icon(
+                          //   Icons.notifications_none_outlined,
+                          //   color: AppColors.purpleDark,
+                          // ),
+                          // const SizedBox(
+                          //   width: 10,
+                          // ),
                           SvgPicture.asset(
-                            "assets/notificationIcon.svg",
+                            "assets/notification.svg",
                             width: 25,
                             height: 25,
                           ),
@@ -115,15 +115,15 @@ class _ResultScreenState extends State<ResultScreen> {
                                     horizontal: 9.0, vertical: 8),
                                 child: Row(
                                   children: [
-                                    SvgPicture.asset("assets/drops.svg",
-                                        colorFilter: ColorFilter.mode(
-                                            indexItem == 0
-                                                ? AppColors.mainBg
-                                                : AppColors.textLite,
-                                            BlendMode.srcIn)),
-                                    const SizedBox(
-                                      width: 7,
-                                    ),
+                                    // SvgPicture.asset("assets/drops.svg",
+                                    //     colorFilter: ColorFilter.mode(
+                                    //         indexItem == 0
+                                    //             ? AppColors.mainBg
+                                    //             : AppColors.textLite,
+                                    //         BlendMode.srcIn)),
+                                    // const SizedBox(
+                                    //   width: 7,
+                                    // ),
                                     Text(
                                       "Cardiovascular...",
                                       style: indexItem == 0
@@ -156,15 +156,15 @@ class _ResultScreenState extends State<ResultScreen> {
                                     horizontal: 9.0, vertical: 8),
                                 child: Row(
                                   children: [
-                                    SvgPicture.asset("assets/weight.svg",
-                                        colorFilter: ColorFilter.mode(
-                                            indexItem == 1
-                                                ? AppColors.mainBg
-                                                : AppColors.textLite,
-                                            BlendMode.srcIn)),
-                                    const SizedBox(
-                                      width: 7,
-                                    ),
+                                    // SvgPicture.asset("assets/weight.svg",
+                                    //     colorFilter: ColorFilter.mode(
+                                    //         indexItem == 1
+                                    //             ? AppColors.mainBg
+                                    //             : AppColors.textLite,
+                                    //         BlendMode.srcIn)),
+                                    // const SizedBox(
+                                    //   width: 7,
+                                    // ),
                                     Text(
                                       "Organ He...",
                                       style: indexItem == 1
@@ -197,15 +197,15 @@ class _ResultScreenState extends State<ResultScreen> {
                                     horizontal: 9.0, vertical: 8),
                                 child: Row(
                                   children: [
-                                    SvgPicture.asset("assets/dna.svg",
-                                        colorFilter: ColorFilter.mode(
-                                            indexItem == 2
-                                                ? AppColors.mainBg
-                                                : AppColors.textLite,
-                                            BlendMode.srcIn)),
-                                    const SizedBox(
-                                      width: 7,
-                                    ),
+                                    // SvgPicture.asset("assets/dna.svg",
+                                    //     colorFilter: ColorFilter.mode(
+                                    //         indexItem == 2
+                                    //             ? AppColors.mainBg
+                                    //             : AppColors.textLite,
+                                    //         BlendMode.srcIn)),
+                                    // const SizedBox(
+                                    //   width: 7,
+                                    // ),
                                     Text(
                                       "Metabolic...",
                                       style: indexItem == 2
@@ -238,15 +238,15 @@ class _ResultScreenState extends State<ResultScreen> {
                                     horizontal: 9.0, vertical: 8),
                                 child: Row(
                                   children: [
-                                    SvgPicture.asset("assets/monitor.svg",
-                                        colorFilter: ColorFilter.mode(
-                                            indexItem == 3
-                                                ? AppColors.mainBg
-                                                : AppColors.textLite,
-                                            BlendMode.srcIn)),
-                                    const SizedBox(
-                                      width: 7,
-                                    ),
+                                    // SvgPicture.asset("assets/monitor.svg",
+                                    //     colorFilter: ColorFilter.mode(
+                                    //         indexItem == 3
+                                    //             ? AppColors.mainBg
+                                    //             : AppColors.textLite,
+                                    //         BlendMode.srcIn)),
+                                    // const SizedBox(
+                                    //   width: 7,
+                                    // ),
                                     Text(
                                       "Immune...",
                                       style: indexItem == 3
@@ -279,15 +279,15 @@ class _ResultScreenState extends State<ResultScreen> {
                                     horizontal: 9.0, vertical: 8),
                                 child: Row(
                                   children: [
-                                    SvgPicture.asset("assets/monitor.svg",
-                                        colorFilter: ColorFilter.mode(
-                                            indexItem == 3
-                                                ? AppColors.mainBg
-                                                : AppColors.textLite,
-                                            BlendMode.srcIn)),
-                                    const SizedBox(
-                                      width: 7,
-                                    ),
+                                    // SvgPicture.asset("assets/monitor.svg",
+                                    //     colorFilter: ColorFilter.mode(
+                                    //         indexItem == 3
+                                    //             ? AppColors.mainBg
+                                    //             : AppColors.textLite,
+                                    //         BlendMode.srcIn)),
+                                    // const SizedBox(
+                                    //   width: 7,
+                                    // ),
                                     Text(
                                       "Genetic & MSK...",
                                       style: indexItem == 3
