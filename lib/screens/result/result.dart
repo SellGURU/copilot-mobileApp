@@ -321,28 +321,34 @@ class _ResultScreenState extends State<ResultScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: 30,
-                        width: 50,
-                        child: FittedBox(
-                          fit: BoxFit.fill,
-                          child: BlocBuilder<SwitchValueGraphBloc,
-                              SwitchValueState>(
-                            builder: (context, state) {
-                              return CupertinoSwitch(
-                                autofocus: false,
-                                activeColor: AppColors.iconPurpleDark,
-                                value: state.switchValue,
-                                onChanged: (value) {
-                                  print(state.switchValue);
-                                  BlocProvider.of<SwitchValueGraphBloc>(context)
-                                      .add(UpdateSwitchValueGraph(value));
-                                  // valueSwitch = value;
+                      Row(
+                        children: [
+                          SizedBox(
+                            height: 30,
+                            width: 50,
+                            child: FittedBox(
+                              fit: BoxFit.fill,
+                              child: BlocBuilder<SwitchValueGraphBloc,
+                                  SwitchValueState>(
+                                builder: (context, state) {
+                                  return CupertinoSwitch(
+                                    autofocus: false,
+                                    activeColor: AppColors.iconPurpleDark,
+                                    value: state.switchValue,
+                                    onChanged: (value) {
+                                      print(state.switchValue);
+                                      BlocProvider.of<SwitchValueGraphBloc>(context)
+                                          .add(UpdateSwitchValueGraph(value));
+                                      // valueSwitch = value;
+                                    },
+                                  );
                                 },
-                              );
-                            },
+                              ),
+                            ),
                           ),
-                        ),
+                          const SizedBox(width: 5,),
+                          Text("Graph View",style: AppTextStyles.hintMedium,),
+                        ],
                       ),
                     ],
                   ),

@@ -1,0 +1,55 @@
+{
+  "" : {
+    "const-values" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/rook_sdk_apple_health-master.swiftconstvalues",
+    "dependencies" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/rook_sdk_apple_health-master.d",
+    "diagnostics" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/rook_sdk_apple_health-master.dia",
+    "emit-module-dependencies" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/rook_sdk_apple_health-master-emit-module.d",
+    "emit-module-diagnostics" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/rook_sdk_apple_health-master-emit-module.dia",
+    "swift-dependencies" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/rook_sdk_apple_health-master.swiftdeps"
+  },
+  "/Users/amin/.pub-cache/hosted/pub.dev/rook_sdk_apple_health-1.2.2/ios/Classes/Error/FlutterError.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/FlutterError.o",
+    "llvm-bc" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/FlutterError.bc",
+    "object" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/FlutterError.o"
+  },
+  "/Users/amin/.pub-cache/hosted/pub.dev/rook_sdk_apple_health-1.2.2/ios/Classes/Extension/FlutterMethodCallExtensions.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/FlutterMethodCallExtensions.o",
+    "llvm-bc" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/FlutterMethodCallExtensions.bc",
+    "object" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/FlutterMethodCallExtensions.o"
+  },
+  "/Users/amin/.pub-cache/hosted/pub.dev/rook_sdk_apple_health-1.2.2/ios/Classes/FlutterResult/FlutterResultTypes.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/FlutterResultTypes.o",
+    "llvm-bc" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/FlutterResultTypes.bc",
+    "object" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/FlutterResultTypes.o"
+  },
+  "/Users/amin/.pub-cache/hosted/pub.dev/rook_sdk_apple_health-1.2.2/ios/Classes/Mapper/DataSourceMappers.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/DataSourceMappers.o",
+    "llvm-bc" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/DataSourceMappers.bc",
+    "object" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/DataSourceMappers.o"
+  },
+  "/Users/amin/.pub-cache/hosted/pub.dev/rook_sdk_apple_health-1.2.2/ios/Classes/Mapper/RookEnvironmentMappers.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/RookEnvironmentMappers.o",
+    "llvm-bc" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/RookEnvironmentMappers.bc",
+    "object" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/RookEnvironmentMappers.o"
+  },
+  "/Users/amin/.pub-cache/hosted/pub.dev/rook_sdk_apple_health-1.2.2/ios/Classes/Proto/protos.pb.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/protos.pb.o",
+    "llvm-bc" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/protos.pb.bc",
+    "object" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/protos.pb.o"
+  },
+  "/Users/amin/.pub-cache/hosted/pub.dev/rook_sdk_apple_health-1.2.2/ios/Classes/RookSdkAppleHealthPlugin.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/RookSdkAppleHealthPlugin.o",
+    "llvm-bc" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/RookSdkAppleHealthPlugin.bc",
+    "object" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/RookSdkAppleHealthPlugin.o"
+  },
+  "/Users/amin/.pub-cache/hosted/pub.dev/rook_sdk_apple_health-1.2.2/ios/Classes/Utils/BuildDateFromMillis.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/BuildDateFromMillis.o",
+    "llvm-bc" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/BuildDateFromMillis.bc",
+    "object" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/BuildDateFromMillis.o"
+  },
+  "/Users/amin/.pub-cache/hosted/pub.dev/rook_sdk_apple_health-1.2.2/ios/Classes/Utils/RunWithValue.swift" : {
+    "index-unit-output-path" : "/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/RunWithValue.o",
+    "llvm-bc" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/RunWithValue.bc",
+    "object" : "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/Objects-normal/arm64/RunWithValue.o"
+  }
+}

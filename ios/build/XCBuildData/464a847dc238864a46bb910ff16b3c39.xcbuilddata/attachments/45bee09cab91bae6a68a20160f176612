@@ -1,0 +1,23 @@
+{
+  'version': 0,
+  'use-external-names': 'false',
+  'case-sensitive': 'false',
+  'roots': [{
+    'type': 'directory',
+    'name': "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Release-iphoneos/rook_sdk_apple_health/rook_sdk_apple_health.framework/Modules"
+    'contents': [{
+      'type': 'file',
+      'name': "module.modulemap",
+      'external-contents': "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/unextended-module.modulemap",
+    }]
+    },
+    {
+    'type': 'directory',
+    'name': "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Release-iphoneos/rook_sdk_apple_health/rook_sdk_apple_health.framework/Headers"
+    'contents': [{
+      'type': 'file',
+      'name': "rook_sdk_apple_health-Swift.h",
+      'external-contents': "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/rook_sdk_apple_health.build/unextended-interface-header.h",
+    }]
+    }]
+}

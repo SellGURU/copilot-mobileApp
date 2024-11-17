@@ -38,6 +38,7 @@ class _ChatscreenState extends State<Chatscreen> {
       _controller.clear();
     }
   }
+
   final ScrollController _scrollController = ScrollController(); // Step 1
 
   void _scrollToBottom() {
@@ -47,6 +48,7 @@ class _ChatscreenState extends State<Chatscreen> {
       curve: Curves.easeOut,
     );
   }
+
   @override
   void initState() {
     super.initState();
@@ -104,34 +106,36 @@ class _ChatscreenState extends State<Chatscreen> {
                     ],
                   ),
                   const SizedBox(height: 20),
-            BlocBuilder<ChatCubit, ChatState>(
-              builder: (context, state) {
-                if (state is ChatHistoryLoaded) {
-                  WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
-                  return Expanded(
-                    child: ListView.builder(
-                      controller: _scrollController, // Attach the ScrollController
-                      itemCount: state.messages.length,
-                      itemBuilder: (context, index) {
-                        final message = state.messages[index];
-                        return _buildMessageBubble(
-                          message.text,
-                          message.sender,
-                          message.time,
-                          message.avatarUrl,
+                  BlocBuilder<ChatCubit, ChatState>(
+                    builder: (context, state) {
+                      if (state is ChatHistoryLoaded) {
+                        WidgetsBinding.instance
+                            .addPostFrameCallback((_) => _scrollToBottom());
+                        return Expanded(
+                          child: ListView.builder(
+                            controller:
+                                _scrollController, // Attach the ScrollController
+                            itemCount: state.messages.length,
+                            itemBuilder: (context, index) {
+                              final message = state.messages[index];
+                              return _buildMessageBubble(
+                                message.text,
+                                message.sender,
+                                message.time,
+                                message.avatarUrl,
+                              );
+                            },
+                          ),
                         );
-                      },
-                    ),
-                  );
-                } else if (state is ChatHistoryLoaded) {
-                  return const Center(child: CircularProgressIndicator());
-                } else {
-                  return const Center(child: Text("An error occurred"));
-                }
-              },
-            ),
+                      } else if (state is ChatHistoryLoading) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else {
+                        print("state is ${state}");
+                        return const Center(child: Text("An error occurred"));
+                      }
+                    },
+                  ),
                   const SizedBox(height: 120),
-
                 ],
               ),
               Positioned(
@@ -152,7 +156,7 @@ class _ChatscreenState extends State<Chatscreen> {
                         hintStyle: AppTextStyles.hint,
                         hintText: "Ask me anything...",
                         suffixIcon: IconButton(
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.send,
                             color: AppColors.purpleDark,
                           ),
@@ -191,7 +195,7 @@ class _ChatscreenState extends State<Chatscreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           textDirection: TextDirection.rtl,
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               backgroundImage: NetworkImage("https://via.placeholder.com/40"),
               radius: 20,
             ),
@@ -241,8 +245,7 @@ class _ChatscreenState extends State<Chatscreen> {
           ],
         ),
       );
-    }
-    else {
+    } else {
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Row(
@@ -250,8 +253,8 @@ class _ChatscreenState extends State<Chatscreen> {
           textDirection: TextDirection.ltr,
           children: [
             CircleAvatar(
-              backgroundImage: NetworkImage("https://via.placeholder.com/40"),
               radius: 20,
+              child: SvgPicture.asset("assets/AiPic.svg"),
             ),
             const SizedBox(width: 10),
             Expanded(
@@ -272,7 +275,7 @@ class _ChatscreenState extends State<Chatscreen> {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        time,
+                        time.split(' ')[1],
                         style: AppTextStyles.titleMedium
                             .copyWith(color: Colors.grey),
                         textDirection: TextDirection.ltr,
@@ -302,4 +305,3 @@ class _ChatscreenState extends State<Chatscreen> {
     }
   }
 }
-

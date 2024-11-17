@@ -68,17 +68,16 @@ class ChatCubit extends Cubit<ChatState> {
     try {
       _dio.post(Endpoints.getHistoryChat).then((response) {
         if (response.statusCode == 200) {
+          print("data test bb ${response.data}");
+
           if(response.data["conversation_id"]!=null){
-            // print("check hi null");
             conversationId=response.data["conversation_id"];
           }
-
 
           if(response.data["messages"].length>0) {
 
             for (var entry in response.data["messages"]) {
               String time = entry["entrytime"] ?? ""; // Get message time
-
               // Create Message for user's request
               if (entry["request"] != null && entry["request"].isNotEmpty) {
                 messages.add(Message.fromRequest(time, entry["request"]));

@@ -1,0 +1,96 @@
+Target dependency graph (37 targets)
+Target 'Pods-RunnerTests' in project 'Pods'
+➜ Explicit dependency on target 'Pods-Runner' in project 'Pods'
+Target 'Pods-Runner' in project 'Pods'
+➜ Explicit dependency on target 'AppAuth' in project 'Pods'
+➜ Explicit dependency on target 'DKImagePickerController' in project 'Pods'
+➜ Explicit dependency on target 'DKPhotoGallery' in project 'Pods'
+➜ Explicit dependency on target 'Flutter' in project 'Pods'
+➜ Explicit dependency on target 'GTMAppAuth' in project 'Pods'
+➜ Explicit dependency on target 'GTMSessionFetcher' in project 'Pods'
+➜ Explicit dependency on target 'GoogleSignIn' in project 'Pods'
+➜ Explicit dependency on target 'RookSDK' in project 'Pods'
+➜ Explicit dependency on target 'SDWebImage' in project 'Pods'
+➜ Explicit dependency on target 'SwiftProtobuf' in project 'Pods'
+➜ Explicit dependency on target 'SwiftyGif' in project 'Pods'
+➜ Explicit dependency on target 'camera_avfoundation' in project 'Pods'
+➜ Explicit dependency on target 'file_picker' in project 'Pods'
+➜ Explicit dependency on target 'google_sign_in_ios' in project 'Pods'
+➜ Explicit dependency on target 'path_provider_foundation' in project 'Pods'
+➜ Explicit dependency on target 'permission_handler_apple' in project 'Pods'
+➜ Explicit dependency on target 'rook_sdk_apple_health' in project 'Pods'
+➜ Explicit dependency on target 'shared_preferences_foundation' in project 'Pods'
+➜ Explicit dependency on target 'url_launcher_ios' in project 'Pods'
+Target 'url_launcher_ios' in project 'Pods'
+➜ Explicit dependency on target 'Flutter' in project 'Pods'
+➜ Explicit dependency on target 'url_launcher_ios-url_launcher_ios_privacy' in project 'Pods'
+Target 'url_launcher_ios-url_launcher_ios_privacy' in project 'Pods' (no dependencies)
+Target 'shared_preferences_foundation' in project 'Pods'
+➜ Explicit dependency on target 'Flutter' in project 'Pods'
+➜ Explicit dependency on target 'shared_preferences_foundation-shared_preferences_foundation_privacy' in project 'Pods'
+Target 'shared_preferences_foundation-shared_preferences_foundation_privacy' in project 'Pods' (no dependencies)
+Target 'rook_sdk_apple_health' in project 'Pods'
+➜ Explicit dependency on target 'Flutter' in project 'Pods'
+➜ Explicit dependency on target 'RookSDK' in project 'Pods'
+➜ Explicit dependency on target 'SwiftProtobuf' in project 'Pods'
+Target 'permission_handler_apple' in project 'Pods'
+➜ Explicit dependency on target 'Flutter' in project 'Pods'
+➜ Explicit dependency on target 'permission_handler_apple-permission_handler_apple_privacy' in project 'Pods'
+Target 'permission_handler_apple-permission_handler_apple_privacy' in project 'Pods' (no dependencies)
+Target 'path_provider_foundation' in project 'Pods'
+➜ Explicit dependency on target 'Flutter' in project 'Pods'
+➜ Explicit dependency on target 'path_provider_foundation-path_provider_foundation_privacy' in project 'Pods'
+Target 'path_provider_foundation-path_provider_foundation_privacy' in project 'Pods' (no dependencies)
+Target 'google_sign_in_ios' in project 'Pods'
+➜ Explicit dependency on target 'AppAuth' in project 'Pods'
+➜ Explicit dependency on target 'Flutter' in project 'Pods'
+➜ Explicit dependency on target 'GTMSessionFetcher' in project 'Pods'
+➜ Explicit dependency on target 'GoogleSignIn' in project 'Pods'
+➜ Explicit dependency on target 'google_sign_in_ios-google_sign_in_ios_privacy' in project 'Pods'
+Target 'google_sign_in_ios-google_sign_in_ios_privacy' in project 'Pods' (no dependencies)
+Target 'file_picker' in project 'Pods'
+➜ Explicit dependency on target 'DKImagePickerController' in project 'Pods'
+➜ Explicit dependency on target 'Flutter' in project 'Pods'
+➜ Explicit dependency on target 'file_picker-file_picker_ios_privacy' in project 'Pods'
+Target 'file_picker-file_picker_ios_privacy' in project 'Pods' (no dependencies)
+Target 'camera_avfoundation' in project 'Pods'
+➜ Explicit dependency on target 'Flutter' in project 'Pods'
+➜ Explicit dependency on target 'camera_avfoundation-camera_avfoundation_privacy' in project 'Pods'
+Target 'camera_avfoundation-camera_avfoundation_privacy' in project 'Pods' (no dependencies)
+Target 'SwiftProtobuf' in project 'Pods' (no dependencies)
+Target 'RookSDK' in project 'Pods' (no dependencies)
+Target 'GoogleSignIn' in project 'Pods'
+➜ Explicit dependency on target 'AppAuth' in project 'Pods'
+➜ Explicit dependency on target 'GTMAppAuth' in project 'Pods'
+➜ Explicit dependency on target 'GTMSessionFetcher' in project 'Pods'
+➜ Explicit dependency on target 'GoogleSignIn-GoogleSignIn' in project 'Pods'
+Target 'GoogleSignIn-GoogleSignIn' in project 'Pods' (no dependencies)
+Target 'GTMAppAuth' in project 'Pods'
+➜ Explicit dependency on target 'AppAuth' in project 'Pods'
+➜ Explicit dependency on target 'GTMAppAuth-GTMAppAuth_Privacy' in project 'Pods'
+➜ Explicit dependency on target 'GTMSessionFetcher' in project 'Pods'
+Target 'GTMSessionFetcher' in project 'Pods'
+➜ Explicit dependency on target 'GTMSessionFetcher-GTMSessionFetcher_Core_Privacy' in project 'Pods'
+➜ Explicit dependency on target 'GTMSessionFetcher-GTMSessionFetcher_Full_Privacy' in project 'Pods'
+Target 'GTMSessionFetcher-GTMSessionFetcher_Full_Privacy' in project 'Pods' (no dependencies)
+Target 'GTMSessionFetcher-GTMSessionFetcher_Core_Privacy' in project 'Pods' (no dependencies)
+Target 'GTMAppAuth-GTMAppAuth_Privacy' in project 'Pods' (no dependencies)
+Target 'Flutter' in project 'Pods' (no dependencies)
+Target 'DKImagePickerController' in project 'Pods'
+➜ Explicit dependency on target 'DKImagePickerController-DKImagePickerController' in project 'Pods'
+➜ Explicit dependency on target 'DKPhotoGallery' in project 'Pods'
+Target 'DKPhotoGallery' in project 'Pods'
+➜ Explicit dependency on target 'DKPhotoGallery-DKPhotoGallery' in project 'Pods'
+➜ Explicit dependency on target 'SDWebImage' in project 'Pods'
+➜ Explicit dependency on target 'SwiftyGif' in project 'Pods'
+Target 'SwiftyGif' in project 'Pods'
+➜ Explicit dependency on target 'SwiftyGif-SwiftyGif' in project 'Pods'
+Target 'SwiftyGif-SwiftyGif' in project 'Pods' (no dependencies)
+Target 'SDWebImage' in project 'Pods'
+➜ Explicit dependency on target 'SDWebImage-SDWebImage' in project 'Pods'
+Target 'SDWebImage-SDWebImage' in project 'Pods' (no dependencies)
+Target 'DKPhotoGallery-DKPhotoGallery' in project 'Pods' (no dependencies)
+Target 'DKImagePickerController-DKImagePickerController' in project 'Pods' (no dependencies)
+Target 'AppAuth' in project 'Pods'
+➜ Explicit dependency on target 'AppAuth-AppAuthCore_Privacy' in project 'Pods'
+Target 'AppAuth-AppAuthCore_Privacy' in project 'Pods' (no dependencies)

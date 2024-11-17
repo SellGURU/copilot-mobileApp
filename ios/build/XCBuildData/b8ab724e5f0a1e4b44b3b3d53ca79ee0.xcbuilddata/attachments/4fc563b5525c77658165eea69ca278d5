@@ -1,0 +1,11 @@
+framework module rook_sdk_apple_health {
+  umbrella header "rook_sdk_apple_health-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module rook_sdk_apple_health.Swift {
+  header "rook_sdk_apple_health-Swift.h"
+  requires objc
+}

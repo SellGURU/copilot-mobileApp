@@ -79,7 +79,7 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                             widget.badgeText,
                             style: widget.badgeText == "Borderline"
                                 ? AppTextStyles.hint
-                                : AppTextStyles.hintWhite,
+                                : AppTextStyles.hint,
                           ),
                         ),
                       ),

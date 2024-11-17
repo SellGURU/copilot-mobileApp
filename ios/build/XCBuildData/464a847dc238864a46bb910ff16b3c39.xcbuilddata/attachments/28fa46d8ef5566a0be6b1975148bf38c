@@ -1,0 +1,5 @@
+ extern const unsigned char rook_sdk_apple_healthVersionString[];
+ extern const double rook_sdk_apple_healthVersionNumber;
+
+ const unsigned char rook_sdk_apple_healthVersionString[] __attribute__ ((used)) = "@(#)PROGRAM:rook_sdk_apple_health  PROJECT:Pods-1" "\n";
+ const double rook_sdk_apple_healthVersionNumber __attribute__ ((used)) = (double)1.;

@@ -1,0 +1,23 @@
+{
+  'version': 0,
+  'use-external-names': 'false',
+  'case-sensitive': 'false',
+  'roots': [{
+    'type': 'directory',
+    'name': "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Release-iphoneos/SwiftProtobuf/SwiftProtobuf.framework/Modules"
+    'contents': [{
+      'type': 'file',
+      'name': "module.modulemap",
+      'external-contents': "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/SwiftProtobuf.build/unextended-module.modulemap",
+    }]
+    },
+    {
+    'type': 'directory',
+    'name': "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Release-iphoneos/SwiftProtobuf/SwiftProtobuf.framework/Headers"
+    'contents': [{
+      'type': 'file',
+      'name': "SwiftProtobuf-Swift.h",
+      'external-contents': "/Users/amin/AndroidStudioProjects/test_copilet/ios/build/Pods.build/Release-iphoneos/SwiftProtobuf.build/unextended-interface-header.h",
+    }]
+    }]
+}
