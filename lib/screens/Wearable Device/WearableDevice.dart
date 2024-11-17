@@ -49,10 +49,13 @@ class _WearableDeviceState extends State<WearableDevice> {
               padding: const EdgeInsets.all(20),
               child: Column(
                 children: [
-                  Text(
-                    "Sync your health data effortlessly by connecting with Health Applications. By integrating, track your progress across all your devices, and make the most of your health journey.",
-                    textAlign: TextAlign.start,
-                    style: AppTextStyles.titleMediumLangHeight,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 6.5),
+                    child: Text(
+                      "Sync your health data effortlessly by connecting with Health Applications. By integrating, track your progress across all your devices, and make the most of your health journey.",
+                      textAlign: TextAlign.start,
+                      style: AppTextStyles.titleMediumLangHeight,
+                    ),
                   ),
                   const SizedBox(
                     height: 20,

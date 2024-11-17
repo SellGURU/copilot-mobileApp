@@ -83,21 +83,21 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                           ),
                         ),
                       ),
-                      Row(
-                        children: [
-                          SvgPicture.asset('assets/dangerIcon.svg'),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "Need to work",
-                            style: TextStyle(
-                                color: widget.colorBadge,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 12),
-                          )
-                        ],
-                      )
+                      // Row(
+                      //   children: [
+                      //     SvgPicture.asset('assets/dangerIcon.svg'),
+                      //     const SizedBox(
+                      //       width: 5,
+                      //     ),
+                      //     // Text(
+                      //     //   "Need to work",
+                      //     //   style: TextStyle(
+                      //     //       color: widget.colorBadge,
+                      //     //       fontWeight: FontWeight.w400,
+                      //     //       fontSize: 12),
+                      //     // )
+                      //   ],
+                      // )
                     ],
                   )
                 ],

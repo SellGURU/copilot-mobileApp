@@ -19,7 +19,7 @@ class BiomarkerCubit extends Cubit<BiomarkerState> {
         if (value.statusCode == 200) {
           // var jsonResponse = json.decode(value.data);
           // print("data:${jsonResponse["data"]}");
-          // print("value.data:${value.data["data"]}");
+          print("value.data:${value.data["data"]}");
           emit(SuccessBiomarkerState(biomarkerData: value.data));
         } else {
           emit(ErrorBiomarkerState());

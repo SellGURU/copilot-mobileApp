@@ -213,7 +213,7 @@ class _ChatscreenState extends State<Chatscreen> {
                         sender,
                         style: AppTextStyles.title2
                             .copyWith(fontWeight: FontWeight.bold),
-                        overflow: TextOverflow.ellipsis,
+                      overflow: TextOverflow.ellipsis,
                         textDirection: TextDirection.rtl,
                       ),
                       const SizedBox(width: 8),

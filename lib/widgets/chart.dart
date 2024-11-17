@@ -1,5 +1,3 @@
-
-
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,8 +10,15 @@ import 'dart:math';
 
 class ChartDot extends StatelessWidget {
   ChartDot({super.key});
-  double getRandomX() => Random().nextDouble() * 5;
-  double getRandomY() => Random().nextDouble() * 160 + 50;
+  double getRandomX(){
+    double randomNumber = Random().nextDouble() * 5;
+    return double.parse(randomNumber.toStringAsFixed(2));
+  }
+  double getRandomY() {
+    double randomNumber = Random().nextDouble() * 160 + 50;
+    return double.parse(randomNumber.toStringAsFixed(2));
+  }
+
   // const SettingPage({super.key});
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
     switch (value.toInt()) {
@@ -58,17 +63,17 @@ class ChartDot extends StatelessWidget {
     //       '30',
     //       style: AppTextStyles.hintVerySmale,
     //     ));
-    if (value.toInt() == 40 || value.toInt() == 160) {
-      return Container(
-          width: 100,
-          child: Text(
-            "${value.toInt()}",
-            style: AppTextStyles.hintVerySmale,
-          ));
-    }
+    // if (value.toInt() == 40 || value.toInt() == 160) {
+    //   return Container(
+    //       width: 100,
+    //       child: Text(
+    //         "${value.toInt()}",
+    //         style: AppTextStyles.hintVerySmale,
+    //       ));
+    // }
     print(meta.axisPosition);
     // if(meta.axisPosition.isFinite)
-    return SizedBox();
+    return SizedBox(width: 0,height: 0,);
   }
 
   List<Color> gradientColors = [
@@ -78,6 +83,7 @@ class ChartDot extends StatelessWidget {
 
   LineChartData mainData() {
     return LineChartData(
+
       clipData: const FlClipData.none(),
       gridData: const FlGridData(
         show: false,
@@ -119,23 +125,23 @@ class ChartDot extends StatelessWidget {
             },
           ),
         ),
-        leftTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            getTitlesWidget: (value, meta) => leftTitleWidgets(value, meta),
-          ),
-        ),
+        leftTitles: AxisTitles(sideTitles: SideTitles(showTitles: false)),
+        // leftTitles: AxisTitles(
+        //   sideTitles: SideTitles(
+        //     showTitles: true,
+        //     getTitlesWidget: (value, meta) => leftTitleWidgets(value, meta),
+        //   ),
+        // ),
       ),
       lineBarsData: [
         LineChartBarData(
           spots: [
-            FlSpot(0, 0),
-            FlSpot(1, 70),
+            const FlSpot(0, 0),
+            const FlSpot(1, 70),
             FlSpot(2, getRandomY()),
             FlSpot(3, getRandomY()),
             FlSpot(4, getRandomY()),
             FlSpot(5, getRandomY()),
-
           ],
           isCurved: true,
           shadow: BoxShadow(

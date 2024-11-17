@@ -39,7 +39,6 @@ class _ResultScreenState extends State<ResultScreen> {
           );
         }
         var data = state.getBiomarkerData();
-        print("data:${data}");
         if (state is SuccessBiomarkerState) {
           return SingleChildScrollView(
 
