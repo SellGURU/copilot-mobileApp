@@ -40,17 +40,17 @@ class _ProgressScreenState extends State<ProgressScreen> {
                   ),
                   Row(
                     children: [
-                      SvgPicture.asset(
-                        "assets/notificationIcon.svg",
-                        width: 25,
-                        height: 25,
+                      const Icon(
+                        Icons.notifications_none_outlined,
+                        color: AppColors.purpleDark,
                       ),
                       const SizedBox(
                         width: 5,
                       ),
-                      const Icon(
-                        Icons.notifications_none_outlined,
-                        color: AppColors.purpleDark,
+                      SvgPicture.asset(
+                        "assets/notificationIcon.svg",
+                        width: 25,
+                        height: 25,
                       ),
                     ],
                   )
@@ -78,53 +78,6 @@ class _ProgressScreenState extends State<ProgressScreen> {
                 height: 10,
               ),
 
-              WaterTaskWidget(),
-              const SizedBox(
-                height: 10,
-              ),
-              WaterTaskWidget(),
-              const SizedBox(
-                height: 10,
-              ),
-              WaterTaskWidget(),
-              const SizedBox(
-                height: 10,
-              ),
-              WaterTaskWidget(),
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              WaterTaskWidget(),
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              WaterTaskWidget(),
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              WaterTaskWidget(),
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              WaterTaskWidget(),
-              const SizedBox(
-                height: 10,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
               WaterTaskWidget(),
               const SizedBox(
                 height: 10,
@@ -608,73 +561,96 @@ class _AddBtnBottomSheetState extends State<AddBtnBottomSheet> {
           topRight: Radius.circular(20.0),
         ),
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Text(
-            'Water for Today',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
+      child: Stack(children: [
+        Positioned(
+          top: -10,
+          right: -10,
+          child: IconButton(
+            icon: const Icon(
+              Icons.close,
+              color: AppColors.purpleDark,
             ),
-          ),
-          SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                '$glasses Glasses',
-                style: TextStyle(
-                  fontSize: 22,
-                ),
-              ),
-              SizedBox(width: 10,),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: incrementGlasses,
-                    child: Icon(Icons.add,size: 18,color: AppColors.hintLite,),
-                  ),
-                  GestureDetector(
-                    onTap: decrementGlasses,
-                    child: Icon(Icons.remove,size: 18,color: AppColors.hintLite),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(height: 5),
-          Text(
-            'of $goal',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey,
-            ),
-          ),
-          SizedBox(height: 20),
-          ElevatedButton(
             onPressed: () {
-              // Add save logic here
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content:
-                      Text('Changes saved', style: AppTextStyles.hintWhite),
-                ),
-              );
+              Navigator.pop(context);
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.purpleDark,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30),
-              ),
-              padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-            ),
-            child: Text('Save Changes', style: AppTextStyles.hintWhite),
           ),
-        ],
-      ),
+        ),
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            const Text(
+              'Water for Today',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  '$glasses Glasses',
+                  style: const TextStyle(
+                    fontSize: 22,
+                  ),
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: incrementGlasses,
+                      child: Icon(
+                        Icons.add,
+                        size: 18,
+                        color: AppColors.hintLite,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: decrementGlasses,
+                      child: Icon(Icons.remove,
+                          size: 18, color: AppColors.hintLite),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SizedBox(height: 5),
+            Text(
+              'of $goal',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+                // Add save logic here
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content:
+                        Text('Changes saved', style: AppTextStyles.hintWhite),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.purpleDark,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+              ),
+              child: Text('Save Changes', style: AppTextStyles.hintWhite),
+            ),
+          ],
+        ),
+      ]),
     );
   }
 }

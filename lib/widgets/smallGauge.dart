@@ -50,7 +50,7 @@ class SmallGauge extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          "$value",
+                          "$value%",
                           style: AppTextStyles.titleSmaleBold,
                         ),
                       ],
