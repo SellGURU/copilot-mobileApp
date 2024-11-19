@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   AppColors._();
-  // rgba(48, 68, 91, 1)
-  // rgba(123, 147, 175, 1)
+  // rgba(132, 138, 148, 1)
   static const Color mainBg = Colors.white;
   static const Color black = Color.fromRGBO(48, 68, 91, 1);
   static const Color bgScreen = Color.fromARGB(255, 254, 254, 254);
@@ -11,9 +10,11 @@ class AppColors {
   static const Color primary = Color.fromARGB(255, 48, 68, 91);
   static const Color textLite = Color.fromARGB(255,123, 147, 175);
   static const Color gray100 = Color.fromARGB(255,243, 244, 246);
+  static const Color grayDark = Color.fromRGBO(132, 138, 148, 1);
   // rgba(, 1)
   static const Color textLiteGray = Color.fromARGB(255,174, 193, 218);
   static const Color purpleDark = Color.fromARGB(255, 147, 129, 255);
+  // rgba(184, 184, 255, 1)
   static const Color purpleLite = Color.fromRGBO(208, 209, 255, 1);
   static const Color iconPurpleDark = Color.fromARGB(255, 147, 129, 255);
   static const Color PurpleLiteText = Color.fromRGBO(184, 184, 255, 1);
@@ -28,6 +29,7 @@ class AppColors {
   static const Color yellowBegaDarker = Color.fromRGBO(255, 228, 94, 1);
   static const Color yellowLite = Color.fromRGBO(251, 236, 196, 1);
   static const Color yellowText = Color.fromRGBO(242, 211, 130, 1);
+  static const Color shadowColorWithOpacity = Color.fromRGBO(153, 171, 198, 0.18);
   static const Color shadowColor = Color.fromARGB(153, 171, 198, 100);
   static const Color brandSecondaryColor = Color.fromARGB(255, 147, 129, 255);
   static const Color gray = Color.fromRGBO(245, 247, 250, 1);

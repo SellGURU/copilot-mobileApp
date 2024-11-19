@@ -13,78 +13,155 @@ class ProgressScreen extends StatefulWidget {
   State<ProgressScreen> createState() => _ProgressScreenState();
 }
 
-class _ProgressScreenState extends State<ProgressScreen> {
+class _ProgressScreenState extends State<ProgressScreen>
+    with SingleTickerProviderStateMixin {
+  final ScrollController _scrollController = ScrollController();
+
+  late AnimationController _animationController;
+  late Animation<double> _planProgressOpacity;
+  late Animation<double> _calendarOpacity;
+
+  bool _isPlanProgressVisible = true; // Tracks which item is visible
+  int selectedDate = DateTime.now().day;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Initialize AnimationController
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 500), // Adjust duration as needed
+    );
+
+    // Define Animations using CurvedAnimation
+    _planProgressOpacity = Tween<double>(begin: 1.0, end: 0.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _calendarOpacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: Curves.easeInOut,
+      ),
+    );
+
+    _scrollController.addListener(_onScroll);
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  void _onScroll() {
+    double offset = _scrollController.offset;
+
+    if (offset > 50 && _isPlanProgressVisible) {
+      // Trigger fade out of PlanProgressSection and fade in HorizontalCalendar
+      setState(() {
+        _isPlanProgressVisible = false;
+      });
+      _animationController.forward();
+    } else if (offset <= 50 && !_isPlanProgressVisible) {
+      // Trigger fade in of PlanProgressSection and fade out HorizontalCalendar
+      setState(() {
+        _isPlanProgressVisible = true;
+      });
+      _animationController.reverse();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final dates = List.generate(
+      7,
+          (index) => DateTime.now().add(Duration(days: index - 2)),
+    );
+
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Progress",
-                        style: AppTextStyles.title1,
-                      ),
-                      SizedBox(
-                        width: 10,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.notifications_none_outlined,
-                        color: AppColors.purpleDark,
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      SvgPicture.asset(
-                        "assets/notificationIcon.svg",
-                        width: 25,
-                        height: 25,
-                      ),
-                    ],
-                  )
-                ],
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              // Progress Bar Plan Section
-
-              PlanProgressSection(),
-              SizedBox(height: 16),
-              // Daily Goals Section
-              GoalCompletionSection(),
-              SizedBox(height: 16),
-              // Challenges Section
-              ChallengesSection(),
-              SizedBox(height: 16),
-              // Tasks Section
-              Text(
-                "Tasks",
-                style: AppTextStyles.title2,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-
-              WaterTaskWidget(),
-              const SizedBox(
-                height: 10,
-              ),
-            ],
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(height: 25,),
+          // Header Section
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Progress",
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.notifications_none_outlined,
+                      color: Colors.black,
+                    ),
+                    SizedBox(width: 5),
+                    Icon(Icons.more_vert),
+                  ],
+                ),
+              ],
+            ),
           ),
-        ),
+          Expanded(
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20,),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 30),
+                    // PlanProgressSection with FadeTransition
+                    FadeTransition(
+                      opacity: _planProgressOpacity, // Use Animation<double>
+                      child: PlanProgressSection(),
+                    ),
+                    // HorizontalCalendar with FadeTransition
+                    !_isPlanProgressVisible?  FadeTransition(
+                      opacity: _calendarOpacity, // Use Animation<double>
+                      child: HorizontalCalendar(
+                        dates: dates,
+                        selectedDate: selectedDate,
+                        onDateSelected: (date) {
+                          setState(() {
+                            selectedDate = date;
+                          });
+                        },
+                      ),
+                    ):SizedBox(width: 0,),
+                    const SizedBox(height: 16),
+                    // Daily Goals Section
+                    GoalCompletionSection(),
+                    const SizedBox(height: 16),
+                    // Challenges Section
+                    ChallengesSection(),
+                    const SizedBox(height: 16),
+                    // Tasks Section
+                    Text(
+                      "Tasks",
+                      style: AppTextStyles.title2,
+                    ),
+                    const SizedBox(height: 10),
+                    WaterTaskWidget(),
+                    const SizedBox(height: 150),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -108,15 +185,53 @@ class PlanProgressSection extends StatelessWidget {
               offset: const Offset(4, 0), // changes position of shadow
             ),
           ]),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Text(
-          //   'Your Weekly Progress',
-          //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-          // ),
-          SizedBox(height: 16),
           Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                width: 20,
+                height: 2,
+                decoration: BoxDecoration(
+                    border: Border.all(width: 2, color: AppColors.greenLite),
+                    color: AppColors.yellowBega),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                'Main Plan',
+                style: AppTextStyles.hint,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Row(
+                children: [
+                  Container(
+                    width: 20,
+                    height: 2,
+                    decoration: BoxDecoration(
+                        border:
+                            Border.all(width: 2, color: AppColors.yellowBega),
+                        color: AppColors.yellowBega),
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Text(
+                    'Alternative Plan',
+                    style: AppTextStyles.hint,
+                  ),
+                ],
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               BarChartWidget(
@@ -183,8 +298,8 @@ class BarChartWidget extends StatelessWidget {
           alignment: Alignment.bottomCenter,
           children: [
             Container(
-              height: 80,
-              width: 16,
+              height: 150,
+              width: 22,
               decoration: BoxDecoration(
                 color: AppColors.bgChartProgress,
                 borderRadius: BorderRadius.circular(8),
@@ -193,8 +308,8 @@ class BarChartWidget extends StatelessWidget {
             Positioned(
               bottom: 0,
               child: Container(
-                height: 80 * alternativePlan,
-                width: 16,
+                height: 150 * alternativePlan,
+                width: 22,
                 decoration: BoxDecoration(
                   color: this.color,
                   borderRadius: BorderRadius.circular(8),
@@ -652,5 +767,79 @@ class _AddBtnBottomSheetState extends State<AddBtnBottomSheet> {
         ),
       ]),
     );
+  }
+}
+
+class HorizontalCalendar extends StatefulWidget {
+  final List<DateTime> dates;
+  final int selectedDate;
+  final Function(int) onDateSelected;
+
+  const HorizontalCalendar({
+    Key? key,
+    required this.dates,
+    required this.selectedDate,
+    required this.onDateSelected,
+  }) : super(key: key);
+
+  @override
+  State<HorizontalCalendar> createState() => _HorizontalCalendarState();
+}
+
+class _HorizontalCalendarState extends State<HorizontalCalendar> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(10),
+
+      height: 110, // Height of the calendar
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: widget.dates.length,
+        itemBuilder: (context, index) {
+          final date = widget.dates[index];
+          final isSelected = date.day == widget.selectedDate;
+
+          return GestureDetector(
+            onTap: () => widget.onDateSelected(date.day),
+            child: Container(
+              width: 65,
+              height: 95,
+              margin: const EdgeInsets.symmetric(horizontal: 8,vertical: 10),
+              decoration: BoxDecoration(
+                color: isSelected ? AppColors.PurpleLiteText : Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: const [
+                   BoxShadow(
+                      color: AppColors.shadowColorWithOpacity,
+                      blurRadius: 10,
+                      offset: Offset(4, 0),
+                    ),
+                ],
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "${date.day}",
+                    style: !isSelected ? AppTextStyles.title3xlLiteGray: AppTextStyles.title3xlWhite
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    _getWeekdayName(date.weekday),
+                    style:!isSelected ?AppTextStyles.title2Gray:AppTextStyles.title2White
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  String _getWeekdayName(int weekday) {
+    const weekdays = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    return weekdays[weekday - 1];
   }
 }

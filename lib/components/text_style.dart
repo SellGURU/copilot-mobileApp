@@ -18,12 +18,20 @@ class AppTextStyles {
       textStyle: TextStyle(
           fontSize: 24, color: AppColors.mainBg, fontWeight: FontWeight.w400));
 
+  static TextStyle title3xlLiteGray = GoogleFonts.roboto(
+      textStyle: TextStyle(
+          fontSize: 24, color: AppColors.grayDark, fontWeight: FontWeight.w500));
+  static TextStyle title3xlWhite = GoogleFonts.roboto(
+      textStyle: TextStyle(
+          fontSize: 24, color: AppColors.mainBg, fontWeight: FontWeight.w500));
+
   static TextStyle title2xl = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 24, color: AppColors.text, fontWeight: FontWeight.w700));
   static TextStyle titleXl = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 20, color: AppColors.text, fontWeight: FontWeight.w500));
+
   static TextStyle titleXlYellow = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 20, color: AppColors.yellowText,
@@ -64,9 +72,21 @@ class AppTextStyles {
   static TextStyle titleMediumWhite = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 14, color: Colors.white, fontWeight: FontWeight.w400));
+
+
   static TextStyle title2 = GoogleFonts.roboto(
       textStyle: TextStyle(fontSize: 14, color: AppColors.text),
       fontWeight: FontWeight.w500);
+
+  static TextStyle title2White = GoogleFonts.roboto(
+      textStyle: TextStyle(fontSize: 14, color: AppColors.mainBg),
+      fontWeight: FontWeight.w500);
+
+
+  static TextStyle title2Gray = GoogleFonts.roboto(
+      textStyle: TextStyle(fontSize: 14, color: AppColors.grayDark),
+      fontWeight: FontWeight.w500);
+
   static TextStyle title2Purple = GoogleFonts.roboto(
       textStyle: TextStyle(fontSize: 14, color: AppColors.purpleDark),
       fontWeight: FontWeight.w500);
