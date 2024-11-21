@@ -3,31 +3,35 @@ class Message {
   final String text;
   final String time;
   final String avatarUrl;
+  final List<String> images; // To store image URLs for requests
 
   Message({
     required this.sender,
     required this.text,
     required this.time,
     required this.avatarUrl,
+    this.images = const [], // Default to an empty list if no images
   });
 
   // Factory constructor to create a request message (from the user)
-  factory Message.fromRequest(String time, String requestText) {
+  factory Message.fromRequest(Map<String, dynamic> entry) {
     return Message(
       sender: "User",
-      text: requestText,
-      time: time,
-      avatarUrl: "path/to/user/avatar", // Replace with actual user avatar path
+      text: entry['request']['text'],
+      time: entry['entrytime'],
+      avatarUrl: "path/to/user/avatar",
+      images: List<String>.from(entry['request']['images'] ?? []), // Handle images array
     );
   }
 
   // Factory constructor to create a response message (from the system)
-  factory Message.fromResponse(String time, String responseText) {
+  factory Message.fromResponse(Map<String, dynamic> entry) {
     return Message(
       sender: "Ai",
-      text: responseText,
-      time: time,
-      avatarUrl: "path/to/system/avatar", // Replace with actual system avatar path
+      text: entry['response'],
+      time: entry['entrytime'],
+      avatarUrl: "path/to/system/avatar",
+      images: [], // No images for the response
     );
   }
 }

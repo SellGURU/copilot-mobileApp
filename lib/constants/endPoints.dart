@@ -13,5 +13,5 @@ class Endpoints {
   static const clientInformationMobile = "${baseUrlCodie}client_information_mobile";
   static const google_form = "${baseUrlCodie}google_form";
   static const mobile_chat = "${baseUrlCodie}mobile_chat";
-  static const getHistoryChat = "${baseUrlCodie}mobile/get_messages_id";
+  static const getHistoryChat = "${baseUrlCodie}mobile_chat/get_messages_id";
 }

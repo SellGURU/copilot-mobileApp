@@ -18,7 +18,6 @@ class Chatscreen extends StatefulWidget {
 
 class _ChatscreenState extends State<Chatscreen> {
   final TextEditingController _controller = TextEditingController();
-  final List<Message> _messages = [];
 
   Future<String?> getNameUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -114,7 +113,7 @@ class _ChatscreenState extends State<Chatscreen> {
                         return Expanded(
                           child: ListView.builder(
                             controller:
-                                _scrollController, // Attach the ScrollController
+                            _scrollController, // Attach the ScrollController
                             itemCount: state.messages.length,
                             itemBuilder: (context, index) {
                               final message = state.messages[index];
@@ -213,7 +212,7 @@ class _ChatscreenState extends State<Chatscreen> {
                         sender,
                         style: AppTextStyles.title2
                             .copyWith(fontWeight: FontWeight.bold),
-                      overflow: TextOverflow.ellipsis,
+                        overflow: TextOverflow.ellipsis,
                         textDirection: TextDirection.rtl,
                       ),
                       const SizedBox(width: 8),

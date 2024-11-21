@@ -8,13 +8,13 @@ import '../../../constants/endPoints.dart';
 import '../../../utility/token/getTokenLocaly.dart';
 
 class ChatCubit extends Cubit<ChatState> {
-  ChatCubit() : super(ChatInitial()){
+  ChatCubit() : super(ChatInitial()) {
     getHistoryChat();
   }
 
   List<Message> messages = [];
   Dio _dio = Dio();
-  var conversationId=1;
+  var conversationId = 1;
 
   Future<void> sendMessage(String message) async {
     // Add the user's message to the list immediately
@@ -43,12 +43,11 @@ class ChatCubit extends Cubit<ChatState> {
 
       if (response.statusCode == 200) {
         // Add the AI's response to the list
-        messages.add(Message(
-          sender: 'Ai',
-          text: response.data["answer"],
-          time: DateTime.now().toString(), // Set the current time for AI response
-          avatarUrl: 'path/to/ai/avatar', // Replace with the actual AI avatar path
-        ));
+        conversationId = response.data["current_conversation_id"];
+        messages.add(Message.fromResponse({
+          'entrytime': DateTime.now().toString(),
+          'response': response.data["response"]
+        }));
 
         // Emit the updated message list to update the UI again
         emit(ChatHistoryLoaded(List.from(messages)));
@@ -66,38 +65,35 @@ class ChatCubit extends Cubit<ChatState> {
     _dio.options.headers['Authorization'] = "bearer $token";
 
     try {
-      _dio.post(Endpoints.getHistoryChat).then((response) {
-        if (response.statusCode == 200) {
-          print("data test bb ${response.data}");
+      final response = await _dio.post(Endpoints.getHistoryChat);
 
-          if(response.data["conversation_id"]!=null){
-            conversationId=response.data["conversation_id"];
-          }
+      if (response.statusCode == 200) {
+        if (response.data["conversation_id"] != null) {
+          conversationId = response.data["conversation_id"];
+        }
 
-          if(response.data["messages"].length>0) {
+        if (response.data["messages"].isNotEmpty) {
+          for (var entry in response.data["messages"]) {
+            String time = entry["entrytime"] ?? ""; // Get message time
 
-            for (var entry in response.data["messages"]) {
-              String time = entry["entrytime"] ?? ""; // Get message time
-              // Create Message for user's request
-              if (entry["request"] != null && entry["request"].isNotEmpty) {
-                messages.add(Message.fromRequest(time, entry["request"]));
-              }
+            // Create Message for user's request
+            if (entry["request"] != null && entry["request"].isNotEmpty) {
+              messages.add(Message.fromRequest(entry));
+            }
 
-
-              // Create Message for system's response
-              if (entry["response"] != null && entry["response"].isNotEmpty) {
-                messages.add(Message.fromResponse(time, entry["response"]));
-              }
-
-              emit(ChatHistoryLoaded(messages));
+            // Create Message for system's response
+            if (entry["response"] != null && entry["response"].isNotEmpty) {
+              messages.add(Message.fromResponse(entry));
             }
           }
-          else {
-            emit(ChatHistoryLoaded(response.data["messages"] ?? []));
-            emit(ChatHistoryError("Failed to load history message"));
-          }
+
+          emit(ChatHistoryLoaded(List.from(messages)));
+        } else {
+          emit(ChatHistoryError("No messages found"));
         }
-      });
+      } else {
+        emit(ChatHistoryError("Failed to load history"));
+      }
     } catch (e) {
       emit(ChatHistoryError("An error occurred: $e"));
     }
