@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../components/text_style.dart';
 import '../../widgets/PercentIndicator.dart';
+import '../../widgets/friendsThumbnail.dart';
 import '../../widgets/normal-Gauges.dart';
 import '../../widgets/smallGauge.dart';
 import '../../widgets/totalScoreGauge.dart';
@@ -81,7 +82,7 @@ class _ProgressScreenState extends State<ProgressScreen>
   Widget build(BuildContext context) {
     final dates = List.generate(
       7,
-          (index) => DateTime.now().add(Duration(days: index - 2)),
+      (index) => DateTime.now().add(Duration(days: index - 2)),
     );
 
     return Scaffold(
@@ -89,7 +90,9 @@ class _ProgressScreenState extends State<ProgressScreen>
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 25,),
+          const SizedBox(
+            height: 25,
+          ),
           // Header Section
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
@@ -117,7 +120,9 @@ class _ProgressScreenState extends State<ProgressScreen>
             child: SingleChildScrollView(
               controller: _scrollController,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20,),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -129,18 +134,22 @@ class _ProgressScreenState extends State<ProgressScreen>
                       child: PlanProgressSection(),
                     ),
                     // HorizontalCalendar with FadeTransition
-                    !_isPlanProgressVisible?  FadeTransition(
-                      opacity: _calendarOpacity, // Use Animation<double>
-                      child: HorizontalCalendar(
-                        dates: dates,
-                        selectedDate: selectedDate,
-                        onDateSelected: (date) {
-                          setState(() {
-                            selectedDate = date;
-                          });
-                        },
-                      ),
-                    ):SizedBox(width: 0,),
+                    !_isPlanProgressVisible
+                        ? FadeTransition(
+                            opacity: _calendarOpacity, // Use Animation<double>
+                            child: HorizontalCalendar(
+                              dates: dates,
+                              selectedDate: selectedDate,
+                              onDateSelected: (date) {
+                                setState(() {
+                                  selectedDate = date;
+                                });
+                              },
+                            ),
+                          )
+                        : SizedBox(
+                            width: 0,
+                          ),
                     const SizedBox(height: 16),
                     // Daily Goals Section
                     GoalCompletionSection(),
@@ -154,7 +163,17 @@ class _ProgressScreenState extends State<ProgressScreen>
                       style: AppTextStyles.title2,
                     ),
                     const SizedBox(height: 10),
-                    WaterTaskWidget(),
+                    WaterTaskWidget(
+                      title: 'Drink the water',
+                      des: '500/2000 ML',
+                      iconSrc: 'assets/Emoji11.png',value: 0.3
+                    ),
+                    const SizedBox(height: 10),
+                    WaterTaskWidget(
+                      title: 'Walk',
+                      des: '0/10000 STEPS',
+                      iconSrc: 'assets/Emoji21.png', value: 0.0,
+                    ),
                     const SizedBox(height: 150),
                   ],
                 ),
@@ -399,6 +418,7 @@ class ChallengesSection extends StatelessWidget {
           child: Column(
             children: [
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
@@ -408,6 +428,7 @@ class ChallengesSection extends StatelessWidget {
                       Text('Best Runners!', style: AppTextStyles.hintMedium),
                     ],
                   ),
+                  OverlappingCirclesScreen()
                 ],
               ),
               Padding(
@@ -417,7 +438,8 @@ class ChallengesSection extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text('5 days 13 hours left', style: AppTextStyles.hint),
-                    Text("2 friends joined", style: AppTextStyles.hint)
+                    Text("2 friends joined", style: AppTextStyles.hint),
+                    // OverlappingCirclesScreen()
                   ],
                 ),
               ),
@@ -476,6 +498,12 @@ class TasksSection extends StatelessWidget {
 }
 
 class WaterTaskWidget extends StatelessWidget {
+  String title;
+  String iconSrc;
+  double value;
+  String des;
+  WaterTaskWidget(
+      {required this.title, required this.value,required this.des, required this.iconSrc});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -506,15 +534,25 @@ class WaterTaskWidget extends StatelessWidget {
                   children: [
                     CircularProgressIndicator(
                       strokeWidth: 2,
-                      value: 0.3, // Progress based on 500/2000 ML
+                      value: value, // Progress based on 500/2000 ML
                       backgroundColor: Colors.blue[100],
                       valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
                     ),
-                    const Icon(
-                      Icons.water_drop,
-                      color: Colors.blue,
-                      size: 16,
-                    ),
+                    // const Icon(
+                    //   Icons.water_drop,
+                    //   color: Colors.blue,
+                    //   size: 16,
+                    // ),
+                    ClipRRect(
+                        borderRadius:
+                            BorderRadius.circular(1000), // Image border
+
+                        child: Image.asset(
+                          fit: BoxFit.cover,
+                          iconSrc,
+                          width: 10,
+                          height: 10,
+                        )),
                   ],
                 ),
               ),
@@ -524,12 +562,12 @@ class WaterTaskWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Drink the water',
+                    title,
                     style: AppTextStyles.hintMedium,
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    '500/2000 ML',
+                    des,
                     style: AppTextStyles.hint,
                   ),
                 ],
@@ -805,30 +843,30 @@ class _HorizontalCalendarState extends State<HorizontalCalendar> {
             child: Container(
               width: 65,
               height: 95,
-              margin: const EdgeInsets.symmetric(horizontal: 8,vertical: 10),
+              margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
               decoration: BoxDecoration(
                 color: isSelected ? AppColors.PurpleLiteText : Colors.white,
                 borderRadius: BorderRadius.circular(10),
                 boxShadow: const [
-                   BoxShadow(
-                      color: AppColors.shadowColorWithOpacity,
-                      blurRadius: 10,
-                      offset: Offset(4, 0),
-                    ),
+                  BoxShadow(
+                    color: AppColors.shadowColorWithOpacity,
+                    blurRadius: 10,
+                    offset: Offset(4, 0),
+                  ),
                 ],
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    "${date.day}",
-                    style: !isSelected ? AppTextStyles.title3xlLiteGray: AppTextStyles.title3xlWhite
-                  ),
+                  Text("${date.day}",
+                      style: !isSelected
+                          ? AppTextStyles.title3xlLiteGray
+                          : AppTextStyles.title3xlWhite),
                   const SizedBox(height: 4),
-                  Text(
-                    _getWeekdayName(date.weekday),
-                    style:!isSelected ?AppTextStyles.title2Gray:AppTextStyles.title2White
-                  ),
+                  Text(_getWeekdayName(date.weekday),
+                      style: !isSelected
+                          ? AppTextStyles.title2Gray
+                          : AppTextStyles.title2White),
                 ],
               ),
             ),

@@ -156,141 +156,140 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     SharedPreferences _prefs;
+    // 00
     return Scaffold(
         backgroundColor: AppColors.bgScreen,
-        body: SafeArea(
-          child: BlocBuilder<PageIndexBloc, PageIndexState>(
-            builder: (context, state) {
-              return GestureDetector(
-                onTap: () {
-                  if (isShowDropDown) {
-                    setState(() {
-                      isShowDropDown = false;
-                    });
-                  }
-                },
-                child: Container(
-                  alignment: Alignment.center,
-                  height: size.height,
-                  width: size.width,
-                  child: SizedBox(
-                    width: size.width > 440 ? 440 : size.width,
-                    child: Stack(
-                      children: [
-                        Overview2(
-                          isShowDropDown: isShowDropDown,
-                          onToggleDropDown: toggleDropDown,
-                        ),
-                        if (isShowDropDown)
-                          Positioned(
-                              top: 70,
-                              left: 50,
-                              child: Container(
-                                padding: EdgeInsets.all(5),
-                                width: 133,
-                                height: 92,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(10)),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey
-                                            .withOpacity(.5)
-                                            .withOpacity(.1),
-                                        spreadRadius: 2,
-                                        blurRadius: 2,
-                                        offset: const Offset(0,
-                                            1), // changes position of shadow
+        body: BlocBuilder<PageIndexBloc, PageIndexState>(
+          builder: (context, state) {
+            return GestureDetector(
+              onTap: () {
+                if (isShowDropDown) {
+                  setState(() {
+                    isShowDropDown = false;
+                  });
+                }
+              },
+              child: Container(
+                alignment: Alignment.center,
+                // height: size.height,
+                // width: size.width,
+                child: SizedBox(
+                  // width: size.width > 440 ? 440 : size.width,
+                  child: Stack(
+                    children: [
+                      Overview2(
+                        isShowDropDown: isShowDropDown,
+                        onToggleDropDown: toggleDropDown,
+                      ),
+                      if (isShowDropDown)
+                        Positioned(
+                            top: 70,
+                            left: 50,
+                            child: Container(
+                              padding: EdgeInsets.all(5),
+                              width: 133,
+                              height: 92,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey
+                                          .withOpacity(.5)
+                                          .withOpacity(.1),
+                                      spreadRadius: 2,
+                                      blurRadius: 2,
+                                      offset: const Offset(0,
+                                          1), // changes position of shadow
+                                    ),
+                                  ]),
+                              child: Column(
+                                crossAxisAlignment:
+                                    CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/watch-status.svg",
+                                        width: 30,
+                                        height: 16,
                                       ),
-                                    ]),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          "assets/watch-status.svg",
-                                          width: 30,
-                                          height: 16,
+                                      const SizedBox(
+                                        width: 5,
+                                      ),
+                                      GestureDetector(
+                                        onTap: () async => {
+                                          _prefs = await SharedPreferences
+                                              .getInstance(),
+
+                                          // _launchURL(
+                                          //     "https://connections.rook-connect.review/client_uuid/b0eb1473-44ed-4c93-8d90-eb15deb20bb7/user_id/${_prefs.getString("email")}/")
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    WearableDevice()),
+                                          )
+                                        },
+                                        child: Text(
+                                          "Wearable Device",
+                                          style: AppTextStyles
+                                              .hintBlackWithHeight,
                                         ),
-                                        const SizedBox(
-                                          width: 5,
+                                      )
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  BlocBuilder<AuthCubit, AuthState>(
+                                    builder: (context, state) {
+                                      return GestureDetector(
+                                        onTap: () async {
+                                          await BlocProvider.of<AuthCubit>(
+                                                  context)
+                                              .logOut();
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    LoginPage()),
+                                          );
+                                        },
+                                        child: Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              "assets/logout.svg",
+                                              width: 30,
+                                              height: 16,
+                                              colorFilter: ColorFilter.mode(
+                                                  Colors.black,
+                                                  BlendMode.srcIn),
+                                            ),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            Text(
+                                              "Log out",
+                                              style: AppTextStyles
+                                                  .hintBlackWithHeight,
+                                            ),
+                                          ],
                                         ),
-                                        GestureDetector(
-                                          onTap: () async => {
-                                            _prefs = await SharedPreferences
-                                                .getInstance(),
-              
-                                            // _launchURL(
-                                            //     "https://connections.rook-connect.review/client_uuid/b0eb1473-44ed-4c93-8d90-eb15deb20bb7/user_id/${_prefs.getString("email")}/")
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      WearableDevice()),
-                                            )
-                                          },
-                                          child: Text(
-                                            "Wearable Device",
-                                            style: AppTextStyles
-                                                .hintBlackWithHeight,
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    BlocBuilder<AuthCubit, AuthState>(
-                                      builder: (context, state) {
-                                        return GestureDetector(
-                                          onTap: () async {
-                                            await BlocProvider.of<AuthCubit>(
-                                                    context)
-                                                .logOut();
-                                            Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      LoginPage()),
-                                            );
-                                          },
-                                          child: Row(
-                                            children: [
-                                              SvgPicture.asset(
-                                                "assets/logout.svg",
-                                                width: 30,
-                                                height: 16,
-                                                colorFilter: ColorFilter.mode(
-                                                    Colors.black,
-                                                    BlendMode.srcIn),
-                                              ),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              Text(
-                                                "Log out",
-                                                style: AppTextStyles
-                                                    .hintBlackWithHeight,
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              )),
-                      ],
-                    ),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            )),
+                    ],
                   ),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ));
   }
 }
@@ -735,7 +734,7 @@ class _Overview2State extends State<Overview2> {
                 SizedBox(
                     height: 280,
                     child: ListView.separated(
-                      itemCount: 3,
+                      itemCount: 2,
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
                       padding: const EdgeInsets.only(

@@ -26,114 +26,109 @@ class _SettingPageState extends State<SettingPage> {
     DateTime now = DateTime.now();
     // Format the date to show month name and day
     String formattedDate = DateFormat('MMMM, d').format(now);
-
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: Container(
-          alignment: Alignment.center,
-          height: size.height,
-          width: size.width,
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 30,horizontal: 25),
-            width: kIsWeb ? (size.width > 420 ? 420 : size.width) : size.width,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Setting",
-                      style: AppTextStyles.title1,
-                    ),
-                    SvgPicture.asset("assets/notification.svg",width: 24,height: 24,)
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  formattedDate,
-                  style: AppTextStyles.titleXl,
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const WearableDevice()),
-                    );
-                  },
-                  child: WearableDevicesTile(
-                    srcImage: 'watch-status.svg',
-                    textTitle: 'Wearable Devices',
+    // 00
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Container(
+        alignment: Alignment.center,
+        height: size.height,
+        width: size.width,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 30,horizontal: 25),
+          width: kIsWeb ? (size.width > 420 ? 420 : size.width) : size.width,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Setting",
+                    style: AppTextStyles.title1,
                   ),
+                  SvgPicture.asset("assets/notification.svg",width: 24,height: 24,)
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Text(
+                formattedDate,
+                style: AppTextStyles.titleXl,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => WearableDevice()));
+                },
+                child: WearableDevicesTile(
+                  srcImage: 'watch-status.svg',
+                  textTitle: 'Wearable Devices',
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                WearableDevicesTile(
-                  srcImage: 'lock.svg',
-                  textTitle: 'Change Password',
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                WearableDevicesTile(
-                  srcImage: 'lock.svg',
-                  textTitle: 'Privacy Policy',
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                WearableDevicesTile(
-                  srcImage: 'security-safe.svg',
-                  textTitle: 'Terms of Service',
-                ),
-                const SizedBox(
-                  height: 30,
-                ),
-                BlocBuilder<AuthCubit, AuthState>(
-                  builder: (context, state) {
-                    return GestureDetector(
-                      onTap: () async {
-                        await BlocProvider.of<AuthCubit>(context).logOut();
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => LoginPage()),
-                        );
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                            "assets/logout.svg",
-                            width: 30,
-                            height: 16,
-                            colorFilter: ColorFilter.mode(
-                                AppColors.purpleDark, BlendMode.srcIn),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "Log out",
-                            style: AppTextStyles.title2Purple,
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ],
-            ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              WearableDevicesTile(
+                srcImage: 'lock.svg',
+                textTitle: 'Change Password',
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              WearableDevicesTile(
+                srcImage: 'lock.svg',
+                textTitle: 'Privacy Policy',
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              WearableDevicesTile(
+                srcImage: 'security-safe.svg',
+                textTitle: 'Terms of Service',
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, state) {
+                  return GestureDetector(
+                    onTap: () async {
+                      await BlocProvider.of<AuthCubit>(context).logOut();
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginPage()),
+                      );
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/logout.svg",
+                          width: 30,
+                          height: 16,
+                          colorFilter: ColorFilter.mode(
+                              AppColors.purpleDark, BlendMode.srcIn),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "Log out",
+                          style: AppTextStyles.title2Purple,
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
         ),
       ),

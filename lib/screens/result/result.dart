@@ -261,16 +261,16 @@ class _ResultScreenState extends State<ResultScreen> {
                             onTap: () {
                               setState(() {
                                 indexItem = 4;
-                                itemSelectedFiltered = "Genetic & MSK";
+                                itemSelectedFiltered = "MSK";
                               });
                             },
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius:
                                 BorderRadius.all(Radius.circular(15)),
-                                color: indexItem == 3
-                                    ? AppColors.purpleDark
-                                    : Colors.white,
+                                color: indexItem == 4
+                              ? AppColors.purpleDark
+                                  : Colors.white,
                               ),
                               height: 40,
                               child: Padding(
@@ -289,7 +289,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                     // ),
                                     Text(
                                       "Genetic & MSK...",
-                                      style: indexItem == 3
+                                      style: indexItem == 4
                                           ? AppTextStyles.hintWhite
                                           : AppTextStyles.hint,
                                     )
@@ -315,7 +315,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             style: AppTextStyles.hint,
                           ),
                           Text(
-                            "May 12 , 2024",
+                            "May,12,2024",
                             style: AppTextStyles.title2,
                           ),
                         ],
@@ -360,6 +360,9 @@ class _ResultScreenState extends State<ResultScreen> {
                     child: ListView.separated(
                       itemCount: data["data"].length,
                       itemBuilder: (BuildContext context, int index) {
+                        if (index ==0){
+                          return SizedBox(width: 0,);
+                        }
                         if (itemSelectedFiltered ==
                                 data["data"][index]["tag"] ||
                             itemSelectedFiltered == "all") {
@@ -417,6 +420,17 @@ class BioMarkerCard extends StatelessWidget {
       return AppColors.greenBorder;
     }
   }
+  getNameBadge(color) {
+    if (color == "red") {
+      return "Critical";
+    }
+    if (color == "yellow") {
+      return "Borderline";
+    }
+    if (color == "green") {
+      return "Normal";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -428,7 +442,7 @@ class BioMarkerCard extends StatelessWidget {
                 ))),
         child: Cardresultscreen(
           colorBadge: getColorBadge(colorBadge),
-          badgeText: 'Normal',
+          badgeText: getNameBadge(colorBadge),
           title: label,
         ),
       ),

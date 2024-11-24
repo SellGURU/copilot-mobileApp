@@ -34,13 +34,19 @@ class _WearableDeviceState extends State<WearableDevice> {
         child: Scaffold(
           appBar: AppBar(
             centerTitle: false,
-            title: Text("Wearable Device"),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context); // Navigate back when pressed
-              },
-            ),
+
+            actions: [
+              IconButton(
+                icon: SvgPicture.asset("assets/backIcon.svg",width: 24,height: 24,  fit: BoxFit.contain,),
+                onPressed: () {
+                  Navigator.pop(context); // Navigate back when pressed
+                },
+              ),
+              Text("Wearable Device",style: AppTextStyles.title1,),
+              Expanded(child: SizedBox())
+            ],
+            leading: SizedBox(width: 0,height: 0,), // Hides the back button
+            leadingWidth: 0,
             backgroundColor: Colors.white,
           ),
           backgroundColor: Colors.white,

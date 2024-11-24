@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,7 +31,9 @@ class Mainscreen extends StatefulWidget {
 
 class _MainscreenState extends State<Mainscreen> {
   final GlobalKey<NavigatorState> _healthPlanScreenKey = GlobalKey();
+  final GlobalKey<NavigatorState> _settingScreenKey = GlobalKey();
   final GlobalKey<NavigatorState> _resultScreenKey = GlobalKey();
+  final GlobalKey<NavigatorState> _chatScreenKey = GlobalKey();
 
   // override the back btn
   Future<bool> _onWillPop() async {
@@ -39,6 +42,12 @@ class _MainscreenState extends State<Mainscreen> {
     }
     if (_resultScreenKey.currentState!.canPop()) {
       _resultScreenKey.currentState!.pop();
+    }
+    if (_chatScreenKey.currentState!.canPop()) {
+      _chatScreenKey.currentState!.pop();
+    }
+    if (_settingScreenKey.currentState!.canPop()) {
+      _settingScreenKey.currentState!.pop();
     }
 
     return false;
@@ -50,7 +59,7 @@ class _MainscreenState extends State<Mainscreen> {
       onWillPop: _onWillPop,
       child: Scaffold(
           backgroundColor: AppColors.bgScreen,
-          body: SafeArea(
+          body: ColorfulSafeArea(
             child: BlocBuilder<PageIndexBloc, PageIndexState>(
               builder: (context, state) {
                 // setState(() {
@@ -73,8 +82,19 @@ class _MainscreenState extends State<Mainscreen> {
                         builder: (context) => ProgressScreen(),
                       ),
                     ),
-                    SettingPage(),
-                    const Chatscreen(),
+                    Navigator(
+                      key: _settingScreenKey,
+                      onGenerateRoute: (settings) => MaterialPageRoute(
+                        builder: (context) => SettingPage(),
+                      ),
+                    ),
+                    Navigator(
+                      key: _chatScreenKey,
+                      onGenerateRoute: (settings) => MaterialPageRoute(
+                        builder: (context) => Chatscreen(),
+                      ),
+                    ),
+            
                     CameraScreen(
                       isCameraStart: false,
                     ),

@@ -87,7 +87,7 @@ class ItemCard extends StatelessWidget {
                 Column(
                   children: [
                     Text(
-                      "Avg",
+                      "Current",
                       style: AppTextStyles.hint,
                     ),
                     Row(
@@ -109,7 +109,7 @@ class ItemCard extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 30,
             ),
             ChartDot(),

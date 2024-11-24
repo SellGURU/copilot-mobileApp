@@ -71,12 +71,12 @@ class _ChatscreenState extends State<Chatscreen> {
     var size = MediaQuery.of(context).size;
     return Container(
         alignment: Alignment.center,
-        height: size.height,
+        // height: size.height,
         width: size.width,
         child: Container(
-          width: size.width > 440 ? 440 : size.width,
+          // width: size.width > 440 ? 440 : size.width,
           margin: EdgeInsets.only(top: size.height * .02),
-          padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
           child: Stack(
             children: [
               Column(
@@ -110,6 +110,7 @@ class _ChatscreenState extends State<Chatscreen> {
                       if (state is ChatHistoryLoaded) {
                         WidgetsBinding.instance
                             .addPostFrameCallback((_) => _scrollToBottom());
+
                         return Expanded(
                           child: ListView.builder(
                             controller:
@@ -139,9 +140,11 @@ class _ChatscreenState extends State<Chatscreen> {
               ),
               Positioned(
                 bottom: 50,
-                width: size.width > 420 ? 400 : size.width * .9,
+                width:size.width * .9,
+                //  > 420 ? 400 : size.width * .9,
                 child: Container(
                   alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
                   height: 50,
                   child: Material(
                     color: AppColors.mainBg,
@@ -217,7 +220,7 @@ class _ChatscreenState extends State<Chatscreen> {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        time,
+                          time.split(' ')[1],
                         style: AppTextStyles.titleMedium
                             .copyWith(color: Colors.grey),
                         textDirection: TextDirection.rtl,

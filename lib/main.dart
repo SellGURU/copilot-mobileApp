@@ -13,6 +13,7 @@ import 'package:copilet/screens/welcomScreen/welcomScreen.dart';
 import 'package:copilet/widgets/SurveysCard/googleForm/cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:copilet/route/routes.dart';
@@ -30,7 +31,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   runApp(MyApp());
 }
 
@@ -71,12 +71,15 @@ class MyApp extends StatelessWidget {
             if (state is LoggedInState) {
               return Container(
                   alignment: Alignment.center,
-                  height: size.height,
+                  // height: size.height,
                   width: size.width,
                   child: Container(
-                    width: size.width > 440 ? 440 : size.width,
-                    margin: EdgeInsets.only(top: size.height * .02),
+
+                    // width: size.width > 440 ? 440 : size.width,
+                    // margin: EdgeInsets.only(top: size.height * .02),
                     child: const Mainscreen(),
+
+
                   ));
               // return const ();
             }
