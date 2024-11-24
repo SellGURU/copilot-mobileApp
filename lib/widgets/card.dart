@@ -9,10 +9,12 @@ class ItemCard extends StatelessWidget {
   final String status;
   final String average;
   final String current;
+  String scale;
   final Widget icon;
 
   ItemCard(
       {super.key,
+        required this.scale,
       required this.title,
       required this.average,
       required this.current,
@@ -77,7 +79,7 @@ class ItemCard extends StatelessWidget {
                           width: 5,
                         ),
                         Text(
-                          "bpm",
+                          scale,
                           style: AppTextStyles.hint,
                         )
                       ],
@@ -100,7 +102,7 @@ class ItemCard extends StatelessWidget {
                           width: 5,
                         ),
                         Text(
-                          "bpm",
+                          scale,
                           style: AppTextStyles.hint,
                         )
                       ],

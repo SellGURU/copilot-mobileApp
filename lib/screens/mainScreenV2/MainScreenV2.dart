@@ -752,7 +752,7 @@ class _Overview2State extends State<Overview2> {
                               height: 40,
                             ),
                             status: "hi",
-                            current: "81");
+                            current: "81", scale: index % 2 == 0 ? "bpm" : "mg/dl",);
                       },
                       separatorBuilder: (BuildContext context, int index) {
                         return const SizedBox(

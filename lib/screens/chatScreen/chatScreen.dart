@@ -110,23 +110,28 @@ class _ChatscreenState extends State<Chatscreen> {
                       if (state is ChatHistoryLoaded) {
                         WidgetsBinding.instance
                             .addPostFrameCallback((_) => _scrollToBottom());
+                        if(state.messages.isEmpty) {
+                          return SizedBox(height: size.height*.65,child: Center(child: SvgPicture.asset("assets/empty.svg")));
+                        }
+                        else{
+                          return Expanded(
+                            child: ListView.builder(
+                              controller:
+                              _scrollController, // Attach the ScrollController
+                              itemCount: state.messages.length,
+                              itemBuilder: (context, index) {
+                                final message = state.messages[index];
+                                return _buildMessageBubble(
+                                  message.text,
+                                  message.sender,
+                                  message.time,
+                                  message.avatarUrl,
+                                );
+                              },
+                            ),
+                          );
+                        }
 
-                        return Expanded(
-                          child: ListView.builder(
-                            controller:
-                            _scrollController, // Attach the ScrollController
-                            itemCount: state.messages.length,
-                            itemBuilder: (context, index) {
-                              final message = state.messages[index];
-                              return _buildMessageBubble(
-                                message.text,
-                                message.sender,
-                                message.time,
-                                message.avatarUrl,
-                              );
-                            },
-                          ),
-                        );
                       } else if (state is ChatHistoryLoading) {
                         return const Center(child: CircularProgressIndicator());
                       } else {

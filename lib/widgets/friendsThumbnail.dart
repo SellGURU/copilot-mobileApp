@@ -47,7 +47,7 @@ class OverlappingCirclesScreen extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(1000), // Image border
                 child: Image.asset(
-                  "assets/m.png",
+                  "assets/woman3.png",
                   fit:BoxFit.cover,
                 ),
               ),
