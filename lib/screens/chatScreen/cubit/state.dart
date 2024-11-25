@@ -19,7 +19,7 @@ class Message {
       sender: "User",
       text: entry['request']['text'],
       time: entry['entrytime'].split(' ')[1],
-      avatarUrl: "path/to/user/avatar",
+      avatarUrl: "assets/avatar12.svg",
       images: List<String>.from(entry['request']['images'] ?? []), // Handle images array
     );
   }
@@ -30,7 +30,7 @@ class Message {
       sender: "Ai",
       text: entry['response'],
       time: entry['entrytime'],
-      avatarUrl: "path/to/system/avatar",
+      avatarUrl: "assets/avatar12.svg",
       images: [], // No images for the response
     );
   }

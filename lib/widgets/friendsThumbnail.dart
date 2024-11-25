@@ -22,7 +22,8 @@ class OverlappingCirclesScreen extends StatelessWidget {
                   border: Border.all(width: 1.5,color: AppColors.mainBg),
                   borderRadius: BorderRadius.all(Radius.circular(100))
               ),
-              child: ClipRRect(
+              child:
+              ClipRRect(
                 borderRadius: BorderRadius.circular(1000), // Image border
 
                 child: Image.asset(

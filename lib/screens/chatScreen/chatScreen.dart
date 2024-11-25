@@ -243,10 +243,18 @@ class _ChatscreenState extends State<Chatscreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           textDirection: TextDirection.rtl,
           children: [
-            const CircleAvatar(
-              backgroundImage: NetworkImage("https://via.placeholder.com/40"),
-              radius: 20,
-            ),
+             ClipRRect(
+               borderRadius: BorderRadius.circular(1000), // Image border
+
+               child: Image.asset(
+                 "assets/man2.png",
+                 fit:BoxFit.cover,
+                 width: 30,
+                 height: 30,
+               ),
+             ),
+
+
             const SizedBox(width: 10),
             Expanded(
               child: Column(

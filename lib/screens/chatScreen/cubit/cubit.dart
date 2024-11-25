@@ -24,7 +24,7 @@ class ChatCubit extends Cubit<ChatState> {
       sender: 'User',
       text: message,
       time: "${now.hour}:${now.minute}",
-      avatarUrl: 'path/to/user/avatar',
+      avatarUrl: 'assets/avatar12.svg',
     ));
 
     // Emit updated message list to update the UI
