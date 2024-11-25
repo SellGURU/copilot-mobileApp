@@ -18,7 +18,7 @@ class Message {
     return Message(
       sender: "User",
       text: entry['request']['text'],
-      time: entry['entrytime'],
+      time: entry['entrytime'].split(' ')[1],
       avatarUrl: "path/to/user/avatar",
       images: List<String>.from(entry['request']['images'] ?? []), // Handle images array
     );

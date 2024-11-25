@@ -35,6 +35,7 @@ class _ChatscreenState extends State<Chatscreen> {
       String? userName = await getNameUser();
       BlocProvider.of<ChatCubit>(context).sendMessage(_controller.value.text);
       _controller.clear();
+      _scrollToBottom();
     }
   }
 
@@ -55,7 +56,7 @@ class _ChatscreenState extends State<Chatscreen> {
     _scrollController.addListener(() {
       if (_scrollController.position.atEdge &&
           _scrollController.position.pixels != 0) {
-        // Do nothing if already at the bottom
+        _scrollToBottom();
       }
     });
   }
@@ -107,7 +108,6 @@ class _ChatscreenState extends State<Chatscreen> {
                   const SizedBox(height: 20),
                   BlocConsumer<ChatCubit, ChatState>(
                     builder: (context, state) {
-                      print("state chate is $state");
                       if (state is ChatHistoryLoading) {
                         return const Center(child: CircularProgressIndicator());
                       } else if (state is ChatHistoryLoaded) {
@@ -119,12 +119,16 @@ class _ChatscreenState extends State<Chatscreen> {
                             ),
                           );
                         } else {
+                          // Ensure scrolling after messages are loaded
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            _scrollToBottom();
+                          });
                           return Expanded(
                             child: ListView.builder(
                               controller: _scrollController,
                               itemCount: state.messages.length,
                               itemBuilder: (context, index) {
-                                final message = state.messages[index];
+                                var message = state.messages[index];
                                 return _buildMessageBubble(
                                   message.text,
                                   message.sender,
@@ -136,7 +140,7 @@ class _ChatscreenState extends State<Chatscreen> {
                           );
                         }
                       } else if (state is ChatHistoryError || state is ChatError) {
-                        // Show error with existing messages
+                        // Handle errors with messages
                         return Column(
                           children: [
                             Expanded(
@@ -168,14 +172,9 @@ class _ChatscreenState extends State<Chatscreen> {
                       }
                     },
                     listener: (context, state) {
-                      if (state is ChatHistoryError) {
+                      if (state is ChatHistoryError || state is ChatError) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("internet error")),
-                        );
-                      }
-                      if(state is ChatError ){
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(content: Text("internet error 2")),
+                          const SnackBar(content: Text("Internet error")),
                         );
                       }
                     },
@@ -267,7 +266,7 @@ class _ChatscreenState extends State<Chatscreen> {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        time.split(' ')[1],
+                        time,
                         style: AppTextStyles.titleMedium
                             .copyWith(color: Colors.grey),
                         textDirection: TextDirection.rtl,

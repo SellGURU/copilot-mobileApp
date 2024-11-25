@@ -17,11 +17,13 @@ class ChatCubit extends Cubit<ChatState> {
   var conversationId = 1;
 
   Future<void> sendMessage(String message) async {
+    final now = DateTime.now();
+
     // Add the user's message to the list immediately
     messages.add(Message(
       sender: 'User',
       text: message,
-      time: DateTime.now().toString(),
+      time: "${now.hour}:${now.minute}",
       avatarUrl: 'path/to/user/avatar',
     ));
 
@@ -42,14 +44,16 @@ class ChatCubit extends Cubit<ChatState> {
 
       if (response.statusCode == 200) {
         // Add the AI's response to the list
-        print("response.data:${response.data}");
+        // print("response.data:${response.data}");
+
         conversationId = response.data["current_conversation_id"];
         messages.add(Message.fromResponse({
-          'entrytime': DateTime.now().toString(),
+          'entrytime': ": ${now.hour}:${now.minute}",
           'response': response.data["answer"]
         }));
-        print("chech1");
-        // Emit the updated message list to update the UI again
+
+        // print("chech1 ${messages[messages.length-1].text}");
+
         emit(ChatHistoryLoaded(List.from(messages)));
       } else {
         emit(ChatError("Failed to send message"));
