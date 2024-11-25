@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,6 +28,29 @@ class Cardresultscreen extends StatefulWidget {
 }
 
 class _CardresultscreenState extends State<Cardresultscreen> {
+  double nextGaussian() {
+    final random = Random();
+    double u1 = random.nextDouble();
+    double u2 = random.nextDouble();
+    return sqrt(-2 * log(u1)) * cos(2 * pi * u2); // Box-Muller transform
+  }
+
+  double getRandomY() {
+    double mean = 120; // Average heart rate (center of the range)
+    double stdDev = 30; // Standard deviation for wider spread
+    double randomValue = mean + stdDev * nextGaussian();
+    return randomValue.clamp(60, 180); // Clamp values between 60 and 180
+  }
+  getSpots(){
+    var spots=[
+      FlSpot(1, getRandomY()),
+      FlSpot(2, getRandomY()),
+      FlSpot(3, getRandomY()),
+      FlSpot(4, getRandomY()),
+    ];
+    return spots;
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SwitchValueGraphBloc, SwitchValueState>(
@@ -163,7 +189,7 @@ class _CardresultscreenState extends State<Cardresultscreen> {
               const SizedBox(
                 height: 15,
               ),
-              state.switchValue ? ChartDot() : const SizedBox()
+              state.switchValue ? ChartDot(spots: getSpots(),) : const SizedBox()
             ],
           ),
         );

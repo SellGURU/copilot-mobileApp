@@ -3,21 +3,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 class ChartDot extends StatelessWidget {
-  ChartDot({super.key});
+  var spots;
+  ChartDot({super.key,required this.spots});
 
-  double nextGaussian() {
-    final random = Random();
-    double u1 = random.nextDouble();
-    double u2 = random.nextDouble();
-    return sqrt(-2 * log(u1)) * cos(2 * pi * u2); // Box-Muller transform
-  }
-
-  double getRandomY() {
-    double mean = 120; // Average heart rate (center of the range)
-    double stdDev = 30; // Standard deviation for wider spread
-    double randomValue = mean + stdDev * nextGaussian();
-    return randomValue.clamp(60, 180); // Clamp values between 60 and 180
-  }
 
 
   // Month labels for the X-axis
@@ -97,12 +85,7 @@ class ChartDot extends StatelessWidget {
       lineBarsData: [
         LineChartBarData(
 
-          spots: [
-            FlSpot(1, getRandomY()),
-            FlSpot(2, getRandomY()),
-            FlSpot(3, getRandomY()),
-            FlSpot(4, getRandomY()),
-          ],
+          spots: spots ,
           isCurved: true,
           gradient: LinearGradient(
             colors: gradientColors,

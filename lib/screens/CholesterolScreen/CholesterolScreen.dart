@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:accordion/accordion.dart';
 import 'package:accordion/controllers.dart';
 import 'package:flutter/material.dart';
@@ -229,6 +231,9 @@ class ResultMainTab extends StatefulWidget {
 }
 
 class _ResultMainTabState extends State<ResultMainTab> {
+
+
+
   var toggleHistoryMod = "History";
   var sections = [
     {
@@ -241,6 +246,29 @@ class _ResultMainTabState extends State<ResultMainTab> {
     },
     // Add more sections as needed
   ];
+  double nextGaussian() {
+    final random = Random();
+    double u1 = random.nextDouble();
+    double u2 = random.nextDouble();
+    return sqrt(-2 * log(u1)) * cos(2 * pi * u2); // Box-Muller transform
+  }
+
+  double getRandomY() {
+    double mean = 120; // Average heart rate (center of the range)
+    double stdDev = 30; // Standard deviation for wider spread
+    double randomValue = mean + stdDev * nextGaussian();
+    return randomValue.clamp(60, 180); // Clamp values between 60 and 180
+  }
+  getSpots(){
+    var spots=[
+      FlSpot(1, getRandomY()),
+      FlSpot(2, getRandomY()),
+      FlSpot(3, getRandomY()),
+      FlSpot(4, getRandomY()),
+    ];
+    return spots;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -342,7 +370,7 @@ class _ResultMainTabState extends State<ResultMainTab> {
                 const SizedBox(height: 16),
                 AspectRatio(
                   aspectRatio: 1.5,
-                  child: ChartDot(),
+                  child: ChartDot(spots: getSpots(),),
                 ),
               ],
             ),

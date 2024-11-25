@@ -21,8 +21,8 @@ class ChatCubit extends Cubit<ChatState> {
     messages.add(Message(
       sender: 'User',
       text: message,
-      time: DateTime.now().toString(), // Set the current time for user message
-      avatarUrl: 'path/to/user/avatar', // Replace with the actual user avatar path
+      time: DateTime.now().toString(),
+      avatarUrl: 'path/to/user/avatar',
     ));
 
     // Emit updated message list to update the UI
@@ -32,7 +32,6 @@ class ChatCubit extends Cubit<ChatState> {
     _dio.options.headers['Authorization'] = "Bearer $token";
 
     try {
-      // Send the user's message to the server
       final response = await _dio.post(
         Endpoints.mobile_chat,
         data: {
@@ -43,19 +42,26 @@ class ChatCubit extends Cubit<ChatState> {
 
       if (response.statusCode == 200) {
         // Add the AI's response to the list
+        print("response.data:${response.data}");
         conversationId = response.data["current_conversation_id"];
         messages.add(Message.fromResponse({
           'entrytime': DateTime.now().toString(),
-          'response': response.data["response"]
+          'response': response.data["answer"]
         }));
-
+        print("chech1");
         // Emit the updated message list to update the UI again
         emit(ChatHistoryLoaded(List.from(messages)));
       } else {
         emit(ChatError("Failed to send message"));
+        print("chech2");
+        // Emit the messages even during an error
+        emit(ChatHistoryLoaded(List.from(messages)));
       }
     } catch (e) {
+      print("chech3 $e");
       emit(ChatError("An error occurred: $e"));
+      // Emit the messages even during an error
+      emit(ChatHistoryLoaded(List.from(messages)));
     }
   }
 
@@ -74,14 +80,12 @@ class ChatCubit extends Cubit<ChatState> {
 
         if (response.data["messages"].isNotEmpty) {
           for (var entry in response.data["messages"]) {
-            String time = entry["entrytime"] ?? ""; // Get message time
+            String time = entry["entrytime"] ?? "";
 
-            // Create Message for user's request
             if (entry["request"] != null && entry["request"].isNotEmpty) {
               messages.add(Message.fromRequest(entry));
             }
 
-            // Create Message for system's response
             if (entry["response"] != null && entry["response"].isNotEmpty) {
               messages.add(Message.fromResponse(entry));
             }
@@ -90,12 +94,22 @@ class ChatCubit extends Cubit<ChatState> {
           emit(ChatHistoryLoaded(List.from(messages)));
         } else {
           emit(ChatHistoryError("No messages found"));
+          // Emit previous messages if any exist
+          if (messages.isNotEmpty) {
+            emit(ChatHistoryLoaded(List.from(messages)));
+          }
         }
       } else {
         emit(ChatHistoryError("Failed to load history"));
+        if (messages.isNotEmpty) {
+          emit(ChatHistoryLoaded(List.from(messages)));
+        }
       }
     } catch (e) {
       emit(ChatHistoryError("An error occurred: $e"));
+      if (messages.isNotEmpty) {
+        emit(ChatHistoryLoaded(List.from(messages)));
+      }
     }
   }
 }

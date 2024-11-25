@@ -105,19 +105,23 @@ class _ChatscreenState extends State<Chatscreen> {
                     ],
                   ),
                   const SizedBox(height: 20),
-                  BlocBuilder<ChatCubit, ChatState>(
+                  BlocConsumer<ChatCubit, ChatState>(
                     builder: (context, state) {
-                      if (state is ChatHistoryLoaded) {
-                        WidgetsBinding.instance
-                            .addPostFrameCallback((_) => _scrollToBottom());
-                        if(state.messages.isEmpty) {
-                          return SizedBox(height: size.height*.65,child: Center(child: SvgPicture.asset("assets/empty.svg")));
-                        }
-                        else{
+                      print("state chate is $state");
+                      if (state is ChatHistoryLoading) {
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (state is ChatHistoryLoaded) {
+                        if (state.messages.isEmpty) {
+                          return SizedBox(
+                            height: size.height * .65,
+                            child: Center(
+                              child: SvgPicture.asset("assets/empty.svg"),
+                            ),
+                          );
+                        } else {
                           return Expanded(
                             child: ListView.builder(
-                              controller:
-                              _scrollController, // Attach the ScrollController
+                              controller: _scrollController,
                               itemCount: state.messages.length,
                               itemBuilder: (context, index) {
                                 final message = state.messages[index];
@@ -131,25 +135,63 @@ class _ChatscreenState extends State<Chatscreen> {
                             ),
                           );
                         }
-
-                      } else if (state is ChatHistoryLoading) {
-                        return const Center(child: CircularProgressIndicator());
+                      } else if (state is ChatHistoryError || state is ChatError) {
+                        // Show error with existing messages
+                        return Column(
+                          children: [
+                            Expanded(
+                              child: ListView.builder(
+                                controller: _scrollController,
+                                itemCount: context.read<ChatCubit>().messages.length,
+                                itemBuilder: (context, index) {
+                                  final message = context.read<ChatCubit>().messages[index];
+                                  return _buildMessageBubble(
+                                    message.text,
+                                    message.sender,
+                                    message.time,
+                                    message.avatarUrl,
+                                  );
+                                },
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            const Center(
+                              child: Text(
+                                "An error occurred. Unable to load new messages.",
+                                style: TextStyle(color: Colors.red),
+                              ),
+                            ),
+                          ],
+                        );
                       } else {
-                        print("state is ${state}");
-                        return const Center(child: Text("An error occurred"));
+                        return const Center(child: Text("No messages available."));
+                      }
+                    },
+                    listener: (context, state) {
+                      if (state is ChatHistoryError) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text("internet error")),
+                        );
+                      }
+                      if(state is ChatError ){
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text("internet error 2")),
+                        );
                       }
                     },
                   ),
+
                   const SizedBox(height: 120),
                 ],
               ),
               Positioned(
                 bottom: 50,
-                width:size.width * .9,
+                width: size.width * .9,
                 //  > 420 ? 400 : size.width * .9,
                 child: Container(
                   alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
                   height: 50,
                   child: Material(
                     color: AppColors.mainBg,
@@ -225,7 +267,7 @@ class _ChatscreenState extends State<Chatscreen> {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                          time.split(' ')[1],
+                        time.split(' ')[1],
                         style: AppTextStyles.titleMedium
                             .copyWith(color: Colors.grey),
                         textDirection: TextDirection.rtl,
