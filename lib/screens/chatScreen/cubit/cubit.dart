@@ -16,16 +16,16 @@ class ChatCubit extends Cubit<ChatState> {
   Dio _dio = Dio();
   var conversationId = 1;
 
-  Future<void> sendMessage(String message) async {
+  Future<void> sendMessage(String message, String base64) async {
     final now = DateTime.now();
 
     // Add the user's message to the list immediately
     messages.add(Message(
-      sender: 'User',
-      text: message,
-      time: "${now.hour}:${now.minute}",
-      avatarUrl: 'assets/avatar12.svg',
-    ));
+        sender: 'User',
+        text: message,
+        time: "${now.hour}:${now.minute}",
+        avatarUrl: 'assets/avatar12.svg',
+        images: base64.isNotEmpty ? [base64] : []));
 
     // Emit updated message list to update the UI
     emit(ChatHistoryLoaded(List.from(messages)));

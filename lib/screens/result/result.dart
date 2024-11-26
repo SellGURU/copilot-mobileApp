@@ -436,7 +436,8 @@ class BioMarkerCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: GestureDetector(
-        onTap: () => Navigator.of(context).push(MaterialPageRoute(
+        onTap: () =>
+            Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => CholesterolScreen(
                   title: label,
                 ))),

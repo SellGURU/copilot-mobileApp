@@ -20,7 +20,8 @@ class Message {
       text: entry['request']['text'],
       time: entry['entrytime'].split(' ')[1],
       avatarUrl: "assets/avatar12.svg",
-      images: List<String>.from(entry['request']['images'] ?? []), // Handle images array
+      images:
+          List<String>.from(entry['request']['images']), // Handle images array
     );
   }
 
@@ -35,8 +36,6 @@ class Message {
     );
   }
 }
-
-
 
 abstract class ChatState {
   const ChatState();

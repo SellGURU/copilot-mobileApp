@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:copilet/screens/chatScreen/cubit/cubit.dart';
 import 'package:copilet/screens/chatScreen/cubit/cubit.dart';
 import 'package:copilet/screens/chatScreen/cubit/state.dart';
@@ -33,7 +36,8 @@ class _ChatscreenState extends State<Chatscreen> {
 
       // Get the user's name from SharedPreferences
       String? userName = await getNameUser();
-      BlocProvider.of<ChatCubit>(context).sendMessage(_controller.value.text);
+      BlocProvider.of<ChatCubit>(context)
+          .sendMessage(_controller.value.text, "");
       _controller.clear();
       _scrollToBottom();
     }
@@ -130,31 +134,38 @@ class _ChatscreenState extends State<Chatscreen> {
                               itemBuilder: (context, index) {
                                 var message = state.messages[index];
                                 return _buildMessageBubble(
-                                  message.text,
-                                  message.sender,
-                                  message.time,
-                                  message.avatarUrl,
-                                );
+                                    message.text,
+                                    message.sender,
+                                    message.time,
+                                    message.avatarUrl,
+                                    message.images.isNotEmpty
+                                        ? message.images[0]
+                                        : "");
                               },
                             ),
                           );
                         }
-                      } else if (state is ChatHistoryError || state is ChatError) {
+                      } else if (state is ChatHistoryError ||
+                          state is ChatError) {
                         // Handle errors with messages
                         return Column(
                           children: [
                             Expanded(
                               child: ListView.builder(
                                 controller: _scrollController,
-                                itemCount: context.read<ChatCubit>().messages.length,
+                                itemCount:
+                                    context.read<ChatCubit>().messages.length,
                                 itemBuilder: (context, index) {
-                                  final message = context.read<ChatCubit>().messages[index];
+                                  final message =
+                                      context.read<ChatCubit>().messages[index];
                                   return _buildMessageBubble(
-                                    message.text,
-                                    message.sender,
-                                    message.time,
-                                    message.avatarUrl,
-                                  );
+                                      message.text,
+                                      message.sender,
+                                      message.time,
+                                      message.avatarUrl,
+                                      message.images.isNotEmpty
+                                          ? message.images[0]
+                                          : "");
                                 },
                               ),
                             ),
@@ -168,7 +179,8 @@ class _ChatscreenState extends State<Chatscreen> {
                           ],
                         );
                       } else {
-                        return const Center(child: Text("No messages available."));
+                        return const Center(
+                            child: Text("No messages available."));
                       }
                     },
                     listener: (context, state) {
@@ -179,7 +191,6 @@ class _ChatscreenState extends State<Chatscreen> {
                       }
                     },
                   ),
-
                   const SizedBox(height: 120),
                 ],
               ),
@@ -234,27 +245,28 @@ class _ChatscreenState extends State<Chatscreen> {
         ));
   }
 
-  Widget _buildMessageBubble(
-      String text, String sender, String time, String avatarUrl) {
+  Widget _buildMessageBubble(String text, String sender, String time,
+      String avatarUrl, String imageBase64) {
     if (sender == "User") {
+      String cleanBase64 =
+          imageBase64.replaceFirst('data:image/png;base64,', '');
+      Uint8List bytesImage = base64Decode(cleanBase64);
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           textDirection: TextDirection.rtl,
           children: [
-             ClipRRect(
-               borderRadius: BorderRadius.circular(1000), // Image border
+            ClipRRect(
+              borderRadius: BorderRadius.circular(1000), // Image border
 
-               child: Image.asset(
-                 "assets/man2.png",
-                 fit:BoxFit.cover,
-                 width: 30,
-                 height: 30,
-               ),
-             ),
-
-
+              child: Image.asset(
+                "assets/man2.png",
+                fit: BoxFit.cover,
+                width: 30,
+                height: 30,
+              ),
+            ),
             const SizedBox(width: 10),
             Expanded(
               child: Column(
@@ -282,18 +294,47 @@ class _ChatscreenState extends State<Chatscreen> {
                     ],
                   ),
                   const SizedBox(height: 5),
-                  Container(
-                    width: 255,
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Text(
-                      text,
-                      style: AppTextStyles.titleMedium,
-                      textDirection: TextDirection.rtl,
-                    ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Container(
+                        width: 255,
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade200,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Text(
+                          text,
+                          style: AppTextStyles.titleMedium,
+                          textDirection: TextDirection.rtl,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      if (bytesImage.isNotEmpty)
+                        Container(
+                          width: 120,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                                width: 1, color: AppColors.purpleDark),
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                          ),
+                          child: ClipRRect(
+                            borderRadius:const BorderRadius.all(Radius.circular(
+                                10)), // Match the container's border radius
+                            child: Image.memory(
+                              bytesImage, // Your base64 decoded image bytes
+                              fit: BoxFit
+                                  .cover, // Ensures the image scales to cover the area
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                 ],
               ),
