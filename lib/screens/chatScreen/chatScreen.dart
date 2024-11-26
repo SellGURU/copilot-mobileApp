@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:copilet/screens/camera/imageHandlerCubit/cubit.dart';
+import 'package:copilet/screens/camera/imageHandlerCubit/state.dart';
 import 'package:copilet/screens/chatScreen/cubit/cubit.dart';
 import 'package:copilet/screens/chatScreen/cubit/cubit.dart';
 import 'package:copilet/screens/chatScreen/cubit/state.dart';
@@ -194,51 +196,74 @@ class _ChatscreenState extends State<Chatscreen> {
                   const SizedBox(height: 120),
                 ],
               ),
-              Positioned(
-                bottom: 50,
-                width: size.width * .9,
-                //  > 420 ? 400 : size.width * .9,
-                child: Container(
-                  alignment: Alignment.center,
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
-                  height: 50,
-                  child: Material(
-                    color: AppColors.mainBg,
-                    elevation: 15,
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    shadowColor: AppColors.mainShadow,
-                    child: TextFormField(
-                      controller: _controller,
-                      textAlign: TextAlign.left,
-                      decoration: InputDecoration(
-                        hintStyle: AppTextStyles.hint,
-                        hintText: "Ask me anything...",
-                        suffixIcon: IconButton(
-                          icon: const Icon(
-                            Icons.send,
-                            color: AppColors.purpleDark,
-                          ),
-                          onPressed: _sendMessage,
-                        ),
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 0.0,
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                            color: Colors.transparent,
-                            width: 0.0,
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
+              BlocBuilder<ImageHandlerCubit, ImageHandlerState>(
+                builder: (context, state) {
+                  return Positioned(
+                    bottom: 50,
+                    width: size.width * .9,
+                    //  > 420 ? 400 : size.width * .9,
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 0, horizontal: 5),
+                      height: state is HaveImage ? 88 : 58,
+                      child: Material(
+                        color: AppColors.mainBg,
+                        elevation: 15,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(10)),
+                        shadowColor: AppColors.mainShadow,
+                        child: Column(
+                          children: [
+                            if (state is HaveImage)
+                              Container(
+                                width: 51,
+                                height: 30,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 1, color: AppColors.purpleDark),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                ),
+                                child: Image.memory(state.imageByte),
+                              ),
+                            TextFormField(
+                              controller: _controller,
+                              textAlign: TextAlign.left,
+                              decoration: InputDecoration(
+                                hintStyle: AppTextStyles.hint,
+                                hintText: "Ask me anything...",
+                                suffixIcon: IconButton(
+                                  icon: const Icon(
+                                    Icons.send,
+                                    color: AppColors.purpleDark,
+                                  ),
+                                  onPressed: _sendMessage,
+                                ),
+                                border: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 0.0,
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                ),
+                                enabledBorder: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.transparent,
+                                    width: 0.0,
+                                  ),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ),
-                ),
+                  );
+                },
               ),
             ],
           ),
@@ -325,8 +350,9 @@ class _ChatscreenState extends State<Chatscreen> {
                                 const BorderRadius.all(Radius.circular(10)),
                           ),
                           child: ClipRRect(
-                            borderRadius:const BorderRadius.all(Radius.circular(
-                                10)), // Match the container's border radius
+                            borderRadius: const BorderRadius.all(
+                                Radius.circular(
+                                    10)), // Match the container's border radius
                             child: Image.memory(
                               bytesImage, // Your base64 decoded image bytes
                               fit: BoxFit

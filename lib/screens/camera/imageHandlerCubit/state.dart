@@ -1,18 +1,18 @@
-class ImageHandlerCubitState {
-  ImageHandlerCubitState init() {
-    return ImageHandlerCubitState();
+class ImageHandlerState {
+  ImageHandlerState init() {
+    return ImageHandlerState();
   }
 
-  ImageHandlerCubitState clone() {
-    return ImageHandlerCubitState();
+  ImageHandlerState clone() {
+    return ImageHandlerState();
   }
 }
 
-class HaveImage extends ImageHandlerCubitState {
-  var imageBase64;
-  HaveImage({required this.imageBase64});
+class HaveImage extends ImageHandlerState {
+  var imageByte;
+  HaveImage({required this.imageByte});
 }
 
-class HaveNotImage extends ImageHandlerCubitState {
+class HaveNotImage extends ImageHandlerState {
   HaveNotImage();
 }

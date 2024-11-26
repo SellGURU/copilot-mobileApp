@@ -96,7 +96,7 @@ class _MainscreenState extends State<Mainscreen> {
                     ),
             
                     CameraScreen(
-                      isCameraStart: false,
+                      isCameraStart: false, Parentcontext: context,
                     ),
                   ],
                 );

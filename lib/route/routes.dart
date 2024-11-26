@@ -17,6 +17,6 @@ Map<String, Widget Function(BuildContext)> routes = {
       ),
   ScreenNames.detailedPlan: (context) => detailedPlan(),
   ScreenNames.cameraScreen: (context) => CameraScreen(
-        isCameraStart: false,
+        isCameraStart: false, Parentcontext: context,
       ),
 };

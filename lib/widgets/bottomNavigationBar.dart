@@ -244,8 +244,7 @@ class _ListItemsState extends State<ListItems> {
               // widget.takeItem("screenShot");
               // Navigator.pop(widget.Parentcontext);
             },
-            child:
-            Container(
+            child: Container(
               padding: const EdgeInsets.only(
                   left: 3.5, right: 3.5, top: 8, bottom: 13),
               alignment: Alignment.center,
@@ -290,12 +289,12 @@ class _ListItemsState extends State<ListItems> {
                       value: BlocProvider.of<CameraBloc>(widget.Parentcontext),
                       child: CameraScreen(
                         isCameraStart: isCameraStart,
+                        Parentcontext: widget.Parentcontext,
                       )),
                 ),
               );
             },
-            child:
-            Container(
+            child: Container(
               padding: const EdgeInsets.only(
                   left: 3.5, right: 3.5, top: 8, bottom: 13),
               alignment: Alignment.center,

@@ -9,12 +9,15 @@ import 'package:path_provider/path_provider.dart';
 import 'package:copilet/utility/camareControlerBloc/camera_Bloc.dart';
 import 'package:copilet/utility/camareControlerBloc/camera_states.dart';
 
+import '../../utility/changeScreanBloc/PageIndex_Bloc.dart';
+import '../../utility/changeScreanBloc/PageIndex_events.dart';
 import '../chatScreen/chatScreen.dart';
 
 class CameraScreen extends StatefulWidget {
   final bool isCameraStart;
+  var Parentcontext;
 
-  CameraScreen({required this.isCameraStart});
+  CameraScreen({required this.isCameraStart, required this.Parentcontext});
 
   @override
   State<CameraScreen> createState() => _CameraScreenState();
@@ -69,9 +72,11 @@ class _CameraScreenState extends State<CameraScreen> {
       // Print or use the base64 string
       // print("Base64 String: $base64String");
       // Navigator.pushNamed(context, ScreenNames.)
-      BlocProvider.of<ImageHandlerCubitCubit>(context).getImage(base64String);
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const Chatscreen()));
+      BlocProvider.of<ImageHandlerCubit>(widget.Parentcontext).getImage(base64String);
+      // Navigator.of(context)
+      //     .push(MaterialPageRoute(builder: (context) => const Chatscreen()));
+      BlocProvider.of<PageIndexBloc>(widget.Parentcontext).add(UpdatePageIndex(5));
+      Navigator.pop(widget.Parentcontext);
     } catch (e) {
       print("Error capturing image: $e");
     }
