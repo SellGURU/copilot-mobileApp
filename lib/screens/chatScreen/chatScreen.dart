@@ -214,18 +214,46 @@ class _ChatscreenState extends State<Chatscreen> {
                             const BorderRadius.all(Radius.circular(10)),
                         shadowColor: AppColors.mainShadow,
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             if (state is HaveImage)
-                              Container(
-                                width: 51,
-                                height: 30,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      width: 1, color: AppColors.purpleDark),
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(10)),
-                                ),
-                                child: Image.memory(state.imageByte),
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 51,
+                                    height: 30,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                          width: 1,
+                                          color: AppColors.purpleDark),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                      child: Image.memory(
+                                        state.imageByte,
+                                        fit: BoxFit.cover,
+                                        width: 51,
+                                        height: 30,
+                                      ),
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                      onTap: () {
+                                        BlocProvider.of<ImageHandlerCubit>(
+                                                context)
+                                            .DeletImage();
+                                      },
+                                      child: SvgPicture.asset(
+                                        "assets/close-circle.svg",
+                                        width: 24,
+                                        height: 24,
+                                        fit: BoxFit.cover,
+                                      )),
+                                ],
                               ),
                             TextFormField(
                               controller: _controller,
