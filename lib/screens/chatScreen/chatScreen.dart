@@ -206,7 +206,7 @@ class _ChatscreenState extends State<Chatscreen> {
                       alignment: Alignment.center,
                       padding: const EdgeInsets.symmetric(
                           vertical: 0, horizontal: 5),
-                      height: state is HaveImage ? 88 : 58,
+                      height: state is HaveImage ? 110 : 58,
                       child: Material(
                         color: AppColors.mainBg,
                         elevation: 15,
@@ -255,6 +255,8 @@ class _ChatscreenState extends State<Chatscreen> {
                                       )),
                                 ],
                               ),
+                            if (state is HaveImage)
+                              const SizedBox(height: 5,),
                             TextFormField(
                               controller: _controller,
                               textAlign: TextAlign.left,

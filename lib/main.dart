@@ -2,27 +2,22 @@ import 'package:camera/camera.dart';
 import 'package:copilet/screens/Wearable%20Device/authorizersRook/cubit.dart';
 import 'package:copilet/screens/camera/imageHandlerCubit/cubit.dart';
 import 'package:copilet/screens/chatScreen/cubit/cubit.dart';
-import 'package:copilet/screens/mainScreenV2/MainScreenV2.dart';
+import 'package:copilet/screens/mainScreen/mainScreen.dart';
 import 'package:copilet/screens/mainScreenV2/cubit/cubit.dart';
 import 'package:copilet/screens/mainScreenV2/downloadReport/cubit.dart';
-import 'package:copilet/screens/mainScreenV2/downloadReport/state.dart';
 import 'package:copilet/screens/mainScreenV2/downloadWeaklyReportState/cubit.dart';
-import 'package:copilet/screens/mainScreenV2/downloadWeaklyReportState/state.dart';
 import 'package:copilet/screens/mainScreenV2/userinfoCubit/cubit.dart';
-import 'package:copilet/screens/plan/planScreen.dart';
 import 'package:copilet/screens/welcomScreen/welcomScreen.dart';
+import 'package:copilet/utility/deviceName.dart';
 import 'package:copilet/widgets/SurveysCard/googleForm/cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:copilet/route/routes.dart';
 import 'package:copilet/screens/home/cubit/cubit.dart';
 import 'package:copilet/screens/login/cubit/cubit.dart';
 import 'package:copilet/screens/login/cubit/state.dart';
-import 'package:copilet/screens/login/login.dart';
-import 'package:copilet/screens/mainScreen/mainScreen.dart';
 import 'package:copilet/utility/camareControlerBloc/camera_Bloc.dart';
 import 'package:copilet/utility/camareControlerBloc/camera_events.dart';
 import 'package:copilet/utility/changeScreanBloc/PageIndex_Bloc.dart';
@@ -41,6 +36,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    PlatformType platform = getPlatformType();
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => PageIndexBloc()),
@@ -77,8 +73,8 @@ class MyApp extends StatelessWidget {
                   width: size.width,
                   child: Container(
 
-                    // width: size.width > 440 ? 440 : size.width,
-                    // margin: EdgeInsets.only(top: size.height * .02),
+                    width:platform==PlatformType.web? size.width > 440 ? 440 : size.width:null,
+                    margin:platform==PlatformType.web? EdgeInsets.only(top: size.height * .02):null,
                     child: const Mainscreen(),
 
 

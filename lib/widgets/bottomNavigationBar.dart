@@ -13,6 +13,7 @@ import '../screens/camera/camaraScreen.dart';
 import '../utility/camareControlerBloc/camera_Bloc.dart';
 import '../utility/changeScreanBloc/PageIndex_Bloc.dart';
 import '../utility/changeScreanBloc/PageIndex_events.dart';
+import '../utility/deviceName.dart';
 
 class BottomNavigationBarCustom extends StatefulWidget {
   // Function takeScreenShot;
@@ -48,6 +49,8 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
 
             BlocProvider.of<PageIndexBloc>(context).add(UpdatePageIndex(index));
           } else {
+            PlatformType platform = getPlatformType();
+
             showPopover(
               context: context,
               bodyBuilder: (contextBodyBuilder) => ListItems(
@@ -59,7 +62,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                 print("takeItem $itemSelectName");
               },
               direction: PopoverDirection.bottom,
-              width: 600,
+              width: platform==PlatformType.web? (size.width > 440) ? size.width : 600:null,
               height: 140,
               arrowHeight: 0,
               shadow: [BoxShadow(color: Colors.transparent)],
@@ -190,10 +193,17 @@ class ListItems extends StatefulWidget {
 class _ListItemsState extends State<ListItems> {
   var itemSelect = 1;
   bool isCameraStart = false;
+  PlatformType platform = getPlatformType();
+
+
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    var size = MediaQuery.of(context).size;
+
+    return Container(
       padding: const EdgeInsets.symmetric(vertical: 8),
+      width:platform==PlatformType.web? size.width > 440 ? 440 : size.width:null,
+
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
