@@ -10,7 +10,8 @@ class ImageHandlerState {
 
 class HaveImage extends ImageHandlerState {
   var imageByte;
-  HaveImage({required this.imageByte});
+  var imageBase64;
+  HaveImage({required this.imageByte, this.imageBase64});
 }
 
 class HaveNotImage extends ImageHandlerState {

@@ -30,7 +30,7 @@ class _ChatscreenState extends State<Chatscreen> {
         .getString('name'); // Assuming 'name' is the key for the user's name
   }
 
-  void _sendMessage() async {
+  void _sendMessage(image) async {
     if (_controller.text.isNotEmpty) {
       final now = DateTime.now();
       final formattedTime =
@@ -39,7 +39,7 @@ class _ChatscreenState extends State<Chatscreen> {
       // Get the user's name from SharedPreferences
       String? userName = await getNameUser();
       BlocProvider.of<ChatCubit>(context)
-          .sendMessage(_controller.value.text, "");
+          .sendMessage(_controller.value.text, "data:image/png;base64,$image");
       _controller.clear();
       _scrollToBottom();
     }
@@ -266,7 +266,13 @@ class _ChatscreenState extends State<Chatscreen> {
                                     Icons.send,
                                     color: AppColors.purpleDark,
                                   ),
-                                  onPressed: _sendMessage,
+                                  onPressed: () {
+                                    _sendMessage(state is HaveImage
+                                        ? state.imageBase64
+                                        : "");
+                                    BlocProvider.of<ImageHandlerCubit>(context)
+                                        .DeletImage();
+                                  },
                                 ),
                                 border: const OutlineInputBorder(
                                   borderSide: BorderSide(

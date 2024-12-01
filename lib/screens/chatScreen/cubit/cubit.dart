@@ -29,7 +29,7 @@ class ChatCubit extends Cubit<ChatState> {
 
     // Emit updated message list to update the UI
     emit(ChatHistoryLoaded(List.from(messages)));
-
+    print(base64);
     var token = await getTokenLocally();
     _dio.options.headers['Authorization'] = "Bearer $token";
 
@@ -39,6 +39,7 @@ class ChatCubit extends Cubit<ChatState> {
         data: {
           "text": message,
           "conversation_id": conversationId,
+          "images": base64.isNotEmpty ? [base64] : []
         },
       );
 
