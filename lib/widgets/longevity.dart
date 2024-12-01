@@ -19,9 +19,9 @@ class _LongevityState extends State<Longevity> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SizedBox(height: 20,),
+        const SizedBox(height: 20,),
         Container(alignment: Alignment.centerLeft,child: Text("Longevity Theme",style: AppTextStyles.title1,)),
-        SizedBox(height: 10,),
+      const  SizedBox(height: 10,),
         Column(
           children: [
             Container(
@@ -52,7 +52,7 @@ class _LongevityState extends State<Longevity> {
                           colorFilter: ColorFilter.mode(AppColors.PurpleLiteText, BlendMode.srcIn),
 
                         ),
-                        SizedBox(width: 5,),
+                        const SizedBox(width: 5,),
                         Center(
                             child: Text(
                           "Diet",

@@ -292,7 +292,7 @@ class _ListItemsState extends State<ListItems> {
               setState(() {
                 isCameraStart = true;
               });
-              Navigator.of(widget.Parentcontext).push(
+              Navigator.of(widget.Parentcontext).pushReplacement(
                 MaterialPageRoute<void>(
                   // provide the Bloc to other screen
                   builder: (_) => BlocProvider.value(
