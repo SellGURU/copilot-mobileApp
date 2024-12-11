@@ -225,14 +225,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.0.7"
-  fixnum:
-    dependency: transitive
-    description:
-      name: fixnum
-      sha256: b6dc7065e46c974bc7c5f143080a6764ec7a4be6da1285ececdc37be96de53be
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.1"
   fl_chart:
     dependency: "direct main"
     description:
@@ -672,14 +664,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.1"
-  protobuf:
-    dependency: transitive
-    description:
-      name: protobuf
-      sha256: "68645b24e0716782e58948f8467fd42a880f255096a821f9e7d0ec625b00c84d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.0"
   provider:
     dependency: transitive
     description:
@@ -688,30 +672,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.2"
-  rook_sdk_apple_health:
-    dependency: "direct main"
-    description:
-      name: rook_sdk_apple_health
-      sha256: "239e3014d6fe4c347a275d03dd69d4d706e79634d64680d4f4160bd0873668ae"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.3.0"
-  rook_sdk_core:
-    dependency: "direct main"
-    description:
-      name: rook_sdk_core
-      sha256: "500927e978306e018a60e3cea0bbafb3833e18e947fa7b2b018b1384d54b3161"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.3"
-  rook_sdk_health_connect:
-    dependency: "direct main"
-    description:
-      name: rook_sdk_health_connect
-      sha256: "47ddd5f2e18b53a5eb9e0e109f172cfca46ac10515d24e882402433c90268ce0"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.0"
   screenshot:
     dependency: "direct main"
     description:

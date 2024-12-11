@@ -21,6 +21,7 @@ import 'dart:async'; // For Timer
 
 import '../../components/text_style.dart';
 import '../../res/colors.dart';
+import '../../utility/LaunchUrl.dart';
 import '../../utility/changeScreanBloc/PageIndex_Bloc.dart';
 import '../../utility/changeScreanBloc/PageIndex_states.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -37,40 +38,7 @@ import 'package:http/http.dart' as http;
 
 import 'downloadReport/cubit.dart';
 
-// Future<void> downloadAndSavePdf(BuildContext context, String base64Pdf) async {
-//   // Decode base64 string to bytes
-//   final bytes = base64Decode(base64Pdf);
-//   print("test gbv");
-//   if (kIsWeb) {
-//     // Web logic for downloading the PDF
-//     print("test pdf");
-//     _downloadPdfWeb(bytes);
-//   } else {
-//     // Android logic for saving the PDF
-//     print("test pdf mobile");
-//
-//     await _downloadPdfAndroid(context, bytes);
-//   }
-// }
-//
-// /// Web: Download the PDF using the browser's download mechanism
-// void _downloadPdfWeb(Uint8List bytes) {
-//   // Create a Blob object from the bytes
-//   final blob = html.Blob([bytes], 'application/pdf');
-//
-//   // Create a URL for the Blob and set it as the href of an anchor element
-//   final url = html.Url.createObjectUrlFromBlob(blob);
-//   final anchor = html.AnchorElement(href: url)
-//     ..setAttribute("download", "report.pdf")
-//     ..click(); // Trigger a download by clicking the link
-//
-//   // Revoke the object URL to avoid memory leaks
-//   html.Url.revokeObjectUrl(url);
-// }
-void _launchURL(String url) async {
-  final Uri urlRedirect = Uri.parse(url);
-  await launchUrl(urlRedirect);
-}
+
 
 Future<void> downloadPdf(BuildContext context, String pdfUrl) async {
   if (kIsWeb) {
@@ -505,82 +473,108 @@ class _Overview2State extends State<Overview2> {
                               //   width: 15,
                               // ),
                               const SizedBox(width: 40,),
-                              BlocConsumer<DownloadReportPdfCubit,
-                                  DownloadPdfState>(
-                                listener: (context, state) {
-                                  // TODO: implement listener
-                                },
-                                builder: (context, state) {
-                                  print("state is :${state}");
-                                  if (state is SuccessDownloadPdf) {
-                                    return GestureDetector(
-                                      onTap: () async {
-                                        // print("test on tab");
-                                        _launchURL(state.pdfUrl);
-                                      },
-                                      child: Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            "assets/document-download.svg",
-                                            width: 16,
-                                            height: 16,
-                                            colorFilter: const ColorFilter.mode(
-                                              AppColors.purpleDark,
-                                              BlendMode.srcIn,
-                                            ),
-                                          ),
-                                          const SizedBox(
-                                            width: 5,
-                                          ),
-                                          Text(
-                                            "Report",
-                                            style: AppTextStyles.hintPurple,
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  }
-                                  if (state is LoadingDownloadPdf) {
-                                    return const SizedBox(
-                                        width: 15,
-                                        height: 15,
-                                        child: CircularProgressIndicator());
-                                  }
-                                  if (state is ErrorDownloadPdf) {
-                                    return Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                          "assets/document-download.svg",
-                                          width: 16,
-                                          height: 16,
-                                          colorFilter: const ColorFilter.mode(
-                                            AppColors.purpleLite,
-                                            BlendMode.srcIn,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          "Report",
-                                          style: AppTextStyles.hintLitePurple,
-                                        ),
-                                      ],
-                                    );
-                                  } else {
-                                    return const SizedBox(child: Text("have error"),);
-                                  }
-                                },
+                      /// BlocConsumer widget that listens to and builds UI based on the state of DownloadReportPdfCubit.
+                      /// This handles the download of a report PDF and provides feedback for different states.
+                      BlocConsumer<DownloadReportPdfCubit, DownloadPdfState>(
+                        listener: (context, state) {
+                          // TODO: Implement listener for handling side effects based on state changes.
+                        },
+                        builder: (context, state) {
+                          print("State is: \$state");
+
+                          // State: SuccessDownloadPdf
+                          if (state is SuccessDownloadPdf) {
+                            return GestureDetector(
+                              onTap: () async {
+                                // Launch the URL for the PDF download
+                                LaunchURL(state.pdfUrl);
+                              },
+                              child: Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    "assets/document-download.svg",
+                                    width: 16,
+                                    height: 16,
+                                    colorFilter: const ColorFilter.mode(
+                                      AppColors.purpleDark,
+                                      BlendMode.srcIn,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    "Report",
+                                    style: AppTextStyles.hintPurple,
+                                  ),
+                                ],
                               ),
-                            ],
+                            );
+                          }
+
+                          // State: LoadingDownloadPdf
+                          if (state is LoadingDownloadPdf) {
+                            return const SizedBox(
+                              width: 15,
+                              height: 15,
+                              child: CircularProgressIndicator(),
+                            );
+                          }
+
+                          // State: ErrorDownloadPdf
+                          if (state is ErrorDownloadPdf) {
+                            return Row(
+                              children: [
+                                SvgPicture.asset(
+                                  "assets/document-download.svg",
+                                  width: 16,
+                                  height: 16,
+                                  colorFilter: const ColorFilter.mode(
+                                    AppColors.purpleLite,
+                                    BlendMode.srcIn,
+                                  ),
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
+                                  "Report",
+                                  style: AppTextStyles.hintLitePurple,
+                                ),
+                              ],
+                            );
+                          }
+
+                          // Default: Unknown State
+                          return const SizedBox(
+                            child: Text("An error occurred"),
+                          );
+                        },
+                      ),
+                      ],
                           ),
-                          BlocConsumer<ClientInformationMobileCubit,
-                              ClientInformationMobileState>(
+                          /// BlocConsumer for `ClientInformationMobileCubit`
+                          ///
+                          /// This widget listens to and builds the UI based on the states emitted by
+                          /// `ClientInformationMobileCubit`. It is responsible for displaying the user's
+                          /// name when the `SuccessClientInformation` state is emitted.
+                          ///
+                          /// Listener:
+                          /// - Currently, the listener is not implemented but can be used to handle side
+                          ///   effects, such as showing a toast message or navigating to another screen
+                          ///   based on state changes.
+                          ///
+                          /// Builder:
+                          /// - When the state is `SuccessClientInformation`, it displays the user's name
+                          ///   (retrieved from `state.userInfo["name"]`) in a tappable `Text` widget. The
+                          ///   `onTap` of the `GestureDetector` triggers the `onToggleDropDown` callback
+                          ///   from the parent widget (`widget.onToggleDropDown()`).
+                          ///
+                          /// - For all other states, an empty `SizedBox` is rendered, effectively displaying
+                          ///   nothing in the UI.
+                          BlocConsumer<ClientInformationMobileCubit, ClientInformationMobileState>(
                             listener: (context, state) {
-                              // TODO: implement listener
+                              // TODO: implement listener for handling side effects
                             },
                             builder: (context, state) {
                               if (state is SuccessClientInformation) {
+                                // Display the user's name when data is successfully loaded
                                 return GestureDetector(
                                   onTap: () => {widget.onToggleDropDown()},
                                   child: Text(
@@ -589,6 +583,7 @@ class _Overview2State extends State<Overview2> {
                                   ),
                                 );
                               }
+                              // Render an empty widget for other states
                               return const SizedBox();
                             },
                           ),

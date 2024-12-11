@@ -1,3 +1,6 @@
+/// This file serves as the entry point for the application.
+/// It initializes required dependencies, sets up providers, and defines the main app widget structure.
+
 import 'package:camera/camera.dart';
 import 'package:copilet/screens/Wearable%20Device/authorizersRook/cubit.dart';
 import 'package:copilet/screens/camera/imageHandlerCubit/cubit.dart';
@@ -13,7 +16,6 @@ import 'package:copilet/widgets/SurveysCard/googleForm/cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:copilet/route/routes.dart';
 import 'package:copilet/screens/home/cubit/cubit.dart';
 import 'package:copilet/screens/login/cubit/cubit.dart';
@@ -26,10 +28,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 void main() async {
+  /// Ensures binding is initialized for widgets before running the app.
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
+/// The main widget of the application.
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -37,8 +41,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     PlatformType platform = getPlatformType();
+
     return MultiBlocProvider(
       providers: [
+        /// Provides state management for various features of the application.
         BlocProvider(create: (_) => PageIndexBloc()),
         BlocProvider(create: (_) => DownloadWeaklyReportCubit()),
         BlocProvider(create: (_) => SwitchValueGraphBloc()),
@@ -69,21 +75,17 @@ class MyApp extends StatelessWidget {
             if (state is LoggedInState) {
               return Container(
                   alignment: Alignment.center,
-                  // height: size.height,
                   width: size.width,
                   child: Container(
-
-                    width:platform==PlatformType.web? size.width > 440 ? 440 : size.width:null,
-                    margin:platform==PlatformType.web? EdgeInsets.only(top: size.height * .02):null,
+                    width: platform == PlatformType.web ? (size.width > 440 ? 440 : size.width) : null,
+                    margin: platform == PlatformType.web ? EdgeInsets.only(top: size.height * .02) : null,
                     child: const Mainscreen(),
-
-
                   ));
-              // return const ();
             }
             if (state is LoggedOutState) {
               return const Welcomscreen();
             } else {
+              /// get the all data before seen with user
               BlocProvider.of<ClientInformationMobileCubit>(context).getPdf();
               BlocProvider.of<GoogleFormCubit>(context).getBiomarker();
               BlocProvider.of<HealthScoreCubit>(context).getBiomarker();

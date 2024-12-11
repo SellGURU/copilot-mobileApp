@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../res/colors.dart';
-
+/// This file defines a centralized collection of text styles for a Flutter application.
 class AppTextStyles {
   AppTextStyles._();
   static TextStyle title4xl = GoogleFonts.alice(
