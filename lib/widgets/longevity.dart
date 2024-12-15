@@ -86,7 +86,7 @@ class _LongevityState extends State<Longevity> {
                           ),
                         ),
                         SizedBox(width: 13,),
-                        SvgPicture.asset("assets/arrowHome.svg")
+                        // SvgPicture.asset("assets/arrowHome.svg")
                       ],
                     )
                   ],
@@ -156,7 +156,7 @@ class _LongevityState extends State<Longevity> {
                           ),
                         ),
                         SizedBox(width: 13,),
-                        SvgPicture.asset("assets/arrowHome.svg")
+                        // SvgPicture.asset("assets/arrowHome.svg")
                       ],
                     )
                   ],
@@ -226,7 +226,7 @@ class _LongevityState extends State<Longevity> {
                           ),
                         ),
                         SizedBox(width: 13,),
-                        SvgPicture.asset("assets/arrowHome.svg")
+                        // SvgPicture.asset("assets/arrowHome.svg")
                       ],
                     )
                   ],
@@ -294,7 +294,7 @@ class _LongevityState extends State<Longevity> {
                           ),
                         ),
                         SizedBox(width: 13,),
-                        SvgPicture.asset("assets/arrowHome.svg")
+                        // SvgPicture.asset("assets/arrowHome.svg")
                       ],
                     )
                   ],

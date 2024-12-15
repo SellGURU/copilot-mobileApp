@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +63,11 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                 print("takeItem $itemSelectName");
               },
               direction: PopoverDirection.bottom,
-              width: platform==PlatformType.web? (size.width > 440) ? size.width : 600:null,
+              width: platform == PlatformType.web
+                  ? (size.width > 440)
+                      ? size.width
+                      : 600
+                  : null,
               height: 140,
               arrowHeight: 0,
               shadow: [BoxShadow(color: Colors.transparent)],
@@ -195,15 +200,17 @@ class _ListItemsState extends State<ListItems> {
   bool isCameraStart = false;
   PlatformType platform = getPlatformType();
 
-
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8),
-      width:platform==PlatformType.web? size.width > 440 ? 440 : size.width:null,
-
+      width: platform == PlatformType.web
+          ? size.width > 440
+              ? 440
+              : size.width
+          : null,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -252,7 +259,24 @@ class _ListItemsState extends State<ListItems> {
           GestureDetector(
             onTap: () {
               // widget.takeItem("screenShot");
-              // Navigator.pop(widget.Parentcontext);
+              Navigator.pop(widget.Parentcontext);
+              const snackBar = SnackBar(
+                elevation: 0,
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: Colors.transparent,
+                content: AwesomeSnackbarContent(
+                  color: AppColors.purpleDark,
+                  title: 'this feature on the develop ',
+                  message:
+                      '',
+
+                  /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+                  contentType: ContentType.help,
+                ),
+              );
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(snackBar);
             },
             child: Container(
               padding: const EdgeInsets.only(

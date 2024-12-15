@@ -22,7 +22,6 @@ class DownloadReportPdfCubit extends Cubit<DownloadPdfState> {
           print("res.data:${res.data}");
           if(res.data!=null){
             emit(SuccessDownloadPdf(pdfUrl: res.data));
-            // print("res.data:${res.data}");
           }
           else{
             print("pdf be null");

@@ -6,6 +6,9 @@ import '../../../constants/endPoints.dart';
 import '../../../utility/token/getTokenLocaly.dart';
 import 'state.dart';
 
+
+
+
 /// `ClientInformationMobileCubit` manages the client information fetching process.
 class ClientInformationMobileCubit extends Cubit<ClientInformationMobileState> {
   ClientInformationMobileCubit() : super(ClientInformationMobileState()) {
