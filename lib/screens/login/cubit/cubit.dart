@@ -57,11 +57,28 @@ class AuthCubit extends Cubit<AuthState> {
           // emit(SuccessState());
           emit(ErrorState(value.data["detail"]));
         }
+      }).catchError((error) {
+      if (error is DioException) {
+        String errorMessage = "Something went wrong. Please try again.";
+
+        if (error.response != null) {
+          // API responded but returned an error
+          final errorData = error.response?.data;
+          errorMessage = errorData['detail'] ?? "Unknown error occurred";
+        } else {
+          // No response (network issue)
+          errorMessage = "Network error. Please check your connection.";
+        }
+
+        emit(ErrorState(errorMessage));
+      } else {
+        emit(ErrorState("Unexpected error occurred."));
+      }
       });
     } catch (e) {
       print("catch: $e");
       // emit(SuccessState());
-      emit(ErrorState("server error"));
+       emit(ErrorState("error"));
     }
   }
 
