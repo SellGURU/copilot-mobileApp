@@ -17,21 +17,22 @@ class DownloadReportPdfCubit extends Cubit<DownloadPdfState> {
       emit(LoadingDownloadPdf());
       var token = await getTokenLocally();
       _dio.options.headers['Authorization'] = "bearer $token";
-      try {
-        _dio.post(Endpoints.downloadPdfReport).then((res) {
-          print("res.data:${res.data}");
-          if(res.data!=null){
-            emit(SuccessDownloadPdf(pdfUrl: res.data));
-          }
-          else{
-            print("pdf be null");
-            emit(ErrorDownloadPdf());
-          }
-        });
-      } catch (e) {
-        print("error download pdf $e");
-        emit(ErrorDownloadPdf());
-      }
+      emit(SuccessDownloadPdf(pdfUrl: 'https://holisticare.vercel.app/share/a3fd9a1653/ZXCVMNBBASDFLKJHRTYU'));
+      // try {
+      //   _dio.post(Endpoints.downloadPdfReport).then((res) {
+      //     print("res.data:${res.data}");
+      //     if(res.data!=null){
+      //       emit(SuccessDownloadPdf(pdfUrl: res.data));
+      //     }
+      //     else{
+      //       print("pdf be null");
+      //       emit(ErrorDownloadPdf());
+      //     }
+      //   });
+      // } catch (e) {
+      //   print("error download pdf $e");
+      //   emit(ErrorDownloadPdf());
+      // }
     }
     }
 }

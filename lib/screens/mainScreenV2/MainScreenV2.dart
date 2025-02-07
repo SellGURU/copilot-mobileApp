@@ -755,6 +755,8 @@ class _Overview2State extends State<Overview2> {
                         );
                       },
                     )),
+               
+               
                 BlocConsumer<GoogleFormCubit, GoogleFormState>(
                   listener: (context, state) {
                     // TODO: implement listener
@@ -765,122 +767,122 @@ class _Overview2State extends State<Overview2> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Surveys",
+                            "Personal Information",
                             style: AppTextStyles.title1,
                           ),
                           const SizedBox(
-                            height: 10,
+                            height: 50,
                           ),
                           SurveyCard(
                             imagePath:
                                 'assets/Medical-Specialty-Rehabilitation--Streamline-Ultimate.svg',
-                            Minutes: state.googleFormData["Back Pain Surveys"]
+                            Minutes: state.googleFormData["Personal Information"]
                                 ["Average_response_time"],
-                            Questions: state.googleFormData['Back Pain Surveys']
+                            Questions: state.googleFormData['Personal Information']
                                 ["number_of_questions"],
-                            Title: 'Back Pain Surveys',
-                            Link: state.googleFormData['Back Pain Surveys']
+                            Title: 'Personal Information',
+                            Link: state.googleFormData['Personal Information']
                                 ["link"],
-                            fill: state.googleFormData['Back Pain Surveys']
+                            fill: state.googleFormData['Personal Information']
                                 ["filled"],
-                            eventName: "back pain surveys",
+                            eventName: "Personal Information",
                           ),
-                          SurveyCard(
-                            imagePath:
-                                'assets/heart-rate-strong--Streamline-Ultimate.svg',
-                            Minutes:
-                                state.googleFormData["Fitness test results"]
-                                    ["Average_response_time"],
-                            Questions:
-                                state.googleFormData['Fitness test results']
-                                    ["number_of_questions"],
-                            Title: 'Fitness Test Results',
-                            Link: state.googleFormData['Fitness test results']
-                                ["link"],
-                            fill: state.googleFormData['Fitness test results']
-                                ["filled"],
-                            eventName: "fitness test results",
-                          ),
-                          SurveyCard(
-                            eventName:
-                                "longevity performance coaching daily survey",
-                            imagePath:
-                                'assets/herbal-medicine-2--Streamline-Ultimate.svg',
-                            Minutes: state.googleFormData[
-                                    "Longevity Performance Coaching Daily Survey"]
-                                ["Average_response_time"],
-                            Questions: state.googleFormData[
-                                    'Longevity Performance Coaching Daily Survey']
-                                ["number_of_questions"],
-                            Title: 'Longevity Performance Coaching',
-                            Link: state.googleFormData[
-                                    'Longevity Performance Coaching Daily Survey']
-                                ["link"],
-                            fill: state.googleFormData[
-                                    'Longevity Performance Coaching Daily Survey']
-                                ["filled"],
-                          ),
-                          SurveyCard(
-                            imagePath:
-                                'assets/brain-head-1--Streamline-Ultimate.svg',
-                            Minutes: state.googleFormData[
-                                    "Emotional Health and Motivation Survey"]
-                                ["Average_response_time"],
-                            Questions: state.googleFormData[
-                                    'Emotional Health and Motivation Survey']
-                                ["number_of_questions"],
-                            Title: 'Emotional Health and Motivation',
-                            Link: state.googleFormData[
-                                    'Emotional Health and Motivation Survey']
-                                ["link"],
-                            fill: state.googleFormData[
-                                    'Emotional Health and Motivation Survey']
-                                ["filled"],
-                            eventName: '',
-                          ),
-                          SurveyCard(
-                            imagePath:
-                                'assets/heart-approve-1--Streamline-Ultimate.svg',
-                            Minutes: state.googleFormData[
-                                    "Stability, Mobility and Flexibility tests"]
-                                ["Average_response_time"],
-                            Questions: state.googleFormData[
-                                    'Stability, Mobility and Flexibility tests']
-                                ["number_of_questions"],
-                            Title: 'Stability, Mobility and Flexibility',
-                            Link: state.googleFormData[
-                                    'Stability, Mobility and Flexibility tests']
-                                ["link"],
-                            fill: state.googleFormData[
-                                    'Stability, Mobility and Flexibility tests']
-                                ["filled"],
-                            eventName:
-                                "stability, mobility and flexibility tests",
-                          ),
-                          SurveyCard(
-                            imagePath:
-                                'assets/Blood-Drops-Positive--Streamline-Ultimate.svg',
-                            Minutes: state.googleFormData["Blood test"]
-                                ["Average_response_time"],
-                            Questions: state.googleFormData['Blood test']
-                                ["number_of_questions"],
-                            Title: 'Blood Test',
-                            Link: state.googleFormData['Blood test']["link"],
-                            fill: state.googleFormData['Blood test']["filled"],
-                            eventName: 'blood test',
-                          ),
-                          SurveyCard(
-                            imagePath:
-                                'assets/Medical-Data-Cross--Streamline-Ultimate.svg',
-                            Minutes: state.googleFormData["Clinet info"]
-                                ["Average_response_time"],
-                            Questions: state.googleFormData['Clinet info']
-                                ["number_of_questions"],
-                            Title: 'Clinet Info',
-                            Link: state.googleFormData['Clinet info']["link"],
-                            fill: state.googleFormData['Clinet info']["filled"],
-                            eventName: 'clinet info',
-                          ),
+                          // SurveyCard(
+                          //   imagePath:
+                          //       'assets/heart-rate-strong--Streamline-Ultimate.svg',
+                          //   Minutes:
+                          //       state.googleFormData["Fitness test results"]
+                          //           ["Average_response_time"],
+                          //   Questions:
+                          //       state.googleFormData['Fitness test results']
+                          //           ["number_of_questions"],
+                          //   Title: 'Fitness Test Results',
+                          //   Link: state.googleFormData['Fitness test results']
+                          //       ["link"],
+                          //   fill: state.googleFormData['Fitness test results']
+                          //       ["filled"],
+                          //   eventName: "fitness test results",
+                          // ),
+                          // SurveyCard(
+                          //   eventName:
+                          //       "longevity performance coaching daily survey",
+                          //   imagePath:
+                          //       'assets/herbal-medicine-2--Streamline-Ultimate.svg',
+                          //   Minutes: state.googleFormData[
+                          //           "Longevity Performance Coaching Daily Survey"]
+                          //       ["Average_response_time"],
+                          //   Questions: state.googleFormData[
+                          //           'Longevity Performance Coaching Daily Survey']
+                          //       ["number_of_questions"],
+                          //   Title: 'Longevity Performance Coaching',
+                          //   Link: state.googleFormData[
+                          //           'Longevity Performance Coaching Daily Survey']
+                          //       ["link"],
+                          //   fill: state.googleFormData[
+                          //           'Longevity Performance Coaching Daily Survey']
+                          //       ["filled"],
+                          // ),
+                          // SurveyCard(
+                          //   imagePath:
+                          //       'assets/brain-head-1--Streamline-Ultimate.svg',
+                          //   Minutes: state.googleFormData[
+                          //           "Emotional Health and Motivation Survey"]
+                          //       ["Average_response_time"],
+                          //   Questions: state.googleFormData[
+                          //           'Emotional Health and Motivation Survey']
+                          //       ["number_of_questions"],
+                          //   Title: 'Emotional Health and Motivation',
+                          //   Link: state.googleFormData[
+                          //           'Emotional Health and Motivation Survey']
+                          //       ["link"],
+                          //   fill: state.googleFormData[
+                          //           'Emotional Health and Motivation Survey']
+                          //       ["filled"],
+                          //   eventName: '',
+                          // ),
+                          // SurveyCard(
+                          //   imagePath:
+                          //       'assets/heart-approve-1--Streamline-Ultimate.svg',
+                          //   Minutes: state.googleFormData[
+                          //           "Stability, Mobility and Flexibility tests"]
+                          //       ["Average_response_time"],
+                          //   Questions: state.googleFormData[
+                          //           'Stability, Mobility and Flexibility tests']
+                          //       ["number_of_questions"],
+                          //   Title: 'Stability, Mobility and Flexibility',
+                          //   Link: state.googleFormData[
+                          //           'Stability, Mobility and Flexibility tests']
+                          //       ["link"],
+                          //   fill: state.googleFormData[
+                          //           'Stability, Mobility and Flexibility tests']
+                          //       ["filled"],
+                          //   eventName:
+                          //       "stability, mobility and flexibility tests",
+                          // ),
+                          // SurveyCard(
+                          //   imagePath:
+                          //       'assets/Blood-Drops-Positive--Streamline-Ultimate.svg',
+                          //   Minutes: state.googleFormData["Blood test"]
+                          //       ["Average_response_time"],
+                          //   Questions: state.googleFormData['Blood test']
+                          //       ["number_of_questions"],
+                          //   Title: 'Blood Test',
+                          //   Link: state.googleFormData['Blood test']["link"],
+                          //   fill: state.googleFormData['Blood test']["filled"],
+                          //   eventName: 'blood test',
+                          // ),
+                          // SurveyCard(
+                          //   imagePath:
+                          //       'assets/Medical-Data-Cross--Streamline-Ultimate.svg',
+                          //   Minutes: state.googleFormData["Clinet info"]
+                          //       ["Average_response_time"],
+                          //   Questions: state.googleFormData['Clinet info']
+                          //       ["number_of_questions"],
+                          //   Title: 'Clinet Info',
+                          //   Link: state.googleFormData['Clinet info']["link"],
+                          //   fill: state.googleFormData['Clinet info']["filled"],
+                          //   eventName: 'clinet info',
+                          // ),
                         ],
                       );
                     }
@@ -894,6 +896,9 @@ class _Overview2State extends State<Overview2> {
                     }
                   },
                 )
+                
+
+                
                 // Container(
                 //   padding: const EdgeInsets.only(top: 1, bottom: 10),
                 //   height: size.height * .2,
