@@ -12,7 +12,7 @@ import '../../../utility/token/getTokenLocaly.dart';
 
 class ChatCubit extends Cubit<ChatState> {
   ChatCubit() : super(ChatInitial()) {
-    getHistoryChat();  // Initialize the chat history when the cubit is created
+    // getHistoryChat();  // Initialize the chat history when the cubit is created
   }
 
   // List of messages in the current chat session
