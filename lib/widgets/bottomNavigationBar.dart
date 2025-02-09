@@ -1,4 +1,3 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -259,24 +258,7 @@ class _ListItemsState extends State<ListItems> {
           GestureDetector(
             onTap: () {
               // widget.takeItem("screenShot");
-              Navigator.pop(widget.Parentcontext);
-              const snackBar = SnackBar(
-                elevation: 0,
-                behavior: SnackBarBehavior.floating,
-                backgroundColor: Colors.transparent,
-                content: AwesomeSnackbarContent(
-                  color: AppColors.purpleDark,
-                  title: 'this feature on the develop ',
-                  message:
-                      '',
-
-                  /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-                  contentType: ContentType.help,
-                ),
-              );
-              ScaffoldMessenger.of(context)
-                ..hideCurrentSnackBar()
-                ..showSnackBar(snackBar);
+              
             },
             child: Container(
               padding: const EdgeInsets.only(
