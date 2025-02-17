@@ -18,7 +18,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async'; // For Timer
-
+import 'package:intl/intl.dart';
 import '../../components/text_style.dart';
 import '../../res/colors.dart';
 import '../../utility/LaunchUrl.dart';
@@ -58,6 +58,11 @@ void _downloadPdfWebFromUrl(String pdfUrl) {
     ..setAttribute("download", "report.pdf")
     ..click(); // Trigger a download by clicking the link
 }
+
+String getFormattedDate(DateTime date) {
+  return DateFormat("MMMM, d").format(date);
+}
+
 
 /// Android: Download the PDF from a URL and save it using app-specific storage or SAF (File Picker)
 Future<void> _downloadPdfAndroidFromUrl(
@@ -364,16 +369,8 @@ class _Overview2State extends State<Overview2> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    GestureDetector(
-                      onTap: () => {widget.onToggleDropDown()},
-                      child: SvgPicture.asset(
-                        "assets/avatar.svg",
-                        width: 50,
-                        height: 50,
-                      ),
-                    ),
                     const SizedBox(
-                      width: 15,
+                      width: 0,
                     ),
                     Expanded(
                       child: Column(
@@ -385,8 +382,8 @@ class _Overview2State extends State<Overview2> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "Good morning",
-                                style: AppTextStyles.hint,
+                                "Overview",
+                                style: AppTextStyles.title1,
                               ),
                                 
                               // BlocConsumer<DownloadWeaklyReportCubit,
@@ -475,79 +472,79 @@ class _Overview2State extends State<Overview2> {
                               const SizedBox(width: 40,),
                       /// BlocConsumer widget that listens to and builds UI based on the state of DownloadReportPdfCubit.
                       /// This handles the download of a report PDF and provides feedback for different states.
-                      BlocConsumer<DownloadReportPdfCubit, DownloadPdfState>(
-                        listener: (context, state) {
-                          // TODO: Implement listener for handling side effects based on state changes.
-                        },
-                        builder: (context, state) {
-                          print("State is: \$state");
+                          BlocConsumer<DownloadReportPdfCubit, DownloadPdfState>(
+                            listener: (context, state) {
+                              // TODO: Implement listener for handling side effects based on state changes.
+                            },
+                            builder: (context, state) {
+                              print("State is: \$state");
 
-                          // State: SuccessDownloadPdf
-                          if (state is SuccessDownloadPdf) {
-                            return GestureDetector(
-                              onTap: () async {
-                                // Launch the URL for the PDF download
-                                LaunchURL(state.pdfUrl);
-                              },
-                              child: Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/document-download.svg",
-                                    width: 16,
-                                    height: 16,
-                                    colorFilter: const ColorFilter.mode(
-                                      AppColors.purpleDark,
-                                      BlendMode.srcIn,
+                              // State: SuccessDownloadPdf
+                              if (state is SuccessDownloadPdf) {
+                                return GestureDetector(
+                                  onTap: () async {
+                                    // Launch the URL for the PDF download
+                                    LaunchURL(state.pdfUrl);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                        "assets/document-download.svg",
+                                        width: 16,
+                                        height: 16,
+                                        colorFilter: const ColorFilter.mode(
+                                          AppColors.purpleDark,
+                                          BlendMode.srcIn,
+                                        ),
+                                      ),
+                                      const SizedBox(width: 5),
+                                      Text(
+                                        "Report",
+                                        style: AppTextStyles.hintPurple,
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+
+                              // State: LoadingDownloadPdf
+                              if (state is LoadingDownloadPdf) {
+                                return const SizedBox(
+                                  width: 15,
+                                  height: 15,
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+
+                              // State: ErrorDownloadPdf
+                              if (state is ErrorDownloadPdf) {
+                                return Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/document-download.svg",
+                                      width: 16,
+                                      height: 16,
+                                      colorFilter: const ColorFilter.mode(
+                                        AppColors.purpleLite,
+                                        BlendMode.srcIn,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(width: 5),
-                                  Text(
-                                    "Report",
-                                    style: AppTextStyles.hintPurple,
-                                  ),
-                                ],
-                              ),
-                            );
-                          }
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      "Report",
+                                      style: AppTextStyles.hintLitePurple,
+                                    ),
+                                  ],
+                                );
+                              }
 
-                          // State: LoadingDownloadPdf
-                          if (state is LoadingDownloadPdf) {
-                            return const SizedBox(
-                              width: 15,
-                              height: 15,
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-
-                          // State: ErrorDownloadPdf
-                          if (state is ErrorDownloadPdf) {
-                            return Row(
-                              children: [
-                                SvgPicture.asset(
-                                  "assets/document-download.svg",
-                                  width: 16,
-                                  height: 16,
-                                  colorFilter: const ColorFilter.mode(
-                                    AppColors.purpleLite,
-                                    BlendMode.srcIn,
-                                  ),
-                                ),
-                                const SizedBox(width: 5),
-                                Text(
-                                  "Report",
-                                  style: AppTextStyles.hintLitePurple,
-                                ),
-                              ],
-                            );
-                          }
-
-                          // Default: Unknown State
-                          return const SizedBox(
-                            child: Text("An error occurred"),
-                          );
-                        },
-                      ),
-                      ],
+                              // Default: Unknown State
+                              return const SizedBox(
+                                child: Text("An error occurred"),
+                              );
+                            },
+                          ),
+                          ],
                           ),
                           /// BlocConsumer for `ClientInformationMobileCubit`
                           ///
@@ -576,11 +573,15 @@ class _Overview2State extends State<Overview2> {
                               if (state is SuccessClientInformation) {
                                 // Display the user's name when data is successfully loaded
                                 return GestureDetector(
-                                  onTap: () => {widget.onToggleDropDown()},
-                                  child: Text(
-                                    state.userInfo["name"],
-                                    style: AppTextStyles.title1,
+                                  // onTap: () => {widget.onToggleDropDown()},
+                                  child:Padding(
+                                    padding: const EdgeInsets.only(top: 20.0), // 20 pixels top margin
+                                    child:Text(
+                                    getFormattedDate(DateTime.now()),
+                                    // state.userInfo["name"],
+                                    style: AppTextStyles.titleXl,
                                   ),
+                                  )
                                 );
                               }
                               // Render an empty widget for other states
@@ -593,126 +594,10 @@ class _Overview2State extends State<Overview2> {
                   ],
                 ),
                 const SizedBox(
-                  height: 30,
+                  height: 0,
                 ),
-                Container(
-                  width: size.width > 440 ? 440 : size.width,
-          
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        blurRadius: 8,
-                        spreadRadius: 1,
-                        offset: const Offset(0, 3),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Column(
-                        children: [
-                          Row(
-                            children: [
-                              NormalGauges(
-                                picAddress: "assets/overview/1.svg",
-                                value: 80,
-                                colorGauge: AppColors.greenVaryLite, MAEText: '2-5 years', title: 'Photo Aging',
-                              ),
-                              const SizedBox(width: 5,),
-          
-                              NormalGauges(
-                                picAddress: "assets/overview/2.svg",
-                                value: 40,
-                                colorGauge: AppColors.yellowLite, MAEText: '6-10 years', title: 'Anamnesis Aging',
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Text("Digital Clocks",style: AppTextStyles.hintSmalePurple,),
-                          SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            children: [
-                              NormalGauges(
-                                picAddress: "assets/overview/3.svg",
-                                value: 40,
-                                colorGauge: AppColors.greenVaryLite, MAEText: '6-7 years', title: 'ECG Aging',
-                              ),
-                              const SizedBox(width: 5,),
-                              NormalGauges(
-                                picAddress: "assets/mind-pink.svg",
-                                value: 40,
-                                colorGauge: AppColors.greenVaryLite, MAEText: '7-8 years', title: 'Mind Aging',
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-          
-                      // Container(
-                      //   width: size.width > 440 ? 120 : size.width * .25,
-                      //   // height: size.height * .1,
-                      //   child: Totalscoregauge(
-                      //     colorGauge:AppColors.pinkBorder,
-                      //     value: 0,
-                      //   ),
-                      // ),
-                      Column(
-                        children: [
-                          Row(
-                            children: [
-                              NormalGauges(
-                                picAddress: "assets/overview/4.svg",
-                                value: 40,
-                                colorGauge: AppColors.yellowLite, MAEText: '3-10 years', title: 'Microbiome Aging',
-                              ),
-                              const SizedBox(width: 5,),
-          
-                              NormalGauges(
-                                picAddress: "assets/overview/5.svg",
-                                value: 60,
-                                colorGauge: AppColors.greenVaryLite, MAEText: '3-6 years', title: 'Transcriptome Aging',
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                           Text("Molecular Clocks",style: AppTextStyles.hintSmaleYellow,),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            children: [
-                              NormalGauges(
-                                picAddress: "assets/overview/6.svg",
-                                value: 60,
-                                colorGauge: AppColors.greenVaryLite, MAEText: '5-6 years', title: 'Blood Aging',
-                              ),
-                              const SizedBox(width: 5,),
-          
-                              NormalGauges(
-                                picAddress: "assets/overview/7.svg",
-                                value: 60,
-                                colorGauge: AppColors.redBorder, MAEText: '2-4 years', title: 'DeepM Aging',
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 16),
+
+                SizedBox(height: 2),
                 // const Longevity2(),
                 Longevity(),
                 const SizedBox(
