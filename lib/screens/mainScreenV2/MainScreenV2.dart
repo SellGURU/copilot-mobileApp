@@ -22,6 +22,7 @@ import 'package:intl/intl.dart';
 import '../../components/text_style.dart';
 import '../../res/colors.dart';
 import '../../utility/LaunchUrl.dart';
+import '../../models/Biomarker.dart'; // Import the Person class
 import '../../utility/changeScreanBloc/PageIndex_Bloc.dart';
 import '../../utility/changeScreanBloc/PageIndex_states.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -128,7 +129,7 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    SharedPreferences _prefs;
+    SharedPreferences _prefs; 
     // 00
     return Scaffold(
         backgroundColor: AppColors.bgScreen,
@@ -289,7 +290,12 @@ class _Overview2State extends State<Overview2> {
   void initState() {
     getTime();
   }
-
+  List<Biomarker> biomarkers = [
+    //   "assets/Hrate.svg"
+    Biomarker(name: "Heart Rate",avg: 81,current: 84,unit:"bpm",values: [80,79,80,83,84],icon:"assets/ldlRate.svg"),
+    Biomarker(name: "Cholesterol",avg: 160,current: 173,unit:"mg/dl",values: [160,130,180,170,173],icon:"assets/Hrate.svg"),
+    Biomarker(name: "BMI",avg: 28,current: 27,unit:"kg/m²",values: [29,27,28,29,27],icon:"assets/Hrate.svg"),
+  ];   
   void getTime() async {
     print("_timePassed");
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -607,32 +613,31 @@ class _Overview2State extends State<Overview2> {
                   padding: const EdgeInsets.only(top: 20),
                   alignment: Alignment.centerLeft,
                   child: Text(
-                    "Blood Biomarkers",
+                    "Biomarkers",
                     style: AppTextStyles.title1,
                   ),
                 ),
                 SizedBox(
                     height: 280,
                     child: ListView.separated(
-                      itemCount: 2,
+                      itemCount: biomarkers.length,
                       scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
+                      shrinkWrap: false,
+                      physics: BouncingScrollPhysics(),
                       padding: const EdgeInsets.only(
                           top: 20, bottom: 20, left: 8, right: 10),
                       itemBuilder: (BuildContext context, int index) {
                         return ItemCard(
-                            title:
-                            index % 2 == 0 ? "Heart Rate" : "Cholesterol",
-                            average: "84",
+                            title:biomarkers[index].name,
+                            average: biomarkers[index].avg.toString(),
+                            // "assets/ldlRate.svg"
                             icon: SvgPicture.asset(
-                              index % 2 == 0
-                                  ? "assets/Hrate.svg"
-                                  : "assets/ldlRate.svg",
+                              biomarkers[index].icon,
                               width: 40,
                               height: 40,
                             ),
                             status: "hi",
-                            current: "81", scale: index % 2 == 0 ? "bpm" : "mg/dl",);
+                            current:biomarkers[index].current.toString(), scale: biomarkers[index].unit.toString(),valuesData:biomarkers[index].values);
                       },
                       separatorBuilder: (BuildContext context, int index) {
                         return const SizedBox(

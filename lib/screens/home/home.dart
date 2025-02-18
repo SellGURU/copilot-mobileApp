@@ -106,6 +106,7 @@ class Overview extends StatelessWidget {
                               height: 40,
                             ),
                             status: "hi",
+                            valuesData: [1],
                             current: "81", scale: index % 2 == 0 ? "bpm" : "mg/dl", );
                       },
                       separatorBuilder: (BuildContext context, int index) {
