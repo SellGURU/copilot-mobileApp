@@ -46,8 +46,8 @@ class ChartDot extends StatelessWidget {
 
   // Define gradient colors for the chart
   List<Color> gradientColors = [
-    AppColors.brandSecondaryColor,
-    AppColors.brandSecondaryColor,
+    AppColors.greenBega,
+    AppColors.greenBega,
   ];
 
   // Line chart data configuration
@@ -98,7 +98,7 @@ class ChartDot extends StatelessWidget {
               radius: 3,
               color: Colors.white,
               strokeWidth: 2,
-              strokeColor: AppColors.purpleDark,
+              strokeColor: AppColors.greenBega,
             ),
           ),
           belowBarData: BarAreaData(

@@ -122,7 +122,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
               padding: EdgeInsets.all(1),
               height: (size.height),
               decoration: BoxDecoration(
-                  color: AppColors.iconPurpleDark,
+                  color: AppColors.greenBega,
                   borderRadius: BorderRadius.circular(99),
                   boxShadow: [
                     BoxShadow(
@@ -130,7 +130,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                         offset: Offset(0, 4),
                         blurRadius: 12)
                   ]),
-              child: Image.asset("assets/codie.png"),
+              child: SvgPicture.asset("assets/star.svg"),
             ),
           ),
           TabItem(
