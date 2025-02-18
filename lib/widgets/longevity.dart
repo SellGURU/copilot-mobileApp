@@ -45,13 +45,26 @@ class _LongevityState extends State<Longevity> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(
-                          "assets/apple.svg",
-                          width: 30,
-                          height: 30,
-                          colorFilter: ColorFilter.mode(AppColors.PurpleLiteText, BlendMode.srcIn),
-
-                        ),
+                        Container(
+                          width: 32,
+                          height:32,
+                          // color: Colors.yellowAccent,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(.1),
+                            border: Border.all(color: Colors.white, width: 1), // Border
+                            borderRadius: BorderRadius.circular(20), // Rounded corners
+                          ),
+                          child:Center(
+                            child:SvgPicture.asset(
+                              "assets/diet.svg",
+                              width: 20,
+                              height: 20,
+                              fit: BoxFit.cover,
+                          // colorFilter: ColorFilter.mode(AppColors.PurpleLiteText, BlendMode.srcIn),
+                          ),
+                          ),
+                        ),                        
+                        
                         const SizedBox(width: 5,),
                         Center(
                             child: Text(
@@ -115,13 +128,26 @@ class _LongevityState extends State<Longevity> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(
-                          "assets/mid.svg",
-                          width: 30,
-                          height: 30,
-                          colorFilter: ColorFilter.mode(AppColors.PurpleLiteText, BlendMode.srcIn),
-
-                        ),
+                        Container(
+                          width: 32,
+                          height:32,
+                          // color: Colors.yellowAccent,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(.1),
+                            border: Border.all(color: Colors.white, width: 1), // Border
+                            borderRadius: BorderRadius.circular(20), // Rounded corners
+                          ),
+                          child:Center(
+                            child:SvgPicture.asset(
+                              "assets/mental-disorder.svg",
+                              width: 20,
+                              height: 20,
+                              fit: BoxFit.cover,
+                          // colorFilter: ColorFilter.mode(AppColors.PurpleLiteText, BlendMode.srcIn),
+                          ),
+                          ),
+                        ),                        
+                        
                         SizedBox(width: 5,),
                         Center(
                             child: Text(
@@ -185,13 +211,26 @@ class _LongevityState extends State<Longevity> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(
-                          "assets/activityIcon.svg",
-                          width: 30,
-                          height: 30,
-                          colorFilter: ColorFilter.mode(AppColors.PurpleLiteText, BlendMode.srcIn),
-
+                        Container(
+                          width: 32,
+                          height:32,
+                          // color: Colors.yellowAccent,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(.1),
+                            border: Border.all(color: Colors.white, width: 1), // Border
+                            borderRadius: BorderRadius.circular(20), // Rounded corners
+                          ),
+                          child:Center(
+                            child:SvgPicture.asset(
+                              "assets/weight.svg",
+                              width: 20,
+                              height: 20,
+                              fit: BoxFit.cover,
+                          // colorFilter: ColorFilter.mode(AppColors.PurpleLiteText, BlendMode.srcIn),
+                          ),
+                          ),
                         ),
+
                         SizedBox(width: 5,),
                         Center(
                             child: Text(
@@ -255,11 +294,26 @@ class _LongevityState extends State<Longevity> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SvgPicture.asset(
-                          "assets/pil.svg",
-                          width: 30,
-                          height: 30,
-                        ),
+                        Container(
+                          width: 32,
+                          height:32,
+                          // color: Colors.yellowAccent,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(.1),
+                            border: Border.all(color: Colors.white, width: 1), // Border
+                            borderRadius: BorderRadius.circular(20), // Rounded corners
+                          ),
+                          child:Center(
+                            child:SvgPicture.asset(
+                              "assets/pil.svg",
+                              width: 20,
+                              height: 20,
+                              fit: BoxFit.cover,
+                          // colorFilter: ColorFilter.mode(AppColors.PurpleLiteText, BlendMode.srcIn),
+                          ),
+                          ),
+                        ),                        
+                        
                         SizedBox(width: 5,),
                         Center(
                             child: Text(
