@@ -9,6 +9,7 @@ import 'package:copilet/screens/mainScreenV2/userinfoCubit/state.dart';
 import 'package:copilet/widgets/SurveysCard/SurveysCard.dart';
 import 'package:copilet/widgets/SurveysCard/googleForm/cubit.dart';
 import 'package:copilet/widgets/SurveysCard/googleForm/state.dart';
+import 'package:copilet/widgets/Tasks.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -606,6 +607,7 @@ class _Overview2State extends State<Overview2> {
                 SizedBox(height: 2),
                 // const Longevity2(),
                 Longevity(),
+                Tasks(),
                 const SizedBox(
                   height: 20,
                 ),

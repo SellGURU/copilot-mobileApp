@@ -143,6 +143,11 @@ class AppTextStyles {
           fontSize: 10,
           color: AppColors.textLite,
           fontWeight: FontWeight.w400));
+  static TextStyle hintSmalePrimary = GoogleFonts.roboto(
+      textStyle: TextStyle(
+          fontSize: 10,
+          color: AppColors.purpleDark,
+          fontWeight: FontWeight.w400));          
   static TextStyle hintSmaleYellow = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 10,
