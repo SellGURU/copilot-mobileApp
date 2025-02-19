@@ -14,6 +14,11 @@ class Tasks extends StatefulWidget{
 }
 
 class _TasksState extends State<Tasks> {
+  List<Map<String, dynamic>> tasks = [
+    { "id": 1, "title": "Morning Check-In", "type": "Check-In", "completed": false },
+    { "id": 2, "title": "Daily Questionnaire", "type": "Questionary", "completed": true },
+    { "id": 3, "title": "Drink Water", "type": "Habits", "completed": false }
+  ];
   @override
   Widget build(BuildContext context) {
     return Column(
