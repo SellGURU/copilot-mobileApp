@@ -1,5 +1,6 @@
 import 'package:copilet/components/text_style.dart';
 import 'package:copilet/res/colors.dart';
+import 'package:copilet/widgets/Tasks/TaskWrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
@@ -14,10 +15,14 @@ class Tasks extends StatefulWidget{
 }
 
 class _TasksState extends State<Tasks> {
+  List<String> taskTypes = ['Check-In', 'Questionary', 'Habits'];
   List<Map<String, dynamic>> tasks = [
-    { "id": 1, "title": "Morning Check-In", "type": "Check-In", "completed": false },
-    { "id": 2, "title": "Daily Questionnaire", "type": "Questionary", "completed": true },
-    { "id": 3, "title": "Drink Water", "type": "Habits", "completed": false }
+    { "id": 1, "title": "Daily Check in", "type": "Check-In", "completed": false },
+    { "id": 2, "title": "Profile Data", "type": "Questionary", "completed": true },
+    { "id": 2, "title": "Stability, Mobility", "type": "Questionary", "completed": true },
+    { "id": 3, "title": "Drink the water", "type": "Habits", "completed": false },
+    { "id": 3, "title": "Walk", "type": "Habits", "completed": false },
+    { "id": 3, "title": "Meditate", "type": "Habits", "completed": false }
   ];
   @override
   Widget build(BuildContext context) {
@@ -48,74 +53,12 @@ class _TasksState extends State<Tasks> {
             ],
           ),
           child: Column(
-            children:[Column(
-              children: [
-                Row(
-                  spacing: 4,
-                  children: [
-                    SvgPicture.asset(
-                        "assets/firstline.svg",
-                        fit: BoxFit.cover,
-                        width:18,
-                        height:18
-                    ),
-                    Text('Check-In',style: AppTextStyles.hintSmalePrimary,)
-                  ],
-                )
-                ,
-                Container(
-                  margin: const EdgeInsets.only(top: 8),
-                  padding:const EdgeInsets.only(left: 8),
-                  decoration: const BoxDecoration(
-                    border: Border(left: BorderSide(color: AppColors.SilverGray,width: 1,))
-                  ),
-                  child:Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(mainAxisAlignment:MainAxisAlignment.start,spacing: 4 ,children: [
-                          Container(
-                            width: 36,
-                            height: 36,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(100),
-                              border: Border.all(
-                                color: AppColors.SilverGray,
-                                width: 3,
-                              )// Rounded corners
-                            ),
-                            child: Center(
-                              // ignore: deprecated_member_use
-                              child:SvgPicture.asset('assets/firstline.svg',width: 16,height: 16,fit: BoxFit.contain,color: AppColors.TextTriarty ,) )
-                          )
-                          ,
-                          Text("Daily Check in",style: AppTextStyles.hintMedium,)
-                        ],)
-                        ,
-                        Container(
-                          width: 24,
-                          height: 24,
-                          decoration:BoxDecoration(
-                            border: Border.all(
-                              color:AppColors.SilverGray,
-                              width:1,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ) ,
-                          child: Center(
-                            child:SvgPicture.asset('assets/pelas.svg',) ,
-                          ),
-                        )
-                      ],)
-                  ],
-                )
-                ,
-                ),
-
-              ],
-            )]
+            children: List.generate(3, (index) => 
+              Padding(
+                padding: const EdgeInsets.only(bottom: 10), // Adds gap of 10 pixels
+                child: TaskWrapper(typeName: taskTypes[index],tasks: tasks.where((task) => task['type'] == taskTypes[index]).toList(),),
+              ),
+            ),
           ),
         )
       ],
