@@ -25,7 +25,7 @@ class _TaskItemState extends State<TaskItem> {
       ..loadRequest(Uri.parse("https://holisticare.vercel.app/checkin"));
   }
 
-  void _openWebViewModal(BuildContext context) {
+  void _openWebViewModal(BuildContext context,String title) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -35,7 +35,7 @@ class _TaskItemState extends State<TaskItem> {
           child: Column(
             children: [
               AppBar(
-                title: const Text("WebView"),
+                title: Text(title,style: AppTextStyles.title1),
                 automaticallyImplyLeading: false,
                 actions: [
                   IconButton(
@@ -89,10 +89,10 @@ class _TaskItemState extends State<TaskItem> {
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ) ,
-                          child:ElevatedButton(
+                          child:GestureDetector(
                             child:Center(
                               child:SvgPicture.asset('assets/pelas.svg',) ,
-                          ), onPressed: () { _openWebViewModal(context); },
+                          ), onTap: () { _openWebViewModal(context,widget.task["title"]); },
                           ) 
                         )
                 ] ,);
