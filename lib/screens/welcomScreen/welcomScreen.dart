@@ -28,7 +28,7 @@ class _WelcomscreenState extends State<Welcomscreen> {
               children: [
                 Positioned.fill(
                   child: SvgPicture.asset(
-                    "assets/splashWeb.svg",
+                    "assets/splashWeb2.svg",
                     fit: BoxFit.cover,
                   ),
                 ),
