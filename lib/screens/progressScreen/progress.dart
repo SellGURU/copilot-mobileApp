@@ -1,4 +1,5 @@
 import 'package:copilet/res/colors.dart';
+import 'package:copilet/widgets/Tasks.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -158,23 +159,24 @@ class _ProgressScreenState extends State<ProgressScreen>
                     ChallengesSection(),
                     const SizedBox(height: 16),
                     // Tasks Section
-                    Text(
-                      "Tasks",
-                      style: AppTextStyles.title2,
-                    ),
-                    const SizedBox(height: 10),
-                    WaterTaskWidget(
-                      title: 'Drink the water',
-                      des: '500/2000 ML',
-                      iconSrc: 'assets/Emoji11.png',value: 0.3
-                    ),
-                    const SizedBox(height: 10),
-                    WaterTaskWidget(
-                      title: 'Walk',
-                      des: '0/10000 STEPS',
-                      iconSrc: 'assets/Emoji21.png', value: 0.0,
-                    ),
-                    const SizedBox(height: 150),
+                    // Text(
+                    //   "Tasks",
+                    //   style: AppTextStyles.title2,
+                    // ),
+                    const Tasks(),
+                    // const SizedBox(height: 10),
+                    // WaterTaskWidget(
+                    //   title: 'Drink the water',
+                    //   des: '500/2000 ML',
+                    //   iconSrc: 'assets/Emoji11.png',value: 0.3
+                    // ),
+                    // const SizedBox(height: 10),
+                    // WaterTaskWidget(
+                    //   title: 'Walk',
+                    //   des: '0/10000 STEPS',
+                    //   iconSrc: 'assets/Emoji21.png', value: 0.0,
+                    // ),
+                    // const SizedBox(height: 150),
                   ],
                 ),
               ),
@@ -189,6 +191,14 @@ class _ProgressScreenState extends State<ProgressScreen>
 // Plan Progress Section
 class PlanProgressSection extends StatelessWidget {
   @override
+  List<DateTime> getDaysRange() {
+    DateTime today = DateTime.now();
+    return [
+      today.subtract(const Duration(days: 3)), // 3 days ago
+      today,                             // Today
+      today.add(const Duration(days: 3)),      // 3 days after
+    ];
+  }  
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16.0),
@@ -288,6 +298,7 @@ class PlanProgressSection extends StatelessWidget {
                   mainPlan: 0.6,
                   color: AppColors.greenLite,
                   alternativePlan: 0.7),
+            
             ],
           ),
         ],
