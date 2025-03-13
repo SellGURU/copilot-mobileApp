@@ -1,0 +1,2 @@
+C:/Users/nima/Desktop/copilot-mobileApp/android/app/.cxx/RelWithDebInfo/4q4n3g6i/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/nima/Desktop/copilot-mobileApp/android/app/.cxx/RelWithDebInfo/4q4n3g6i/x86_64/CMakeFiles/rebuild_cache.dir
