@@ -12,6 +12,7 @@ class AppColors {
   static const Color textLite = Color.fromARGB(255,123, 147, 175);
   static const Color TextTriarty = Color.fromARGB(255,176, 176, 176);
   static const Color gray100 = Color.fromARGB(255,243, 244, 246);
+   static const Color gray50 = Color.fromARGB(255,243, 244, 246);
   static const Color grayDark = Color.fromRGBO(132, 138, 148, 1);
   // rgba(, 1)
   static const Color textLiteGray = Color.fromARGB(255,174, 193, 218);
@@ -21,7 +22,7 @@ class AppColors {
   static const Color purpleLite = Color.fromRGBO(208, 209, 255, 1);
   static const Color iconPurpleDark = Color.fromARGB(255, 147, 129, 255);
   static const Color PurpleLiteText = Color.fromRGBO(48, 48, 177, 1);
-  static const Color greenBega = Color.fromARGB(255,6, 199, 141);
+  static const Color greenBega = Color.fromARGB(255, 108, 194, 74);
   static const Color greenLite = Color.fromRGBO(201, 235, 237, 1);
   static const Color greenVaryLite = Color.fromRGBO(153, 215, 219, 1);
   static const Color redBega = Color.fromRGBO(252, 84, 116, 0.3);

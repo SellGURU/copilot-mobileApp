@@ -4,7 +4,7 @@ import 'package:copilet/res/colors.dart';
 import 'package:copilet/widgets/Tasks/TaskWrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'package:webview_flutter/webview_flutter.dart';
 class TaskItem extends StatefulWidget {
   final Map<String, dynamic> task;
   const TaskItem({super.key,required this.task});
@@ -15,6 +15,45 @@ class TaskItem extends StatefulWidget {
 }
 
 class _TaskItemState extends State<TaskItem> {
+
+  late final WebViewController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = WebViewController()
+      ..loadRequest(Uri.parse("https://holisticare.vercel.app/checkin"));
+  }
+
+  void _openWebViewModal(BuildContext context,String title) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return SizedBox(
+          height: MediaQuery.of(context).size.height * 0.9,
+          child: Column(
+            children: [
+              AppBar(
+                title: Text(title,style: AppTextStyles.title1),
+                automaticallyImplyLeading: false,
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: WebViewWidget(controller: _controller),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return  Row(
@@ -50,9 +89,11 @@ class _TaskItemState extends State<TaskItem> {
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ) ,
-                          child: Center(
-                            child:SvgPicture.asset('assets/pelas.svg',) ,
-                          ),
+                          child:GestureDetector(
+                            child:Center(
+                              child:SvgPicture.asset('assets/pelas.svg',) ,
+                          ), onTap: () { _openWebViewModal(context,widget.task["title"]); },
+                          ) 
                         )
                 ] ,);
   }  
