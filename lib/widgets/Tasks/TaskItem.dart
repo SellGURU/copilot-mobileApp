@@ -1,6 +1,7 @@
 // ignore: file_names
 import 'package:copilet/components/text_style.dart';
 import 'package:copilet/res/colors.dart';
+import 'package:copilet/utility/token/getTokenLocaly.dart';
 import 'package:copilet/widgets/Tasks/TaskWrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,16 +16,36 @@ class TaskItem extends StatefulWidget {
 }
 
 class _TaskItemState extends State<TaskItem> {
-
+  late Map<String, dynamic> taskData;
   late final WebViewController _controller;
-
+  late String encodeId ;
   @override
   void initState() {
     super.initState();
-    _controller = WebViewController()
-      ..loadRequest(Uri.parse("https://holisticare.vercel.app/checkin"));
+    taskData = widget.task; // Access task from widget
+    _initializeTask();
+    // _controller = WebViewController()
+    //   ..loadRequest(Uri.parse("https://holisticare.vercel.app/checkin/"+taskData["id"]));
   }
 
+  Future<void> _initializeTask() async {
+    // Simulate fetching taskId asynchronously (e.g., API call, SharedPreferences)
+    String fetchedEncodeId = await _getEncodeId(); // Await an async function
+    setState(() {
+      encodeId = fetchedEncodeId; // Update state with fetched ID
+    });
+
+    _initializeWebView();
+  }  
+  Future<String> _getEncodeId() async {
+    return await getEncodeLocally() as String;   
+  }  
+  void _initializeWebView() {
+    _controller = WebViewController();
+    _controller.loadRequest(Uri.parse("https://holisticare.vercel.app/checkin/$encodeId"));
+    // print()
+    setState(() {}); // Ensure UI updates after WebView loads
+  }
   void _openWebViewModal(BuildContext context,String title) {
     showModalBottomSheet(
       context: context,

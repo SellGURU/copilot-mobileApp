@@ -14,4 +14,5 @@ class Endpoints {
   static const google_form = "${baseUrlCodie}google_form";
   static const mobile_chat = "${baseUrlCodie}mobile_chat";
   static const getHistoryChat = "${baseUrlCodie}mobile_chat/get_messages_id";
+  static const getQuestionary = "${baseUrlCodie}mobile/tasks/show_assigned_questionaries";
 }

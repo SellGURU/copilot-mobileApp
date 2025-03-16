@@ -1,9 +1,15 @@
+import 'dart:convert';
+
 import 'package:copilet/components/text_style.dart';
+import 'package:copilet/constants/endPoints.dart';
 import 'package:copilet/res/colors.dart';
+import 'package:copilet/utility/token/getTokenLocaly.dart';
 import 'package:copilet/widgets/Tasks/TaskWrapper.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:http/http.dart' as http;
 
 class Tasks extends StatefulWidget{
   const Tasks({super.key});
@@ -17,13 +23,45 @@ class Tasks extends StatefulWidget{
 class _TasksState extends State<Tasks> {
   List<String> taskTypes = ['Check-In', 'Questionary', 'Habits'];
   List<Map<String, dynamic>> tasks = [
-    { "id": 1, "title": "Daily Check in", "type": "Check-In", "completed": false },
-    { "id": 2, "title": "Profile Data", "type": "Questionary", "completed": true },
-    { "id": 2, "title": "Stability, Mobility", "type": "Questionary", "completed": true },
-    { "id": 3, "title": "Drink the water", "type": "Habits", "completed": false },
-    { "id": 3, "title": "Walk", "type": "Habits", "completed": false },
-    { "id": 3, "title": "Meditate", "type": "Habits", "completed": false }
+    // { "id": 1, "title": "Daily Check in", "type": "Check-In", "completed": false },
+    // { "id": 2, "title": "Profile Data", "type": "Questionary", "completed": true },
+    // { "id": 2, "title": "Stability, Mobility", "type": "Questionary", "completed": true },
+    // { "id": 3, "title": "Drink the water", "type": "Habits", "completed": false },
+    // { "id": 3, "title": "Walk", "type": "Habits", "completed": false },
+    // { "id": 3, "title": "Meditate", "type": "Habits", "completed": false }
   ];
+  Dio _dio = Dio();
+  
+  @override
+  void initState() {
+    super.initState();
+    fetchQuestionary();
+  }
+
+  Future<void>  fetchQuestionary() async {
+    var token = await getTokenLocally();
+    _dio.options.headers['Authorization'] = "bearer $token";
+    final response = await _dio.post(Endpoints.getQuestionary);
+
+    if (response.statusCode == 200) {
+      List<dynamic> jsonData =response.data;
+     
+      setState((){
+        List<Map<String, dynamic>> modifiedData = jsonData.map((item) {
+          return {
+            'id': item['unique_id'],
+            'title': item['title'],
+            'type': "Questionary",
+            'completed': item['status'] // Add custom key
+          };
+        }).toList(); 
+        tasks = modifiedData;
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
