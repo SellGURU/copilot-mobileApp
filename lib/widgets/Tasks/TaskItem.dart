@@ -41,9 +41,9 @@ class _TaskItemState extends State<TaskItem> {
     return await getEncodeLocally() as String;   
   }  
   void _initializeWebView() {
-    _controller = WebViewController();
-    _controller.loadRequest(Uri.parse("https://holisticare.vercel.app/checkin/$encodeId/$taskData.id"));
-    print("https://holisticare.vercel.app/checkin/$encodeId/"+taskData["id"]);
+    _controller = WebViewController()
+      ..loadRequest(Uri.parse("https://holisticare.vercel.app/checkin/$encodeId/"+taskData["id"]));
+    // print("https://holisticare.vercel.app/checkin/$encodeId/$taskData.id");
     setState(() {}); // Ensure UI updates after WebView loads
   }
   void _openWebViewModal(BuildContext context,String title) {
@@ -105,12 +105,19 @@ class _TaskItemState extends State<TaskItem> {
                           height: 24,
                           decoration:BoxDecoration(
                             border: Border.all(
-                              color:AppColors.SilverGray,
+                              color:widget.task["completed"] == 'Done'?AppColors.greenBega:AppColors.SilverGray,
                               width:1,
                             ),
                             borderRadius: BorderRadius.circular(8),
                           ) ,
-                          child:GestureDetector(
+                          child:widget.task["completed"] == 'Done'?
+                          GestureDetector(
+                            child:Center(
+                              child:SvgPicture.asset('assets/tick.svg',) ,
+                          ),
+                          )                           
+                          :
+                          GestureDetector(
                             child:Center(
                               child:SvgPicture.asset('assets/pelas.svg',) ,
                           ), onTap: () { _openWebViewModal(context,widget.task["title"]); },
