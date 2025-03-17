@@ -88,13 +88,13 @@ class _TaskItemState extends State<TaskItem> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(100),
                               border: Border.all(
-                                color: AppColors.SilverGray,
+                                color:widget.task["completed"]=='Done'?AppColors.greenBega :AppColors.SilverGray,
                                 width: 3,
                               )// Rounded corners
                             ),
                             child: Center(
                               // ignore: deprecated_member_use
-                              child:SvgPicture.asset('assets/firstline.svg',width: 16,height: 16,fit: BoxFit.contain,color: AppColors.TextTriarty ,) )
+                              child:SvgPicture.asset('assets/firstline.svg',width: 16,height: 16,fit: BoxFit.contain,color:widget.task["completed"]=='Done'?AppColors.greenBega : AppColors.TextTriarty ,) )
                           )
                           ,
                           Text(widget.task["title"],style: AppTextStyles.hintMedium,)
