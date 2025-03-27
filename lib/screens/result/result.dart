@@ -364,11 +364,11 @@ class _ResultScreenState extends State<ResultScreen> {
                           return SizedBox(width: 0,);
                         }
                         if (itemSelectedFiltered ==
-                                data["data"][index]["tag"] ||
+                                data["data"][index]["subcategory"] ||
                             itemSelectedFiltered == "all") {
                           return BioMarkerCard(
-                            label: data["data"][index]["label"],
-                            colorBadge: data["data"][index]["colorBadge"],
+                            label:data["data"][index]["name"],
+                            colorBadge:"red",
                           );
                         } else {
                           return const SizedBox(

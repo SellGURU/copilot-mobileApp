@@ -4,7 +4,7 @@ class Endpoints {
   static const baseUrlCodie = "https://vercel-backend-one-roan.vercel.app/holisticare/";
 
   // mobile/get_messages_id
-  static const biomarker = "${baseUrl}api/getDate";
+  static const biomarker = "${baseUrlCodie}biomarkers_mobile";
   static const login = "${baseUrlCodie}auth/mobile_token";
   static const healthScore = "${baseUrlCodie}health_score_mobile";
   static const downloadPdfReport = "${baseUrlCodie}download_report_mobile";
