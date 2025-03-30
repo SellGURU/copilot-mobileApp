@@ -5,7 +5,7 @@ import 'dart:math';
 class ChartDot extends StatelessWidget {
   var spots;
   var labels;
-  ChartDot({super.key,required this.spots, this.labels});
+  ChartDot({super.key,required this.spots, required this.labels});
 
 
 
@@ -28,8 +28,26 @@ class ChartDot extends StatelessWidget {
     AppColors.greenBega,
   ];
 
+  // Calculate min and max Y values from spots
+  double getMinY() {
+    if (spots.isEmpty) return 0;
+    return spots.map((spot) => spot.y).reduce((a, b) => a < b ? a : b) - 3;
+  }
+
+  double getMaxY() {
+    if (spots.isEmpty) return 100;
+    return spots.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
+  }
+
   // Line chart data configuration
   LineChartData mainData() {
+    double minY = getMinY();
+    double maxY = getMaxY();
+    // Add some padding to the min and max values
+    double padding = (maxY - minY) * 0.1;
+    minY = (minY - padding).clamp(0, double.infinity);
+    maxY = maxY + padding;
+
     return LineChartData( 
       gridData: const FlGridData(
         show: false,
@@ -40,6 +58,8 @@ class ChartDot extends StatelessWidget {
           bottom: BorderSide(width: 1, color: Colors.grey),
         ),
       ),
+      minY: minY,
+      maxY: maxY,
       titlesData: FlTitlesData(
         show: true,
         bottomTitles: AxisTitles(
@@ -61,8 +81,7 @@ class ChartDot extends StatelessWidget {
       ),
       lineBarsData: [
         LineChartBarData(
-        
-          spots: spots ,
+          spots: spots,
           isCurved: true,
           gradient: LinearGradient(
             colors: gradientColors,
