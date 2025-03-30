@@ -6,6 +6,8 @@ class Message {
   final String time; // The timestamp when the message was sent
   final String avatarUrl; // URL or path to the avatar image of the sender
   final List<String> images; // A list of image URLs associated with the message (for requests)
+  final String message_to; // The source of the message (e.g., "user" or "ai")
+
 
   /// Constructor for the `Message` class.
   ///
@@ -20,6 +22,7 @@ class Message {
     required this.time,
     required this.avatarUrl,
     this.images = const [], // Default to an empty list if no images
+    this.message_to  = "user", // Default message source is "user"
   });
 
   /// Factory constructor to create a `Message` from a user's request data.
@@ -31,6 +34,7 @@ class Message {
       text: entry['request']['text'], // Extract text from the request
       time: entry['entrytime'].split(' ')[1], // Extract time from the entrytime field
       avatarUrl: "assets/avatar12.svg", // Default avatar URL for user
+      message_to: "ai", // Default message source is "user"
       images:
       List<String>.from(entry['request']['images']), // Extract images if available
     );

@@ -36,6 +36,7 @@ class ChatCubit extends Cubit<ChatState> {
         text: message,
         time: "${now.hour}:${now.minute}",
         avatarUrl: 'assets/avatar12.svg',
+        message_to:'ai',
         images: base64.isNotEmpty ? [base64] : []));
 
     // Emit updated message list to update the UI
@@ -51,7 +52,8 @@ class ChatCubit extends Cubit<ChatState> {
         data: {
           "text": message,
           "conversation_id": conversationId,
-          "images": base64.isNotEmpty ? [base64] : []
+          "images": [],
+          "message_to":"ai"
         },
       );
 
