@@ -24,10 +24,16 @@ class ChatCubit extends Cubit<ChatState> {
   // Conversation ID for tracking chat sessions
   var conversationId = 1;
 
+  /// Clears all messages from the chat
+  void clearMessages() {
+    messages.clear();
+    emit(ChatHistoryLoaded(List.from(messages)));
+  }
+
   /// Sends a new message from the user to the chat API and updates the chat state.
   ///
   /// [message] is the text message to be sent, and [base64] is an optional image encoded in base64.
-  Future<void> sendMessage(String message, String base64) async {
+  Future<void> sendMessage(String message, String base64, {String message_to = "ai"}) async {
     final now = DateTime.now();
 
     // Immediately add the user's message to the list
@@ -36,7 +42,7 @@ class ChatCubit extends Cubit<ChatState> {
         text: message,
         time: "${now.hour}:${now.minute}",
         avatarUrl: 'assets/avatar12.svg',
-        message_to:'ai',
+        message_to: message_to,
         images: base64.isNotEmpty ? [base64] : []));
 
     // Emit updated message list to update the UI
@@ -53,7 +59,7 @@ class ChatCubit extends Cubit<ChatState> {
           "text": message,
           "conversation_id": conversationId,
           "images": [],
-          "message_to":"ai"
+          "message_to": message_to == "coach" ? "coach" : "ai"
         },
       );
 
@@ -87,28 +93,31 @@ class ChatCubit extends Cubit<ChatState> {
 
     try {
       // Request chat history from the server
-      final response = await _dio.post(Endpoints.getHistoryChat);
+      final response = await _dio.post(
+        Endpoints.getHistoryChat,
+        data: {
+          "message_from": "ai"  // Only include message_to parameter
+        }
+      );
 
       if (response.statusCode == 200) {
         if (response.data["conversation_id"] != null) {
           conversationId = response.data["conversation_id"];  // Update conversation ID if available
         }
 
-        if (response.data["messages"].isNotEmpty) {
+        if (response.data["messages"] != null && response.data["messages"].isNotEmpty) {
+          messages.clear(); // Clear existing messages
           // Add the messages to the list
-          for (var entry in response.data["messages"]) {
-            String time = entry["entrytime"] ?? "";
-
-            if (entry["request"] != null && entry["request"].isNotEmpty) {
-              messages.add(Message.fromRequest(entry));
-            }
-
-            if (entry["response"] != null && entry["response"].isNotEmpty) {
-              messages.add(Message.fromResponse(entry));
+          for (var message in response.data["messages"]) {
+            if (message["sender_type"] == "patient") {
+              messages.add(Message.fromRequest(message));
+            } else if (message["sender_type"] == "ai") {
+              messages.add(Message.fromResponse(message));
             }
           }
-
-          emit(ChatHistoryLoaded(List.from(messages)));  // Emit the updated messages
+          print(messages);
+             emit(ChatHistoryError("No messages found"));
+          // emit(ChatHistoryLoaded(List.from(messages)));  // Emit the updated messages
         } else {
           emit(ChatHistoryError("No messages found"));
           // Emit previous messages if any exist
@@ -125,9 +134,9 @@ class ChatCubit extends Cubit<ChatState> {
     } catch (e) {
       // Catch and handle any errors during fetching history
       emit(ChatHistoryError("An error occurred: $e"));
-      if (messages.isNotEmpty) {
-        emit(ChatHistoryLoaded(List.from(messages)));  // Emit the previous messages in case of error
-      }
+      // if (messages.isNotEmpty) {
+      //   emit(ChatHistoryLoaded(List.from(messages)));  // Emit the previous messages in case of error
+      // }
     }
   }
 }

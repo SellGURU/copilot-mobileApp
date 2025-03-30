@@ -46,7 +46,8 @@ class _ChatscreenState extends State<Chatscreen> {
       // Get the user's name from SharedPreferences
       String? userName = await getNameUser();
       BlocProvider.of<ChatCubit>(context)
-          .sendMessage(_controller.value.text, "data:image/png;base64,$image");
+          .sendMessage(_controller.value.text, "data:image/png;base64,$image", 
+              message_to: _selectedMode == ChatMode.coach ? "coach" : "ai");
       _controller.clear();
       _scrollToBottom();
     }
@@ -147,12 +148,15 @@ class _ChatscreenState extends State<Chatscreen> {
                               ),
                             ),
                           ],
-                          onChanged: (ChatMode? newValue) {
+                          onChanged: (ChatMode? newValue) async {
                             if (newValue != null) {
                               setState(() {
                                 _selectedMode = newValue;
                                 _isDropdownOpen = false;
                               });
+                              // Clear messages and get history for the new mode
+                              BlocProvider.of<ChatCubit>(context).clearMessages();
+                              //  BlocProvider.of<ChatCubit>(context).getHistoryChat();
                             }
                           },
                           onTap: () {
