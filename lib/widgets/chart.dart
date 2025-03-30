@@ -4,39 +4,17 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 class ChartDot extends StatelessWidget {
   var spots;
-  ChartDot({super.key,required this.spots});
+  var labels;
+  ChartDot({super.key,required this.spots, this.labels});
 
 
 
   // Month labels for the X-axis
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
-    switch (value.toInt()) {
-      case 1:
-        return const Text(
-          'May',
-          style: TextStyle(fontSize: 6, color: Colors.grey),
-        );
-      case 2:
-        return const Text(
-          'June',
-          style: TextStyle(fontSize: 6, color: Colors.grey),
-        );
-      case 3:
-        return const Text(
-          'July',
-          style: TextStyle(fontSize: 6, color: Colors.grey),
-        );
-      case 4:
-        return const Text(
-          'August',
-          style: TextStyle(fontSize: 6, color: Colors.grey),
-        );
-      default:
-        return const Text(
-          '',
-          style: TextStyle(fontSize: 6, color: Colors.grey),
-        );
-    }
+    return Text(
+      labels[value.toInt()],
+      style: TextStyle(fontSize: 6, color: Colors.grey),
+    );
   }
 
   // No left titles (Y-axis values hidden for a cleaner UI)
@@ -52,9 +30,7 @@ class ChartDot extends StatelessWidget {
 
   // Line chart data configuration
   LineChartData mainData() {
-    return LineChartData(
-      maxY: 180,
-      minY: 40,
+    return LineChartData( 
       gridData: const FlGridData(
         show: false,
       ),
@@ -69,6 +45,7 @@ class ChartDot extends StatelessWidget {
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
+            reservedSize: 20,
             getTitlesWidget: (value, meta) => bottomTitleWidgets(value, meta),
           ),
         ),
@@ -84,7 +61,7 @@ class ChartDot extends StatelessWidget {
       ),
       lineBarsData: [
         LineChartBarData(
-
+        
           spots: spots ,
           isCurved: true,
           gradient: LinearGradient(

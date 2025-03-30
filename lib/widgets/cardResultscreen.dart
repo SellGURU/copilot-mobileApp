@@ -59,13 +59,17 @@ class _CardresultscreenState extends State<Cardresultscreen> {
     return randomValue.clamp(60, 180); // Clamp values between 60 and 180
   }
   getSpots(){
-    var spots=[
-      FlSpot(1, getRandomY()),
-      FlSpot(2, getRandomY()),
-      FlSpot(3, getRandomY()),
-      FlSpot(4, getRandomY()),
-    ];
+    var data = widget.data as Map<String, dynamic>;
+    var values = data['values'] as List<dynamic>? ?? [];
+    var spots = values.asMap().entries.map((entry) => 
+      FlSpot(entry.key.toDouble(), double.tryParse(entry.value.toString()) ?? 0)
+    ).toList();
     return spots;
+  }
+
+  getLabels(){
+    var data = widget.data as Map<String, dynamic>;
+    return data['date'] as List<dynamic>? ?? [];
   }
 
   @override
@@ -202,9 +206,12 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                 ],
               ),
               const SizedBox(
-                height: 15,
+                height: 35,
               ),
-              state.switchValue ? ChartDot(spots: getSpots(),) : const SizedBox()
+              state.switchValue ? ChartDot(spots: getSpots(), labels: getLabels()) : const SizedBox(),
+              const SizedBox(
+                height: 25,
+              ),
             ],
           ),
         );

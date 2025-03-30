@@ -395,6 +395,7 @@ class BioMarkerCard extends StatelessWidget {
             Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => CholesterolScreen(
                   title: label,
+                  data: data,
                 ))),
         child: Cardresultscreen(
           colorBadge: getColorBadge(colorBadge),
