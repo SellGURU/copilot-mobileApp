@@ -12,7 +12,7 @@ import '../../../utility/token/getTokenLocaly.dart';
 
 class ChatCubit extends Cubit<ChatState> {
   ChatCubit() : super(ChatInitial()) {
-    // getHistoryChat();  // Initialize the chat history when the cubit is created
+    getHistoryChat(messageType: "ai");  // Initialize the chat history when the cubit is created
   }
 
   // List of messages in the current chat session
@@ -24,10 +24,11 @@ class ChatCubit extends Cubit<ChatState> {
   // Conversation ID for tracking chat sessions
   var conversationId = 1;
 
-  /// Clears all messages from the chat
-  void clearMessages() {
+  /// Clears all messages from the chat and optionally loads new history
+  void clearMessages({String messageType = "ai"}) {
     messages.clear();
     emit(ChatHistoryLoaded(List.from(messages)));
+    getHistoryChat(messageType: messageType);  // Load new history with specified message type
   }
 
   /// Sends a new message from the user to the chat API and updates the chat state.
@@ -85,7 +86,7 @@ class ChatCubit extends Cubit<ChatState> {
   }
 
   /// Fetches the chat history from the server and updates the chat state.
-  Future<void> getHistoryChat() async {
+  Future<void> getHistoryChat({String messageType = "ai"}) async {
     emit(ChatHistoryLoading());  // Emit loading state
 
     var token = await getTokenLocally();  // Retrieve token locally
@@ -96,34 +97,39 @@ class ChatCubit extends Cubit<ChatState> {
       final response = await _dio.post(
         Endpoints.getHistoryChat,
         data: {
-          "message_from": "ai"  // Only include message_to parameter
+          "message_from": messageType  // Use the provided message type (ai or coach)
         }
       );
 
       if (response.statusCode == 200) {
+
         if (response.data["conversation_id"] != null) {
           conversationId = response.data["conversation_id"];  // Update conversation ID if available
         }
-
-        if (response.data["messages"] != null && response.data["messages"].isNotEmpty) {
-          messages.clear(); // Clear existing messages
-          // Add the messages to the list
-          for (var message in response.data["messages"]) {
-            if (message["sender_type"] == "patient") {
-              messages.add(Message.fromRequest(message));
-            } else if (message["sender_type"] == "ai") {
-              messages.add(Message.fromResponse(message));
+        if(response.data["messages"].length != 0){
+          if (response.data["messages"] != null && response.data["messages"].isNotEmpty) {
+            messages.clear(); // Clear existing messages
+            // Add the messages to the list
+            final now = DateTime.now();
+            for (var message in response.data["messages"]) {
+              print(message);
+              messages.add(Message(
+                sender: message["sender_type"] == "patient" ? "User" : "Ai",
+                text: message["message_text"],
+                time: " "+message["time"],
+                avatarUrl: "assets/avatar12.svg",
+                message_to: messageType,  // Use the provided message type
+                images: []
+              ));
             }
-          }
-          print(messages);
-             emit(ChatHistoryError("No messages found"));
-          // emit(ChatHistoryLoaded(List.from(messages)));  // Emit the updated messages
-        } else {
-          emit(ChatHistoryError("No messages found"));
-          // Emit previous messages if any exist
-          if (messages.isNotEmpty) {
+            
+            print(messages);
+            emit(ChatHistoryLoaded(List.from(messages)));  // Emit the updated messages
+          } else {
             emit(ChatHistoryLoaded(List.from(messages)));
           }
+        }else {
+          emit(ChatHistoryLoaded(List.from(messages)));
         }
       } else {
         emit(ChatHistoryError("Failed to load history"));
@@ -132,11 +138,7 @@ class ChatCubit extends Cubit<ChatState> {
         }
       }
     } catch (e) {
-      // Catch and handle any errors during fetching history
       emit(ChatHistoryError("An error occurred: $e"));
-      // if (messages.isNotEmpty) {
-      //   emit(ChatHistoryLoaded(List.from(messages)));  // Emit the previous messages in case of error
-      // }
     }
   }
 }

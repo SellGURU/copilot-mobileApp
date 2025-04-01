@@ -155,8 +155,8 @@ class _ChatscreenState extends State<Chatscreen> {
                                 _isDropdownOpen = false;
                               });
                               // Clear messages and get history for the new mode
-                              BlocProvider.of<ChatCubit>(context).clearMessages();
-                              //  BlocProvider.of<ChatCubit>(context).getHistoryChat();
+                              BlocProvider.of<ChatCubit>(context).clearMessages(messageType: _selectedMode == ChatMode.coach ? "coach" : "ai");
+                              BlocProvider.of<ChatCubit>(context).getHistoryChat(messageType: _selectedMode == ChatMode.coach ? "coach" : "ai");
                             }
                           },
                           onTap: () {
