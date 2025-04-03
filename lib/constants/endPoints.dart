@@ -18,4 +18,5 @@ class Endpoints {
   static const getCheckin = "${baseUrlCodie}mobile/tasks/show_checkin_questions";
   static const getTodaysTasks = "${baseUrlCodie}mobile/today_tasks";
   static const getWeeklyTasks = "${baseUrlCodie}mobile/weekly_tasks";
+  static const checkTask = "${baseUrlCodie}mobile/check_task";
 }

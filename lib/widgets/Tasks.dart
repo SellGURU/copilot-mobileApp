@@ -64,7 +64,7 @@ class _TasksState extends State<Tasks> {
                 'id': item['task_id'],
                 'title': item['Title'],
                 'type': item['Category'],
-                'completed': item['Status'] // Add custom key
+                'completed': item['Status'] ==true?'Done':'' // Add custom key
               };
             }
             if(item['Category'] == 'Activity'){
@@ -146,7 +146,7 @@ class _TasksState extends State<Tasks> {
             ],
           ),
           child:widget.title =='Daily Tasks'? Column(
-            children: List.generate(4, (index) => 
+            children: List.generate(5, (index) => 
               Padding(
                 padding: const EdgeInsets.only(bottom: 10), // Adds gap of 10 pixels
                 child: TaskWrapper(typeName: taskTypes[index],tasks: tasks.where((task) => task['type'] == taskTypes[index]).toList(),),
