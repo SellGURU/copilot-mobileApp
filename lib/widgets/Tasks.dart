@@ -22,7 +22,7 @@ class Tasks extends StatefulWidget{
 }
 
 class _TasksState extends State<Tasks> {
-  List<String> taskTypes = ['Check-In', 'Habits', 'Questionary'];
+  List<String> taskTypes = ['Check-In', 'Diet','Activity','Supplement','Lifestyle', 'Questionary'];
   List<Map<String, dynamic>> tasks = [
     // { "id": 1, "title": "Daily Check in", "type": "Check-In", "completed": false },
     // { "id": 2, "title": "Profile Data", "type": "Questionary", "completed": true },
@@ -42,11 +42,51 @@ class _TasksState extends State<Tasks> {
   Future<void>  fetchQuestionary() async {
     var token = await getTokenLocally();
     _dio.options.headers['Authorization'] = "bearer $token";
-    final response = await _dio.post(widget.title == 'Daily Tasks'? Endpoints.getCheckin:Endpoints.getQuestionary);
+    final response = await _dio.post(widget.title == 'Daily Tasks'? Endpoints.getTodaysTasks:Endpoints.getQuestionary);
 
     if (response.statusCode == 200) {
       List<dynamic> jsonData =response.data;
      
+      if(widget.title == 'Daily Tasks'){
+      setState((){
+        List<Map<String, dynamic>> modifiedData = jsonData.map((item) {
+          if(item['Task_Type'] == 'Checkin'){
+            return {
+              'id': item['task_id'],
+              'title': item['Title'],
+              'type': "Check-In",
+              'completed': item['Status'] // Add custom key
+            };
+          }
+          if(item['Task_Type'] == 'Action'){
+            if(item['Category'] == 'Diet' || item['Category'] == 'Supplement' || item['Category'] == 'Lifestyle'){
+              return {
+                'id': item['task_id'],
+                'title': item['Title'],
+                'type': item['Category'],
+                'completed': item['Status'] // Add custom key
+              };
+            }
+            if(item['Category'] == 'Activity'){
+              return {
+                'id': item['task_id'],
+                'title': item['Title'],
+                'type': "Activity",
+                'completed': item['Status'] // Add custom key
+              };  
+            }
+          }
+          return {
+            'id': "",
+            'title': "test",
+            'type': "Check-In",
+            'completed': "Done" // Add custom key
+          };
+          
+        }).toList(); 
+        tasks = modifiedData;
+        });
+      }else {
       setState((){
         List<Map<String, dynamic>> modifiedData = jsonData.map((item) {
           return {
@@ -57,7 +97,9 @@ class _TasksState extends State<Tasks> {
           };
         }).toList(); 
         tasks = modifiedData;
-      });
+        });
+
+      }
     } else {
       throw Exception('Failed to load data');
     }
@@ -104,7 +146,7 @@ class _TasksState extends State<Tasks> {
             ],
           ),
           child:widget.title =='Daily Tasks'? Column(
-            children: List.generate(2, (index) => 
+            children: List.generate(4, (index) => 
               Padding(
                 padding: const EdgeInsets.only(bottom: 10), // Adds gap of 10 pixels
                 child: TaskWrapper(typeName: taskTypes[index],tasks: tasks.where((task) => task['type'] == taskTypes[index]).toList(),),
@@ -112,7 +154,7 @@ class _TasksState extends State<Tasks> {
             ),
           ): Padding(
                 padding: const EdgeInsets.only(bottom: 10), // Adds gap of 10 pixels
-                child: TaskWrapper(typeName: taskTypes[2],tasks: tasks.where((task) => task['type'] == taskTypes[2]).toList(),),
+                child: TaskWrapper(typeName: taskTypes[5],tasks: tasks.where((task) => task['type'] == taskTypes[5]).toList(),),
               ),
         )
       ],

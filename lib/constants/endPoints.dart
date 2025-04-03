@@ -16,4 +16,6 @@ class Endpoints {
   static const getHistoryChat = "${baseUrlCodie}mobile_chat/get_messages_id";
   static const getQuestionary = "${baseUrlCodie}mobile/tasks/show_assigned_questionaries";
   static const getCheckin = "${baseUrlCodie}mobile/tasks/show_checkin_questions";
+  static const getTodaysTasks = "${baseUrlCodie}mobile/today_tasks";
+  static const getWeeklyTasks = "${baseUrlCodie}mobile/weekly_tasks";
 }
