@@ -55,7 +55,7 @@ class _TasksState extends State<Tasks> {
               'id': item['task_id'],
               'title': item['Title'],
               'type': "Check-In",
-              'completed': item['Status'] // Add custom key
+              'completed': item['Status'] ==true?'Done':'' // Add custom key
             };
           }
           if(item['Task_Type'] == 'Action'){
