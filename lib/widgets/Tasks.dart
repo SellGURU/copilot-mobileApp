@@ -4,6 +4,7 @@ import 'package:copilet/components/text_style.dart';
 import 'package:copilet/constants/endPoints.dart';
 import 'package:copilet/res/colors.dart';
 import 'package:copilet/utility/token/getTokenLocaly.dart';
+import 'package:copilet/widgets/Tasks/ActivityTaskWrapper.dart';
 import 'package:copilet/widgets/Tasks/TaskWrapper.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -72,6 +73,7 @@ class _TasksState extends State<Tasks> {
                 'id': item['task_id'],
                 'title': item['Title'],
                 'type': "Activity",
+                'Sections': item['Sections'],
                 'completed': item['Status'] // Add custom key
               };  
             }
@@ -149,7 +151,7 @@ class _TasksState extends State<Tasks> {
             children: List.generate(5, (index) => 
               Padding(
                 padding: const EdgeInsets.only(bottom: 10), // Adds gap of 10 pixels
-                child: TaskWrapper(typeName: taskTypes[index],tasks: tasks.where((task) => task['type'] == taskTypes[index]).toList(),),
+                child: taskTypes[index] !='Activity'? TaskWrapper(typeName: taskTypes[index],tasks: tasks.where((task) => task['type'] == taskTypes[index]).toList(),):ActivityTaskWrapper(typeName: taskTypes[index],tasks: tasks.where((task) => task['type'] == taskTypes[index]).toList(),) ,
               ),
             ),
           ): Padding(
