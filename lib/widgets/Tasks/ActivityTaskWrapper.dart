@@ -1,6 +1,6 @@
 import 'package:copilet/components/text_style.dart';
 import 'package:copilet/res/colors.dart';
-import 'package:copilet/widgets/Tasks/TaskItem.dart';
+import 'package:copilet/widgets/Tasks/ActivityTaskItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -37,7 +37,11 @@ class _ActivityTaskWrapperState extends State<ActivityTaskWrapper> {
                   children:List.generate(widget.tasks.length, (index) => 
                     Column(   
                       children: [
-                        Row(
+                        Column(
+                          children: List.generate(widget.tasks[index]["Sections"].length, (inde) => 
+                            Column(
+                              children: [
+                                  Row(
                           children: [
                             Padding(
                             padding: const EdgeInsets.only(left: 16, top: 4),
@@ -45,25 +49,24 @@ class _ActivityTaskWrapperState extends State<ActivityTaskWrapper> {
                           ),
                           
                         ],
-                      )
-                        ,
-                        Column(
-                          children: List.generate(widget.tasks[index]["Sections"].length, (inde) => 
-                            Container(
-                              margin: const EdgeInsets.only(top: 8),
-                              padding:const EdgeInsets.only(left: 8),
-                              decoration: const BoxDecoration(
-                                border: Border(left: BorderSide(color: AppColors.SilverGray,width: 1,))
-                              ),
-                              child:Column(
-                              children: List.generate(widget.tasks[index]["Sections"][inde]["Exercises"].length,
-                              (index2) => 
-                                Padding(padding: const EdgeInsets.only(bottom: 4),
-                                child: TaskItem(task: widget.tasks[index],),
-                                ),
-                              )
-                            )                          
-                              )
+                      ),                          
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 8),
+                                    padding:const EdgeInsets.only(left: 8),
+                                    decoration: const BoxDecoration(
+                                      border: Border(left: BorderSide(color: AppColors.SilverGray,width: 1,))
+                                    ),
+                                    child:Column(
+                                    children: List.generate(widget.tasks[index]["Sections"][inde]["Exercises"].length,
+                                    (index2) => 
+                                      Padding(padding: const EdgeInsets.only(bottom: 4),
+                                      child: ActivityTaskItem(task: widget.tasks[index]["Sections"][inde]["Exercises"][index2],),
+                                      ),
+                                    )
+                                  )                          
+                                    )
+                              ]
+                            ),
                             ),
                         ),                    
                         ] 

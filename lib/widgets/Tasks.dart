@@ -54,6 +54,7 @@ class _TasksState extends State<Tasks> {
           if(item['Task_Type'] == 'Checkin'){
             return {
               'id': item['task_id'],
+              'task_id': item['task_id'],
               'title': item['Title'],
               'type': "Check-In",
               'completed': item['Status'] ==true?'Done':'' // Add custom key
@@ -63,6 +64,7 @@ class _TasksState extends State<Tasks> {
             if(item['Category'] == 'Diet' || item['Category'] == 'Supplement' || item['Category'] == 'Lifestyle'){
               return {
                 'id': item['task_id'],
+                'task_id': item['task_id'],
                 'title': item['Title'],
                 'type': item['Category'],
                 'completed': item['Status'] ==true?'Done':'' // Add custom key
@@ -71,6 +73,7 @@ class _TasksState extends State<Tasks> {
             if(item['Category'] == 'Activity'){
               return {
                 'id': item['task_id'],
+                'task_id': item['task_id'],
                 'title': item['Title'],
                 'type': "Activity",
                 'Sections': item['Sections'],
@@ -81,6 +84,7 @@ class _TasksState extends State<Tasks> {
           return {
             'id': "",
             'title': "test",
+            'task_id': item['task_id'],
             'type': "Check-In",
             'completed': "Done" // Add custom key
           };

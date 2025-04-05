@@ -26,7 +26,7 @@ class TaskCubit extends Cubit<TaskState> {
       
       // Call the checkTask endpoint
       final response = await _dio.post(Endpoints.checkTask, data: {
-        "task_id": task["id"],
+        "task_id": task["task_id"] ,
       });
 
       // Only update task completion status if the API call was successful
