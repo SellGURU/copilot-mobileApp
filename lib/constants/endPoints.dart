@@ -1,7 +1,7 @@
 class Endpoints {
   static const baseUrl = "https://back-copilet-app.vercel.app/";
   // static const baseUrlCodie = "https://vercel-backend-one-roan.vercel.app/clinic_copilot/";
-  static const baseUrlCodie = "https://vercel-backend-one-roan.vercel.app/holisticare_test";
+  static const baseUrlCodie = "https://vercel-backend-one-roan.vercel.app/holisticare_test/";
 
   // mobile/get_messages_id
   static const biomarker = "${baseUrlCodie}biomarkers_mobile";
