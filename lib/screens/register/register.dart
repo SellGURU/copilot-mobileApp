@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:copilet/screens/login/login.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -73,7 +74,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
     try {
       final response = await http.post(
-        Uri.parse('${Endpoints.baseUrl}mobile_register'),
+        Uri.parse(Endpoints.register),
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -95,7 +96,10 @@ class _RegisterPageState extends State<RegisterPage> {
           backgroundColor: Colors.green,
           textColor: Colors.white,
         );
-        // TODO: Navigate to next screen or login
+        // Navigate to login page
+        if (mounted) {
+          Navigator.pushReplacementNamed(context, '/login');
+        }
       } else {
         // Handle error response
         String errorMessage = "Registration failed";
@@ -264,22 +268,32 @@ class _RegisterPageState extends State<RegisterPage> {
                                     ),
                             ),
                           ),
-                          if (_currentStep > 0) ...[
-                            const SizedBox(height: 15),
-                            GestureDetector(
-                              onTap: _isLoading ? null : () {
-                                setState(() {
-                                  _currentStep--;
-                                });
-                              },
-                              child: Text(
-                                "Back",
-                                style: AppTextStyles.titleMedium.copyWith(
-                                  color: AppColors.greenBega,
+                          const SizedBox(height: 15),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginPage(),
                                 ),
-                              ),
+                              );
+                            },
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Already have an account? ",
+                                  style: AppTextStyles.titleMedium,
+                                ),
+                                Text(
+                                  "login",
+                                  style: AppTextStyles.titleMedium.copyWith(
+                                    color: AppColors.greenBega,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ],
                       ),
                     )

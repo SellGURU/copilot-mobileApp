@@ -4,7 +4,7 @@ class Endpoints {
   static const baseUrlCodie = "https://vercel-backend-one-roan.vercel.app/holisticare_test/";
 
   // Auth endpoints
-  static const register = "${baseUrlCodie}mobile_register";
+  static const register = "${baseUrlCodie}auth/mobile_register";
   static const login = "${baseUrlCodie}auth/mobile_token";
   static const forgotPassword = "${baseUrlCodie}forgot-password";
   static const resetPassword = "${baseUrlCodie}reset-password";
