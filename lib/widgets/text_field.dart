@@ -55,7 +55,7 @@ gapPadding: 0,
           margin: const EdgeInsets.symmetric(horizontal: 6),
           child: Text(
             widget.label,
-            style: AppTextStyles.titleLg,
+            style: AppTextStyles.hintBlack,
           ),
         ),
         const SizedBox(height: 5),

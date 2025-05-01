@@ -3,9 +3,14 @@ class Endpoints {
   // static const baseUrlCodie = "https://vercel-backend-one-roan.vercel.app/clinic_copilot/";
   static const baseUrlCodie = "https://vercel-backend-one-roan.vercel.app/holisticare_test/";
 
+  // Auth endpoints
+  static const register = "${baseUrlCodie}mobile_register";
+  static const login = "${baseUrlCodie}auth/mobile_token";
+  static const forgotPassword = "${baseUrlCodie}forgot-password";
+  static const resetPassword = "${baseUrlCodie}reset-password";
+
   // mobile/get_messages_id
   static const biomarker = "${baseUrlCodie}biomarkers_mobile";
-  static const login = "${baseUrlCodie}auth/mobile_token";
   static const healthScore = "${baseUrlCodie}health_score_mobile";
   static const downloadPdfReport = "${baseUrlCodie}download_report_mobile";
   static const downloadPdfReportWeakly = "${baseUrlCodie}download_weekly_report_mobile";
