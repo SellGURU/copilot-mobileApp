@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:copilet/components/text_style.dart';
 import 'package:copilet/res/colors.dart';
-import 'package:copilet/constants/endpoints.dart';
+import 'package:copilet/constants/endPoints.dart';
 import 'package:copilet/widgets/text_field.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
