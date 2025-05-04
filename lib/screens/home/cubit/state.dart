@@ -21,6 +21,7 @@ final class SuccessBiomarkerState extends BiomarkerState {
   SuccessBiomarkerState({required this.biomarkerData});
   @override
   getBiomarkerData() {
+    print("biomarkerData: ${this.biomarkerData}");
     return this.biomarkerData;
   }
 }

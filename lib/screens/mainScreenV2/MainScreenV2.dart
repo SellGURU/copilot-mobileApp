@@ -37,10 +37,10 @@ import '../login/cubit/state.dart';
 import 'package:universal_html/html.dart' as html;
 import 'dart:io' as io; // For Android file handling
 import 'package:http/http.dart' as http;
+import '../home/cubit/cubit.dart';
+import '../home/cubit/state.dart';
 
 import 'downloadReport/cubit.dart';
-
-
 
 Future<void> downloadPdf(BuildContext context, String pdfUrl) async {
   if (kIsWeb) {
@@ -64,7 +64,6 @@ void _downloadPdfWebFromUrl(String pdfUrl) {
 String getFormattedDate(DateTime date) {
   return DateFormat("MMMM, d").format(date);
 }
-
 
 /// Android: Download the PDF from a URL and save it using app-specific storage or SAF (File Picker)
 Future<void> _downloadPdfAndroidFromUrl(
@@ -291,12 +290,7 @@ class _Overview2State extends State<Overview2> {
   void initState() {
     getTime();
   }
-  List<Biomarker> biomarkers = [
-    //   "assets/Hrate.svg"
-    Biomarker(name: "Heart Rate",avg: 81,current: 84,unit:"bpm",values: [80,79,80,83,84],icon:"assets/ldlRate.svg"),
-    Biomarker(name: "Cholesterol",avg: 160,current: 173,unit:"mg/dl",values: [160,130,180,170,173],icon:"assets/Hrate.svg"),
-    Biomarker(name: "BMI",avg: 28,current: 27,unit:"kg/m²",values: [29,27,28,29,27],icon:"assets/Hrate.svg"),
-  ];   
+
   void getTime() async {
     print("_timePassed");
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -317,41 +311,6 @@ class _Overview2State extends State<Overview2> {
           _timePassed = '${difference.inHours} hours';
         } else {
           _timePassed = '${difference.inDays} days';
-        }
-      });
-    } else {
-      setState(() {
-        _timePassed = "No time stored.";
-      });
-    }
-  }
-
-  // Store the current time and show time passed automatically
-  Future<void> _storeTimeAndShow() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    DateTime now = DateTime.now();
-
-    // Store the current time
-    await prefs.setString('buttonPressTime', now.toIso8601String());
-    print("Time stored: $now");
-
-    // Calculate and show the time passed immediately
-    String? storedTimeStr = prefs.getString('buttonPressTime');
-
-    if (storedTimeStr != null) {
-      _storedTime = DateTime.parse(storedTimeStr);
-      final difference = DateTime.now().difference(_storedTime!);
-      print("time:${difference.inMinutes}");
-
-      setState(() {
-        if (difference.inSeconds < 60) {
-          _timePassed = "${difference.inSeconds} seconds";
-        } else if (difference.inMinutes < 60) {
-          _timePassed = "${difference.inMinutes} minutes";
-        } else if (difference.inHours < 24) {
-          _timePassed = "${difference.inHours} hours";
-        } else {
-          _timePassed = "${difference.inDays} days";
         }
       });
     } else {
@@ -620,34 +579,82 @@ class _Overview2State extends State<Overview2> {
                     style: AppTextStyles.title1,
                   ),
                 ),
-                SizedBox(
-                    height: 280,
-                    child: ListView.separated(
-                      itemCount: biomarkers.length,
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: false,
-                      physics: BouncingScrollPhysics(),
-                      padding: const EdgeInsets.only(
-                          top: 20, bottom: 20, left: 8, right: 10),
-                      itemBuilder: (BuildContext context, int index) {
-                        return ItemCard(
-                            title:biomarkers[index].name,
-                            average: biomarkers[index].avg.toString(),
-                            // "assets/ldlRate.svg"
-                            icon: SvgPicture.asset(
-                              biomarkers[index].icon,
-                              width: 40,
-                              height: 40,
-                            ),
-                            status: "hi",
-                            current:biomarkers[index].current.toString(), scale: biomarkers[index].unit.toString(),valuesData:biomarkers[index].values);
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        return const SizedBox(
-                          width: 10,
-                        );
-                      },
-                    )),
+                BlocBuilder<BiomarkerCubit, BiomarkerState>(
+                  builder: (context, state) {
+                    if (state is LoadingBiomarkerState) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    
+                    if (state is SuccessBiomarkerState) {
+                      var biomarkerData = state.getBiomarkerData();
+                      return SizedBox(
+                        height: 280,
+                        child: ListView.separated(
+                          itemCount: biomarkerData["data"].length,
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: false,
+                          physics: BouncingScrollPhysics(),
+                          padding: const EdgeInsets.only(
+                              top: 20, bottom: 20, left: 8, right: 10),
+                          itemBuilder: (BuildContext context, int index) {
+                            var biomarker = biomarkerData["data"][index];
+                            // Ensure all values are properly typed
+                            String name = biomarker["name"]?.toString() ?? "Unknown Biomarker";
+                            String avg = biomarker["avg"]?.toString() ?? "0";
+                            String current = biomarker["current"]?.toString() ?? "0";
+                            String unit = biomarker["unit"]?.toString() ?? "";
+                            String icon = biomarker["icon"]?.toString() ?? "assets/Hrate.svg";
+                            String status = biomarker["status"]?.toString() ?? "Unknown";
+                            
+                            // Safely convert values to List<num>
+                            List<num> values = [];
+                            if (biomarker["values"] is List) {
+                              try {
+                                values = biomarker["values"].map((v) {
+                                  if (v is num) return v;
+                                  if (v is String) return num.tryParse(v) ?? 0;
+                                  return 0;
+                                }).toList();
+                              } catch (e) {
+                                print("Error converting values: $e");
+                                values = [];
+                              }
+                            }
+
+                            return ItemCard(
+                              title: name,
+                              average: avg,
+                              icon: SvgPicture.asset(
+                                icon,
+                                width: 40,
+                                height: 40,
+                              ),
+                              status: status,
+                              current: current,
+                              scale: unit,
+                              valuesData: values,
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const SizedBox(
+                              width: 10,
+                            );
+                          },
+                        ),
+                      );
+                    }
+                    
+                    if (state is ErrorBiomarkerState) {
+                      return const Center(
+                        child: Text("Error loading biomarkers"),
+                      );
+                    }
+                    
+                    return const SizedBox();
+                  },
+                ),
                
                
                 // BlocConsumer<GoogleFormCubit, GoogleFormState>(
