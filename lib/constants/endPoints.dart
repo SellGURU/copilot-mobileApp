@@ -4,7 +4,7 @@ class Endpoints {
   static const baseUrlCodie = "https://vercel-backend-one-roan.vercel.app/holisticare/";
 
   // mobile/get_messages_id
-  static const biomarker = "${baseUrl}api/getDate";
+  static const biomarker = "${baseUrlCodie}biomarkers_mobile";
   static const login = "${baseUrlCodie}auth/mobile_token";
   static const healthScore = "${baseUrlCodie}health_score_mobile";
   static const downloadPdfReport = "${baseUrlCodie}download_report_mobile";
@@ -14,4 +14,10 @@ class Endpoints {
   static const google_form = "${baseUrlCodie}google_form";
   static const mobile_chat = "${baseUrlCodie}mobile_chat";
   static const getHistoryChat = "${baseUrlCodie}mobile_chat/get_messages_id";
+  static const getQuestionary = "${baseUrlCodie}mobile/tasks/show_assigned_questionaries";
+  static const getCheckin = "${baseUrlCodie}mobile/tasks/show_checkin_questions";
+  static const getTodaysTasks = "${baseUrlCodie}mobile/today_tasks";
+  static const getWeeklyTasks = "${baseUrlCodie}mobile/weekly_tasks";
+  static const checkTask = "${baseUrlCodie}mobile/check_task";
+  static const getScores = "${baseUrlCodie}mobile/scores";
 }

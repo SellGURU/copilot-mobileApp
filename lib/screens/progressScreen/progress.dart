@@ -163,7 +163,7 @@ class _ProgressScreenState extends State<ProgressScreen>
                     //   "Tasks",
                     //   style: AppTextStyles.title2,
                     // ),
-                    const Tasks(),
+                    const Tasks(title: "Daily Tasks"),
                     // const SizedBox(height: 10),
                     // WaterTaskWidget(
                     //   title: 'Drink the water',

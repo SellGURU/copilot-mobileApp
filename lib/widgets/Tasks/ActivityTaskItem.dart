@@ -10,16 +10,16 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'cubit.dart';
 import 'state.dart';
 
-class TaskItem extends StatefulWidget {
+class ActivityTaskItem extends StatefulWidget {
   final Map<String, dynamic> task;
-  const TaskItem({super.key,required this.task});
+  const ActivityTaskItem({super.key,required this.task});
   @override
-  State<TaskItem> createState() {
-    return _TaskItemState();
+  State<ActivityTaskItem> createState() {
+    return _ActivityTaskItemState();
   }  
 }
 
-class _TaskItemState extends State<TaskItem> {
+class _ActivityTaskItemState extends State<ActivityTaskItem> {
   late Map<String, dynamic> taskData;
   late final WebViewController _controller;
   late String encodeId;
@@ -117,7 +117,7 @@ class _TaskItemState extends State<TaskItem> {
                       )
                     )
                   ),
-                  Text(taskData["title"], style: AppTextStyles.hintMedium)
+                  Text(taskData["Title"], style: AppTextStyles.hintMedium)
                 ],
               ),
               Container(
@@ -141,7 +141,7 @@ class _TaskItemState extends State<TaskItem> {
                         child: SvgPicture.asset('assets/pelas.svg'),
                       ),
                       onTap: () {
-                        _openWebViewModal(context, taskData["title"]);
+                        _openWebViewModal(context, taskData["Title"]);
                         context.read<TaskCubit>().completeTask(taskData);
                       },
                     )

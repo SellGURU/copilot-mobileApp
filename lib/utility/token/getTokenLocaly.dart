@@ -5,3 +5,8 @@ Future<String?> getTokenLocally() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   return prefs.getString('token');
 }
+
+Future<String?> getEncodeLocally() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs.getString('encode');
+}
