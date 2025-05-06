@@ -47,8 +47,10 @@ class _RegisterPageState extends State<RegisterPage> {
     setState(() {
       if (value.isEmpty) {
         _errorMessagePassword = 'Please enter a password';
-      } else if (value.length < 6) {
-        _errorMessagePassword = 'Password must be at least 6 characters long';
+      } else if (value.length < 8) {
+        _errorMessagePassword = 'Password must be at least 8 characters long';
+      } else if (!RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]').hasMatch(value)) {
+        _errorMessagePassword = 'Password must include uppercase, lowercase, numbers and special characters';
       } else {
         _errorMessagePassword = null;
       }
@@ -224,22 +226,26 @@ class _RegisterPageState extends State<RegisterPage> {
                               controller: _emailController,
                               isPassword: false,
                               errorText: _errorMessageEmail,
+                              onChanged: _validateEmail,
                             ),
                           if (_currentStep == 1) ...[
                             AppTextField(
                               label: 'Password',
-                              hint: 'Enter Password',
+                              hint: 'Enter your password ....',
                               controller: _passwordController,
                               isPassword: true,
                               errorText: _errorMessagePassword,
+                              onChanged: _validatePassword,
+                              tooltipMessage: 'At least 8 characters.\n(Use Uppercase & Lowercase letters, Numbers and Special characters).\nAvoid using personal information or patterns.',
                             ),
                             const SizedBox(height: 20),
                             AppTextField(
                               label: 'Confirm Password',
-                              hint: 'Confirm your Password',
+                              hint: 'Confirm your password ...',
                               controller: _confirmPasswordController,
                               isPassword: true,
                               errorText: _errorMessageConfirmPassword,
+                              onChanged: _validateConfirmPassword,
                             ),
                           ],
                           const SizedBox(height: 64),
@@ -269,31 +275,36 @@ class _RegisterPageState extends State<RegisterPage> {
                             ),
                           ),
                           const SizedBox(height: 15),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const LoginPage(),
-                                ),
-                              );
-                            },
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Already have an account? ",
-                                  style: AppTextStyles.titleMedium,
-                                ),
-                                Text(
-                                  "login",
-                                  style: AppTextStyles.titleMedium.copyWith(
-                                    color: AppColors.greenBega,
+                          if (_currentStep == 0)
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginPage(),
                                   ),
-                                ),
-                              ],
+                                );
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Already have an account? ",
+                                    style: AppTextStyles.titleMedium.copyWith(
+                                      color: const Color(0xFF888888),
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                  Text(
+                                    "Log in",
+                                    style: AppTextStyles.titleMedium.copyWith(
+                                      color: AppColors.greenBega,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
                         ],
                       ),
                     )

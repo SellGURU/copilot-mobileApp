@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../components/text_style.dart';
 import '../res/colors.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AppTextField extends StatefulWidget {
   final String label;
@@ -12,6 +13,8 @@ class AppTextField extends StatefulWidget {
   final TextInputType? inputType;
   final String? errorText;
   final bool isPassword;
+  final Function(String)? onChanged;
+  final String? tooltipMessage;
 
   AppTextField({
     required this.label,
@@ -23,6 +26,8 @@ class AppTextField extends StatefulWidget {
     this.textAlign = TextAlign.start,
     this.inputType,
     this.errorText,
+    this.onChanged,
+    this.tooltipMessage,
   });
 
   @override
@@ -38,24 +43,61 @@ class _AppTextFieldState extends State<AppTextField> {
 
     final borderStyle = OutlineInputBorder(
       borderRadius: const BorderRadius.all(Radius.circular(20)),
-gapPadding: 0,
+      gapPadding: 0,
       borderSide: BorderSide(
-
         color: widget.errorText == null ? AppColors.gray50 : AppColors.red,
         width: widget.errorText == null ? 1.0 : 5.5,
       ),
     );
-
-    final textColor = widget.errorText == null ? Colors.black : AppColors.red;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           margin: const EdgeInsets.symmetric(horizontal: 6),
-          child: Text(
-            widget.label,
-            style: AppTextStyles.hintBlack,
+          child: Row(
+            children: [
+              Text(
+                widget.label,
+                style: AppTextStyles.hintBlack,
+              ),
+              if (widget.isPassword && widget.tooltipMessage != null) ...[
+                const SizedBox(width: 8),
+                Theme(
+                  data: Theme.of(context).copyWith(
+                    tooltipTheme: TooltipThemeData(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(4),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      textStyle: TextStyle(
+                        color: Colors.black,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ),
+                  child: Tooltip(
+                    message: widget.tooltipMessage,
+                    child: Container(
+                      width: 8,
+                      height: 8,
+                      child: SvgPicture.asset(
+                        "info-circle.svg",
+                        width: 8,
+                        height: 8,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ],
           ),
         ),
         const SizedBox(height: 5),
@@ -66,10 +108,11 @@ gapPadding: 0,
             controller: widget.controller,
             obscureText: widget.isPassword && _isObscured,
             keyboardType: widget.inputType,
-            style: TextStyle(color: textColor),
+            style: TextStyle(color: Colors.black),
+            onChanged: widget.onChanged,
             decoration: InputDecoration(
               hintText: widget.hint,
-              hintStyle: AppTextStyles.hint,
+              hintStyle: AppTextStyles.hint.copyWith(color: const Color(0xFFB0B0B0)),
               // prefixIcon: widget.icon,
               contentPadding: EdgeInsets.symmetric(vertical: 16,horizontal: 24), //Change this value to custom as you like
               isDense: true, // and add this line
