@@ -110,6 +110,87 @@ Future<void> _downloadPdfAndroidFromUrl(
   }
 }
 
+/// Processes the biomarkers data structure and returns a flattened list of biomarkers
+/// with their categories and subcategories.
+List<Map<String, dynamic>> processBiomarkers(List<dynamic> biomarkersData) {
+  try {
+    List<Map<String, dynamic>> flattenedBiomarkers = [];
+
+    if (biomarkersData == null || biomarkersData.isEmpty) {
+      return [];
+    }
+
+    for (var category in biomarkersData) {
+      if (category == null || category['subcategories'] == null) continue;
+      
+      String categoryName = category['category'] ?? 'Unknown Category';
+      
+      for (var subcategory in category['subcategories']) {
+        if (subcategory == null || subcategory['biomarkers'] == null) continue;
+        
+        String subcategoryName = subcategory['subcategory'] ?? 'Unknown Subcategory';
+        
+        for (var biomarker in subcategory['biomarkers']) {
+          if (biomarker == null) continue;
+          
+          // Create a new map with the biomarker data
+          Map<String, dynamic> newBiomarker = Map.from(biomarker);
+          
+          // Handle values array conversion
+          List<num> values = [];
+          if (newBiomarker['values'] != null) {
+            try {
+              var rawValues = newBiomarker['values'];
+              if (rawValues is List) {
+                for (var value in rawValues) {
+                  if (value is num) {
+                    values.add(value);
+                  } else if (value is String) {
+                    if (value.startsWith('[') && value.endsWith(']')) {
+                      // Handle range values like "[0.0, 1.0]"
+                      String cleanValue = value.substring(1, value.length - 1);
+                      List<String> parts = cleanValue.split(',');
+                      if (parts.length == 2) {
+                        num? parsedValue = num.tryParse(parts[0].trim());
+                        if (parsedValue != null) {
+                          values.add(parsedValue);
+                        }
+                      }
+                    } else {
+                      num? parsedValue = num.tryParse(value);
+                      if (parsedValue != null) {
+                        values.add(parsedValue);
+                      }
+                    }
+                  }
+                }
+              }
+            } catch (e) {
+              print('Error converting values: $e');
+              values = [];
+            }
+          }
+          
+          // Create final biomarker with all data
+          Map<String, dynamic> finalBiomarker = {
+            ...newBiomarker,
+            'values': values,
+            'category': categoryName,
+            'subcategory': subcategoryName,
+          };
+          
+          flattenedBiomarkers.add(finalBiomarker);
+        }
+      }
+    }
+    
+    return flattenedBiomarkers;
+  } catch (e) {
+    print('Error processing biomarkers: $e');
+    return [];
+  }
+}
+
 class Mainscreenv2 extends StatefulWidget {
   const Mainscreenv2({super.key});
 
@@ -589,6 +670,7 @@ class _Overview2State extends State<Overview2> {
                     
                     if (state is SuccessBiomarkerState) {
                       var biomarkerData = state.getBiomarkerData();
+                      print("biomarkerData: ${processBiomarkers(biomarkerData['data'])}");
                       return SizedBox(
                         height: 280,
                         child: ListView.separated(
