@@ -17,17 +17,34 @@ class Cardresultscreen extends StatefulWidget {
   late Color colorBadge;
   late String badgeText;
   late String title;
+  Object data;
   Cardresultscreen(
       {super.key,
       required this.colorBadge,
       required this.badgeText,
-      required this.title});
+      required this.title,
+      required this.data});
 
   @override
   State<Cardresultscreen> createState() => _CardresultscreenState();
 }
 
 class _CardresultscreenState extends State<Cardresultscreen> {
+  Color resolveStatusColor(String status) {
+    switch (status.toLowerCase()) {
+      case 'good':
+        return Colors.green;
+      case 'excellent':
+        return const Color.fromRGBO(127, 57, 251, 1);
+      case 'needs focus':
+        return const Color(0xFFFF3E5D);
+      case 'ok':
+        return const Color.fromRGBO(251, 173, 55, 1);
+      default:
+        return Colors.grey;
+    }
+  }
+
   double nextGaussian() {
     final random = Random();
     double u1 = random.nextDouble();
@@ -42,13 +59,17 @@ class _CardresultscreenState extends State<Cardresultscreen> {
     return randomValue.clamp(60, 180); // Clamp values between 60 and 180
   }
   getSpots(){
-    var spots=[
-      FlSpot(1, getRandomY()),
-      FlSpot(2, getRandomY()),
-      FlSpot(3, getRandomY()),
-      FlSpot(4, getRandomY()),
-    ];
+    var data = widget.data as Map<String, dynamic>;
+    var values = data['values'] as List<dynamic>? ?? [];
+    var spots = values.asMap().entries.map((entry) => 
+      FlSpot(entry.key.toDouble(), double.tryParse(entry.value.toString()) ?? 0)
+    ).toList();
     return spots;
+  }
+
+  getLabels(){
+    var data = widget.data as Map<String, dynamic>;
+    return data['date'] as List<dynamic>? ?? [];
   }
 
   @override
@@ -59,7 +80,7 @@ class _CardresultscreenState extends State<Cardresultscreen> {
           padding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
           decoration: BoxDecoration(
               border:
-                  Border(left: BorderSide(color: widget.colorBadge, width: 3)),
+                  Border(left: BorderSide(color:resolveStatusColor((widget.data as Map<String, dynamic>)['status'][0]), width: 3)),
               borderRadius: BorderRadius.all(Radius.circular(15)),
               color: Colors.white,
               boxShadow: const [
@@ -84,7 +105,7 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                         style: AppTextStyles.title1,
                       ),
                       Text(
-                        widget.title,
+                        (widget.data as Map<String, dynamic>)['subcategory'] as String,
                         style: AppTextStyles.hint,
                       ),
                     ],
@@ -97,15 +118,13 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 5),
                         decoration: BoxDecoration(
-                            color: widget.colorBadge,
+                            color:resolveStatusColor((widget.data as Map<String, dynamic>)['status'][0]) ,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(15))),
                         child: Center(
                           child: Text(
-                            widget.badgeText,
-                            style: widget.badgeText == "Borderline"
-                                ? AppTextStyles.hint
-                                : AppTextStyles.hint,
+                            (widget.data as Map<String, dynamic>)['status'][0],
+                            style:AppTextStyles.hint.copyWith(color: Colors.white),
                           ),
                         ),
                       ),
@@ -187,9 +206,12 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                 ],
               ),
               const SizedBox(
-                height: 15,
+                height: 35,
               ),
-              state.switchValue ? ChartDot(spots: getSpots(),) : const SizedBox()
+              state.switchValue ? ChartDot(spots: getSpots(), labels: getLabels()) : const SizedBox(),
+              const SizedBox(
+                height: 25,
+              ),
             ],
           ),
         );

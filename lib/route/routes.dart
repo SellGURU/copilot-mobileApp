@@ -14,6 +14,7 @@ Map<String, Widget Function(BuildContext)> routes = {
   ScreenNames.onboarddinglogin: (context) => onboarddinglogin(),
   ScreenNames.LDL: (context) => CholesterolScreen(
         title: '',
+        data: {},
       ),
   ScreenNames.detailedPlan: (context) => detailedPlan(),
   ScreenNames.cameraScreen: (context) => CameraScreen(

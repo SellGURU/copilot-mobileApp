@@ -97,7 +97,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             onTap: () {
                               setState(() {
                                 indexItem = 0;
-                                itemSelectedFiltered = "blood";
+                                itemSelectedFiltered = "Blood";
                               });
                             },
                             child: Container(
@@ -111,7 +111,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               height: 40,
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 9.0, vertical: 8),
+                                    horizontal: 20.0, vertical: 12),
                                 child: Row(
                                   children: [
                                     // SvgPicture.asset("assets/drops.svg",
@@ -124,7 +124,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                     //   width: 7,
                                     // ),
                                     Text(
-                                      "Cardiovascular...",
+                                      "Blood",
                                       style: indexItem == 0
                                           ? AppTextStyles.hintWhite
                                           : AppTextStyles.hint,
@@ -138,7 +138,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             onTap: () {
                               setState(() {
                                 indexItem = 1;
-                                itemSelectedFiltered = "activity";
+                                itemSelectedFiltered = "Activity";
                               });
                             },
                             child: Container(
@@ -152,7 +152,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               height: 40,
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 9.0, vertical: 8),
+                                    horizontal: 20, vertical: 8),
                                 child: Row(
                                   children: [
                                     // SvgPicture.asset("assets/weight.svg",
@@ -165,7 +165,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                     //   width: 7,
                                     // ),
                                     Text(
-                                      "Organ He...",
+                                      "Activity",
                                       style: indexItem == 1
                                           ? AppTextStyles.hintWhite
                                           : AppTextStyles.hint,
@@ -179,7 +179,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             onTap: () {
                               setState(() {
                                 indexItem = 2;
-                                itemSelectedFiltered = "dna";
+                                itemSelectedFiltered = "DNA";
                               });
                             },
                             child: Container(
@@ -193,7 +193,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               height: 40,
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 9.0, vertical: 8),
+                                    horizontal: 20, vertical: 8),
                                 child: Row(
                                   children: [
                                     // SvgPicture.asset("assets/dna.svg",
@@ -206,7 +206,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                     //   width: 7,
                                     // ),
                                     Text(
-                                      "Metabolic...",
+                                      "DNA",
                                       style: indexItem == 2
                                           ? AppTextStyles.hintWhite
                                           : AppTextStyles.hint,
@@ -220,7 +220,7 @@ class _ResultScreenState extends State<ResultScreen> {
                             onTap: () {
                               setState(() {
                                 indexItem = 3;
-                                itemSelectedFiltered = "AGING";
+                                itemSelectedFiltered = "Aging";
                               });
                             },
                             child: Container(
@@ -234,7 +234,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               height: 40,
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
-                                    horizontal: 9.0, vertical: 8),
+                                    horizontal: 20.0, vertical: 8),
                                 child: Row(
                                   children: [
                                     // SvgPicture.asset("assets/monitor.svg",
@@ -247,7 +247,7 @@ class _ResultScreenState extends State<ResultScreen> {
                                     //   width: 7,
                                     // ),
                                     Text(
-                                      "Immune...",
+                                      "Aging",
                                       style: indexItem == 3
                                           ? AppTextStyles.hintWhite
                                           : AppTextStyles.hint,
@@ -257,47 +257,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               ),
                             ),
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                indexItem = 4;
-                                itemSelectedFiltered = "MSK";
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                BorderRadius.all(Radius.circular(15)),
-                                color: indexItem == 4
-                              ? AppColors.purpleDark
-                                  : Colors.white,
-                              ),
-                              height: 40,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 9.0, vertical: 8),
-                                child: Row(
-                                  children: [
-                                    // SvgPicture.asset("assets/monitor.svg",
-                                    //     colorFilter: ColorFilter.mode(
-                                    //         indexItem == 3
-                                    //             ? AppColors.mainBg
-                                    //             : AppColors.textLite,
-                                    //         BlendMode.srcIn)),
-                                    // const SizedBox(
-                                    //   width: 7,
-                                    // ),
-                                    Text(
-                                      "Genetic & MSK...",
-                                      style: indexItem == 4
-                                          ? AppTextStyles.hintWhite
-                                          : AppTextStyles.hint,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+
                         ],
                       ),
                     ),
@@ -363,18 +323,12 @@ class _ResultScreenState extends State<ResultScreen> {
                         if (index ==0){
                           return SizedBox(width: 0,);
                         }
-                        if (itemSelectedFiltered ==
-                                data["data"][index]["tag"] ||
-                            itemSelectedFiltered == "all") {
-                          return BioMarkerCard(
-                            label: data["data"][index]["label"],
-                            colorBadge: data["data"][index]["colorBadge"],
-                          );
-                        } else {
-                          return const SizedBox(
-                            height: 0,
-                          );
-                        }
+                        return BioMarkerCard(
+                          label:data["data"][index]["name"],
+                          colorBadge:"red", 
+                          data: data["data"][index],
+                        );
+                        
                       },
                       separatorBuilder: (BuildContext context, int index) {
                         if (itemSelectedFiltered ==
@@ -408,7 +362,8 @@ class BioMarkerCard extends StatelessWidget {
   String label = "";
   String unit = "";
   String colorBadge = "";
-  BioMarkerCard({required this.label, required this.colorBadge});
+  Object data = {};
+  BioMarkerCard({required this.label, required this.colorBadge, required this.data});
   getColorBadge(color) {
     if (color == "red") {
       return AppColors.red;
@@ -440,11 +395,13 @@ class BioMarkerCard extends StatelessWidget {
             Navigator.of(context).push(MaterialPageRoute(
             builder: (context) => CholesterolScreen(
                   title: label,
+                  data: data,
                 ))),
         child: Cardresultscreen(
           colorBadge: getColorBadge(colorBadge),
           badgeText: getNameBadge(colorBadge),
           title: label,
+          data: data,
         ),
       ),
     );

@@ -41,7 +41,7 @@ class _AppTextFieldState extends State<AppTextField> {
 gapPadding: 0,
       borderSide: BorderSide(
 
-        color: widget.errorText == null ? AppColors.purpleDark : AppColors.red,
+        color: widget.errorText == null ? AppColors.gray50 : AppColors.red,
         width: widget.errorText == null ? 1.0 : 5.5,
       ),
     );
@@ -74,22 +74,23 @@ gapPadding: 0,
               contentPadding: EdgeInsets.symmetric(vertical: 16,horizontal: 24), //Change this value to custom as you like
               isDense: true, // and add this line
               suffixIcon: widget.isPassword
-                  ? IconButton(
-                icon: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Icon(
-                    _isObscured
-                        ? Icons.visibility_off_outlined
-                        : Icons.visibility_outlined,
-                    color: const Color.fromRGBO(123, 147, 175, 1),
-                  ),
-                ),
-                onPressed: () {
-                  setState(() {
-                    _isObscured = !_isObscured;
-                  });
-                },
-              )
+                  ? IconButton(  
+                      icon: Padding(
+                        padding: const EdgeInsets.only(right: 8.0),
+                        child:  Icon(
+                          _isObscured
+                              ? Icons.visibility_off_outlined
+                              : Icons.visibility_outlined,
+                          color: const Color.fromRGBO(123, 147, 175, 1),
+                        ),
+                        
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isObscured = !_isObscured;
+                        });
+                      },
+                    )
                   : null,
               errorStyle: AppTextStyles.error,
               errorText: widget.errorText,
@@ -99,7 +100,7 @@ gapPadding: 0,
                 borderRadius: BorderRadius.all(Radius.circular(20)),
                 gapPadding: 0,
                 borderSide: BorderSide(
-                  color: AppColors.purpleDark,
+                  color: AppColors.greenBega,
                   width: 2.0,
                 ),
               ),

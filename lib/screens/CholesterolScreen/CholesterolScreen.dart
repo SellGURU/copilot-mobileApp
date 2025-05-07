@@ -18,8 +18,9 @@ import '../../widgets/chart.dart';
 
 class CholesterolScreen extends StatefulWidget {
   final String title;
+  Object data;
 
-  CholesterolScreen({Key? key, required this.title}) : super(key: key);
+  CholesterolScreen({Key? key, required this.title, required this.data}) : super(key: key);
 
   @override
   State<CholesterolScreen> createState() => _CholesterolScreenState();
@@ -104,9 +105,9 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
                 IndexedStack(
                   index: indexItem,
                   children: [
-                    ResultMainTab(title: widget.title),
-                    HowToImproveTab(title: widget.title),
-                    InsightTab(title: widget.title),
+                    ResultMainTab(title: widget.title, data: widget.data),
+                    HowToImproveTab(title: widget.title, data: widget.data),
+                    InsightTab(title: widget.title, data: widget.data),
                   ],
                 )
               ],
@@ -145,8 +146,9 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
 
 class ResultMainTab extends StatefulWidget {
   final String title;
+  final Object data;
 
-  ResultMainTab({Key? key, required this.title}) : super(key: key);
+  ResultMainTab({Key? key, required this.title, required this.data}) : super(key: key);
 
   @override
   State<ResultMainTab> createState() => _ResultMainTabState();
@@ -154,10 +156,16 @@ class ResultMainTab extends StatefulWidget {
 
 class _ResultMainTabState extends State<ResultMainTab> {
   var toggleHistoryMod = "History";
-  var sections = [
-    {'headerText': 'What Borderline LDL Cholesterol means for your health?', 'contentText': 'Content for the first section.'},
-    {'headerText': 'What your body says', 'contentText': 'Content for the second section.'},
-  ];
+  late final List<Map<String, String>> sections;
+
+  @override
+  void initState() {
+    super.initState();
+    sections = [
+      {'headerText': 'What ${widget.title} means for your health?', 'contentText': (widget.data as Map<String, dynamic>)['what_it_means']},
+      {'headerText': 'What your body says', 'contentText': (widget.data as Map<String, dynamic>)['what_body_says']},
+    ];
+  }
 
   double nextGaussian() {
     final random = Random();
@@ -173,14 +181,18 @@ class _ResultMainTabState extends State<ResultMainTab> {
     return randomValue.clamp(60, 180);
   }
 
-  getSpots() {
-    var spots = [
-      FlSpot(1, getRandomY()),
-      FlSpot(2, getRandomY()),
-      FlSpot(3, getRandomY()),
-      FlSpot(4, getRandomY()),
-    ];
+  getSpots(){
+    var data = widget.data as Map<String, dynamic>;   
+    var values = data['values'] as List<dynamic>? ?? [];
+    var spots = values.asMap().entries.map((entry) => 
+      FlSpot(entry.key.toDouble(), double.tryParse(entry.value.toString()) ?? 0)
+    ).toList();
     return spots;
+  }
+
+  getLabels() {
+    var labels = ['2024-01-01', '2024-01-02', '2024-01-03', '2024-01-04'];
+    return labels;
   }
 
   @override
@@ -242,7 +254,7 @@ class _ResultMainTabState extends State<ResultMainTab> {
                   ],
                 ),
                 const SizedBox(height: 10),
-                Text('LDL, or low-density lipoprotein, is often referred to as the "bad" cholesterol...',
+                Text((widget.data as Map<String, dynamic>)['more_info'],
                     style: AppTextStyles.hintBlack),
               ],
             ),
@@ -259,7 +271,7 @@ class _ResultMainTabState extends State<ResultMainTab> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 16),
-                AspectRatio(aspectRatio: 1.5, child: ChartDot(spots: getSpots())),
+                AspectRatio(aspectRatio: 1.5, child: ChartDot(spots: getSpots(), labels: getLabels())),
               ],
             ),
           ),
@@ -276,8 +288,9 @@ class _ResultMainTabState extends State<ResultMainTab> {
 
 class HowToImproveTab extends StatefulWidget {
   final String title;
+  final Object data;
 
-  HowToImproveTab({Key? key, required this.title}) : super(key: key);
+  HowToImproveTab({Key? key, required this.title, required this.data}) : super(key: key);
 
   @override
   State<HowToImproveTab> createState() => _HowToImproveTabState();
@@ -311,7 +324,7 @@ class _HowToImproveTabState extends State<HowToImproveTab> {
               ],
             ),
             const SizedBox(height: 10),
-            Text('To improve your cholesterol levels, you can try the following:',
+            Text((widget.data as Map<String, dynamic>)['how_to_improve'],
                 style: AppTextStyles.hintBlack),
             const SizedBox(height: 10),
             // Add your content on lifestyle improvements here
@@ -326,8 +339,9 @@ class _HowToImproveTabState extends State<HowToImproveTab> {
 
 class InsightTab extends StatefulWidget {
   final String title;
+  final Object data;
 
-  InsightTab({Key? key, required this.title}) : super(key: key);
+  InsightTab({Key? key, required this.title, required this.data}) : super(key: key);
 
   @override
   State<InsightTab> createState() => _InsightTabState();
@@ -361,7 +375,7 @@ class _InsightTabState extends State<InsightTab> {
               ],
             ),
             const SizedBox(height: 10),
-            Text('Insights based on cholesterol levels and other health markers...',
+            Text((widget.data as Map<String, dynamic>)['insight'],
                 style: AppTextStyles.hintBlack),
           ],
         ),

@@ -14,6 +14,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../components/text_style.dart';
 import '../../res/colors.dart';
 
+enum ChatMode {
+  ai,
+  coach
+}
+
 class Chatscreen extends StatefulWidget {
   const Chatscreen({super.key});
 
@@ -23,6 +28,8 @@ class Chatscreen extends StatefulWidget {
 
 class _ChatscreenState extends State<Chatscreen> {
   final TextEditingController _controller = TextEditingController();
+  ChatMode _selectedMode = ChatMode.ai;
+  bool _isDropdownOpen = false;
 
   Future<String?> getNameUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -39,7 +46,8 @@ class _ChatscreenState extends State<Chatscreen> {
       // Get the user's name from SharedPreferences
       String? userName = await getNameUser();
       BlocProvider.of<ChatCubit>(context)
-          .sendMessage(_controller.value.text, "data:image/png;base64,$image");
+          .sendMessage(_controller.value.text, "data:image/png;base64,$image", 
+              message_to: _selectedMode == ChatMode.coach ? "coach" : "ai");
       _controller.clear();
       _scrollToBottom();
     }
@@ -91,9 +99,72 @@ class _ChatscreenState extends State<Chatscreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "AI Copilot",
-                        style: AppTextStyles.title1,
+                      Container(
+                        width: 150,
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(8),
+                          boxShadow: _isDropdownOpen ? [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.1),
+                              spreadRadius: 1,
+                              blurRadius: 3,
+                              offset: const Offset(0, 1),
+                            ),
+                          ] : null,
+                        ),
+                        child: DropdownButton<ChatMode>(
+                          value: _selectedMode,
+                          underline: const SizedBox(),
+                          icon: Icon(
+                            Icons.arrow_drop_down,
+                            color: const Color(0xFF383838),
+                            size: 20,
+                          ),
+                          isExpanded: true,
+                          dropdownColor: Colors.white,
+                          items: [
+                            DropdownMenuItem(
+                              value: ChatMode.ai,
+                              child: Text(
+                                "AI Assistant",
+                                style: const TextStyle(
+                                  color: Color(0xFF383838),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                            DropdownMenuItem(
+                              value: ChatMode.coach,
+                              child: Text(
+                                "Coach",
+                                style: const TextStyle(
+                                  color: Color(0xFF383838),
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                          ],
+                          onChanged: (ChatMode? newValue) async {
+                            if (newValue != null) {
+                              setState(() {
+                                _selectedMode = newValue;
+                                _isDropdownOpen = false;
+                              });
+                              // Clear messages and get history for the new mode
+                              BlocProvider.of<ChatCubit>(context).clearMessages(messageType: _selectedMode == ChatMode.coach ? "coach" : "ai");
+                              BlocProvider.of<ChatCubit>(context).getHistoryChat(messageType: _selectedMode == ChatMode.coach ? "coach" : "ai");
+                            }
+                          },
+                          onTap: () {
+                            setState(() {
+                              _isDropdownOpen = !_isDropdownOpen;
+                            });
+                          },
+                        ),
                       ),
                       Row(
                         children: [

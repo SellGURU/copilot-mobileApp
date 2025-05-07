@@ -154,7 +154,7 @@ class _ItemCardState extends State<ItemCard> {
               ],
             ),
             const SizedBox(height: 30),
-            ChartDot(spots: spots), // Pass the same spots to ChartDot
+            ChartDot(spots: spots,  labels:['1','2','3','4','5','6','7','8','9','10'],  ), // Pass the same spots to ChartDot
           ],
         ),
       ),

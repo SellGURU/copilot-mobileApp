@@ -51,6 +51,7 @@ class AuthCubit extends Cubit<AuthState> {
         if (value.statusCode == 200 && value.data["detail"] == null) {
           // print("token11 $value");
           await UpdateToken(value.data["access_token"]);
+          await UpdateEncode(value.data["encoded_mi"]);
           emit(SuccessState());
         } else {
           // print("else");

@@ -226,8 +226,8 @@ class _LoginPageState extends State<LoginPage> {
                     Stack(
                       children: [
                         SvgPicture.asset(
-                          "assets/headerLogin1.svg",
-                          height: 300,
+                          "assets/loginElips.svg",
+                          height: 200,
                           width: size.width,
                           fit: BoxFit.cover,
                         ),
@@ -244,23 +244,23 @@ class _LoginPageState extends State<LoginPage> {
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20),
+                      padding: EdgeInsets.only(left: 24, right: 24,top: 36),
                       child: Column(
                         children: [
                           //
                           Text(
-                            "To continue, please enter your email and password.",
-                            style: AppTextStyles.title2,
+                            "To continue, please enter your email and password. Your password can be found in the invitation email.",
+                            style: AppTextStyles.hintBlackWithHeight,
                             textAlign: TextAlign.center,
                           ),
                           SizedBox(
-                            height: 3,
+                            height: 2,
                           ),
-                          Text(
-                            " Your password can be found in the invitation email.",
-                            style: AppTextStyles.title2,
-                            textAlign: TextAlign.center,
-                          ),
+                          // Text(
+                          //   " Your password can be found in the invitation email.",
+                          //   style: AppTextStyles.title2,
+                          //   textAlign: TextAlign.center,
+                          // ),
                           const SizedBox(height: 30),
                           AppTextField(
                             label: 'E-mail',
@@ -349,7 +349,7 @@ class _LoginPageState extends State<LoginPage> {
                                   padding: const EdgeInsets.only(
                                       top: 10, bottom: 10),
                                   decoration: BoxDecoration(
-                                      color: AppColors.purpleDark,
+                                      color: AppColors.greenBega,
                                       borderRadius: BorderRadius.circular(10)),
                                   width: size.width,
                                   child: Text(
