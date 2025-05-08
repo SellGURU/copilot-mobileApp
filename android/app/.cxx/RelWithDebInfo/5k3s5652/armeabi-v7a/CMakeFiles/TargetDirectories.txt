@@ -1,0 +1,2 @@
+D:/copilot-mobileApp/android/app/.cxx/RelWithDebInfo/5k3s5652/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/copilot-mobileApp/android/app/.cxx/RelWithDebInfo/5k3s5652/armeabi-v7a/CMakeFiles/rebuild_cache.dir
