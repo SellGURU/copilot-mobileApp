@@ -9,6 +9,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:copilet/screens/login/login.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter/gestures.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -27,6 +29,7 @@ class _RegisterPageState extends State<RegisterPage> {
   String? _errorMessagePassword;
   String? _errorMessageConfirmPassword;
   bool _isLoading = false;
+  bool _acceptTerms = false;
 
   void _validateEmail(String value) {
     const pattern = r'^[^@]+@[^@]+\.[^@]+';
@@ -155,10 +158,38 @@ class _RegisterPageState extends State<RegisterPage> {
       case 1:
         _validatePassword(_passwordController.text);
         _validateConfirmPassword(_confirmPasswordController.text);
-        if (_errorMessagePassword == null && _errorMessageConfirmPassword == null) {
+        if (_errorMessagePassword == null && _errorMessageConfirmPassword == null && _acceptTerms) {
           _registerUser();
+        } else if (!_acceptTerms) {
+          Fluttertoast.showToast(
+            msg: "Please accept the privacy policy and terms of service",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+          );
         }
         break;
+    }
+  }
+
+  void _launchURL(String url) async {
+    try {
+      final Uri uri = Uri.parse(url);
+      if (!await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      )) {
+        throw Exception('Could not launch $url');
+      }
+    } catch (e) {
+      Fluttertoast.showToast(
+        msg: "Could not open the link",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+      );
     }
   }
 
@@ -246,6 +277,63 @@ class _RegisterPageState extends State<RegisterPage> {
                               isPassword: true,
                               errorText: _errorMessageConfirmPassword,
                               onChanged: _validateConfirmPassword,
+                            ),
+                            const SizedBox(height: 20),
+                            Row(
+                              children: [
+                                Checkbox(
+                                  value: _acceptTerms,
+                                  onChanged: (bool? value) {
+                                    setState(() {
+                                      _acceptTerms = value ?? false;
+                                    });
+                                  },
+                                  activeColor: AppColors.greenBega,
+                                ),
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        _acceptTerms = !_acceptTerms;
+                                      });
+                                    },
+                                    child: RichText(
+                                      text: TextSpan(
+                                        style: AppTextStyles.titleMedium.copyWith(
+                                          color: const Color(0xFF888888),
+                                          fontSize: 12,
+                                        ),
+                                        children: [
+                                          const TextSpan(text: 'I accept the '),
+                                          TextSpan(
+                                            text: 'Privacy Policy',
+                                            style: TextStyle(
+                                              color: AppColors.greenBega,
+                                              decoration: TextDecoration.underline,
+                                            ),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                _launchURL('https://holisticare.io/privacy-policy/');
+                                              },
+                                          ),
+                                          const TextSpan(text: ' and '),
+                                          TextSpan(
+                                            text: 'Terms of Service',
+                                            style: TextStyle(
+                                              color: AppColors.greenBega,
+                                              decoration: TextDecoration.underline,
+                                            ),
+                                            recognizer: TapGestureRecognizer()
+                                              ..onTap = () {
+                                                _launchURL('https://holisticare.io/terms-of-service/');
+                                              },
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ],
                           const SizedBox(height: 64),
