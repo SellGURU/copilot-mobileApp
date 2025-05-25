@@ -13,7 +13,7 @@ class ItemCard extends StatefulWidget {
   final String current;
   String scale;
   final Widget icon;
-  final List<int> valuesData;
+  final List<num> valuesData;
 
   ItemCard({
     super.key,
@@ -54,10 +54,13 @@ class _ItemCardState extends State<ItemCard> {
   }
 
   List<FlSpot> getSpots() {
-    return widget.valuesData.asMap()
-      .entries
-      .map((entry) => FlSpot(entry.key.toDouble()+1, entry.value.toDouble()))
-      .toList();
+    return List.generate(
+      widget.valuesData.length,
+      (index) => FlSpot(
+        index.toDouble(),
+        widget.valuesData[index].toDouble(), // Convert to double for FlSpot
+      ),
+    );
   }
 
   double calculateAverageY(List<FlSpot> spots) {
@@ -99,7 +102,7 @@ class _ItemCardState extends State<ItemCard> {
                   child: widget.icon,
                 ),
                 Text(
-                  widget.title,
+                  widget.title.length > 15 ? widget.title.substring(0, 15) + '...' : widget.title,
                   style: AppTextStyles.title1,
                 ),
               ],

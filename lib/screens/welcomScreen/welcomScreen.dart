@@ -1,5 +1,5 @@
 import 'package:copilet/components/text_style.dart';
-import 'package:copilet/screens/login/login.dart';
+import 'package:copilet/screens/register/register.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -60,7 +60,7 @@ class _WelcomscreenState extends State<Welcomscreen> {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const LoginPage()),
+                                builder: (context) => const RegisterPage()),
                           );
                         },
                         child: Container(
@@ -85,7 +85,7 @@ class _WelcomscreenState extends State<Welcomscreen> {
                       SizedBox(
                           width: 350,
                           child: Text(
-                            "Holisticare is an invite-only app. You’ll need an invitation email from LPC to create an account.",
+                            "Holisticare is an invite-only app. You'll need an invitation email from LPC to create an account.",
                             textAlign: TextAlign.center,
                             style: AppTextStyles.hintWhite,
                           ))

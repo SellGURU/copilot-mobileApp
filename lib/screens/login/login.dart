@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:copilet/components/text_style.dart';
 import 'package:copilet/res/colors.dart';
 import 'package:copilet/screens/mainScreenV2/MainScreenV2.dart';
+import 'package:copilet/screens/register/register.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -308,17 +309,7 @@ class _LoginPageState extends State<LoginPage> {
                                     'password',
                                     _passwordController
                                         .value.text); // Store password
-                                // BlocProvider.of<ClientInformationMobileCubit>(
-                                //         context)
-                                //     .refresh();
                                 getInitData();
-                                // if (isLoadedData) {
-                                //   Navigator.pushReplacement(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => Mainscreen()),
-                                //   );
-                                // }
                               }
                               if (state is ErrorState) {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -330,37 +321,66 @@ class _LoginPageState extends State<LoginPage> {
                                 return const Center(
                                     child: CircularProgressIndicator());
                               }
-                              return GestureDetector(
-                                onTap: () async {
-                                  _validateEmail(_emailController.text);
-                                  _validatePassword(
-                                      _passwordController.value.text);
-                                  if (_errorMessageEmail == null &&
-                                      _errorMessagePass == null) {
-                                    BlocProvider.of<AuthCubit>(context).logIn(
-                                        _emailController.value.text,
-                                        _passwordController
-                                            .value.text // Pass the password
-                                        );
-                                  }
-                                },
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  padding: const EdgeInsets.only(
-                                      top: 10, bottom: 10),
-                                  decoration: BoxDecoration(
-                                      color: AppColors.greenBega,
-                                      borderRadius: BorderRadius.circular(10)),
-                                  width: size.width,
-                                  child: Text(
-                                    "Log in",
-                                    style: AppTextStyles.titleMediumWhite,
+                              return Column(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () async {
+                                      _validateEmail(_emailController.text);
+                                      _validatePassword(
+                                          _passwordController.value.text);
+                                      if (_errorMessageEmail == null &&
+                                          _errorMessagePass == null) {
+                                        BlocProvider.of<AuthCubit>(context).logIn(
+                                            _emailController.value.text,
+                                            _passwordController
+                                                .value.text // Pass the password
+                                            );
+                                      }
+                                    },
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.only(
+                                          top: 10, bottom: 10),
+                                      decoration: BoxDecoration(
+                                          color: AppColors.greenBega,
+                                          borderRadius: BorderRadius.circular(10)),
+                                      width: size.width,
+                                      child: Text(
+                                        "Log in",
+                                        style: AppTextStyles.titleMediumWhite,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  const SizedBox(height: 15),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => const RegisterPage(),
+                                        ),
+                                      );
+                                    },
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Don't have an account? ",
+                                          style: AppTextStyles.titleMedium,
+                                        ),
+                                        Text(
+                                          "Sign Up",
+                                          style: AppTextStyles.titleMedium.copyWith(
+                                            color: AppColors.greenBega,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               );
                             },
                           ),
-                          const SizedBox(height: 15),
                           // GestureDetector(
                           //   onTap: () => _handleSignIn(context),
                           //   child: Container(

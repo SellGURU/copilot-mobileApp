@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
 import '../../../constants/endPoints.dart';
 import '../../../utility/token/getTokenLocaly.dart';
@@ -37,6 +38,7 @@ class ClientInformationMobileCubit extends Cubit<ClientInformationMobileState> {
             // Save client name in local shared preferences
             SharedPreferences prefs = await SharedPreferences.getInstance();
             prefs.setString('name', res.data["name"]);
+            prefs.setString('userInfoid', jsonEncode(res.data["id"]));
           } else {
             // Handle null response data by emitting an error state
             emit(ErrorClientInformationMobileState());

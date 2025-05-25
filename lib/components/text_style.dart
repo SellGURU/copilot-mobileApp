@@ -96,7 +96,7 @@ class AppTextStyles {
           fontSize: 12,
           color: AppColors.black,
           fontWeight: FontWeight.w400,
-          height: 2));
+          height: 1.5));
   static TextStyle hintWhite = GoogleFonts.inter(
       textStyle: TextStyle(
           fontSize: 12, color: Colors.white, fontWeight: FontWeight.w400));
