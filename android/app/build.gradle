@@ -35,10 +35,10 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file("C:/Users/nima/nima.jks")
-            storePassword "Nima@1382"
-            keyAlias "nima"
-            keyPassword "Nima@1382"
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
         }
     }
     buildTypes {
