@@ -366,12 +366,16 @@ class _LoginPageState extends State<LoginPage> {
                                       children: [
                                         Text(
                                           "Don't have an account? ",
-                                          style: AppTextStyles.titleMedium,
+                                          style: AppTextStyles.titleMedium.copyWith(
+                                            color: const Color(0xFF888888),
+                                            fontSize: 12,
+                                          ),
                                         ),
                                         Text(
                                           "Sign Up",
                                           style: AppTextStyles.titleMedium.copyWith(
                                             color: AppColors.greenBega,
+                                            fontSize: 12,
                                           ),
                                         ),
                                       ],

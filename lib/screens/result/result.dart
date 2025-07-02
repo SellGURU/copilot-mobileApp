@@ -93,170 +93,170 @@ class _ResultScreenState extends State<ResultScreen> {
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                indexItem = 0;
-                                itemSelectedFiltered = "Blood";
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15)),
-                                color: indexItem == 0
-                                    ? AppColors.purpleDark
-                                    : Colors.white,
-                              ),
-                              height: 40,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0, vertical: 12),
-                                child: Row(
-                                  children: [
-                                    // SvgPicture.asset("assets/drops.svg",
-                                    //     colorFilter: ColorFilter.mode(
-                                    //         indexItem == 0
-                                    //             ? AppColors.mainBg
-                                    //             : AppColors.textLite,
-                                    //         BlendMode.srcIn)),
-                                    // const SizedBox(
-                                    //   width: 7,
-                                    // ),
-                                    Text(
-                                      "Blood",
-                                      style: indexItem == 0
-                                          ? AppTextStyles.hintWhite
-                                          : AppTextStyles.hint,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                indexItem = 1;
-                                itemSelectedFiltered = "Activity";
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15)),
-                                color: indexItem == 1
-                                    ? AppColors.purpleDark
-                                    : Colors.white,
-                              ),
-                              height: 40,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 8),
-                                child: Row(
-                                  children: [
-                                    // SvgPicture.asset("assets/weight.svg",
-                                    //     colorFilter: ColorFilter.mode(
-                                    //         indexItem == 1
-                                    //             ? AppColors.mainBg
-                                    //             : AppColors.textLite,
-                                    //         BlendMode.srcIn)),
-                                    // const SizedBox(
-                                    //   width: 7,
-                                    // ),
-                                    Text(
-                                      "Activity",
-                                      style: indexItem == 1
-                                          ? AppTextStyles.hintWhite
-                                          : AppTextStyles.hint,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                indexItem = 2;
-                                itemSelectedFiltered = "DNA";
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15)),
-                                color: indexItem == 2
-                                    ? AppColors.purpleDark
-                                    : Colors.white,
-                              ),
-                              height: 40,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20, vertical: 8),
-                                child: Row(
-                                  children: [
-                                    // SvgPicture.asset("assets/dna.svg",
-                                    //     colorFilter: ColorFilter.mode(
-                                    //         indexItem == 2
-                                    //             ? AppColors.mainBg
-                                    //             : AppColors.textLite,
-                                    //         BlendMode.srcIn)),
-                                    // const SizedBox(
-                                    //   width: 7,
-                                    // ),
-                                    Text(
-                                      "DNA",
-                                      style: indexItem == 2
-                                          ? AppTextStyles.hintWhite
-                                          : AppTextStyles.hint,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                indexItem = 3;
-                                itemSelectedFiltered = "Aging";
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15)),
-                                color: indexItem == 3
-                                    ? AppColors.purpleDark
-                                    : Colors.white,
-                              ),
-                              height: 40,
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0, vertical: 8),
-                                child: Row(
-                                  children: [
-                                    // SvgPicture.asset("assets/monitor.svg",
-                                    //     colorFilter: ColorFilter.mode(
-                                    //         indexItem == 3
-                                    //             ? AppColors.mainBg
-                                    //             : AppColors.textLite,
-                                    //         BlendMode.srcIn)),
-                                    // const SizedBox(
-                                    //   width: 7,
-                                    // ),
-                                    Text(
-                                      "Aging",
-                                      style: indexItem == 3
-                                          ? AppTextStyles.hintWhite
-                                          : AppTextStyles.hint,
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                          // GestureDetector(
+                          //   onTap: () {
+                          //     setState(() {
+                          //       indexItem = 0;
+                          //       itemSelectedFiltered = "Blood";
+                          //     });
+                          //   },
+                          //   child: Container(
+                          //     decoration: BoxDecoration(
+                          //       borderRadius:
+                          //           BorderRadius.all(Radius.circular(15)),
+                          //       color: indexItem == 0
+                          //           ? AppColors.purpleDark
+                          //           : Colors.white,
+                          //     ),
+                          //     height: 40,
+                          //     child: Padding(
+                          //       padding: const EdgeInsets.symmetric(
+                          //           horizontal: 20.0, vertical: 12),
+                          //       child: Row(
+                          //         children: [
+                          //           // SvgPicture.asset("assets/drops.svg",
+                          //           //     colorFilter: ColorFilter.mode(
+                          //           //         indexItem == 0
+                          //           //             ? AppColors.mainBg
+                          //           //             : AppColors.textLite,
+                          //           //         BlendMode.srcIn)),
+                          //           // const SizedBox(
+                          //           //   width: 7,
+                          //           // ),
+                          //           Text(
+                          //             "Blood",
+                          //             style: indexItem == 0
+                          //                 ? AppTextStyles.hintWhite
+                          //                 : AppTextStyles.hint,
+                          //           )
+                          //         ],
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          // GestureDetector(
+                          //   onTap: () {
+                          //     setState(() {
+                          //       indexItem = 1;
+                          //       itemSelectedFiltered = "Activity";
+                          //     });
+                          //   },
+                          //   child: Container(
+                          //     decoration: BoxDecoration(
+                          //       borderRadius:
+                          //           BorderRadius.all(Radius.circular(15)),
+                          //       color: indexItem == 1
+                          //           ? AppColors.purpleDark
+                          //           : Colors.white,
+                          //     ),
+                          //     height: 40,
+                          //     child: Padding(
+                          //       padding: const EdgeInsets.symmetric(
+                          //           horizontal: 20, vertical: 8),
+                          //       child: Row(
+                          //         children: [
+                          //           // SvgPicture.asset("assets/weight.svg",
+                          //           //     colorFilter: ColorFilter.mode(
+                          //           //         indexItem == 1
+                          //           //             ? AppColors.mainBg
+                          //           //             : AppColors.textLite,
+                          //           //         BlendMode.srcIn)),
+                          //           // const SizedBox(
+                          //           //   width: 7,
+                          //           // ),
+                          //           Text(
+                          //             "Activity",
+                          //             style: indexItem == 1
+                          //                 ? AppTextStyles.hintWhite
+                          //                 : AppTextStyles.hint,
+                          //           )
+                          //         ],
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          // GestureDetector(
+                          //   onTap: () {
+                          //     setState(() {
+                          //       indexItem = 2;
+                          //       itemSelectedFiltered = "DNA";
+                          //     });
+                          //   },
+                          //   child: Container(
+                          //     decoration: BoxDecoration(
+                          //       borderRadius:
+                          //           BorderRadius.all(Radius.circular(15)),
+                          //       color: indexItem == 2
+                          //           ? AppColors.purpleDark
+                          //           : Colors.white,
+                          //     ),
+                          //     height: 40,
+                          //     child: Padding(
+                          //       padding: const EdgeInsets.symmetric(
+                          //           horizontal: 20, vertical: 8),
+                          //       child: Row(
+                          //         children: [
+                          //           // SvgPicture.asset("assets/dna.svg",
+                          //           //     colorFilter: ColorFilter.mode(
+                          //           //         indexItem == 2
+                          //           //             ? AppColors.mainBg
+                          //           //             : AppColors.textLite,
+                          //           //         BlendMode.srcIn)),
+                          //           // const SizedBox(
+                          //           //   width: 7,
+                          //           // ),
+                          //           Text(
+                          //             "DNA",
+                          //             style: indexItem == 2
+                          //                 ? AppTextStyles.hintWhite
+                          //                 : AppTextStyles.hint,
+                          //           )
+                          //         ],
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
+                          // GestureDetector(
+                          //   onTap: () {
+                          //     setState(() {
+                          //       indexItem = 3;
+                          //       itemSelectedFiltered = "Aging";
+                          //     });
+                          //   },
+                          //   child: Container(
+                          //     decoration: BoxDecoration(
+                          //       borderRadius:
+                          //           BorderRadius.all(Radius.circular(15)),
+                          //       color: indexItem == 3
+                          //           ? AppColors.purpleDark
+                          //           : Colors.white,
+                          //     ),
+                          //     height: 40,
+                          //     child: Padding(
+                          //       padding: const EdgeInsets.symmetric(
+                          //           horizontal: 20.0, vertical: 8),
+                          //       child: Row(
+                          //         children: [
+                          //           // SvgPicture.asset("assets/monitor.svg",
+                          //           //     colorFilter: ColorFilter.mode(
+                          //           //         indexItem == 3
+                          //           //             ? AppColors.mainBg
+                          //           //             : AppColors.textLite,
+                          //           //         BlendMode.srcIn)),
+                          //           // const SizedBox(
+                          //           //   width: 7,
+                          //           // ),
+                          //           Text(
+                          //             "Aging",
+                          //             style: indexItem == 3
+                          //                 ? AppTextStyles.hintWhite
+                          //                 : AppTextStyles.hint,
+                          //           )
+                          //         ],
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
 
                         ],
                       ),
