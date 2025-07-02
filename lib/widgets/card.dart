@@ -13,7 +13,7 @@ class ItemCard extends StatefulWidget {
   final String current;
   String scale;
   final Widget icon;
-  final List<num> valuesData;
+  final List<double> valuesData;
 
   ItemCard({
     super.key,
@@ -58,7 +58,7 @@ class _ItemCardState extends State<ItemCard> {
       widget.valuesData.length,
       (index) => FlSpot(
         index.toDouble(),
-        widget.valuesData[index].toDouble(), // Convert to double for FlSpot
+        widget.valuesData[index], // Convert to double for FlSpot
       ),
     );
   }
@@ -101,9 +101,12 @@ class _ItemCardState extends State<ItemCard> {
                 Container(
                   child: widget.icon,
                 ),
-                Text(
-                  widget.title.length > 15 ? widget.title.substring(0, 15) + '...' : widget.title,
-                  style: AppTextStyles.title1,
+                Tooltip(
+                  message: widget.title.length > 10 ? widget.title : '',
+                  child: Text(
+                    widget.title.length > 10 ? '${widget.title.substring(0, 10)}...' : widget.title,
+                    style: AppTextStyles.title1.copyWith(fontSize: 14),
+                  ),
                 ),
               ],
             ),
