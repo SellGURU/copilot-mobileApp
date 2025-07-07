@@ -79,8 +79,8 @@ class MyApp extends StatelessWidget {
                   alignment: Alignment.center,
                   width: size.width,
                   child: Container(
-                    width: platform == PlatformType.web ? (size.width > 440 ? 440 : size.width) : null,
-                    margin: platform == PlatformType.web ? EdgeInsets.only(top: size.height * .02) : null,
+                    // width: platform == PlatformType.web ? (size.width > 440 ? 440 : size.width) : null,
+                    // margin: platform == PlatformType.web ? EdgeInsets.only(top: size.height * .02) : null,
                     child: const Mainscreen(),
                   ));
             }

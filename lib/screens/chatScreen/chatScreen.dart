@@ -271,7 +271,7 @@ class _ChatscreenState extends State<Chatscreen> {
                 builder: (context, state) {
                   return Positioned(
                     bottom: 50,
-                    width: size.width * .8,
+                    width: size.width * .9,
                     //  > 420 ? 400 : size.width * .9,
                     child: Container(
                       alignment: Alignment.center,

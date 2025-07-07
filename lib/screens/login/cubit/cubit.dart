@@ -14,20 +14,30 @@ class AuthCubit extends Cubit<AuthState> {
   Dio _dio = Dio();
 
   Future<void> _initialize() async {
+    // First check if user should be forced to logout
+    bool shouldForceLogoutUser = await shouldForceLogout();
+    if (shouldForceLogoutUser) {
+      await clearToken();
+      emit(LoggedOutState());
+      return;
+    }
+    
     var token = await getTokenLocally();
-    if (token == null) {
-      emit(logOut());
+    if (token == null || token.isEmpty) {
+      emit(LoggedOutState());
     } else {
       _dio.options.headers['Authorization'] = "bearer $token";
 
       _dio.post(Endpoints.clientInformationMobile).then((value) async {
         if (value.data["detail"] == "Not authenticated" ||value.data["detail"] == "Expired token."||value.data["detail"] ==  "Invalid token.") {
+          // Clear invalid token and emit logged out state
+          await clearToken();
           emit(LoggedOutState());
         } else {
           var token = await getTokenLocally();
           // print("token1:${token}");
           // print(token!.isNotEmpty);
-          if (token!.isNotEmpty) {
+          if (token != null && token.isNotEmpty) {
             emit(LoggedInState());
           } else {
             emit(LoggedOutState());

@@ -14,9 +14,33 @@ Future<void> clearToken() async {
   await prefs.remove('buttonPressTime');
 }
 
+/// Check if user should be logged out based on session timeout
+Future<bool> shouldForceLogout() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  
+  // Check if there's a logout timestamp
+  String? logoutTimestamp = prefs.getString('logoutTimestamp');
+  if (logoutTimestamp != null) {
+    // If logout timestamp exists, user should be logged out
+    await prefs.remove('logoutTimestamp');
+    return true;
+  }
+  
+  return false;
+}
+
+/// Set logout timestamp when user logs out
+Future<void> setLogoutTimestamp() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  await prefs.setString('logoutTimestamp', DateTime.now().toIso8601String());
+}
+
 /// Comprehensive logout function that clears all data and resets everything
 Future<void> clearAllDataAndReset() async {
   try {
+    // Set logout timestamp to force logout on next app start
+    await setLogoutTimestamp();
+    
     // Clear all SharedPreferences data
     await clearToken();
     
