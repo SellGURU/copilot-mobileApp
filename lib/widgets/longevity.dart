@@ -42,11 +42,11 @@ class _LongevityState extends State<Longevity> {
         final data = response.data["scores"];
         print(data);
         setState(() {
-          dietScore = data['diet'] ?? 0;
-          mindScore = data['lifestyle'] ?? 0;
-          activityScore = data['activity'] ?? 0;
-          supplementScore = data['supplement'] ?? 0;
-          lifestyle = data['lifestyle'] ?? 0;
+          dietScore = data['diet'].toDouble() ?? 0;
+          mindScore = data['lifestyle'].toDouble() ?? 0;
+          activityScore = data['activity'].toDouble() ?? 0;
+          supplementScore = data['supplement'].toDouble() ?? 0;
+          lifestyle = data['lifestyle'].toDouble() ?? 0;
           isLoading = false;
         });
       } else {

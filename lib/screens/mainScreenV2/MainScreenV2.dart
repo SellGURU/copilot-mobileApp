@@ -303,14 +303,17 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                                     builder: (context, state) {
                                       return GestureDetector(
                                         onTap: () async {
+                                          // Clear all tokens and data, reset everything
                                           await BlocProvider.of<AuthCubit>(
                                                   context)
-                                              .logOut();
-                                          Navigator.pushReplacement(
+                                              .clearAllData();
+                                          // Navigate to login page and clear the navigation stack
+                                          Navigator.pushAndRemoveUntil(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     LoginPage()),
+                                            (route) => false, // This removes all previous routes from the stack
                                           );
                                         },
                                         child: Row(
@@ -671,59 +674,59 @@ class _Overview2State extends State<Overview2> {
                     if (state is SuccessBiomarkerState) {
                       var biomarkerData = state.getBiomarkerData();
                       print("biomarkerData: ${processBiomarkers(biomarkerData['data'])}");
-                      return SizedBox(
-                        height: 280,
-                        child: ListView.separated(
-                          itemCount: biomarkerData["data"].length,
-                          
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: false,
-                          physics: const BouncingScrollPhysics(),
-                          padding: const EdgeInsets.only(
-                              top: 20, bottom: 20, left: 8, right: 10),
-                          itemBuilder: (BuildContext context, int index) {
-                            var biomarker = biomarkerData["data"][index];
-                            // Ensure all values are properly typed
-                            String name = biomarker["name"]?.toString() ?? "Unknown Biomarker";
-                            String avg = biomarker["values"][0]?.toString() ?? "0";
-                            String current = biomarker["values"][0]?.toString() ?? "0";
-                            String unit = biomarker["unit"]?.toString() ?? "";
-                            String icon = biomarker["icon"]?.toString() ?? "assets/Hrate.svg";
-                            String status = biomarker["status"][0]?.toString() ?? "Unknown";
+                        return SizedBox(
+                          height: 280,
+                          child: ListView.separated(
+                            itemCount: biomarkerData["data"].length,
                             
-                            // Safely convert values to List<num>
-                            List<double> values = (biomarker["values"] as Iterable)
-                                .map((e) => double.tryParse(e.toString()) ?? 0.0)
-                                .toList();
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: false,
+                            physics: const BouncingScrollPhysics(),
+                            padding: const EdgeInsets.only(
+                                top: 20, bottom: 20, left: 8, right: 10),
+                            itemBuilder: (BuildContext context, int index) {
+                              var biomarker = biomarkerData["data"][index];
+                              // Ensure all values are properly typed
+                              String name = biomarker["name"]?.toString() ?? "Unknown Biomarker";
+                              String avg = biomarker["values"][0]?.toString() ?? "0";
+                              String current = biomarker["values"][0]?.toString() ?? "0";
+                              String unit = biomarker["unit"]?.toString() ?? "";
+                              String icon = biomarker["icon"]?.toString() ?? "assets/Hrate.svg";
+                              String status = biomarker["status"][0]?.toString() ?? "Unknown";
+                              
+                              // Safely convert values to List<num>
+                              List<double> values = (biomarker["values"] as Iterable)
+                                  .map((e) => double.tryParse(e.toString()) ?? 0.0)
+                                  .toList();
 
-                            return ItemCard(
-                              title: name,
-                              average: avg,
-                              icon: SvgPicture.asset(
-                                icon,
-                                width: 40,
-                                height: 40,
-                              ),
-                              status: status,
-                              current: current,
-                              scale: unit,
-                              valuesData: values,
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return const SizedBox(
-                              width: 10,
-                            );
-                          },
-                        ),
-                      );
+                              return ItemCard(
+                                title: name,
+                                average: avg,
+                                icon: SvgPicture.asset(
+                                  icon,
+                                  width: 40,
+                                  height: 40,
+                                ),
+                                status: status,
+                                current: current,
+                                scale: unit,
+                                valuesData: values,
+                              );
+                            },
+                            separatorBuilder: (BuildContext context, int index) {
+                              return const SizedBox(
+                                width: 10,
+                              );
+                            },
+                          ),
+                        );
                     }
                     
-                    if (state is ErrorBiomarkerState) {
-                      return const Center(
-                        child: Text("Error loading biomarkers"),
-                      );
-                    }
+                    // if (state is ErrorBiomarkerState) {
+                    //   return const Center(
+                    //     child: Text("Error loading biomarkers"),
+                    //   );
+                    // }
                     
                     return const SizedBox();
                   },

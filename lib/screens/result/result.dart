@@ -349,9 +349,27 @@ class _ResultScreenState extends State<ResultScreen> {
             ),
           );
         } else {
-          return Center(
-            child: Text("internat Error",style: AppTextStyles.hint,),
-          );
+          return Container(
+              margin: EdgeInsets.only(top: size.height * .02),
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "Your Results",
+                        style: AppTextStyles.title1,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+
+                ],
+              ),
+            );
         }
       },
     );

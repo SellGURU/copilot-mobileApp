@@ -99,10 +99,13 @@ class _SettingPageState extends State<SettingPage> {
                 builder: (context, state) {
                   return GestureDetector(
                     onTap: () async {
-                      await BlocProvider.of<AuthCubit>(context).logOut();
-                      Navigator.pushReplacement(
+                      // Clear all tokens and data, reset everything
+                      await BlocProvider.of<AuthCubit>(context).clearAllData();
+                      // Navigate to login page and clear the navigation stack
+                      Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(builder: (context) => LoginPage()),
+                        (route) => false, // This removes all previous routes from the stack
                       );
                     },
                     child: Row(

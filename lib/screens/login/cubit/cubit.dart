@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import '../../../constants/endPoints.dart';
 import '../../../utility/token/getTokenLocaly.dart';
 import '../../../utility/token/updateToken.dart';
+import '../../../utility/token/clearToken.dart';
 import 'state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -67,7 +68,15 @@ class AuthCubit extends Cubit<AuthState> {
   }
 
   logOut() async {
-    await UpdateToken("");
+    // Clear all stored data including tokens, user info, and credentials
+    await clearToken();
+    emit(LoggedOutState());
+  }
+
+  // Method to clear all data and reset everything
+  clearAllData() async {
+    // Import the comprehensive logout function
+    await clearAllDataAndReset();
     emit(LoggedOutState());
   }
 }
