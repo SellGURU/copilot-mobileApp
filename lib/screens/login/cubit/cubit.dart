@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import '../../../constants/endPoints.dart';
 import '../../../utility/token/getTokenLocaly.dart';
 import '../../../utility/token/updateToken.dart';
-import '../../../utility/token/clearToken.dart';
 import 'state.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -15,12 +14,12 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> _initialize() async {
     // First check if user should be forced to logout
-    bool shouldForceLogoutUser = await shouldForceLogout();
-    if (shouldForceLogoutUser) {
-      await clearToken();
-      emit(LoggedOutState());
-      return;
-    }
+    // bool shouldForceLogoutUser = await shouldForceLogout();
+    // if (shouldForceLogoutUser) {
+    //   // await clearToken();
+    //   emit(LoggedOutState());
+    //   return;
+    // }
     
     var token = await getTokenLocally();
     if (token == null || token.isEmpty) {
@@ -31,7 +30,7 @@ class AuthCubit extends Cubit<AuthState> {
       _dio.post(Endpoints.clientInformationMobile).then((value) async {
         if (value.data["detail"] == "Not authenticated" ||value.data["detail"] == "Expired token."||value.data["detail"] ==  "Invalid token.") {
           // Clear invalid token and emit logged out state
-          await clearToken();
+          // await clearToken();
           emit(LoggedOutState());
         } else {
           var token = await getTokenLocally();
@@ -79,14 +78,15 @@ class AuthCubit extends Cubit<AuthState> {
 
   logOut() async {
     // Clear all stored data including tokens, user info, and credentials
-    await clearToken();
+    // await clearToken();
+    await UpdateToken("");
     emit(LoggedOutState());
   }
 
   // Method to clear all data and reset everything
-  clearAllData() async {
-    // Import the comprehensive logout function
-    await clearAllDataAndReset();
-    emit(LoggedOutState());
-  }
+  // clearAllData() async {
+  //   // Import the comprehensive logout function
+  //   // await clearAllDataAndReset();
+  //   emit(LoggedOutState());
+  // }
 }

@@ -306,7 +306,7 @@ class _Mainscreenv2State extends State<Mainscreenv2> {
                                           // Clear all tokens and data, reset everything
                                           await BlocProvider.of<AuthCubit>(
                                                   context)
-                                              .clearAllData();
+                                              .logOut();
                                           // Navigate to login page and clear the navigation stack
                                           Navigator.pushAndRemoveUntil(
                                             context,

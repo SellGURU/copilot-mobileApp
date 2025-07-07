@@ -13,6 +13,7 @@ import 'package:copilet/screens/mainScreenV2/userinfoCubit/cubit.dart';
 import 'package:copilet/screens/welcomScreen/welcomScreen.dart';
 import 'package:copilet/utility/deviceName.dart';
 import 'package:copilet/widgets/SurveysCard/googleForm/cubit.dart';
+import 'package:copilet/widgets/restart/RestartWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -32,7 +33,7 @@ void main() async {
   /// Ensures binding is initialized for widgets before running the app.
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(MyApp());
+  runApp(const RestartWidget(child: MyApp()));
 }
 
 /// The main widget of the application.
@@ -41,9 +42,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    PlatformType platform = getPlatformType();
 
+  
     return MultiBlocProvider(
       providers: [
         /// Provides state management for various features of the application.
@@ -74,6 +74,8 @@ class MyApp extends StatelessWidget {
         routes: routes,
         home: BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
+            var size = MediaQuery.of(context).size;
+            PlatformType platform = getPlatformType();            
             if (state is LoggedInState) {
               return Container(
                   alignment: Alignment.center,

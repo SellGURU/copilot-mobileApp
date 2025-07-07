@@ -1,5 +1,6 @@
 import 'package:copilet/components/text_style.dart';
 import 'package:copilet/screens/Wearable%20Device/WearableDevice.dart';
+import 'package:copilet/widgets/restart/RestartWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -100,13 +101,9 @@ class _SettingPageState extends State<SettingPage> {
                   return GestureDetector(
                     onTap: () async {
                       // Clear all tokens and data, reset everything
-                      await BlocProvider.of<AuthCubit>(context).clearAllData();
+                      await BlocProvider.of<AuthCubit>(context).logOut();
                       // Navigate to login page and clear the navigation stack
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginPage()),
-                        (route) => false, // This removes all previous routes from the stack
-                      );
+                      RestartWidget.restartApp(context);
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
