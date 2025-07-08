@@ -9,6 +9,7 @@ class AppColors {
   static const Color bgScreen = Color.fromARGB(255, 254, 254, 254);
   static const Color text = Color.fromARGB(255, 48, 68, 91);
   static const Color primary = Color.fromARGB(255, 48, 68, 91);
+  static const Color secandary = Color.fromARGB(255, 136, 136, 136);
   static const Color textLite = Color.fromARGB(255,123, 147, 175);
   static const Color TextTriarty = Color.fromARGB(255,176, 176, 176);
   static const Color gray100 = Color.fromARGB(255,243, 244, 246);
