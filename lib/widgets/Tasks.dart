@@ -4,6 +4,7 @@ import 'package:copilet/components/text_style.dart';
 import 'package:copilet/constants/endPoints.dart';
 import 'package:copilet/res/colors.dart';
 import 'package:copilet/utility/token/getTokenLocaly.dart';
+import 'package:copilet/widgets/EmptyBox.dart';
 import 'package:copilet/widgets/Tasks/ActivityTaskWrapper.dart';
 import 'package:copilet/widgets/Tasks/TaskWrapper.dart';
 import 'package:dio/dio.dart';
@@ -127,15 +128,21 @@ class _TasksState extends State<Tasks> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const SizedBox(height: 20,),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(widget.title,style: AppTextStyles.title1,),
-            Text(resolveCompletedTasksLength().toString()+"/"+resolveTasksLength().toString()+" Completed",style: AppTextStyles.hintSmale,),
-          ],
+        Container(
+          child:tasks.isNotEmpty ? Column(children: [
+            const SizedBox(height: 20,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(widget.title,style: AppTextStyles.title1,),
+                Text(resolveCompletedTasksLength().toString()+"/"+resolveTasksLength().toString()+" Completed",style: AppTextStyles.hintSmale,),
+              ],
+            ),
+          ],):const SizedBox(),
         ),
         Container(
+          child: tasks.isNotEmpty ?
+            Container(
           padding: EdgeInsets.all(12),
           width: double.infinity,
           margin: EdgeInsets.only(top:8), // Adds top margin
@@ -162,7 +169,12 @@ class _TasksState extends State<Tasks> {
                 padding: const EdgeInsets.only(bottom: 10), // Adds gap of 10 pixels
                 child: TaskWrapper(typeName: taskTypes[5],tasks: tasks.where((task) => task['type'] == taskTypes[5]).toList(),),
               ),
-        )
+        )          
+          :
+           EmptyBox(iconPath:widget.title == 'Daily Tasks'?"assets/calendar-2.svg":"assets/favrit.svg" ,text:widget.title == 'Daily Tasks'? "No tasks for today yet":"No flexible tasks assigned",title:widget.title ,)
+          ,
+        ),
+
       ],
     );
   }

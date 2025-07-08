@@ -6,6 +6,7 @@ import 'package:copilet/screens/mainScreenV2/downloadWeaklyReportState/cubit.dar
 import 'package:copilet/screens/mainScreenV2/downloadWeaklyReportState/state.dart';
 import 'package:copilet/screens/mainScreenV2/userinfoCubit/cubit.dart';
 import 'package:copilet/screens/mainScreenV2/userinfoCubit/state.dart';
+import 'package:copilet/widgets/EmptyBox.dart';
 import 'package:copilet/widgets/SurveysCard/SurveysCard.dart';
 import 'package:copilet/widgets/SurveysCard/googleForm/cubit.dart';
 import 'package:copilet/widgets/SurveysCard/googleForm/state.dart';
@@ -652,17 +653,7 @@ class _Overview2State extends State<Overview2> {
                 Longevity(),
                 Tasks(title: "Daily Tasks",),
                 Tasks(title: "Flexible Tasks",),
-                const SizedBox(
-                  height: 20,
-                ),
-                Container(
-                  padding: const EdgeInsets.only(top: 20),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    "Biomarkers",
-                    style: AppTextStyles.title1,
-                  ),
-                ),
+
                 BlocBuilder<BiomarkerCubit, BiomarkerState>(
                   builder: (context, state) {
                     if (state is LoadingBiomarkerState) {
@@ -674,52 +665,70 @@ class _Overview2State extends State<Overview2> {
                     if (state is SuccessBiomarkerState) {
                       var biomarkerData = state.getBiomarkerData();
                       print("biomarkerData: ${processBiomarkers(biomarkerData['data'])}");
-                        return SizedBox(
-                          height: 280,
-                          child: ListView.separated(
-                            itemCount: biomarkerData["data"].length,
+                      if(biomarkerData["data"].length>0){
+                        return Column(
+                          children: [
+                                            const SizedBox(
+                  height: 20,
+                ),
+                  Container(
+                    padding: const EdgeInsets.only(top: 20),
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      "Biomarkers",
+                      style: AppTextStyles.title1,
+                    ),
+                  ),
+                    SizedBox(
+                        height: 280,
+                        child: ListView.separated(
+                          itemCount: biomarkerData["data"].length,
+                          
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: false,
+                          physics: const BouncingScrollPhysics(),
+                          padding: const EdgeInsets.only(
+                              top: 20, bottom: 20, left: 8, right: 10),
+                          itemBuilder: (BuildContext context, int index) {
+                            var biomarker = biomarkerData["data"][index];
+                            // Ensure all values are properly typed
+                            String name = biomarker["name"]?.toString() ?? "Unknown Biomarker";
+                            String avg = biomarker["values"][0]?.toString() ?? "0";
+                            String current = biomarker["values"][0]?.toString() ?? "0";
+                            String unit = biomarker["unit"]?.toString() ?? "";
+                            String icon = biomarker["icon"]?.toString() ?? "assets/Hrate.svg";
+                            String status = biomarker["status"][0]?.toString() ?? "Unknown";
                             
-                            scrollDirection: Axis.horizontal,
-                            shrinkWrap: false,
-                            physics: const BouncingScrollPhysics(),
-                            padding: const EdgeInsets.only(
-                                top: 20, bottom: 20, left: 8, right: 10),
-                            itemBuilder: (BuildContext context, int index) {
-                              var biomarker = biomarkerData["data"][index];
-                              // Ensure all values are properly typed
-                              String name = biomarker["name"]?.toString() ?? "Unknown Biomarker";
-                              String avg = biomarker["values"][0]?.toString() ?? "0";
-                              String current = biomarker["values"][0]?.toString() ?? "0";
-                              String unit = biomarker["unit"]?.toString() ?? "";
-                              String icon = biomarker["icon"]?.toString() ?? "assets/Hrate.svg";
-                              String status = biomarker["status"][0]?.toString() ?? "Unknown";
-                              
-                              // Safely convert values to List<num>
-                              List<double> values = (biomarker["values"] as Iterable)
-                                  .map((e) => double.tryParse(e.toString()) ?? 0.0)
-                                  .toList();
+                            // Safely convert values to List<num>
+                            List<double> values = (biomarker["values"] as Iterable)
+                                .map((e) => double.tryParse(e.toString()) ?? 0.0)
+                                .toList();
 
-                              return ItemCard(
-                                title: name,
-                                average: avg,
-                                icon: SvgPicture.asset(
-                                  icon,
-                                  width: 40,
-                                  height: 40,
-                                ),
-                                status: status,
-                                current: current,
-                                scale: unit,
-                                valuesData: values,
-                              );
-                            },
-                            separatorBuilder: (BuildContext context, int index) {
-                              return const SizedBox(
-                                width: 10,
-                              );
-                            },
-                          ),
-                        );
+                            return ItemCard(
+                              title: name,
+                              average: avg,
+                              icon: SvgPicture.asset(
+                                icon,
+                                width: 40,
+                                height: 40,
+                              ),
+                              status: status,
+                              current: current,
+                              scale: unit,
+                              valuesData: values,
+                            );
+                          },
+                          separatorBuilder: (BuildContext context, int index) {
+                            return const SizedBox(
+                              width: 10,
+                            );
+                          },
+                        ),
+                      )                          ],
+                        ); 
+                      }else {
+                        return const EmptyBox(text: 'No Biomarker Data Yet', iconPath: 'assets/', title: "Biomarkers");
+                      }
                     }
                     
                     // if (state is ErrorBiomarkerState) {
@@ -728,7 +737,7 @@ class _Overview2State extends State<Overview2> {
                     //   );
                     // }
                     
-                    return const SizedBox();
+                    return const EmptyBox(text: 'No Biomarker Data Yet', iconPath: 'assets/glass.svg', title: "Biomarkers");
                   },
                 ),
                
