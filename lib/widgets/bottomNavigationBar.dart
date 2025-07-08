@@ -62,11 +62,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                 print("takeItem $itemSelectName");
               },
               direction: PopoverDirection.bottom,
-              // width: platform == PlatformType.web
-              //     ? (size.width > 440)
-              //         ? size.width
-              //         : 600
-              //     : null,
+              width:600,
               height: 140,
               arrowHeight: 0,
               shadow: [BoxShadow(color: Colors.transparent)],

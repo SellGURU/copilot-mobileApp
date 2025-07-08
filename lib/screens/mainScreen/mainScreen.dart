@@ -57,14 +57,16 @@ class _MainscreenState extends State<Mainscreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: _onWillPop,
-      child: Scaffold(
-          backgroundColor: AppColors.bgScreen,
-          body: ColorfulSafeArea(
+      child:Scaffold(
+      backgroundColor: AppColors.bgScreen,
+      body: ColorfulSafeArea(
+        child: Center(
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: 420,
+            ),
             child: BlocBuilder<PageIndexBloc, PageIndexState>(
               builder: (context, state) {
-                // setState(() {
-                //   pageIndex = state.pageIndex;
-                // });
                 return IndexedStack(
                   index: state.pageIndex,
                   children: [
@@ -94,16 +96,20 @@ class _MainscreenState extends State<Mainscreen> {
                         builder: (context) => Chatscreen(),
                       ),
                     ),
-            
                     CameraScreen(
-                      isCameraStart: false, Parentcontext: context,
+                      isCameraStart: false,
+                      Parentcontext: context,
                     ),
                   ],
                 );
               },
             ),
           ),
-          bottomNavigationBar: BottomNavigationBarCustom()),
+        ),
+      ),
+      bottomNavigationBar: BottomNavigationBarCustom(),
+    )
+
     );
   }
 }

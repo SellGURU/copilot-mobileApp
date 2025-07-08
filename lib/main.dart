@@ -27,11 +27,59 @@ import 'package:copilet/utility/changeScreanBloc/PageIndex_Bloc.dart';
 import 'package:copilet/utility/switchValueBloc/PageIndex_Bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter_web_plugins/flutter_web_plugins.dart';
+
+// Custom Scroll Behavior
+class CustomScrollBehavior extends ScrollBehavior {
+  @override
+  Widget buildOverscrollIndicator(
+    BuildContext context,
+    Widget child,
+    ScrollableDetails details,
+  ) {
+    // For Android - use GlowingOverscrollIndicator
+    if (Theme.of(context).platform == TargetPlatform.android) {
+      return GlowingOverscrollIndicator(
+        axisDirection: details.direction,
+        color: Theme.of(context).colorScheme.secondary,
+        child: child,
+      );
+    }
+    // For iOS - use default behavior
+    return super.buildOverscrollIndicator(context, child, details);
+  }
+
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    PointerDeviceKind.trackpad,
+  };
+
+  @override
+  ScrollPhysics getScrollPhysics(BuildContext context) {
+    // Custom physics for different platforms
+    switch (Theme.of(context).platform) {
+      case TargetPlatform.iOS:
+        return const BouncingScrollPhysics();
+      case TargetPlatform.android:
+        return const ClampingScrollPhysics();
+      default:
+        return const BouncingScrollPhysics();
+    }
+  }
+}
 
 
 void main() async {
   /// Ensures binding is initialized for widgets before running the app.
   WidgetsFlutterBinding.ensureInitialized();
+  if (kIsWeb) {
+    setUrlStrategy(PathUrlStrategy());
+  }  
 
   runApp(const RestartWidget(child: MyApp()));
 }
@@ -71,40 +119,31 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         title: 'App Holisticare',
         debugShowCheckedModeBanner: false,
+        scrollBehavior: CustomScrollBehavior(),
         routes: routes,
         home: BlocBuilder<AuthCubit, AuthState>(
           builder: (context, state) {
-            var size = MediaQuery.of(context).size;
-            PlatformType platform = getPlatformType();            
             if (state is LoggedInState) {
-              return Container(
-                  alignment: Alignment.center,
-                  width: size.width,
-                  child: Container(
-                    // width: platform == PlatformType.web ? (size.width > 440 ? 440 : size.width) : null,
-                    // margin: platform == PlatformType.web ? EdgeInsets.only(top: size.height * .02) : null,
-                    child: const Mainscreen(),
-                  ));
-            }
-            if (state is LoggedOutState) {
-              return const Welcomscreen();
-            } else {
-              /// get the all data before seen with user
-              BlocProvider.of<ClientInformationMobileCubit>(context).getPdf();
-              BlocProvider.of<GoogleFormCubit>(context).getBiomarker();
-              BlocProvider.of<HealthScoreCubit>(context).getBiomarker();
-              BlocProvider.of<DownloadReportPdfCubit>(context).getPdf();
-              return const Scaffold(
-                backgroundColor: Colors.white,
-                body: Center(
-                  child: SpinKitThreeBounce(
-                    color: Colors.purple,
-                  ),
+              return Center(
+                child: Container(
+                  width: kIsWeb ? 420 : double.infinity,
+                  child: const Mainscreen(),
                 ),
               );
             }
+
+            if (state is LoggedOutState) {
+              return const Welcomscreen();
+            }
+
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            );
           },
-        ),
+        )
+
       ),
     );
   }
