@@ -1,3 +1,4 @@
+import 'package:copilet/widgets/EmptyBox.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -22,6 +23,7 @@ class _LongevityState extends State<Longevity> {
   double supplementScore = 0;
   double lifestyle =0;
   bool isLoading = true;
+  bool isEmpty = false;
   String? error;
   final Dio _dio = Dio();
 
@@ -48,17 +50,20 @@ class _LongevityState extends State<Longevity> {
           supplementScore = data['supplement'].toDouble() ?? 0;
           lifestyle = data['lifestyle'].toDouble() ?? 0;
           isLoading = false;
+          isEmpty= data['lifestyle'].toDouble() ==0 && data['supplement'].toDouble() == 0 &&data['lifestyle'].toDouble() ==0 && data['diet'].toDouble() == 0;
         });
       } else {
         setState(() {
           error = 'Failed to load scores';
           isLoading = false;
+          isEmpty = true;
         });
       }
     } catch (e) {
       setState(() {
         error = 'Error fetching scores: $e';
         isLoading = false;
+         isEmpty = true;
       });
     }
   }
@@ -71,6 +76,10 @@ class _LongevityState extends State<Longevity> {
 
     if (error != null) {
       return Center(child: Text(error!));
+    }
+
+    if(isEmpty) {
+      return const EmptyBox(iconPath: "assets/favorite-chart.svg",text: "Your Health Scores Await",title: "Longevity Theme",); 
     }
 
     return Column(

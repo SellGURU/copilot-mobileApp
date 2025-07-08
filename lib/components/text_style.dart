@@ -183,4 +183,8 @@ class AppTextStyles {
   static TextStyle hintSmaleGray = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 10, color: AppColors.textLiteGray, fontWeight: FontWeight.w400));
+
+    static TextStyle headline6 = GoogleFonts.roboto(
+      textStyle: TextStyle(
+          fontSize: 12, color: AppColors.primary, fontWeight: FontWeight.w500));
 }
