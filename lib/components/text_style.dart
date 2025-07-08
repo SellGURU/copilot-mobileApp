@@ -187,4 +187,7 @@ class AppTextStyles {
     static TextStyle headline6 = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 12, color: AppColors.primary, fontWeight: FontWeight.w500));
+    static TextStyle body2  = GoogleFonts.roboto(
+      textStyle: TextStyle(
+          fontSize: 12, color: AppColors.secandary, fontWeight: FontWeight.w400));
 }

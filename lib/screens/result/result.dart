@@ -366,7 +366,37 @@ class _ResultScreenState extends State<ResultScreen> {
                   const SizedBox(
                     height: 20,
                   ),
-
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(.1),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: const Offset(3, 0),
+                        ),
+                      ]),
+                    height: size.height -150,
+                    child: Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            "assets/direct.svg",
+                            width: 48,
+                            height: 48,
+                            fit: BoxFit.cover,
+                          ),
+                          SizedBox(height: 8,),
+                          Text("No Results Available Yet",style: AppTextStyles.headline6,),
+                          SizedBox(height: 8,),
+                          Text("Once your test results are uploaded, you’ll see detailed results here",style: AppTextStyles.body2,)
+                        ],
+                      ),
+                    ),
+                    )
                 ],
               ),
             );
