@@ -1,4 +1,5 @@
 import 'package:copilet/components/text_style.dart';
+import 'package:copilet/screens/login/login.dart';
 import 'package:copilet/screens/register/register.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -39,10 +40,10 @@ class _WelcomscreenState extends State<Welcomscreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        // Image.asset("assets/logoIcon.png"),
-                        Text("Clinic Logo",
-                            style: AppTextStyles.title4xlLiteWeight),
-                        Text("Welcome to Our Clinic!",
+                        Image.asset("assets/GermanClinic.png"),
+                        // Text("Clinic Logo",
+                        //     style: AppTextStyles.title4xlLiteWeight),
+                        Text("Welcome to German Clinic!",
                             style: AppTextStyles.title3xlLiteWeight),
                         const SizedBox(
                           height: 40,
@@ -62,7 +63,7 @@ class _WelcomscreenState extends State<Welcomscreen> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const RegisterPage()),
+                                  builder: (context) => const LoginPage()),
                             );
                           },
                           child: Container(
