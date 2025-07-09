@@ -255,43 +255,43 @@ class _ListItemsState extends State<ListItems> {
             width: 15,
           ),
           // itemSelect=2;
-          GestureDetector(
-            onTap: () {
-              // widget.takeItem("screenShot");
+          // GestureDetector(
+          //   onTap: () {
+          //     // widget.takeItem("screenShot");
               
-            },
-            child: Container(
-              padding: const EdgeInsets.only(
-                  left: 3.5, right: 3.5, top: 8, bottom: 13),
-              alignment: Alignment.center,
-              width: 90,
-              height: 75,
-              decoration: const BoxDecoration(
-                  color: AppColors.mainBg,
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    "assets/Screenshot.svg",
-                    width: 24,
-                    height: 24,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    'Screenshot',
-                    style: AppTextStyles.hint,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(
-            width: 15,
-          ),
+          //   },
+          //   child: Container(
+          //     padding: const EdgeInsets.only(
+          //         left: 3.5, right: 3.5, top: 8, bottom: 13),
+          //     alignment: Alignment.center,
+          //     width: 90,
+          //     height: 75,
+          //     decoration: const BoxDecoration(
+          //         color: AppColors.mainBg,
+          //         borderRadius: BorderRadius.all(Radius.circular(5))),
+          //     child: Column(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       crossAxisAlignment: CrossAxisAlignment.center,
+          //       children: [
+          //         SvgPicture.asset(
+          //           "assets/Screenshot.svg",
+          //           width: 24,
+          //           height: 24,
+          //         ),
+          //         const SizedBox(
+          //           height: 5,
+          //         ),
+          //         Text(
+          //           'Screenshot',
+          //           style: AppTextStyles.hint,
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // const SizedBox(
+          //   width: 15,
+          // ),
           // itemSelect=3;
           GestureDetector(
             onTap: () {

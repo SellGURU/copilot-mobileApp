@@ -92,28 +92,29 @@ class _ProgressScreenState extends State<ProgressScreen>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(
-            height: 25,
+            height: 16,
           ),
           // Header Section
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+          Padding(
+            // margin: EdgeInsets.only(top: size.height * .02),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   "Progress",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: AppTextStyles.title1,
                 ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.notifications_none_outlined,
-                      color: Colors.black,
-                    ),
-                    SizedBox(width: 5),
-                    Icon(Icons.more_vert),
-                  ],
-                ),
+                // Row(
+                //   children: [
+                //     Icon(
+                //       Icons.notifications_none_outlined,
+                //       color: Colors.black,
+                //     ),
+                //     SizedBox(width: 5),
+                //     Icon(Icons.more_vert),
+                //   ],
+                // ),
               ],
             ),
           ),
@@ -151,12 +152,12 @@ class _ProgressScreenState extends State<ProgressScreen>
                         : SizedBox(
                             width: 0,
                           ),
-                    const SizedBox(height: 16),
+                    // const SizedBox(height: 16),
                     // Daily Goals Section
-                    GoalCompletionSection(),
-                    const SizedBox(height: 16),
+                    // GoalCompletionSection(),
+                    // const SizedBox(height: 16),
                     // Challenges Section
-                    ChallengesSection(),
+                    // ChallengesSection(),
                     const SizedBox(height: 16),
                     // Tasks Section
                     // Text(
@@ -265,39 +266,39 @@ class PlanProgressSection extends StatelessWidget {
             children: [
               BarChartWidget(
                   day: 'Sun',
-                  mainPlan: 0.8,
+                  mainPlan: 0,
                   color: AppColors.greenLite,
-                  alternativePlan: 0.4),
+                  alternativePlan: 0),
               BarChartWidget(
                   day: 'Mon',
-                  mainPlan: 0.7,
+                  mainPlan: 0,
                   color: AppColors.greenLite,
-                  alternativePlan: 0.3),
+                  alternativePlan: 0),
               BarChartWidget(
                   day: 'Tue',
-                  mainPlan: 0.9,
+                  mainPlan: 0,
                   color: AppColors.greenLite,
-                  alternativePlan: 0.5),
+                  alternativePlan: 0),
               BarChartWidget(
                   day: 'Wed',
-                  mainPlan: 0.7,
+                  mainPlan: 0,
                   color: AppColors.greenLite,
-                  alternativePlan: 0.2),
+                  alternativePlan: 0),
               BarChartWidget(
                   day: 'Thu',
-                  mainPlan: 0.9,
+                  mainPlan: 0,
                   color: AppColors.greenLite,
-                  alternativePlan: 0.6),
+                  alternativePlan: 0),
               BarChartWidget(
                   day: 'Fri',
-                  mainPlan: 0.5,
+                  mainPlan: 0,
                   color: AppColors.greenLite,
-                  alternativePlan: 0.1),
+                  alternativePlan: 0),
               BarChartWidget(
                   day: 'Sat',
-                  mainPlan: 0.6,
+                  mainPlan: 0,
                   color: AppColors.greenLite,
-                  alternativePlan: 0.7),
+                  alternativePlan: 0),
             
             ],
           ),

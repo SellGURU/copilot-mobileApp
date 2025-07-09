@@ -166,20 +166,20 @@ class _ChatscreenState extends State<Chatscreen> {
                           },
                         ),
                       ),
-                      Row(
-                        children: [
-                          const Icon(
-                            Icons.notifications_none_outlined,
-                            color: AppColors.purpleDark,
-                          ),
-                          const SizedBox(width: 10),
-                          SvgPicture.asset(
-                            "assets/notificationIcon.svg",
-                            width: 25,
-                            height: 25,
-                          ),
-                        ],
-                      )
+                      // Row(
+                      //   children: [
+                      //     const Icon(
+                      //       Icons.notifications_none_outlined,
+                      //       color: AppColors.purpleDark,
+                      //     ),
+                      //     const SizedBox(width: 10),
+                      //     SvgPicture.asset(
+                      //       "assets/notificationIcon.svg",
+                      //       width: 25,
+                      //       height: 25,
+                      //     ),
+                      //   ],
+                      // )
                     ],
                   ),
                   const SizedBox(height: 20),
