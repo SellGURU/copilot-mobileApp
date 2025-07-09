@@ -54,7 +54,22 @@ class Overview extends StatelessWidget {
                     ),
                     NotificationWidget(
                       notificationCount: 2,
-                      notifications: NotificationData.getSampleNotifications(),
+                      notifications: [
+                        NotificationItem(
+                          title: "Welcome!",
+                          message: "Welcome to your health dashboard. Start tracking your biomarkers.",
+                          timestamp: DateTime.now().subtract(const Duration(minutes: 15)),
+                          type: NotificationType.info,
+                          isRead: false,
+                        ),
+                        NotificationItem(
+                          title: "Daily Check-in",
+                          message: "Time for your daily health check-in. Log your water and exercise.",
+                          timestamp: DateTime.now().subtract(const Duration(hours: 1)),
+                          type: NotificationType.success,
+                          isRead: false,
+                        ),
+                      ],
                       onNotificationTap: () {
                         // Handle notification tap
                         print('Notification tapped from home');

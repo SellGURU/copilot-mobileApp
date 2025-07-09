@@ -10,8 +10,8 @@ class NotificationWidget extends StatefulWidget {
 
   const NotificationWidget({
     Key? key,
-    this.notificationCount = 0,
-    this.notifications = const [],
+    required this.notificationCount,
+    required this.notifications , 
     this.onNotificationTap,
   }) : super(key: key);
 
@@ -41,6 +41,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
               "assets/notification.svg",
               width: 25,
               height: 25,
+              color: AppColors.mainSecandaryColor,
             ),
             if (widget.notificationCount > 0)
               Positioned(
@@ -268,120 +269,80 @@ class NotificationItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(16),
-        decoration: BoxDecoration(
-          color: notification.isRead ? Colors.white : AppColors.gray50,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: notification.isRead ? AppColors.SilverGray : AppColors.purpleLite,
-            width: 1,
-          ),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Icon
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: _getIconBackgroundColor(notification.type),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Icon(
-                _getIcon(notification.type),
-                color: _getIconColor(notification.type),
-                size: 20,
-              ),
-            ),
-            const SizedBox(width: 12),
-            // Content
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          notification.title,
-                          style: AppTextStyles.titleMedium.copyWith(
-                            fontWeight: notification.isRead ? FontWeight.w400 : FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      if (!notification.isRead)
-                        Container(
-                          width: 8,
-                          height: 8,
-                          decoration: const BoxDecoration(
-                            color: AppColors.purpleDark,
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                    ],
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    notification.message,
-                    style: AppTextStyles.hint,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    _formatTime(notification.timestamp),
-                    style: AppTextStyles.hintSmale,
-                  ),
-                ],
-              ),
-            ),
-          ],
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: notification.isRead ? Colors.white : AppColors.bgScreen,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: notification.isRead ? AppColors.SilverGray : AppColors.gray100,
+          width: 1,
         ),
       ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Title and unread indicator
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  notification.title,
+                  style: AppTextStyles.titleMedium.copyWith(
+                    fontWeight: notification.isRead ? FontWeight.w400 : FontWeight.w600,
+                  ),
+                ),
+              ),
+              if (!notification.isRead)
+                Container(
+                  width: 8,
+                  height: 8,
+                  decoration: const BoxDecoration(
+                    color: AppColors.gray,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          // Message
+          Text(
+            notification.message,
+            style: AppTextStyles.hint,
+          ),
+          const SizedBox(height: 8),
+          // Time and Proceed button row
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                _formatTime(notification.timestamp),
+                style: AppTextStyles.hintSmale,
+              ),
+              // Proceed button with text and arrow (no background/border)
+              GestureDetector(
+                onTap: onTap,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "Proceed",
+                      style: AppTextStyles.hintPurple.copyWith(fontSize: 12),
+                    ),
+                    const SizedBox(width: 4),
+                    const Icon(
+                      Icons.arrow_forward_ios,
+                      color: AppColors.mainSecandaryColor,
+                      size: 12,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
-  }
-
-  Color _getIconBackgroundColor(NotificationType type) {
-    switch (type) {
-      case NotificationType.success:
-        return AppColors.greenLite;
-      case NotificationType.warning:
-        return AppColors.yellowLite;
-      case NotificationType.error:
-        return AppColors.redLite;
-      case NotificationType.info:
-        return AppColors.purpleLite;
-    }
-  }
-
-  Color _getIconColor(NotificationType type) {
-    switch (type) {
-      case NotificationType.success:
-        return AppColors.greenBega;
-      case NotificationType.warning:
-        return AppColors.yellowBegaDarker;
-      case NotificationType.error:
-        return AppColors.red;
-      case NotificationType.info:
-        return AppColors.purpleDark;
-    }
-  }
-
-  IconData _getIcon(NotificationType type) {
-    switch (type) {
-      case NotificationType.success:
-        return Icons.check_circle;
-      case NotificationType.warning:
-        return Icons.warning;
-      case NotificationType.error:
-        return Icons.error;
-      case NotificationType.info:
-        return Icons.info;
-    }
   }
 
   String _formatTime(DateTime timestamp) {
@@ -428,7 +389,7 @@ enum NotificationType {
 // Sample notification data for testing
 class NotificationData {
   static List<NotificationItem> getSampleNotifications() {
-    return [
+    return <NotificationItem>[
       NotificationItem(
         title: "Welcome!",
         message: "Welcome to your health dashboard. Start tracking your biomarkers.",

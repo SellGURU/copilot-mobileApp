@@ -1,5 +1,6 @@
 import 'package:copilet/components/text_style.dart';
 import 'package:copilet/screens/Wearable%20Device/WearableDevice.dart';
+import 'package:copilet/widgets/notification_widget.dart';
 import 'package:copilet/widgets/restart/RestartWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,6 +67,25 @@ class _SettingPageState extends State<SettingPage> {
                     "Setting",
                     style: AppTextStyles.title1,
                   ),
+                  NotificationWidget(
+                    notificationCount: 2,
+                    notifications: [
+                      NotificationItem(
+                        title: "⚠ Your HRV Trend is Lower",
+                        message: "Based on recent Heart Rate Variability, your Resilience Protocol needs a slight adjustment for optimal recovery.",
+                        timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                        type: NotificationType.info,
+                        isRead: false,
+                      ),
+                      NotificationItem(
+                        title: "🌙 Sleep Dip Detected!",
+                        message: "AI suggests a brief Mindfulness session today and a slight adjustment to evening supplements for enhanced recovery.",
+                        timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                        type: NotificationType.info,
+                        isRead: false,
+                      ),                    
+                    ],      
+                  ),                  
                   // SvgPicture.asset("assets/notification.svg",width: 24,height: 24,)
                 ],
               ),
@@ -143,7 +163,7 @@ class _SettingPageState extends State<SettingPage> {
                           width: 30,
                           height: 16,
                           colorFilter: ColorFilter.mode(
-                              AppColors.purpleDark, BlendMode.srcIn),
+                              AppColors.mainSecandaryColor, BlendMode.srcIn),
                         ),
                         const SizedBox(
                           width: 5,
@@ -192,7 +212,7 @@ class WearableDevicesTile extends StatelessWidget {
           // Left Icon
           Row(
             children: [
-              SvgPicture.asset("assets/setting/${srcImage}"),
+              SvgPicture.asset("assets/setting/${srcImage}",color: AppColors.mainSecandaryColor,),
               const SizedBox(width: 12),
               // Title
               Text(
@@ -205,7 +225,7 @@ class WearableDevicesTile extends StatelessWidget {
           const Icon(
             Icons.arrow_forward_ios,
             size: 20,
-            color: AppColors.purpleDark,
+            color: AppColors.mainSecandaryColor,
           ),
         ],
       ),

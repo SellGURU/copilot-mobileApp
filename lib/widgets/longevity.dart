@@ -71,7 +71,7 @@ class _LongevityState extends State<Longevity> {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator(color: AppColors.mainSecandaryColor));
     }
 
     if (error != null) {

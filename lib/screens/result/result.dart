@@ -56,8 +56,23 @@ class _ResultScreenState extends State<ResultScreen> {
                         style: AppTextStyles.title1,
                       ),
                       NotificationWidget(
-                        notificationCount: 3, // You can make this dynamic based on your data
-                        notifications: NotificationData.getSampleNotifications(),
+                        notificationCount: 2,
+                        notifications: [
+                          NotificationItem(
+                            title: "⚠ Your HRV Trend is Lower",
+                            message: "Based on recent Heart Rate Variability, your Resilience Protocol needs a slight adjustment for optimal recovery.",
+                            timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                            type: NotificationType.info,
+                            isRead: false,
+                          ),
+                          NotificationItem(
+                            title: "🌙 Sleep Dip Detected!",
+                            message: "AI suggests a brief Mindfulness session today and a slight adjustment to evening supplements for enhanced recovery.",
+                            timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                            type: NotificationType.info,
+                            isRead: false,
+                          ),                    
+                        ],
                         onNotificationTap: () {
                           // Handle notification tap
                           print('Notification tapped');
@@ -355,8 +370,23 @@ class _ResultScreenState extends State<ResultScreen> {
                         style: AppTextStyles.title1,
                       ),
                       NotificationWidget(
-                        notificationCount: 0,
-                        notifications: [],
+                        notificationCount: 2,
+                        notifications: [
+                          NotificationItem(
+                            title: "⚠ Your HRV Trend is Lower",
+                            message: "Based on recent Heart Rate Variability, your Resilience Protocol needs a slight adjustment for optimal recovery.",
+                            timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                            type: NotificationType.info,
+                            isRead: false,
+                          ),
+                          NotificationItem(
+                            title: "🌙 Sleep Dip Detected!",
+                            message: "AI suggests a brief Mindfulness session today and a slight adjustment to evening supplements for enhanced recovery.",
+                            timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                            type: NotificationType.info,
+                            isRead: false,
+                          ),                    
+                        ],           
                         onNotificationTap: () {
                           // Handle notification tap
                           print('Notification tapped');

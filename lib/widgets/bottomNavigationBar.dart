@@ -95,7 +95,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                   width: 5,
                   height: 5,
                   colorFilter: pageIndex == 0
-                      ? ColorFilter.mode(AppColors.purpleDark, BlendMode.srcIn)
+                      ? ColorFilter.mode(AppColors.mainSecandaryColor, BlendMode.srcIn)
                       : ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
             ),
           ),
@@ -109,7 +109,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                   height: 5,
                   colorFilter: pageIndex == 1
                       ? const ColorFilter.mode(
-                          AppColors.purpleDark, BlendMode.srcIn)
+                          AppColors.mainSecandaryColor, BlendMode.srcIn)
                       : const ColorFilter.mode(
                           AppColors.textLite, BlendMode.srcIn)),
             ),
@@ -122,7 +122,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
               padding: EdgeInsets.all(1),
               height: (size.height),
               decoration: BoxDecoration(
-                  color: AppColors.greenBega,
+                  color: AppColors.mainPrimaryColor,
                   borderRadius: BorderRadius.circular(99),
                   boxShadow: [
                     BoxShadow(
@@ -144,7 +144,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                     alignment: Alignment.center,
                     colorFilter: pageIndex == 3
                         ? const ColorFilter.mode(
-                            AppColors.purpleDark, BlendMode.srcIn)
+                            AppColors.mainSecandaryColor, BlendMode.srcIn)
                         : const ColorFilter.mode(
                             AppColors.textLite, BlendMode.srcIn)),
               )),
@@ -158,7 +158,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                     height: 5,
                     colorFilter: pageIndex == 4
                         ? const ColorFilter.mode(
-                            AppColors.purpleDark, BlendMode.srcIn)
+                            AppColors.mainSecandaryColor, BlendMode.srcIn)
                         : const ColorFilter.mode(
                             AppColors.textLite, BlendMode.srcIn)),
               )),

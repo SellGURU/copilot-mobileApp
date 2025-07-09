@@ -16,6 +16,10 @@ class AppColors {
    static const Color gray50 = Color.fromARGB(255,243, 244, 246);
   static const Color grayDark = Color.fromRGBO(132, 138, 148, 1);
   // rgba(, 1)
+
+
+  static const Color mainPrimaryColor = Color.fromARGB(255, 108, 194, 74);
+  static const Color mainSecandaryColor = Color.fromARGB(255, 0, 95, 115);
   static const Color textLiteGray = Color.fromARGB(255,174, 193, 218);
   // static const Color purpleDark = Color.fromARGB(255, 147, 129, 255);
   static const Color purpleDark = Color.fromARGB(255, 38, 126, 149);
