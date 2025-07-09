@@ -150,61 +150,61 @@ class _CardresultscreenState extends State<Cardresultscreen> {
               const SizedBox(
                 height: 15,
               ),
-              Row(
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                        decoration: BoxDecoration(
-                            color: AppColors.purpleBadgeLite,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset("assets/normalheart.svg"),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              widget.badgeText,
-                              style: AppTextStyles.hint,
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 5),
-                        decoration: const BoxDecoration(
-                            color: AppColors.purpleBadgeLite,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
-                        child: Center(
-                            child: Row(
-                          children: [
-                            SvgPicture.asset("assets/flash.svg"),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              "Heart Health",
-                              style: AppTextStyles.hint,
-                            ),
-                          ],
-                        )),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                    ],
-                  )
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     Row(
+              //       children: [
+              //         Container(
+              //           padding:
+              //               EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+              //           decoration: BoxDecoration(
+              //               color: AppColors.purpleBadgeLite,
+              //               borderRadius:
+              //                   BorderRadius.all(Radius.circular(15))),
+              //           child: Row(
+              //             children: [
+              //               SvgPicture.asset("assets/normalheart.svg"),
+              //               const SizedBox(
+              //                 width: 5,
+              //               ),
+              //               Text(
+              //                 widget.badgeText,
+              //                 style: AppTextStyles.hint,
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //         const SizedBox(
+              //           width: 5,
+              //         ),
+              //         // Container(
+              //         //   padding: const EdgeInsets.symmetric(
+              //         //       horizontal: 10, vertical: 5),
+              //         //   decoration: const BoxDecoration(
+              //         //       color: AppColors.purpleBadgeLite,
+              //         //       borderRadius:
+              //         //           BorderRadius.all(Radius.circular(15))),
+              //         //   child: Center(
+              //         //       child: Row(
+              //         //     children: [
+              //         //       SvgPicture.asset("assets/flash.svg"),
+              //         //       const SizedBox(
+              //         //         width: 5,
+              //         //       ),
+              //         //       Text(
+              //         //         "Heart Health",
+              //         //         style: AppTextStyles.hint,
+              //         //       ),
+              //         //     ],
+              //         //   )),
+              //         // ),
+              //         const SizedBox(
+              //           height: 5,
+              //         ),
+              //       ],
+              //     )
+              //   ],
+              // ),
               const SizedBox(
                 height: 35,
               ),
