@@ -12,6 +12,7 @@ import '../../utility/switchValueBloc/PageIndex_Bloc.dart';
 import '../../utility/switchValueBloc/PageIndex_events.dart';
 import '../../utility/switchValueBloc/PageIndex_states.dart';
 import '../../widgets/cardResultscreen.dart';
+import '../../widgets/notification_widget.dart';
 import '../CholesterolScreen/CholesterolScreen.dart';
 import '../home/cubit/cubit.dart';
 import '../home/cubit/state.dart';
@@ -54,21 +55,13 @@ class _ResultScreenState extends State<ResultScreen> {
                         "Your Results",
                         style: AppTextStyles.title1,
                       ),
-                      Row(
-                        children: [
-                          // const Icon(
-                          //   Icons.notifications_none_outlined,
-                          //   color: AppColors.purpleDark,
-                          // ),
-                          // const SizedBox(
-                          //   width: 10,
-                          // ),
-                          SvgPicture.asset(
-                            "assets/notification.svg",
-                            width: 25,
-                            height: 25,
-                          ),
-                        ],
+                      NotificationWidget(
+                        notificationCount: 3, // You can make this dynamic based on your data
+                        notifications: NotificationData.getSampleNotifications(),
+                        onNotificationTap: () {
+                          // Handle notification tap
+                          print('Notification tapped');
+                        },
                       )
                     ],
                   ),
@@ -360,6 +353,14 @@ class _ResultScreenState extends State<ResultScreen> {
                       Text(
                         "Your Results",
                         style: AppTextStyles.title1,
+                      ),
+                      NotificationWidget(
+                        notificationCount: 0,
+                        notifications: [],
+                        onNotificationTap: () {
+                          // Handle notification tap
+                          print('Notification tapped');
+                        },
                       ),
                     ],
                   ),

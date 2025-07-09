@@ -7,6 +7,7 @@ import '../../widgets/Mood.dart';
 import '../../widgets/card.dart';
 import '../../widgets/gauges.dart';
 import '../../widgets/longevity.dart';
+import '../../widgets/notification_widget.dart';
 import '../../widgets/radioBtn.dart';
 
 class Overview extends StatelessWidget {
@@ -51,21 +52,13 @@ class Overview extends StatelessWidget {
                         ),
                       ],
                     ),
-                    Row(
-                      children: [
-                        SvgPicture.asset(
-                          "assets/notificationIcon.svg",
-                          width: 25,
-                          height: 25,
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        const Icon(
-                          Icons.notifications_none_outlined,
-                          color: AppColors.purpleDark,
-                        ),
-                      ],
+                    NotificationWidget(
+                      notificationCount: 2,
+                      notifications: NotificationData.getSampleNotifications(),
+                      onNotificationTap: () {
+                        // Handle notification tap
+                        print('Notification tapped from home');
+                      },
                     )
                   ],
                 ),
