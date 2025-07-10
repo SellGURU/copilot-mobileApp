@@ -99,19 +99,19 @@ class _SettingPageState extends State<SettingPage> {
               const SizedBox(
                 height: 20,
               ),
-              // GestureDetector(
-              //   onTap: () {
-              //     Navigator.of(context).push(MaterialPageRoute(
-              //         builder: (context) => WearableDevice()));
-              //   },
-              //   child: WearableDevicesTile(
-              //     srcImage: 'watch-status.svg',
-              //     textTitle: 'Wearable Devices',
-              //   ),
-              // ),
-              // const SizedBox(
-              //   height: 20,
-              // ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => WearableDevice()));
+                },
+                child: WearableDevicesTile(
+                  srcImage: 'watch-status.svg',
+                  textTitle: 'Wearable Devices',
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
               // WearableDevicesTile(
               //   srcImage: 'lock.svg',
               //   textTitle: 'Change Password',
