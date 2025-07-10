@@ -110,19 +110,19 @@ class _ProgressScreenState extends State<ProgressScreen>
                   notificationCount: 2,
                   notifications: [
                     NotificationItem(
-                      title: "⚠ Your HRV Trend is Lower",
-                      message: "Based on recent Heart Rate Variability, your Resilience Protocol needs a slight adjustment for optimal recovery.",
+                      title: "New Tasks, New You!",
+                      message: "Your latest health action plan is ready! Check out your new tasks in the Overview section and take the next step toward a longer, healthier life.",
                       timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
                       type: NotificationType.info,
                       isRead: false,
                     ),
                     NotificationItem(
-                      title: "🌙 Sleep Dip Detected!",
-                      message: "AI suggests a brief Mindfulness session today and a slight adjustment to evening supplements for enhanced recovery.",
+                      title: "Your Progress Awaits!",
+                      message: "Ready to level up your health? Complete your Health Questionnaire to help us build a more personalized and effective wellness plan just for you.",
                       timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
                       type: NotificationType.info,
                       isRead: false,
-                    ),                    
+                    ),     
                   ],
                 ),                
                 // Row(

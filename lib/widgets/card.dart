@@ -96,15 +96,16 @@ class _ItemCardState extends State<ItemCard> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
                   child: widget.icon,
                 ),
+                SizedBox(width: 8,),
                 Tooltip(
-                  message: widget.title.length > 10 ? widget.title : '',
+                  message: widget.title.length > 13 ? widget.title : '',
                   child: Text(
-                    widget.title.length > 10 ? '${widget.title.substring(0, 10)}...' : widget.title,
+                    widget.title.length > 13 ? '${widget.title.substring(0, 13)}...' : widget.title,
                     style: AppTextStyles.title1.copyWith(fontSize: 14),
                   ),
                 ),

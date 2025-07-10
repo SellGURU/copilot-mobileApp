@@ -77,6 +77,7 @@ class _CardresultscreenState extends State<Cardresultscreen> {
     return BlocBuilder<SwitchValueGraphBloc, SwitchValueState>(
       builder: (context, state) {
         return Container(
+          // margin: ,
           padding: EdgeInsets.symmetric(horizontal: 15, vertical: 25),
           decoration: BoxDecoration(
               border:
@@ -100,13 +101,21 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        widget.title,
-                        style: AppTextStyles.title1,
+                      Tooltip(
+                        message: widget.title,
+                        child: Text(
+                          widget.title,
+                          style: AppTextStyles.title1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
-                      Text(
-                        (widget.data as Map<String, dynamic>)['subcategory'] as String,
-                        style: AppTextStyles.hint,
+                      Tooltip(
+                        message: (widget.data as Map<String, dynamic>)['subcategory'] as String,
+                        child: Text(
+                          (widget.data as Map<String, dynamic>)['subcategory'] as String,
+                          style: AppTextStyles.hint,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ],
                   ),
@@ -122,9 +131,13 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(15))),
                         child: Center(
-                          child: Text(
-                            (widget.data as Map<String, dynamic>)['status'][0],
-                            style:AppTextStyles.hint.copyWith(color: Colors.white),
+                          child: Tooltip(
+                            message: (widget.data as Map<String, dynamic>)['status'][0],
+                            child: Text(
+                              (widget.data as Map<String, dynamic>)['status'][0],
+                              style:AppTextStyles.hint.copyWith(color: Colors.white),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
                       ),
