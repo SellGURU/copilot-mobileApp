@@ -199,34 +199,34 @@ class _ResultMainTabState extends State<ResultMainTab> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  toggleHistoryMod = "Latest";
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: toggleHistoryMod == "Latest" ? AppColors.yellowBegaDarker : Colors.grey.shade200,
-              ),
-              child: Text('Latest', style: toggleHistoryMod == "Latest" ? AppTextStyles.hint : AppTextStyles.hintBlack),
-            ),
-            SizedBox(width: 10),
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  toggleHistoryMod = "History";
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: toggleHistoryMod == "History" ? AppColors.yellowBegaDarker : Colors.grey.shade200,
-              ),
-              child: Text('History', style: toggleHistoryMod == "History" ? AppTextStyles.hint : AppTextStyles.hintBlack),
-            ),
-          ],
-        ),
+        // Row(
+        //   mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     ElevatedButton(
+        //       onPressed: () {
+        //         setState(() {
+        //           toggleHistoryMod = "Latest";
+        //         });
+        //       },
+        //       style: ElevatedButton.styleFrom(
+        //         backgroundColor: toggleHistoryMod == "Latest" ? AppColors.yellowBegaDarker : Colors.grey.shade200,
+        //       ),
+        //       child: Text('Latest', style: toggleHistoryMod == "Latest" ? AppTextStyles.hint : AppTextStyles.hintBlack),
+        //     ),
+        //     SizedBox(width: 10),
+        //     ElevatedButton(
+        //       onPressed: () {
+        //         setState(() {
+        //           toggleHistoryMod = "History";
+        //         });
+        //       },
+        //       style: ElevatedButton.styleFrom(
+        //         backgroundColor: toggleHistoryMod == "History" ? AppColors.yellowBegaDarker : Colors.grey.shade200,
+        //       ),
+        //       child: Text('History', style: toggleHistoryMod == "History" ? AppTextStyles.hint : AppTextStyles.hintBlack),
+        //     ),
+        //   ],
+        // ),
         const SizedBox(height: 15),
         // LDL Cholesterol card description
         Card(

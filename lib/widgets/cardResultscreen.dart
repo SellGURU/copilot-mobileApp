@@ -96,28 +96,34 @@ class _CardresultscreenState extends State<Cardresultscreen> {
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Tooltip(
-                        message: widget.title,
-                        child: Text(
-                          widget.title,
-                          style: AppTextStyles.title1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Tooltip(
+                            message: widget.title,
+                            child: Text(
+                              widget.title,
+                              style: AppTextStyles.title1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Tooltip(
+                            message: (widget.data as Map<String, dynamic>)['subcategory'] as String,
+                            child: Text(
+                              (widget.data as Map<String, dynamic>)['subcategory'] as String,
+                              style: AppTextStyles.hint,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
                       ),
-                      Tooltip(
-                        message: (widget.data as Map<String, dynamic>)['subcategory'] as String,
-                        child: Text(
-                          (widget.data as Map<String, dynamic>)['subcategory'] as String,
-                          style: AppTextStyles.hint,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.end,
