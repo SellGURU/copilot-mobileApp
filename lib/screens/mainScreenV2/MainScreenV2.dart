@@ -530,33 +530,34 @@ class _Overview2State extends State<Overview2> {
                                     },
                                     builder: (context, state) {
                                       print("State is: \$state");
-
+                                      
                                       // State: SuccessDownloadPdf
                                       if (state is SuccessDownloadPdf) {
-                                        return GestureDetector(
-                                          onTap: () async {
-                                            // Launch the URL for the PDF download
-                                            LaunchURL(state.pdfUrl);
-                                          },
-                                          child: Row(
-                                            children: [
-                                              SvgPicture.asset(
-                                                "assets/document-download.svg",
-                                                width: 16,
-                                                height: 16,
-                                                colorFilter: const ColorFilter.mode(
-                                                  AppColors.purpleDark,
-                                                  BlendMode.srcIn,
-                                                ),
-                                              ),
-                                              const SizedBox(width: 5),
-                                              Text(
-                                                "Report",
-                                                style: AppTextStyles.hintPurple,
-                                              ),
-                                            ],
-                                          ),
-                                        );
+                                        // return GestureDetector(
+                                        //   onTap: () async {
+                                        //     // Launch the URL for the PDF download
+                                        //     LaunchURL(state.pdfUrl);
+                                        //   },
+                                        //   child: Row(
+                                        //     children: [
+                                        //       SvgPicture.asset(
+                                        //         "assets/document-download.svg",
+                                        //         width: 16,
+                                        //         height: 16,
+                                        //         colorFilter: const ColorFilter.mode(
+                                        //           AppColors.purpleDark,
+                                        //           BlendMode.srcIn,
+                                        //         ),
+                                        //       ),
+                                        //       const SizedBox(width: 5),
+                                        //       Text(
+                                        //         "Report",
+                                        //         style: AppTextStyles.hintPurple,
+                                        //       ),
+                                        //     ],
+                                        //   ),
+                                        // );
+                                         return const SizedBox();
                                       }
 
                                       // State: LoadingDownloadPdf
