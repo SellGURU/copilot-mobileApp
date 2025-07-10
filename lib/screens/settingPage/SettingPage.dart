@@ -1,10 +1,12 @@
 import 'package:copilet/components/text_style.dart';
 import 'package:copilet/screens/Wearable%20Device/WearableDevice.dart';
+import 'package:copilet/widgets/notification_widget.dart';
 import 'package:copilet/widgets/restart/RestartWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../res/colors.dart';
 import '../login/cubit/cubit.dart';
@@ -20,6 +22,21 @@ class SettingPage extends StatefulWidget {
 }
 
 class _SettingPageState extends State<SettingPage> {
+  void _launchURL(String url) async {
+    try {
+      final Uri uri = Uri.parse(url);
+      if (!await launchUrl(
+        uri,
+        mode: LaunchMode.externalApplication,
+      )) {
+        throw Exception('Could not launch $url');
+      }
+    } catch (e) {
+      // Handle error silently or show a toast if needed
+      print('Could not launch URL: $url');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -34,9 +51,10 @@ class _SettingPageState extends State<SettingPage> {
         alignment: Alignment.center,
         height: size.height,
         width: size.width,
+        margin:EdgeInsets.only(top: size.height * .02),
         child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 30,horizontal: 25),
-          width: kIsWeb ? (size.width > 420 ? 420 : size.width) : size.width,
+          padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 20),
+          width:  size.width,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,16 +67,35 @@ class _SettingPageState extends State<SettingPage> {
                     "Setting",
                     style: AppTextStyles.title1,
                   ),
-                  SvgPicture.asset("assets/notification.svg",width: 24,height: 24,)
+                  NotificationWidget(
+                    notificationCount: 2,
+                    notifications: [
+                      NotificationItem(
+                        title: "New Tasks, New You!",
+                        message: "Your latest health action plan is ready! Check out your new tasks in the Overview section and take the next step toward a longer, healthier life.",
+                        timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                        type: NotificationType.info,
+                        isRead: false,
+                      ),
+                      NotificationItem(
+                        title: "Your Progress Awaits!",
+                        message: "Ready to level up your health? Complete your Health Questionnaire to help us build a more personalized and effective wellness plan just for you.",
+                        timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                        type: NotificationType.info,
+                        isRead: false,
+                      ),                       
+                    ],      
+                  ),                  
+                  // SvgPicture.asset("assets/notification.svg",width: 24,height: 24,)
                 ],
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              Text(
-                formattedDate,
-                style: AppTextStyles.titleXl,
-              ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
+              // Text(
+              //   formattedDate,
+              //   style: AppTextStyles.titleXl,
+              // ),
               const SizedBox(
                 height: 20,
               ),
@@ -75,24 +112,36 @@ class _SettingPageState extends State<SettingPage> {
               const SizedBox(
                 height: 20,
               ),
-              WearableDevicesTile(
-                srcImage: 'lock.svg',
-                textTitle: 'Change Password',
+              // WearableDevicesTile(
+              //   srcImage: 'lock.svg',
+              //   textTitle: 'Change Password',
+              // ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
+              GestureDetector(
+                onTap: () {
+                  _launchURL('https://holisticare.io/privacy-policy/');
+                },
+                  child:WearableDevicesTile(
+                  srcImage: 'lock.svg',
+                  textTitle: 'Privacy Policy',
+                ),
               ),
+
               const SizedBox(
                 height: 20,
               ),
-              WearableDevicesTile(
-                srcImage: 'lock.svg',
-                textTitle: 'Privacy Policy',
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              WearableDevicesTile(
+              GestureDetector(
+                onTap: () {
+                  _launchURL('https://holisticare.io/terms-of-service/');
+                },
+                child:WearableDevicesTile(
                 srcImage: 'security-safe.svg',
                 textTitle: 'Terms of Service',
               ),
+              ),
+            
               const SizedBox(
                 height: 30,
               ),
@@ -114,7 +163,7 @@ class _SettingPageState extends State<SettingPage> {
                           width: 30,
                           height: 16,
                           colorFilter: ColorFilter.mode(
-                              AppColors.purpleDark, BlendMode.srcIn),
+                              AppColors.mainSecandaryColor, BlendMode.srcIn),
                         ),
                         const SizedBox(
                           width: 5,
@@ -163,7 +212,7 @@ class WearableDevicesTile extends StatelessWidget {
           // Left Icon
           Row(
             children: [
-              SvgPicture.asset("assets/setting/${srcImage}"),
+              SvgPicture.asset("assets/setting/${srcImage}",color: AppColors.mainSecandaryColor,),
               const SizedBox(width: 12),
               // Title
               Text(
@@ -176,7 +225,7 @@ class WearableDevicesTile extends StatelessWidget {
           const Icon(
             Icons.arrow_forward_ios,
             size: 20,
-            color: AppColors.purpleDark,
+            color: AppColors.mainSecandaryColor,
           ),
         ],
       ),

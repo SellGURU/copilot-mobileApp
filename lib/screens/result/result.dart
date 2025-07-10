@@ -12,6 +12,7 @@ import '../../utility/switchValueBloc/PageIndex_Bloc.dart';
 import '../../utility/switchValueBloc/PageIndex_events.dart';
 import '../../utility/switchValueBloc/PageIndex_states.dart';
 import '../../widgets/cardResultscreen.dart';
+import '../../widgets/notification_widget.dart';
 import '../CholesterolScreen/CholesterolScreen.dart';
 import '../home/cubit/cubit.dart';
 import '../home/cubit/state.dart';
@@ -54,21 +55,28 @@ class _ResultScreenState extends State<ResultScreen> {
                         "Your Results",
                         style: AppTextStyles.title1,
                       ),
-                      Row(
-                        children: [
-                          // const Icon(
-                          //   Icons.notifications_none_outlined,
-                          //   color: AppColors.purpleDark,
-                          // ),
-                          // const SizedBox(
-                          //   width: 10,
-                          // ),
-                          SvgPicture.asset(
-                            "assets/notification.svg",
-                            width: 25,
-                            height: 25,
+                      NotificationWidget(
+                        notificationCount: 2,
+                        notifications: [
+                          NotificationItem(
+                            title: "New Tasks, New You!",
+                            message: "Your latest health action plan is ready! Check out your new tasks in the Overview section and take the next step toward a longer, healthier life.",
+                            timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                            type: NotificationType.info,
+                            isRead: false,
                           ),
+                          NotificationItem(
+                            title: "Your Progress Awaits!",
+                            message: "Ready to level up your health? Complete your Health Questionnaire to help us build a more personalized and effective wellness plan just for you.",
+                            timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                            type: NotificationType.info,
+                            isRead: false,
+                          ),    
                         ],
+                        onNotificationTap: () {
+                          // Handle notification tap
+                          print('Notification tapped');
+                        },
                       )
                     ],
                   ),
@@ -270,14 +278,14 @@ class _ResultScreenState extends State<ResultScreen> {
                     children: [
                       Row(
                         children: [
-                          Text(
-                            "Last Update:",
-                            style: AppTextStyles.hint,
-                          ),
-                          Text(
-                            "May,12,2024",
-                            style: AppTextStyles.title2,
-                          ),
+                          // Text(
+                          //   "Last Update:",
+                          //   style: AppTextStyles.hint,
+                          // ),
+                          // Text(
+                          //   "May,12,2024",
+                          //   style: AppTextStyles.title2,
+                          // ),
                         ],
                       ),
                       Row(
@@ -360,6 +368,29 @@ class _ResultScreenState extends State<ResultScreen> {
                       Text(
                         "Your Results",
                         style: AppTextStyles.title1,
+                      ),
+                      NotificationWidget(
+                        notificationCount: 2,
+                        notifications: [
+                            NotificationItem(
+                              title: "New Tasks, New You!",
+                              message: "Your latest health action plan is ready! Check out your new tasks in the Overview section and take the next step toward a longer, healthier life.",
+                              timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                              type: NotificationType.info,
+                              isRead: false,
+                            ),
+                            NotificationItem(
+                              title: "Your Progress Awaits!",
+                              message: "Ready to level up your health? Complete your Health Questionnaire to help us build a more personalized and effective wellness plan just for you.",
+                              timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                              type: NotificationType.info,
+                              isRead: false,
+                            ),                  
+                        ],           
+                        onNotificationTap: () {
+                          // Handle notification tap
+                          print('Notification tapped');
+                        },
                       ),
                     ],
                   ),

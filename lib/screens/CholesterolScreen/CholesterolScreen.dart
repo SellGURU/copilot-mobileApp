@@ -38,14 +38,14 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
         actions: [
           Text("", style: AppTextStyles.title1),
           SizedBox(width: size.width * .40),
-          Row(
-            children: [
-              SvgPicture.asset("assets/notificationIcon.svg", width: 25, height: 25),
-              const SizedBox(width: 5),
-              const Icon(Icons.notifications_none_outlined, color: AppColors.purpleDark),
-              const SizedBox(width: 15),
-            ],
-          ),
+          // Row(
+          //   children: [
+          //     SvgPicture.asset("assets/notificationIcon.svg", width: 25, height: 25),
+          //     const SizedBox(width: 5),
+          //     const Icon(Icons.notifications_none_outlined, color: AppColors.purpleDark),
+          //     const SizedBox(width: 15),
+          //   ],
+          // ),
         ],
       ),
       backgroundColor: Colors.white,

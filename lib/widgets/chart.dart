@@ -17,9 +17,12 @@ class ChartDot extends StatelessWidget {
     );
   }
 
-  // No left titles (Y-axis values hidden for a cleaner UI)
+  // Y-axis labels
   Widget leftTitleWidgets(double value, TitleMeta meta) {
-    return const SizedBox(width: 0, height: 0);
+    return Text(
+      value.toStringAsFixed(1), // Show one decimal place
+      style: TextStyle(fontSize: 8, color: Colors.grey),
+    );
   }
 
   // Define gradient colors for the chart
@@ -69,8 +72,12 @@ class ChartDot extends StatelessWidget {
             getTitlesWidget: (value, meta) => bottomTitleWidgets(value, meta),
           ),
         ),
-        leftTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false),
+        leftTitles: AxisTitles(
+          sideTitles: SideTitles(
+            showTitles: true,
+            reservedSize: 30,
+            getTitlesWidget: (value, meta) => leftTitleWidgets(value, meta),
+          ),
         ),
         rightTitles: const AxisTitles(
           sideTitles: SideTitles(showTitles: false),

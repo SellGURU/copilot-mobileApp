@@ -2,6 +2,7 @@
 /// It initializes required dependencies, sets up providers, and defines the main app widget structure.
 
 import 'package:camera/camera.dart';
+import 'package:copilet/res/colors.dart';
 import 'package:copilet/screens/Wearable%20Device/authorizersRook/cubit.dart';
 import 'package:copilet/screens/camera/imageHandlerCubit/cubit.dart';
 import 'package:copilet/screens/chatScreen/cubit/cubit.dart';

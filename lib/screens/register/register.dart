@@ -222,6 +222,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Stack(
+                      clipBehavior: Clip.none,
                       children: [
                         SvgPicture.asset(
                           "assets/loginElips.svg",
@@ -230,12 +231,25 @@ class _RegisterPageState extends State<RegisterPage> {
                           fit: BoxFit.cover,
                         ),
                         Positioned(
-                          left: (size.width > 420 ? 130 : size.width / 2 - 100),
+                          left: (size.width > 420 ? 130 : size.width / 2 - 66),
                           top: 100,
-                          child: Text("Clinic Logo", style: AppTextStyles.title4xlLiteWeight,)
+                          child:Container(
+                            width: 132,
+                            height: 132,
+                            child: Image.asset("assets/logoH.png"),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                              border: Border.all(
+                                color: AppColors.mainPrimaryColor,
+                                width: 2, // Adjust border thickness as needed
+                              ),
+                            ),
+                          ),
                         )
                       ],
                     ),
+                    
                     Padding(
                       padding: EdgeInsets.only(left: 24, right: 24, top: 36),
                       child: Column(

@@ -225,6 +225,7 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     Stack(
+                      clipBehavior: Clip.none,
                       children: [
                         SvgPicture.asset(
                           "assets/loginElips.svg",
@@ -234,14 +235,14 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         Positioned(
                             left:
-                                (size.width > 420 ? 130 : size.width / 2 - 100),
+                                (size.width > 420 ? 130 : size.width / 2 - 66),
                             top: 100,
                             // child: Image.asset(
                             //   "assets/logoIcon.png",
                             //   width: 80,
                             //   height: 70,
                             // ))
-                            child: Text("Clinic Logo",style: AppTextStyles.title4xlLiteWeight,))
+                            child: Image.asset("assets/GermanClinic.png"))
                       ],
                     ),
                     Padding(
@@ -249,6 +250,9 @@ class _LoginPageState extends State<LoginPage> {
                       child: Column(
                         children: [
                           //
+                          SizedBox(
+                            height: 16,
+                          ),
                           Text(
                             "To continue, please enter your email and password. Your password can be found in the invitation email.",
                             style: AppTextStyles.hintBlackWithHeight,

@@ -11,6 +11,7 @@ import 'package:copilet/widgets/SurveysCard/SurveysCard.dart';
 import 'package:copilet/widgets/SurveysCard/googleForm/cubit.dart';
 import 'package:copilet/widgets/SurveysCard/googleForm/state.dart';
 import 'package:copilet/widgets/Tasks.dart';
+import 'package:copilet/widgets/notification_widget.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -520,81 +521,108 @@ class _Overview2State extends State<Overview2> {
                               // const SizedBox(
                               //   width: 15,
                               // ),
-                              const SizedBox(width: 40,),
+                              
+                              Row(
+                                children: [
+                                 BlocConsumer<DownloadReportPdfCubit, DownloadPdfState>(
+                                    listener: (context, state) {
+                                      // TODO: Implement listener for handling side effects based on state changes.
+                                    },
+                                    builder: (context, state) {
+                                      print("State is: \$state");
+
+                                      // State: SuccessDownloadPdf
+                                      if (state is SuccessDownloadPdf) {
+                                        return GestureDetector(
+                                          onTap: () async {
+                                            // Launch the URL for the PDF download
+                                            LaunchURL(state.pdfUrl);
+                                          },
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                "assets/document-download.svg",
+                                                width: 16,
+                                                height: 16,
+                                                colorFilter: const ColorFilter.mode(
+                                                  AppColors.purpleDark,
+                                                  BlendMode.srcIn,
+                                                ),
+                                              ),
+                                              const SizedBox(width: 5),
+                                              Text(
+                                                "Report",
+                                                style: AppTextStyles.hintPurple,
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }
+
+                                      // State: LoadingDownloadPdf
+                                      if (state is LoadingDownloadPdf) {
+                                        return const SizedBox(
+                                          width: 15,
+                                          height: 15,
+                                          child: CircularProgressIndicator(color: AppColors.mainSecandaryColor),
+                                        );
+                                      }
+
+                                      // State: ErrorDownloadPdf
+                                      if (state is ErrorDownloadPdf) {
+                                        return Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              "assets/document-download.svg",
+                                              width: 16,
+                                              height: 16,
+                                              colorFilter: const ColorFilter.mode(
+                                                AppColors.purpleLite,
+                                                BlendMode.srcIn,
+                                              ),
+                                            ),
+                                            const SizedBox(width: 5),
+                                            Text(
+                                              "Report",
+                                              style: AppTextStyles.hintLitePurple,
+                                            ),
+                                          ],
+                                        );
+                                      }
+
+                                      // Default: Unknown State
+                                      return const SizedBox(
+                                        child: Text("An error occurred"),
+                                      );
+                                    },
+                                  ), 
+                                   SizedBox(width: 8,),                                 
+                                    NotificationWidget(
+                                      notificationCount: 2,
+                                      notifications: [
+                                        NotificationItem(
+                                          title: "New Tasks, New You!",
+                                          message: "Your latest health action plan is ready! Check out your new tasks in the Overview section and take the next step toward a longer, healthier life.",
+                                          timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                                          type: NotificationType.info,
+                                          isRead: false,
+                                        ),
+                                        NotificationItem(
+                                          title: "Your Progress Awaits!",
+                                          message: "Ready to level up your health? Complete your Health Questionnaire to help us build a more personalized and effective wellness plan just for you.",
+                                          timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                                          type: NotificationType.info,
+                                          isRead: false,
+                                        ),                    
+                                      ],      
+                                    ),
+                                  
+ 
+                          
+                                  ],
+                              ),
                       /// BlocConsumer widget that listens to and builds UI based on the state of DownloadReportPdfCubit.
                       /// This handles the download of a report PDF and provides feedback for different states.
-                          BlocConsumer<DownloadReportPdfCubit, DownloadPdfState>(
-                            listener: (context, state) {
-                              // TODO: Implement listener for handling side effects based on state changes.
-                            },
-                            builder: (context, state) {
-                              print("State is: \$state");
-
-                              // State: SuccessDownloadPdf
-                              if (state is SuccessDownloadPdf) {
-                                return GestureDetector(
-                                  onTap: () async {
-                                    // Launch the URL for the PDF download
-                                    LaunchURL(state.pdfUrl);
-                                  },
-                                  child: Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        "assets/document-download.svg",
-                                        width: 16,
-                                        height: 16,
-                                        colorFilter: const ColorFilter.mode(
-                                          AppColors.purpleDark,
-                                          BlendMode.srcIn,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 5),
-                                      Text(
-                                        "Report",
-                                        style: AppTextStyles.hintPurple,
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }
-
-                              // State: LoadingDownloadPdf
-                              if (state is LoadingDownloadPdf) {
-                                return const SizedBox(
-                                  width: 15,
-                                  height: 15,
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
-
-                              // State: ErrorDownloadPdf
-                              if (state is ErrorDownloadPdf) {
-                                return Row(
-                                  children: [
-                                    SvgPicture.asset(
-                                      "assets/document-download.svg",
-                                      width: 16,
-                                      height: 16,
-                                      colorFilter: const ColorFilter.mode(
-                                        AppColors.purpleLite,
-                                        BlendMode.srcIn,
-                                      ),
-                                    ),
-                                    const SizedBox(width: 5),
-                                    Text(
-                                      "Report",
-                                      style: AppTextStyles.hintLitePurple,
-                                    ),
-                                  ],
-                                );
-                              }
-
-                              // Default: Unknown State
-                              return const SizedBox(
-                                child: Text("An error occurred"),
-                              );
-                            },
-                          ),
                           ],
                           ),
                           /// BlocConsumer for `ClientInformationMobileCubit`
@@ -658,7 +686,7 @@ class _Overview2State extends State<Overview2> {
                   builder: (context, state) {
                     if (state is LoadingBiomarkerState) {
                       return const Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(color: AppColors.mainSecandaryColor,),
                       );
                     }
                     

@@ -91,7 +91,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                   width: 5,
                   height: 5,
                   colorFilter: pageIndex == 0
-                      ? ColorFilter.mode(AppColors.purpleDark, BlendMode.srcIn)
+                      ? ColorFilter.mode(AppColors.mainSecandaryColor, BlendMode.srcIn)
                       : ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
             ),
           ),
@@ -105,7 +105,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                   height: 5,
                   colorFilter: pageIndex == 1
                       ? const ColorFilter.mode(
-                          AppColors.purpleDark, BlendMode.srcIn)
+                          AppColors.mainSecandaryColor, BlendMode.srcIn)
                       : const ColorFilter.mode(
                           AppColors.textLite, BlendMode.srcIn)),
             ),
@@ -118,7 +118,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
               padding: EdgeInsets.all(1),
               height: (size.height),
               decoration: BoxDecoration(
-                  color: AppColors.greenBega,
+                  color: AppColors.mainPrimaryColor,
                   borderRadius: BorderRadius.circular(99),
                   boxShadow: [
                     BoxShadow(
@@ -140,7 +140,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                     alignment: Alignment.center,
                     colorFilter: pageIndex == 3
                         ? const ColorFilter.mode(
-                            AppColors.purpleDark, BlendMode.srcIn)
+                            AppColors.mainSecandaryColor, BlendMode.srcIn)
                         : const ColorFilter.mode(
                             AppColors.textLite, BlendMode.srcIn)),
               )),
@@ -154,7 +154,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                     height: 5,
                     colorFilter: pageIndex == 4
                         ? const ColorFilter.mode(
-                            AppColors.purpleDark, BlendMode.srcIn)
+                            AppColors.mainSecandaryColor, BlendMode.srcIn)
                         : const ColorFilter.mode(
                             AppColors.textLite, BlendMode.srcIn)),
               )),
@@ -251,43 +251,43 @@ class _ListItemsState extends State<ListItems> {
             width: 15,
           ),
           // itemSelect=2;
-          GestureDetector(
-            onTap: () {
-              // widget.takeItem("screenShot");
+          // GestureDetector(
+          //   onTap: () {
+          //     // widget.takeItem("screenShot");
               
-            },
-            child: Container(
-              padding: const EdgeInsets.only(
-                  left: 3.5, right: 3.5, top: 8, bottom: 13),
-              alignment: Alignment.center,
-              width: 90,
-              height: 75,
-              decoration: const BoxDecoration(
-                  color: AppColors.mainBg,
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    "assets/Screenshot.svg",
-                    width: 24,
-                    height: 24,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    'Screenshot',
-                    style: AppTextStyles.hint,
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SizedBox(
-            width: 15,
-          ),
+          //   },
+          //   child: Container(
+          //     padding: const EdgeInsets.only(
+          //         left: 3.5, right: 3.5, top: 8, bottom: 13),
+          //     alignment: Alignment.center,
+          //     width: 90,
+          //     height: 75,
+          //     decoration: const BoxDecoration(
+          //         color: AppColors.mainBg,
+          //         borderRadius: BorderRadius.all(Radius.circular(5))),
+          //     child: Column(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       crossAxisAlignment: CrossAxisAlignment.center,
+          //       children: [
+          //         SvgPicture.asset(
+          //           "assets/Screenshot.svg",
+          //           width: 24,
+          //           height: 24,
+          //         ),
+          //         const SizedBox(
+          //           height: 5,
+          //         ),
+          //         Text(
+          //           'Screenshot',
+          //           style: AppTextStyles.hint,
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // const SizedBox(
+          //   width: 15,
+          // ),
           // itemSelect=3;
           GestureDetector(
             onTap: () {
