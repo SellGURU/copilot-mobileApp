@@ -231,7 +231,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           fit: BoxFit.cover,
                         ),
                         Positioned(
-                          left: (size.width > 420 ? 130 : size.width / 2 - 100),
+                          left: (size.width > 420 ? 130 : size.width / 2 - 66),
                           top: 100,
                           child:Container(
                             width: 132,

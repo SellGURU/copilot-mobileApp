@@ -235,7 +235,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         Positioned(
                             left:
-                                (size.width > 420 ? 130 : size.width / 2 - 100),
+                                (size.width > 420 ? 130 : size.width / 2 - 66),
                             top: 100,
                             // child: Image.asset(
                             //   "assets/logoIcon.png",
