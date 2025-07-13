@@ -71,32 +71,28 @@ class _TaskItemState extends State<TaskItem> {
         context: context,
         isScrollControlled: true,
         builder: (context) {
-          return DraggableScrollableSheet(
-            expand: false,
-            maxChildSize: 0.95,
-            minChildSize: 0.5,
-            initialChildSize: 0.9,
-            builder: (context, scrollController) {
-              return Column(
-                children: [
-                  AppBar(
-                    title: Text(title, style: AppTextStyles.title1),
-                    automaticallyImplyLeading: false,
-                    actions: [
-                      IconButton(
-                        icon: const Icon(Icons.close),
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                    ],
-                  ),
-                  Expanded(
-                    child: WebViewWidget(
-                      controller: _controller,
+          return SizedBox(
+            height: MediaQuery.of(context).size.height * 0.9,
+            child: Column(
+              children: [
+                AppBar(
+                  title: Text(title, style: AppTextStyles.title1),
+                  automaticallyImplyLeading: false,
+                  actions: [
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.pop(context),
                     ),
+                  ],
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,  // مهم
+                    child: WebViewWidget(controller: _controller),
                   ),
-                ],
-              );
-            },
+                ),
+              ],
+            ),
           );
         },
       );
