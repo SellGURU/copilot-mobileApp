@@ -71,7 +71,10 @@ class _CardresultscreenState extends State<Cardresultscreen> {
     var data = widget.data as Map<String, dynamic>;
     return data['date'] as List<dynamic>? ?? [];
   }
-
+  getUnit() {
+    var data = widget.data as Map<String, dynamic>;
+    return data['unit'] as String ; 
+  }
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SwitchValueGraphBloc, SwitchValueState>(
@@ -227,7 +230,7 @@ class _CardresultscreenState extends State<Cardresultscreen> {
               const SizedBox(
                 height: 35,
               ),
-              state.switchValue ? ChartDot(spots: getSpots(), labels: getLabels()) : const SizedBox(),
+              state.switchValue && getUnit() !="" ? ChartDot(spots: getSpots(), labels: getLabels()) : const SizedBox(),
               const SizedBox(
                 height: 25,
               ),

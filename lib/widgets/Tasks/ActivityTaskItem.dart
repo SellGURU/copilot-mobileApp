@@ -103,7 +103,7 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(100),
                       border: Border.all(
-                        color: taskData["completed"] == 'Done' ? AppColors.greenBega : AppColors.SilverGray,
+                        color: taskData["Status"] == true ? AppColors.greenBega : AppColors.SilverGray,
                         width: 3,
                       )
                     ),
@@ -113,7 +113,7 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                         width: 16,
                         height: 16,
                         fit: BoxFit.contain,
-                        color: taskData["completed"] == 'Done' ? AppColors.greenBega : AppColors.TextTriarty,
+                        color: taskData["Status"]== true ? AppColors.greenBega : AppColors.TextTriarty,
                       )
                     )
                   ),
@@ -125,12 +125,12 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                 height: 24,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: taskData["completed"] == 'Done' ? AppColors.greenBega : AppColors.SilverGray,
+                    color: taskData["Status"]== true ? AppColors.greenBega : AppColors.SilverGray,
                     width: 1,
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: taskData["completed"] == 'Done'
+                child: taskData["Status"]== true
                   ? GestureDetector(
                       child: Center(
                         child: SvgPicture.asset('assets/tick.svg'),

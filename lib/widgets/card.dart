@@ -88,7 +88,7 @@ class _ItemCardState extends State<ItemCard> {
         borderRadius: const BorderRadius.all(Radius.circular(10)),
       ),
       width: 200,
-      height: 200,
+      height: widget.average!='Bad for gut' && widget.average!='Good for gut' ? 100 : 200,
       child: Padding(
         padding: const EdgeInsets.only(top: 30, left: 15, right: 15, bottom: 0),
         child: Column(
@@ -112,56 +112,64 @@ class _ItemCardState extends State<ItemCard> {
               ],
             ),
             const SizedBox(height: 10),
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
+            Container(
+              child:widget.average!='Bad for gut' && widget.average!='Good for gut'  ?
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      "Avg",
-                      style: AppTextStyles.hint,
-                    ),
-                    Row(
+                    Column(
                       children: [
                         Text(
-                          "${widget.average}", // Display average Y
-                          style: AppTextStyles.title1,
+                          "Avg",
+                          style: AppTextStyles.hint,
                         ),
-                        const SizedBox(width: 5),
+                        Row(
+                          children: [
+                            Text(
+                              "${widget.average}", // Display average Y
+                              style: AppTextStyles.title1,
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              widget.scale,
+                              style: AppTextStyles.hintSmale,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
                         Text(
-                          widget.scale,
-                          style: AppTextStyles.hintSmale,
+                          "Current",
+                          style: AppTextStyles.hint,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              widget.current, // Display current value
+                              style: AppTextStyles.title1,
+                            ),
+                            const SizedBox(width: 5),
+                            Text(
+                              widget.scale,
+                              style: AppTextStyles.hintSmale,
+                            ),
+                          ],
                         ),
                       ],
                     ),
                   ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      "Current",
-                      style: AppTextStyles.hint,
-                    ),
-                    Row(
-                      children: [
-                        Text(
-                          widget.current, // Display current value
-                          style: AppTextStyles.title1,
-                        ),
-                        const SizedBox(width: 5),
-                        Text(
-                          widget.scale,
-                          style: AppTextStyles.hintSmale,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
+                )
+              : const Text(""),
             ),
             const SizedBox(height: 30),
-            ChartDot(spots: spots,  labels:['1','2','3','4','5','6','7','8','9','10'],  ), // Pass the same spots to ChartDot
+            Container(
+              child:widget.average!='Bad for gut' && widget.average!='Good for gut' ?
+                ChartDot(spots: spots,  labels:['1','2','3','4','5','6','7','8','9','10'],  ) // Pass the same spots to ChartDot
+              :const Text(""),
+            )
           ],
         ),
       ),

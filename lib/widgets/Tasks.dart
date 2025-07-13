@@ -99,13 +99,14 @@ class _TasksState extends State<Tasks> {
               };
             }
             if(item['Category'] == 'Activity'){
+              print(item);
               return {
                 'id': item['task_id'],
                 'task_id': item['task_id'],
                 'title': item['Title'],
                 'type': "Activity",
                 'Sections': item['Sections'],
-                'completed': item['Status'] // Add custom key
+                'completed': item['Status'] ==true?'Done':'' // Add custom key
               };  
             }
           }
@@ -127,7 +128,7 @@ class _TasksState extends State<Tasks> {
             'id': item['unique_id'],
             'title': item['title'],
             'type': "Questionary",
-            'completed': item['status'] // Add custom key
+            'completed':item['Status'] ==true?'Done':'' // Add custom key
           };
         }).toList(); 
         tasks = modifiedData;
@@ -147,9 +148,9 @@ class _TasksState extends State<Tasks> {
   }
   int resolveCompletedTasksLength (){
     if(widget.title == 'Daily Tasks'){
-      return tasks.where((task) => task['type'] !="Questionary" && task["completed"] =='Done').length;
+      return tasks.where((task) => task['type'] !="Questionary" && (task["completed"] =='Done' || task["Status"] ==true)).length;
     }
-    return tasks.where((task) => task['type'] =="Questionary"  && task["completed"] =='Done').length;
+    return tasks.where((task) => task['type'] =="Questionary"  && (task["completed"] =='Done'||task["Status"] ==true)).length;
   }
   @override
   Widget build(BuildContext context) {
