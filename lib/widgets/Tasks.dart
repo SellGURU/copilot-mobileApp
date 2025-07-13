@@ -21,9 +21,17 @@ class Tasks extends StatefulWidget{
   State<Tasks> createState() {
     return _TasksState();
   }
+
+  /// Static method to refresh all Tasks widgets
+  static void refreshAllTasks() {
+    _TasksState.refreshAllTasks();
+  }
 }
 
 class _TasksState extends State<Tasks> {
+  // Static list to track all Tasks instances
+  static final List<_TasksState> _instances = [];
+  
   List<String> taskTypes = ['Check-In', 'Diet','Activity','Supplement','Lifestyle', 'Questionary'];
   List<Map<String, dynamic>> tasks = [
     // { "id": 1, "title": "Daily Check in", "type": "Check-In", "completed": false },
@@ -38,7 +46,26 @@ class _TasksState extends State<Tasks> {
   @override
   void initState() {
     super.initState();
+    _instances.add(this);
     fetchQuestionary();
+  }
+
+  @override
+  void dispose() {
+    _instances.remove(this);
+    super.dispose();
+  }
+
+  /// Refresh tasks data from the server
+  Future<void> refreshTasks() async {
+    await fetchQuestionary();
+  }
+
+  /// Static method to refresh all Tasks widgets
+  static void refreshAllTasks() {
+    for (var instance in _instances) {
+      instance.refreshTasks();
+    }
   }
 
   Future<void>  fetchQuestionary() async {

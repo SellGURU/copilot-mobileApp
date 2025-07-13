@@ -14,6 +14,11 @@ import '../utility/camareControlerBloc/camera_Bloc.dart';
 import '../utility/changeScreanBloc/PageIndex_Bloc.dart';
 import '../utility/changeScreanBloc/PageIndex_events.dart';
 import '../utility/deviceName.dart';
+import '../utility/refreshData.dart';
+import '../screens/mainScreenV2/userinfoCubit/cubit.dart';
+import '../screens/mainScreenV2/cubit/cubit.dart';
+import '../screens/home/cubit/cubit.dart';
+import '../screens/mainScreenV2/downloadReport/cubit.dart';
 
 class BottomNavigationBarCustom extends StatefulWidget {
   // Function takeScreenShot;
@@ -33,6 +38,11 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
     });
   }
 
+  /// Refresh data based on the selected page index
+  void _refreshDataForPage(int pageIndex) {
+    DataRefreshUtil.refreshDataForPage(context, pageIndex);
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -48,6 +58,9 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
             });
 
             BlocProvider.of<PageIndexBloc>(context).add(UpdatePageIndex(index));
+            
+            // Refresh data when switching to different pages
+            _refreshDataForPage(index);
           } else {
             PlatformType platform = getPlatformType();
 
