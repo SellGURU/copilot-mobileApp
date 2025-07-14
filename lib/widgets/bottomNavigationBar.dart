@@ -14,6 +14,11 @@ import '../utility/camareControlerBloc/camera_Bloc.dart';
 import '../utility/changeScreanBloc/PageIndex_Bloc.dart';
 import '../utility/changeScreanBloc/PageIndex_events.dart';
 import '../utility/deviceName.dart';
+import '../utility/refreshData.dart';
+import '../screens/mainScreenV2/userinfoCubit/cubit.dart';
+import '../screens/mainScreenV2/cubit/cubit.dart';
+import '../screens/home/cubit/cubit.dart';
+import '../screens/mainScreenV2/downloadReport/cubit.dart';
 
 class BottomNavigationBarCustom extends StatefulWidget {
   // Function takeScreenShot;
@@ -33,6 +38,11 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
     });
   }
 
+  /// Refresh data based on the selected page index
+  void _refreshDataForPage(int pageIndex) {
+    DataRefreshUtil.refreshDataForPage(context, pageIndex);
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -48,6 +58,9 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
             });
 
             BlocProvider.of<PageIndexBloc>(context).add(UpdatePageIndex(index));
+            
+            // Refresh data when switching to different pages
+            _refreshDataForPage(index);
           } else {
             PlatformType platform = getPlatformType();
 
@@ -289,52 +302,53 @@ class _ListItemsState extends State<ListItems> {
           //   width: 15,
           // ),
           // itemSelect=3;
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                isCameraStart = true;
-              });
-              Navigator.of(widget.Parentcontext).pushReplacement(
-                MaterialPageRoute<void>(
-                  // provide the Bloc to other screen
-                  builder: (_) => BlocProvider.value(
-                      value: BlocProvider.of<CameraBloc>(widget.Parentcontext),
-                      child: CameraScreen(
-                        isCameraStart: isCameraStart,
-                        Parentcontext: widget.Parentcontext,
-                      )),
-                ),
-              );
-            },
-            child: Container(
-              padding: const EdgeInsets.only(
-                  left: 3.5, right: 3.5, top: 8, bottom: 13),
-              alignment: Alignment.center,
-              width: 90,
-              height: 75,
-              decoration: const BoxDecoration(
-                  color: AppColors.mainBg,
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    "assets/camera.svg",
-                    width: 24,
-                    height: 24,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    'Take Picture',
-                    style: AppTextStyles.hint,
-                  ),
-                ],
-              ),
-            ),
-          ),
+          // GestureDetector(
+          //   onTap: () {
+          //     setState(() {
+          //       isCameraStart = true;
+          //     });
+          //     Navigator.of(widget.Parentcontext).pushReplacement(
+          //       MaterialPageRoute<void>(
+          //         // provide the Bloc to other screen
+          //         builder: (_) => BlocProvider.value(
+          //             value: BlocProvider.of<CameraBloc>(widget.Parentcontext),
+          //             child: CameraScreen(
+          //               isCameraStart: isCameraStart,
+          //               Parentcontext: widget.Parentcontext,
+          //             )),
+          //       ),
+          //     );
+          //   },
+          //   child: Container(
+          //     padding: const EdgeInsets.only(
+          //         left: 3.5, right: 3.5, top: 8, bottom: 13),
+          //     alignment: Alignment.center,
+          //     width: 90,
+          //     height: 75,
+          //     decoration: const BoxDecoration(
+          //         color: AppColors.mainBg,
+          //         borderRadius: BorderRadius.all(Radius.circular(5))),
+          //     child: Column(
+          //       mainAxisAlignment: MainAxisAlignment.center,
+          //       crossAxisAlignment: CrossAxisAlignment.center,
+          //       children: [
+          //         SvgPicture.asset(
+          //           "assets/camera.svg",
+          //           width: 24,
+          //           height: 24,
+          //         ),
+          //         const SizedBox(
+          //           height: 5,
+          //         ),
+          //         Text(
+          //           'Take Picture',
+          //           style: AppTextStyles.hint,
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+        
         ],
       ),
     );

@@ -21,9 +21,17 @@ class Tasks extends StatefulWidget{
   State<Tasks> createState() {
     return _TasksState();
   }
+
+  /// Static method to refresh all Tasks widgets
+  static void refreshAllTasks() {
+    _TasksState.refreshAllTasks();
+  }
 }
 
 class _TasksState extends State<Tasks> {
+  // Static list to track all Tasks instances
+  static final List<_TasksState> _instances = [];
+  
   List<String> taskTypes = ['Check-In', 'Diet','Activity','Supplement','Lifestyle', 'Questionary'];
   List<Map<String, dynamic>> tasks = [
     // { "id": 1, "title": "Daily Check in", "type": "Check-In", "completed": false },
@@ -38,7 +46,26 @@ class _TasksState extends State<Tasks> {
   @override
   void initState() {
     super.initState();
+    _instances.add(this);
     fetchQuestionary();
+  }
+
+  @override
+  void dispose() {
+    _instances.remove(this);
+    super.dispose();
+  }
+
+  /// Refresh tasks data from the server
+  Future<void> refreshTasks() async {
+    await fetchQuestionary();
+  }
+
+  /// Static method to refresh all Tasks widgets
+  static void refreshAllTasks() {
+    for (var instance in _instances) {
+      instance.refreshTasks();
+    }
   }
 
   Future<void>  fetchQuestionary() async {
@@ -72,13 +99,14 @@ class _TasksState extends State<Tasks> {
               };
             }
             if(item['Category'] == 'Activity'){
+              print(item);
               return {
                 'id': item['task_id'],
                 'task_id': item['task_id'],
                 'title': item['Title'],
                 'type': "Activity",
                 'Sections': item['Sections'],
-                'completed': item['Status'] // Add custom key
+                'completed': item['Status'] ==true?'Done':'' // Add custom key
               };  
             }
           }
@@ -100,7 +128,7 @@ class _TasksState extends State<Tasks> {
             'id': item['unique_id'],
             'title': item['title'],
             'type': "Questionary",
-            'completed': item['status'] // Add custom key
+            'completed':item['Status'] ==true?'Done':'' // Add custom key
           };
         }).toList(); 
         tasks = modifiedData;
@@ -120,9 +148,9 @@ class _TasksState extends State<Tasks> {
   }
   int resolveCompletedTasksLength (){
     if(widget.title == 'Daily Tasks'){
-      return tasks.where((task) => task['type'] !="Questionary" && task["completed"] =='Done').length;
+      return tasks.where((task) => task['type'] !="Questionary" && (task["completed"] =='Done' || task["Status"] ==true)).length;
     }
-    return tasks.where((task) => task['type'] =="Questionary"  && task["completed"] =='Done').length;
+    return tasks.where((task) => task['type'] =="Questionary"  && (task["completed"] =='Done'||task["Status"] ==true)).length;
   }
   @override
   Widget build(BuildContext context) {

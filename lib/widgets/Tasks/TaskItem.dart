@@ -9,6 +9,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'cubit.dart';
 import 'state.dart';
+import 'dart:io' show Platform;
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class TaskItem extends StatefulWidget {
   final Map<String, dynamic> task;
@@ -44,11 +46,22 @@ class _TaskItemState extends State<TaskItem> {
   }  
 
   void _initializeWebView() {
-    if (taskData['type'] == 'Check-In' || taskData['type'] == 'Questionary') {
-      String taskType = taskData['type'] == 'Check-In' ? 'checkin' : 'questionary';
-      _controller = WebViewController()
-        ..loadRequest(Uri.parse("https://holisticare.vercel.app/$taskType/$encodeId/${taskData["id"]}"));
-      setState(() {});
+    if (kIsWeb) {
+      if (taskData['type'] == 'Check-In' || taskData['type'] == 'Questionary') {
+        String taskType = taskData['type'] == 'Check-In' ? 'checkin' : 'questionary';
+        _controller = WebViewController()
+          ..loadRequest(Uri.parse("https://holisticare.vercel.app/$taskType/$encodeId/${taskData["id"]}"));
+        setState(() {});
+      }
+    }else {
+      if (taskData['type'] == 'Check-In' || taskData['type'] == 'Questionary') {
+        String taskType = taskData['type'] == 'Check-In' ? 'checkin' : 'questionary';
+        _controller = WebViewController()
+          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..loadRequest(Uri.parse("https://holisticare.vercel.app/$taskType/$encodeId/${taskData["id"]}"));
+        setState(() {});
+      }
+
     }
   }
 
@@ -73,7 +86,10 @@ class _TaskItemState extends State<TaskItem> {
                   ],
                 ),
                 Expanded(
-                  child: WebViewWidget(controller: _controller),
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,  // مهم
+                    child: WebViewWidget(controller: _controller),
+                  ),
                 ),
               ],
             ),

@@ -15,6 +15,7 @@ import 'package:copilet/screens/welcomScreen/welcomScreen.dart';
 import 'package:copilet/utility/deviceName.dart';
 import 'package:copilet/widgets/SurveysCard/googleForm/cubit.dart';
 import 'package:copilet/widgets/restart/RestartWidget.dart';
+import 'package:copilet/widgets/Tasks/cubit.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -108,6 +109,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => ClientInformationMobileCubit()),
         BlocProvider(create: (_) => ChatCubit()),
         BlocProvider(create: (_) => ImageHandlerCubit()),
+        BlocProvider(create: (_) => TaskCubit()),
         BlocProvider(
           lazy: false,
           create: (context) {
