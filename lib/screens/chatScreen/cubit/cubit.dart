@@ -46,6 +46,8 @@ class ChatCubit extends Cubit<ChatState> {
         time: "${now.hour}:${now.minute}",
         avatarUrl: 'assets/avatar12.svg',
         message_to: message_to,
+        reported: false,
+        feedback: "null",
         conversation_id: conversationId.toString(),
         images: base64.isNotEmpty ? [base64] : []));
 
@@ -73,7 +75,9 @@ class ChatCubit extends Cubit<ChatState> {
         messages.add(Message.fromResponse({
           'entrytime': ": ${now.hour}:${now.minute}",
           'response': response.data["answer"],
-          'conversation_id': conversationId.toString()
+          'conversation_id': conversationId.toString(),
+          'reported': false,
+          'feedback': "null",
         }));
 
         emit(ChatHistoryLoaded(List.from(messages)));  // Emit the updated messages
@@ -182,6 +186,8 @@ class ChatCubit extends Cubit<ChatState> {
                 avatarUrl: "assets/avatar12.svg",
                 message_to: messageType,
                 conversation_id: message["conversation_id"].toString(),
+                reported: message["reported"]??false,
+                feedback: message["feedback"]?? "null",
                   // Use the provided message type
                 images: []
               ));

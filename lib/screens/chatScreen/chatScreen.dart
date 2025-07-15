@@ -69,9 +69,9 @@ class _ChatscreenState extends State<Chatscreen> {
   }
 
   // Toggle like status
-  void _toggleLike(int messageIndex,String conversationId) {
+  void _toggleLike(int messageIndex,String conversationId,String feedback) {
     setState(() {
-      if (_likedMessages[messageIndex] == true) {
+      if (isMessageLiked(messageIndex,feedback)) {
         BlocProvider.of<ChatCubit>(context).likeDislikeMessage(conversationId, null);
         _likedMessages[messageIndex] = false;
       } else {
@@ -83,9 +83,9 @@ class _ChatscreenState extends State<Chatscreen> {
   }
 
   // Toggle dislike status
-  void _toggleDislike(int messageIndex,String conversationId) {
+  void _toggleDislike(int messageIndex,String conversationId,String feedback) {
     setState(() {
-      if (_dislikedMessages[messageIndex] == true) {
+      if (isMessageDisliked(messageIndex,feedback)) {
         BlocProvider.of<ChatCubit>(context).likeDislikeMessage(conversationId, null);
         _dislikedMessages[messageIndex] = false;
       } else {
@@ -477,7 +477,7 @@ class _ChatscreenState extends State<Chatscreen> {
                                     message.images.isNotEmpty
                                         ? message.images[0]
                                         : "",
-                                    index,message.conversation_id);
+                                    index,message.conversation_id,message.feedback,message.reported);
                               },
                             ),
                           );
@@ -503,7 +503,7 @@ class _ChatscreenState extends State<Chatscreen> {
                                       message.images.isNotEmpty
                                           ? message.images[0]
                                           : "",
-                                      index,message.conversation_id);
+                                      index,message.conversation_id,message.feedback,message.reported);
                                 },
                               ),
                             ),
@@ -643,7 +643,12 @@ class _ChatscreenState extends State<Chatscreen> {
   }
 
   Widget _buildMessageBubble(String text, String sender, String time,
-      String avatarUrl, String imageBase64, int messageIndex,String conversationId) {
+      String avatarUrl, String imageBase64, int messageIndex,String conversationId,String feedback,bool reported) {
+    // setState(() {
+    //   _dislikedMessages[messageIndex] = feedback == "dislike" ? true : false;
+    //   _likedMessages[messageIndex] = feedback == "like" ? true : false;
+
+    // });
     if (sender == "User") {
       String cleanBase64 =
           imageBase64.replaceFirst('data:image/png;base64,', '');
@@ -875,17 +880,17 @@ class _ChatscreenState extends State<Chatscreen> {
                   const SizedBox(width: 2),
                   GestureDetector(
                     onTap: () => {
-                      _toggleLike(messageIndex,conversationId),
+                      _toggleLike(messageIndex,conversationId,feedback),
                       
                     },
                     child: Container(
                       padding: const EdgeInsets.all(4),
                       child: Icon(
-                        _likedMessages[messageIndex] == true
+                        isMessageLiked(messageIndex,feedback)
                             ? Icons.thumb_up
                             : Icons.thumb_up_outlined,
                         size: 16,
-                        color: _likedMessages[messageIndex] == true
+                        color: isMessageLiked(messageIndex,feedback)
                             ? AppColors.purpleDark
                             : Colors.grey[600],
                       ),
@@ -894,16 +899,16 @@ class _ChatscreenState extends State<Chatscreen> {
                   const SizedBox(width: 2),
                   GestureDetector(
                     onTap: () => {
-                      _toggleDislike(messageIndex,conversationId),
+                      _toggleDislike(messageIndex,conversationId,feedback),
                     },
                     child: Container(
                       padding: const EdgeInsets.all(4),
                       child: Icon(
-                        _dislikedMessages[messageIndex] == true
+                        isMessageDisliked(messageIndex,feedback)
                             ? Icons.thumb_down
                             : Icons.thumb_down_outlined,
                         size: 16,
-                        color: _dislikedMessages[messageIndex] == true
+                        color: isMessageDisliked(messageIndex,feedback)
                             ? AppColors.purpleDark
                             : Colors.grey[600],
                       ),
@@ -943,6 +948,21 @@ class _ChatscreenState extends State<Chatscreen> {
           ],
         ),
       );
+    }
+  }
+
+  bool isMessageDisliked(int messageIndex,String feedback) {
+    if (_dislikedMessages.containsKey(messageIndex)) {
+      return _dislikedMessages[messageIndex] == true;
+    } else {
+      return feedback == "dislike" ? true : false; // or false, or any value you want
+    }
+  }
+  bool isMessageLiked(int messageIndex,String feedback) {
+    if (_likedMessages.containsKey(messageIndex)) {
+      return _likedMessages[messageIndex] == true;
+    } else {
+      return feedback == "like" ? true : false; // or false, or any value you want
     }
   }
 }
