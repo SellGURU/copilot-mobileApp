@@ -183,11 +183,17 @@ class AppTextStyles {
   static TextStyle hintSmaleGray = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 10, color: AppColors.textLiteGray, fontWeight: FontWeight.w400));
-
+    static TextStyle headline5 = GoogleFonts.roboto(
+      textStyle: TextStyle(
+          fontSize: 14, color: AppColors.primary, fontWeight: FontWeight.w500)); 
     static TextStyle headline6 = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 12, color: AppColors.primary, fontWeight: FontWeight.w500));
+
     static TextStyle body2  = GoogleFonts.roboto(
       textStyle: TextStyle(
-          fontSize: 12, color: AppColors.secandary, fontWeight: FontWeight.w400));
+          fontSize: 12, color: AppColors.primary, fontWeight: FontWeight.w400));
+    static TextStyle holderEmpty  = GoogleFonts.roboto(
+      textStyle: TextStyle(
+          fontSize: 12, color: AppColors.TextTriarty, fontWeight: FontWeight.w300));
 }

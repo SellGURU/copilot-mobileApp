@@ -41,7 +41,19 @@ class ChartDot extends StatelessWidget {
     if (spots.isEmpty) return 100;
     return spots.map((spot) => spot.y).reduce((a, b) => a > b ? a : b);
   }
-
+    Color getBackgroundColor() {
+      String status = 'success';
+      switch (status) {
+        case 'success':
+          return Colors.green.withOpacity(0.1);
+        case 'warning':
+          return Colors.orange.withOpacity(0.1);
+        case 'error':
+          return Colors.red.withOpacity(0.1);
+        default:
+          return Colors.transparent;
+      }
+    }
   // Line chart data configuration
   LineChartData mainData() {
     double minY = getMinY();
@@ -52,6 +64,7 @@ class ChartDot extends StatelessWidget {
     maxY = maxY + padding;
 
     return LineChartData( 
+      backgroundColor: getBackgroundColor(),
       gridData: const FlGridData(
         show: false,
       ),

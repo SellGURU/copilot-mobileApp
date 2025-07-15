@@ -1,3 +1,5 @@
+// import 'dart:ffi';
+
 import 'package:bloc/bloc.dart';
 import 'package:copilet/screens/chatScreen/cubit/state.dart';
 import 'package:dio/dio.dart';
@@ -15,7 +17,7 @@ class ChatCubit extends Cubit<ChatState> {
     getHistoryChat(messageType: "ai");  // Initialize the chat history when the cubit is created
   }
 
-  // List of messages in the current chat session
+  // List of messages in the cuession
   List<Message> messages = [];
 
   // Dio instance for making network requests
@@ -44,6 +46,9 @@ class ChatCubit extends Cubit<ChatState> {
         time: "${now.hour}:${now.minute}",
         avatarUrl: 'assets/avatar12.svg',
         message_to: message_to,
+        reported: false,
+        feedback: "null",
+        conversation_id: conversationId.toString(),
         images: base64.isNotEmpty ? [base64] : []));
 
     // Emit updated message list to update the UI
@@ -69,7 +74,10 @@ class ChatCubit extends Cubit<ChatState> {
         conversationId = response.data["current_conversation_id"];
         messages.add(Message.fromResponse({
           'entrytime': ": ${now.hour}:${now.minute}",
-          'response': response.data["answer"]
+          'response': response.data["answer"],
+          'conversation_id': conversationId.toString(),
+          'reported': false,
+          'feedback': "null",
         }));
 
         emit(ChatHistoryLoaded(List.from(messages)));  // Emit the updated messages
@@ -85,6 +93,69 @@ class ChatCubit extends Cubit<ChatState> {
     }
   }
 
+
+  Future<void> ReportMessage(String id, String reason, String issue_text) async {
+    final now = DateTime.now();
+
+    // Immediately add the user's message to the list
+    // Emit updated message list to update the UI
+    // emit(ChatHistoryLoaded(List.from(messages)));
+
+    var token = await getTokenLocally();  // Retrieve token locally
+    _dio.options.headers['Authorization'] = "Bearer $token";  // Set authorization header
+
+    try {
+      // Send message to the server
+      final response = await _dio.post(
+        Endpoints.reportAichat,
+        data: {
+          "current_conversation_id":num.parse(id),
+          "reason": reason,
+          "issue_text":issue_text
+        },
+      );
+      if(response.statusCode == 200){
+        // messages.firstWhere((element) => element.conversation_id == id).reported = true;
+        // emit(ChatHistoryLoaded(List.from(messages)));
+        getHistoryChat(messageType: 'ai'); 
+      }
+
+      // if (response.statusCode == 200) {
+      //   // Add the AI's response to the list if the request is successful
+      //   conversationId = response.data["current_conversation_id"];
+      //   messages.add(Message.fromResponse({
+      //     'entrytime': ": ${now.hour}:${now.minute}",
+      //     'response': response.data["answer"]
+      //   }));
+
+      //   emit(ChatHistoryLoaded(List.from(messages)));  // Emit the updated messages
+      // } else {
+      //   // Handle error if status code is not 200
+      //   emit(ChatError("Failed to send message"));
+      //   emit(ChatHistoryLoaded(List.from(messages)));
+      // }
+    } catch (e) {
+      // Catch and handle any errors during the message sending process
+      // emit(ChatError("An error occurred: $e"));
+      // emit(ChatHistoryLoaded(List.from(messages)));
+    }
+  }
+
+  Future<void> likeDislikeMessage(String id,feedback) async {
+     var token = await getTokenLocally();  // Retrieve token locally
+    _dio.options.headers['Authorization'] = "Bearer $token";  // Set authorization header
+    try {
+      final response = await _dio.post(
+        Endpoints.likeDislikeMessage,
+        data: {
+          "current_conversation_id":num.parse(id),
+          "feedback":feedback
+        },
+      );
+    }catch(e){
+      // emit(ChatError("An error occurred: $e"));
+    }
+  }
   /// Fetches the chat history from the server and updates the chat state.
   Future<void> getHistoryChat({String messageType = "ai"}) async {
     emit(ChatHistoryLoading());  // Emit loading state
@@ -118,7 +189,11 @@ class ChatCubit extends Cubit<ChatState> {
                 text: message["message_text"],
                 time: " "+message["time"],
                 avatarUrl: "assets/avatar12.svg",
-                message_to: messageType,  // Use the provided message type
+                message_to: messageType,
+                conversation_id: message["conversation_id"].toString(),
+                reported: message["reported"]??false,
+                feedback: message["feedback"]?? "null",
+                  // Use the provided message type
                 images: []
               ));
             }
