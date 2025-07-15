@@ -30,6 +30,7 @@ class Mainscreen extends StatefulWidget {
 }
 
 class _MainscreenState extends State<Mainscreen> {
+  bool _isReportModalOpen = false;
   final GlobalKey<NavigatorState> _healthPlanScreenKey = GlobalKey();
   final GlobalKey<NavigatorState> _settingScreenKey = GlobalKey();
   final GlobalKey<NavigatorState> _resultScreenKey = GlobalKey();
@@ -55,55 +56,55 @@ class _MainscreenState extends State<Mainscreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: _onWillPop,
-      child: Scaffold(
-          backgroundColor: AppColors.bgScreen,
-          body: ColorfulSafeArea(
-            child: BlocBuilder<PageIndexBloc, PageIndexState>(
-              builder: (context, state) {
-                // setState(() {
-                //   pageIndex = state.pageIndex;
-                // });
-                return IndexedStack(
-                  index: state.pageIndex,
-                  children: [
-                    const Mainscreenv2(),
-                    Navigator(
-                      key: _resultScreenKey,
-                      onGenerateRoute: (settings) => MaterialPageRoute(
-                        builder: (context) => const ResultScreen(),
-                      ),
+    return Scaffold(
+      backgroundColor: AppColors.bgScreen,
+      body: ColorfulSafeArea(
+        child: BlocBuilder<PageIndexBloc, PageIndexState>(
+          builder: (context, state) {
+            return IndexedStack(
+              index: state.pageIndex,
+              children: [
+                const Mainscreenv2(),
+                Navigator(
+                  key: _resultScreenKey,
+                  onGenerateRoute: (settings) => MaterialPageRoute(
+                    builder: (context) => const ResultScreen(),
+                  ),
+                ),
+                const SizedBox(),
+                Navigator(
+                  key: _healthPlanScreenKey,
+                  onGenerateRoute: (settings) => MaterialPageRoute(
+                    builder: (context) => ProgressScreen(),
+                  ),
+                ),
+                Navigator(
+                  key: _settingScreenKey,
+                  onGenerateRoute: (settings) => MaterialPageRoute(
+                    builder: (context) => SettingPage(),
+                  ),
+                ),
+                Navigator(
+                  key: _chatScreenKey,
+                  onGenerateRoute: (settings) => MaterialPageRoute(
+                    builder: (context) => Chatscreen(
+                      onReportModalChanged: (isOpen) {
+                        setState(() {
+                          _isReportModalOpen = isOpen;
+                        });
+                      },
                     ),
-                    const SizedBox(),
-                    Navigator(
-                      key: _healthPlanScreenKey,
-                      onGenerateRoute: (settings) => MaterialPageRoute(
-                        builder: (context) => ProgressScreen(),
-                      ),
-                    ),
-                    Navigator(
-                      key: _settingScreenKey,
-                      onGenerateRoute: (settings) => MaterialPageRoute(
-                        builder: (context) => SettingPage(),
-                      ),
-                    ),
-                    Navigator(
-                      key: _chatScreenKey,
-                      onGenerateRoute: (settings) => MaterialPageRoute(
-                        builder: (context) => Chatscreen(),
-                      ),
-                    ),
-            
-                    CameraScreen(
-                      isCameraStart: false, Parentcontext: context,
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
-          bottomNavigationBar: BottomNavigationBarCustom()),
+                  ),
+                ),
+                CameraScreen(
+                  isCameraStart: false, Parentcontext: context,
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+      bottomNavigationBar: _isReportModalOpen ? null : BottomNavigationBarCustom(),
     );
   }
 }

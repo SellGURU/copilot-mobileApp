@@ -7,6 +7,7 @@ import 'package:copilet/screens/chatScreen/cubit/cubit.dart';
 import 'package:copilet/screens/chatScreen/cubit/cubit.dart';
 import 'package:copilet/screens/chatScreen/cubit/state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,7 +21,8 @@ enum ChatMode {
 }
 
 class Chatscreen extends StatefulWidget {
-  const Chatscreen({super.key});
+  final void Function(bool)? onReportModalChanged;
+  const Chatscreen({Key? key, this.onReportModalChanged}) : super(key: key);
 
   @override
   State<Chatscreen> createState() => _ChatscreenState();
@@ -30,11 +32,64 @@ class _ChatscreenState extends State<Chatscreen> {
   final TextEditingController _controller = TextEditingController();
   ChatMode _selectedMode = ChatMode.ai;
   bool _isDropdownOpen = false;
+  
+  // State management for like/dislike buttons
+  Map<int, bool> _likedMessages = {};
+  Map<int, bool> _dislikedMessages = {};
+
+  // State management for report modal
+  String? _selectedReportReason;
+  final TextEditingController _reportDetailsController = TextEditingController();
+  final List<String> _reportReasons = [
+    'Inaccurate or misleading information',
+    'Offensive, harmful, or inappropriate content',
+    'Irrelevant or nonsensical response',
+    'Harassment',
+    'Other (please specify)'
+  ];
+
+  // State to track if report modal is open
+  bool _isReportModalOpen = false;
 
   Future<String?> getNameUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs
         .getString('name'); // Assuming 'name' is the key for the user's name
+  }
+
+  // Copy message to clipboard
+  void _copyMessage(String text) {
+    Clipboard.setData(ClipboardData(text: text));
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Message copied to clipboard'),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
+
+  // Toggle like status
+  void _toggleLike(int messageIndex) {
+    setState(() {
+      if (_likedMessages[messageIndex] == true) {
+        _likedMessages[messageIndex] = false;
+      } else {
+        _likedMessages[messageIndex] = true;
+        _dislikedMessages[messageIndex] = false; // Remove dislike if liked
+      }
+    });
+  }
+
+  // Toggle dislike status
+  void _toggleDislike(int messageIndex) {
+    setState(() {
+      if (_dislikedMessages[messageIndex] == true) {
+        _dislikedMessages[messageIndex] = false;
+      } else {
+        _dislikedMessages[messageIndex] = true;
+        _likedMessages[messageIndex] = false; // Remove like if disliked
+      }
+    });
   }
 
   void _sendMessage(image) async {
@@ -62,6 +117,211 @@ class _ChatscreenState extends State<Chatscreen> {
       curve: Curves.easeOut,
     );
   }
+
+  // Show report bottom modal
+  void _showReportModal() {
+    _selectedReportReason = null;
+    _reportDetailsController.clear();
+    
+    widget.onReportModalChanged?.call(true);
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      isDismissible: true,
+      enableDrag: true,
+      builder: (BuildContext context) {
+        // Add listener to detect when modal is dismissed
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          if (mounted) {
+            setState(() {
+              _isReportModalOpen = false;
+            });
+          }
+        });
+        
+                return WillPopScope(
+          onWillPop: () async {
+            setState(() {
+              _isReportModalOpen = false;
+            });
+            return true;
+          },
+          child: Container(
+            height:450,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(20),
+                topRight: Radius.circular(20),
+              ),
+            ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 40, right: 40, top: 12, bottom: 12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Container(
+                //   width: 40,
+                //   height: 4,
+                //   margin: const EdgeInsets.only(top: 10),
+                //   decoration: BoxDecoration(
+                //     color: Colors.grey[300],
+                //     borderRadius: BorderRadius.circular(2),
+                //   ),
+                // ),
+                const SizedBox(height: 20),
+                Center(
+                  child: Text(
+                    'Report AI Response',
+                    style: AppTextStyles.headline5,
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text("Tell us what was wrong with this response.", style: AppTextStyles.body2,),
+                const SizedBox(height: 20),
+                Text(
+                  'Reason for Reporting',
+                  style:AppTextStyles.headline6,
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  // height: 44,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: AppColors.gray50),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: DropdownButtonFormField<String>(
+                    value: _selectedReportReason,
+                    
+                    style: AppTextStyles.body2,
+                    // alignment: Alignment.center,
+
+                    decoration: const InputDecoration(
+                      
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 2)
+                    ),
+                    hint: Text('Select a reason', style: AppTextStyles.hint,),
+                    items: _reportReasons.map((String reason) {
+                      return DropdownMenuItem<String>(
+                        value: reason,
+                        child: Text(reason, style: AppTextStyles.body2,),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        _selectedReportReason = newValue;
+                      });
+                    },
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Text(
+                  'Additional Details (optional)',
+                  style:AppTextStyles.headline6,
+                ),        
+                const SizedBox(height: 10),
+                TextField(
+                  controller: _reportDetailsController,
+                  maxLines: 5,
+                  style: AppTextStyles.body2,
+                  decoration: InputDecoration(
+                    hintStyle: AppTextStyles.hint,
+                    hintText: 'Describe the issue in more detail',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(color: AppColors.gray50),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(color: AppColors.gray50),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide(color: AppColors.gray50),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                GestureDetector(
+                  onTap:  _selectedReportReason != null
+                    ? () {
+                        setState(() {
+                          _isReportModalOpen = false;
+                        });
+                        Navigator.pop(context);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text('Report submitted: ${_selectedReportReason}'),
+                            duration: const Duration(seconds: 2),
+                          ),
+                        );
+                      }
+                    : null,
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    width:double.infinity ,
+                    // margin:
+                    //     EdgeInsets.symmetric(horizontal: size.width / 10),
+                    decoration: BoxDecoration(
+                        color: AppColors.purpleDark,
+                        borderRadius: BorderRadius.circular(20)),
+                    // width: size.width,
+                    child: Text(
+                      "Submit Report",
+                      style: AppTextStyles.hintWhite,
+                    ),
+                  ),
+                ),
+            
+                // SizedBox(
+                //   width: double.infinity,
+                //   child: ElevatedButton(
+                //       onPressed: _selectedReportReason != null
+                //           ? () {
+                //               setState(() {
+                //                 _isReportModalOpen = false;
+                //               });
+                //               Navigator.pop(context);
+                //               ScaffoldMessenger.of(context).showSnackBar(
+                //                 SnackBar(
+                //                   content: Text('Report submitted: ${_selectedReportReason}'),
+                //                   duration: const Duration(seconds: 2),
+                //                 ),
+                //               );
+                //             }
+                //           : null,
+                //     style: ElevatedButton.styleFrom(
+                //       backgroundColor: AppColors.purpleDark,
+                //       padding: const EdgeInsets.symmetric(vertical: 12),
+                //       shape: RoundedRectangleBorder(
+                //         borderRadius: BorderRadius.circular(8),
+                //       ),
+                //     ),
+                //     child: const Text(
+                //       'Submit Report',
+                //       style: TextStyle(
+                //         color: Colors.white,
+                //         fontSize: 16,
+                //         fontWeight: FontWeight.w500,
+                //       ),
+                //     ),
+                //   ),
+                // ),
+              
+              ],
+            ),
+          ),
+        ));
+      },
+    ).whenComplete(() {
+      widget.onReportModalChanged?.call(false);
+    });
+  }
+
+
 
   @override
   void initState() {
@@ -213,7 +473,8 @@ class _ChatscreenState extends State<Chatscreen> {
                                     message.avatarUrl,
                                     message.images.isNotEmpty
                                         ? message.images[0]
-                                        : "");
+                                        : "",
+                                    index);
                               },
                             ),
                           );
@@ -238,7 +499,8 @@ class _ChatscreenState extends State<Chatscreen> {
                                       message.avatarUrl,
                                       message.images.isNotEmpty
                                           ? message.images[0]
-                                          : "");
+                                          : "",
+                                      index);
                                 },
                               ),
                             ),
@@ -378,116 +640,120 @@ class _ChatscreenState extends State<Chatscreen> {
   }
 
   Widget _buildMessageBubble(String text, String sender, String time,
-      String avatarUrl, String imageBase64) {
+      String avatarUrl, String imageBase64, int messageIndex) {
     if (sender == "User") {
       String cleanBase64 =
           imageBase64.replaceFirst('data:image/png;base64,', '');
       Uint8List bytesImage = base64Decode(cleanBase64);
       return Padding(
         padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          textDirection: TextDirection.rtl,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            FutureBuilder<String?>(
-              future: getNameUser(),
-              builder: (context, snapshot) {
-                String initials = "U";
-                if (snapshot.data != null && snapshot.data!.isNotEmpty) {
-                  initials = snapshot.data![0].toUpperCase();
-                }
-                return CircleAvatar(
-                  radius: 15,
-                  backgroundColor: AppColors.purpleDark,
-                  child: Text(
-                    initials,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
-                    ),
-                  ),
-                );
-              },
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                textDirection: TextDirection.rtl,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              textDirection: TextDirection.rtl,
+              children: [
+                FutureBuilder<String?>(
+                  future: getNameUser(),
+                  builder: (context, snapshot) {
+                    String initials = "U";
+                    if (snapshot.data != null && snapshot.data!.isNotEmpty) {
+                      initials = snapshot.data![0].toUpperCase();
+                    }
+                    return CircleAvatar(
+                      radius: 15,
+                      backgroundColor: AppColors.purpleDark,
+                      child: Text(
+                        initials,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
                     textDirection: TextDirection.rtl,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      FutureBuilder<String?>(
-                        future: getNameUser(),
-                        builder: (context, snapshot) {
-                          return Text(
-                            snapshot.data ?? "User",
-                            style: AppTextStyles.title2
-                                .copyWith(fontWeight: FontWeight.bold),
-                            overflow: TextOverflow.ellipsis,
-                            textDirection: TextDirection.rtl,
-                          );
-                        },
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        time,
-                        style: AppTextStyles.titleMedium
-                            .copyWith(color: Colors.grey),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         textDirection: TextDirection.rtl,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 5),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Container(
-                        width: 255,
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          text,
-                          style: AppTextStyles.titleMedium,
-                          textDirection: TextDirection.rtl,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      if (bytesImage.isNotEmpty)
-                        Container(
-                          width: 120,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 1, color: AppColors.purpleDark),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10)),
+                        children: [
+                          FutureBuilder<String?>(
+                            future: getNameUser(),
+                            builder: (context, snapshot) {
+                              return Text(
+                                snapshot.data ?? "User",
+                                style: AppTextStyles.title2
+                                    .copyWith(fontWeight: FontWeight.bold),
+                                overflow: TextOverflow.ellipsis,
+                                textDirection: TextDirection.rtl,
+                              );
+                            },
                           ),
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.all(
-                                Radius.circular(
-                                    10)), // Match the container's border radius
-                            child: Image.memory(
-                              bytesImage, // Your base64 decoded image bytes
-                              fit: BoxFit
-                                  .cover, // Ensures the image scales to cover the area
+                          const SizedBox(width: 8),
+                          Text(
+                            time,
+                            style: AppTextStyles.titleMedium
+                                .copyWith(color: Colors.grey),
+                            textDirection: TextDirection.rtl,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 5),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Container(
+                            width: 255,
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              text,
+                              style: AppTextStyles.titleMedium,
+                              textDirection: TextDirection.rtl,
                             ),
                           ),
-                        ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          if (bytesImage.isNotEmpty)
+                            Container(
+                              width: 120,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 1, color: AppColors.purpleDark),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10)), // Match the container's border radius
+                                child: Image.memory(
+                                  bytesImage, // Your base64 decoded image bytes
+                                  fit: BoxFit.cover, // Ensures the image scales to cover the area
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
                     ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
+            // Icon row outside the bubble
           ],
         ),
       );
@@ -496,86 +762,170 @@ class _ChatscreenState extends State<Chatscreen> {
           imageBase64.replaceFirst('data:image/png;base64,', '');
       Uint8List bytesImage = base64Decode(cleanBase64);
       return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: Row(
+        padding: const EdgeInsets.symmetric(vertical: 1.0),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          textDirection: TextDirection.ltr,
           children: [
-            CircleAvatar(
-              radius: 15,
-              backgroundColor: AppColors.purpleDark,
-              child: Text(
-                _selectedMode == ChatMode.coach ? "C" : "A",
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14,
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              textDirection: TextDirection.ltr,
+              children: [
+                CircleAvatar(
+                  radius: 15,
+                  backgroundColor: AppColors.purpleDark,
+                  child: Text(
+                    _selectedMode == ChatMode.coach ? "C" : "A",
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Column(
-                textDirection: TextDirection.ltr,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
                     textDirection: TextDirection.ltr,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        _selectedMode == ChatMode.coach ? "Coach" : "AI Assistant",
-                        style: AppTextStyles.title2
-                            .copyWith(fontWeight: FontWeight.bold),
-                        overflow: TextOverflow.ellipsis,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         textDirection: TextDirection.ltr,
+                        children: [
+                          Text(
+                            _selectedMode == ChatMode.coach ? "Coach" : "AI Assistant",
+                            style: AppTextStyles.title2
+                                .copyWith(fontWeight: FontWeight.bold),
+                            overflow: TextOverflow.ellipsis,
+                            textDirection: TextDirection.ltr,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            time.split(' ')[1],
+                            style: AppTextStyles.titleMedium
+                                .copyWith(color: Colors.grey),
+                            textDirection: TextDirection.ltr,
+                          ),
+                        ],
                       ),
-                      const SizedBox(width: 8),
-                      Text(
-                        time.split(' ')[1],
-                        style: AppTextStyles.titleMedium
-                            .copyWith(color: Colors.grey),
-                        textDirection: TextDirection.ltr,
+                      const SizedBox(height: 0),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            width: 255,
+                            padding: const EdgeInsets.all(12),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade200,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              text,
+                              style: AppTextStyles.titleMedium,
+                              textDirection: TextDirection.ltr,
+                            ),
+                          ),
+                          // const SizedBox(height: 20),
+                          if (bytesImage.isNotEmpty)
+                            Container(
+                              width: 120,
+                              // height: 100,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                    width: 1, color: AppColors.purpleDark),
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(10)),
+                                child: Image.memory(
+                                  bytesImage,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                        ],
                       ),
                     ],
                   ),
-                  const SizedBox(height: 5),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        width: 255,
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade200,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: Text(
-                          text,
-                          style: AppTextStyles.titleMedium,
-                          textDirection: TextDirection.ltr,
+                ),
+              ],
+            ),
+            // Icon row outside the bubble
+            Padding(
+              padding: const EdgeInsets.only(top: 3, left: 40),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                    onTap: () => _copyMessage(text),
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      child: Icon(
+                        Icons.copy,
+                        size: 16,
+                        color: Colors.grey[600],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 2),
+                  GestureDetector(
+                    onTap: () => _toggleLike(messageIndex),
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      child: Icon(
+                        _likedMessages[messageIndex] == true
+                            ? Icons.thumb_up
+                            : Icons.thumb_up_outlined,
+                        size: 16,
+                        color: _likedMessages[messageIndex] == true
+                            ? AppColors.purpleDark
+                            : Colors.grey[600],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 2),
+                  GestureDetector(
+                    onTap: () => _toggleDislike(messageIndex),
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      child: Icon(
+                        _dislikedMessages[messageIndex] == true
+                            ? Icons.thumb_down
+                            : Icons.thumb_down_outlined,
+                        size: 16,
+                        color: _dislikedMessages[messageIndex] == true
+                            ? AppColors.purpleDark
+                            : Colors.grey[600],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 2),
+                  PopupMenuButton<String>(
+                    icon: Icon(
+                      Icons.more_horiz,
+                      size: 16,
+                      color: Colors.grey[600],
+                    ),
+                    onSelected: (value) {
+                      if (value == 'report') {
+                        _showReportModal();
+                      }
+                    },
+                    itemBuilder: (BuildContext context) => [
+                      const PopupMenuItem<String>(
+                        value: 'report',
+                        height: 40,
+                        child: SizedBox(
+                          width: 60,
+                          child: Text(
+                            'Report',
+                            style: TextStyle(fontSize: 12),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ),
-                      const SizedBox(height: 20),
-                      if (bytesImage.isNotEmpty)
-                        Container(
-                          width: 120,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                                width: 1, color: AppColors.purpleDark),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(10)),
-                          ),
-                          child: ClipRRect(
-                            borderRadius: const BorderRadius.all(
-                                Radius.circular(10)),
-                            child: Image.memory(
-                              bytesImage,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
                     ],
                   ),
                 ],
