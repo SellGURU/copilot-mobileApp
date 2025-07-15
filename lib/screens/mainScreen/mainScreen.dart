@@ -59,7 +59,9 @@ class _MainscreenState extends State<Mainscreen> {
     return Scaffold(
       backgroundColor: AppColors.bgScreen,
       body: ColorfulSafeArea(
-        child: BlocBuilder<PageIndexBloc, PageIndexState>(
+        child: Center(
+          child: ConstrainedBox(constraints:BoxConstraints(maxWidth: 400),
+            child:         BlocBuilder<PageIndexBloc, PageIndexState>(
           builder: (context, state) {
             return IndexedStack(
               index: state.pageIndex,
@@ -103,6 +105,9 @@ class _MainscreenState extends State<Mainscreen> {
             );
           },
         ),
+          ),
+        ),
+
       ),
       bottomNavigationBar: _isReportModalOpen ? null : BottomNavigationBarCustom(),
     );
