@@ -32,7 +32,7 @@ class _ChatscreenState extends State<Chatscreen> {
   final TextEditingController _controller = TextEditingController();
   ChatMode _selectedMode = ChatMode.ai;
   bool _isDropdownOpen = false;
-  
+  String conversationIdReport = "";
   // State management for like/dislike buttons
   Map<int, bool> _likedMessages = {};
   Map<int, bool> _dislikedMessages = {};
@@ -245,11 +245,11 @@ class _ChatscreenState extends State<Chatscreen> {
                 ),
                 const SizedBox(height: 20),
                 GestureDetector(
-                  onTap:  _selectedReportReason != null
-                    ? () {
+                  onTap:  () {
                         setState(() {
                           _isReportModalOpen = false;
                         });
+                        BlocProvider.of<ChatCubit>(context).ReportMessage(conversationIdReport, _selectedReportReason!, _reportDetailsController.text);
                         Navigator.pop(context);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -257,8 +257,7 @@ class _ChatscreenState extends State<Chatscreen> {
                             duration: const Duration(seconds: 2),
                           ),
                         );
-                      }
-                    : null,
+                      },
                   child: Container(
                     alignment: Alignment.center,
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
@@ -474,7 +473,7 @@ class _ChatscreenState extends State<Chatscreen> {
                                     message.images.isNotEmpty
                                         ? message.images[0]
                                         : "",
-                                    index);
+                                    index,message.conversation_id);
                               },
                             ),
                           );
@@ -500,7 +499,7 @@ class _ChatscreenState extends State<Chatscreen> {
                                       message.images.isNotEmpty
                                           ? message.images[0]
                                           : "",
-                                      index);
+                                      index,message.conversation_id);
                                 },
                               ),
                             ),
@@ -640,7 +639,7 @@ class _ChatscreenState extends State<Chatscreen> {
   }
 
   Widget _buildMessageBubble(String text, String sender, String time,
-      String avatarUrl, String imageBase64, int messageIndex) {
+      String avatarUrl, String imageBase64, int messageIndex,String conversationId) {
     if (sender == "User") {
       String cleanBase64 =
           imageBase64.replaceFirst('data:image/png;base64,', '');
@@ -911,6 +910,7 @@ class _ChatscreenState extends State<Chatscreen> {
                     onSelected: (value) {
                       if (value == 'report') {
                         _showReportModal();
+                        conversationIdReport = conversationId;
                       }
                     },
                     itemBuilder: (BuildContext context) => [

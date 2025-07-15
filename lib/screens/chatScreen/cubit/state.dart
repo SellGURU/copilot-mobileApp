@@ -7,7 +7,7 @@ class Message {
   final String avatarUrl; // URL or path to the avatar image of the sender
   final List<String> images; // A list of image URLs associated with the message (for requests)
   final String message_to; // The source of the message (e.g., "user" or "ai")
-
+  final String conversation_id; // The source of the message (e.g., "user" or "ai")
 
   /// Constructor for the `Message` class.
   ///
@@ -22,7 +22,8 @@ class Message {
     required this.time,
     required this.avatarUrl,
     this.images = const [], // Default to an empty list if no images
-    this.message_to  = "user", // Default message source is "user"
+    this.message_to  = "user",
+    required this.conversation_id // Default message source is "user"
   });
 
   /// Factory constructor to create a `Message` from a user's request data.
@@ -35,8 +36,8 @@ class Message {
       time: entry['entrytime'].split(' ')[1], // Extract time from the entrytime field
       avatarUrl: "assets/avatar12.svg", // Default avatar URL for user
       message_to: "ai", // Default message source is "user"
-      images:
-      List<String>.from(entry['request']['images']), // Extract images if available
+      images: List<String>.from(entry['request']['images']), // Extract images if available
+      conversation_id: entry['conversation_id'], // Extract conversation ID
     );
   }
 
@@ -49,8 +50,8 @@ class Message {
       text: entry['response'], // Extract the response text
       time: entry['entrytime'], // Use the entrytime for the response's timestamp
       avatarUrl: "assets/avatar12.svg", // Default avatar URL for AI
-      images: [], // No images for AI responses
-    );
+      images: [], // No images for AI responsesa
+      conversation_id: entry['conversation_id']); // Extract conversation ID
   }
 }
 
