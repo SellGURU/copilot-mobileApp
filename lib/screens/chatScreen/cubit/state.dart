@@ -8,7 +8,7 @@ class Message {
   final List<String> images; // A list of image URLs associated with the message (for requests)
   final String message_to; // The source of the message (e.g., "user" or "ai")
   final String conversation_id; // The source of the message (e.g., "user" or "ai")
-  final bool reported;
+  bool reported;
   final String feedback;
   /// Constructor for the `Message` class.
   ///

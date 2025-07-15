@@ -774,91 +774,94 @@ class _ChatscreenState extends State<Chatscreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              textDirection: TextDirection.ltr,
-              children: [
-                CircleAvatar(
-                  radius: 15,
-                  backgroundColor: AppColors.purpleDark,
-                  child: Text(
-                    _selectedMode == ChatMode.coach ? "C" : "A",
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 14,
+            Opacity(
+              opacity: reported ? 0.5 : 1.0,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                textDirection: TextDirection.ltr,
+                children: [
+                  CircleAvatar(
+                    radius: 15,
+                    backgroundColor: AppColors.purpleDark,
+                    child: Text(
+                      _selectedMode == ChatMode.coach ? "C" : "A",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
                     ),
                   ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    textDirection: TextDirection.ltr,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        textDirection: TextDirection.ltr,
-                        children: [
-                          Text(
-                            _selectedMode == ChatMode.coach ? "Coach" : "AI Assistant",
-                            style: AppTextStyles.title2
-                                .copyWith(fontWeight: FontWeight.bold),
-                            overflow: TextOverflow.ellipsis,
-                            textDirection: TextDirection.ltr,
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            time.split(' ')[1],
-                            style: AppTextStyles.titleMedium
-                                .copyWith(color: Colors.grey),
-                            textDirection: TextDirection.ltr,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 0),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 255,
-                            padding: const EdgeInsets.all(12),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            child: Text(
-                              text,
-                              style: AppTextStyles.titleMedium,
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      textDirection: TextDirection.ltr,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          textDirection: TextDirection.ltr,
+                          children: [
+                            Text(
+                              _selectedMode == ChatMode.coach ? "Coach" : "AI Assistant",
+                              style: AppTextStyles.title2
+                                  .copyWith(fontWeight: FontWeight.bold),
+                              overflow: TextOverflow.ellipsis,
                               textDirection: TextDirection.ltr,
                             ),
-                          ),
-                          // const SizedBox(height: 20),
-                          if (bytesImage.isNotEmpty)
+                            const SizedBox(width: 8),
+                            Text(
+                              time.split(' ')[1],
+                              style: AppTextStyles.titleMedium
+                                  .copyWith(color: Colors.grey),
+                              textDirection: TextDirection.ltr,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 0),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
                             Container(
-                              width: 120,
-                              // height: 100,
+                              width: 255,
+                              padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
-                                border: Border.all(
-                                    width: 1, color: AppColors.purpleDark),
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(10)),
+                                color: Colors.grey.shade200,
+                                borderRadius: BorderRadius.circular(12),
                               ),
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(10)),
-                                child: Image.memory(
-                                  bytesImage,
-                                  fit: BoxFit.cover,
-                                ),
+                              child: Text(
+                                text,
+                                style: AppTextStyles.titleMedium,
+                                textDirection: TextDirection.ltr,
                               ),
                             ),
-                        ],
-                      ),
-                    ],
+                            // const SizedBox(height: 20),
+                            if (bytesImage.isNotEmpty)
+                              Container(
+                                width: 120,
+                                // height: 100,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      width: 1, color: AppColors.purpleDark),
+                                  borderRadius:
+                                      const BorderRadius.all(Radius.circular(10)),
+                                ),
+                                child: ClipRRect(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                  child: Image.memory(
+                                    bytesImage,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             // Icon row outside the bubble
             Padding(
@@ -866,8 +869,9 @@ class _ChatscreenState extends State<Chatscreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  // Copy button - available for both AI and Coach
                   GestureDetector(
-                    onTap: () => _copyMessage(text),
+                    onTap: reported ? null : () => _copyMessage(text),
                     child: Container(
                       padding: const EdgeInsets.all(4),
                       child: Icon(
@@ -877,74 +881,119 @@ class _ChatscreenState extends State<Chatscreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 2),
-                  GestureDetector(
-                    onTap: () => {
-                      _toggleLike(messageIndex,conversationId,feedback),
-                      
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      child: Icon(
-                        isMessageLiked(messageIndex,feedback)
-                            ? Icons.thumb_up
-                            : Icons.thumb_up_outlined,
-                        size: 16,
-                        color: isMessageLiked(messageIndex,feedback)
-                            ? AppColors.purpleDark
-                            : Colors.grey[600],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 2),
-                  GestureDetector(
-                    onTap: () => {
-                      _toggleDislike(messageIndex,conversationId,feedback),
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      child: Icon(
-                        isMessageDisliked(messageIndex,feedback)
-                            ? Icons.thumb_down
-                            : Icons.thumb_down_outlined,
-                        size: 16,
-                        color: isMessageDisliked(messageIndex,feedback)
-                            ? AppColors.purpleDark
-                            : Colors.grey[600],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 2),
-                  PopupMenuButton<String>(
-                    icon: Icon(
-                      Icons.more_horiz,
-                      size: 16,
-                      color: Colors.grey[600],
-                    ),
-                    onSelected: (value) {
-                      if (value == 'report') {
-                        _showReportModal();
-                        conversationIdReport = conversationId;
-                      }
-                    },
-                    itemBuilder: (BuildContext context) => [
-                      const PopupMenuItem<String>(
-                        value: 'report',
-                        height: 40,
-                        child: SizedBox(
-                          width: 60,
-                          child: Text(
-                            'Report',
-                            style: TextStyle(fontSize: 12),
-                            textAlign: TextAlign.center,
+                  // Like, Dislike, and More buttons - only for AI Assistant
+                  if (_selectedMode == ChatMode.ai) ...[
+                    const SizedBox(width: 2),
+                    Opacity(
+                      opacity: reported ? 0.5 : 1.0,
+                      child: GestureDetector(
+                        onTap: reported ? null : () => {
+                          _toggleLike(messageIndex,conversationId,feedback),
+                          
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(4),
+                          child: Icon(
+                            isMessageLiked(messageIndex,feedback)
+                                ? Icons.thumb_up
+                                : Icons.thumb_up_outlined,
+                            size: 16,
+                            color: isMessageLiked(messageIndex,feedback)
+                                ? AppColors.purpleDark
+                                : Colors.grey[600],
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    const SizedBox(width: 2),
+                    Opacity(
+                      opacity: reported ? 0.5 : 1.0,
+                      child: GestureDetector(
+                        onTap: reported ? null : () => {
+                          _toggleDislike(messageIndex,conversationId,feedback),
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(4),
+                          child: Icon(
+                            isMessageDisliked(messageIndex,feedback)
+                                ? Icons.thumb_down
+                                : Icons.thumb_down_outlined,
+                            size: 16,
+                            color: isMessageDisliked(messageIndex,feedback)
+                                ? AppColors.purpleDark
+                                : Colors.grey[600],
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 2),
+                    Opacity(
+                      opacity: reported ? 0.5 : 1.0,
+                      child: reported ? Container(
+                        padding: const EdgeInsets.all(4),
+                        child: Icon(
+                          Icons.more_horiz,
+                          size: 16,
+                          color: Colors.grey[400],
+                        ),
+                      ) : PopupMenuButton<String>(
+                        icon: Icon(
+                          Icons.more_horiz,
+                          size: 16,
+                          color: Colors.grey[600],
+                        ),
+                        onSelected: (value) {
+                          if (value == 'report') {
+                            _showReportModal();
+                            conversationIdReport = conversationId;
+                          }
+                        },
+                        itemBuilder: (BuildContext context) => [
+                          const PopupMenuItem<String>(
+                            value: 'report',
+                            height: 40,
+                            child: SizedBox(
+                              width: 60,
+                              child: Text(
+                                'Report',
+                                style: TextStyle(fontSize: 12),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ],
               ),
             ),
+            // Show feedback text for reported messages - only for AI Assistant
+            if (reported && _selectedMode == ChatMode.ai)
+              Padding(
+                padding: const EdgeInsets.only(top: 2, left: 0),
+                child: Row(
+                  children: [
+                    SvgPicture.asset(
+                      "assets/danger.svg",
+                      width: 16,
+                      height: 16,
+                      // color: Colors.grey[600],
+                    ),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: Text(
+                        "You reported this message. Thank you for your feedback.",
+                        style: AppTextStyles.body2.copyWith(
+                          color: Color.fromRGBO(136, 136, 136, 1.0),
+                          fontSize: 11,
+                          // fontStyle: FontStyle.italic,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
           ],
         ),
       );

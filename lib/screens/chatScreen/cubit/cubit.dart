@@ -17,7 +17,7 @@ class ChatCubit extends Cubit<ChatState> {
     getHistoryChat(messageType: "ai");  // Initialize the chat history when the cubit is created
   }
 
-  // List of messages in the current chat session
+  // List of messages in the cuession
   List<Message> messages = [];
 
   // Dio instance for making network requests
@@ -114,6 +114,11 @@ class ChatCubit extends Cubit<ChatState> {
           "issue_text":issue_text
         },
       );
+      if(response.statusCode == 200){
+        // messages.firstWhere((element) => element.conversation_id == id).reported = true;
+        // emit(ChatHistoryLoaded(List.from(messages)));
+        getHistoryChat(messageType: 'ai'); 
+      }
 
       // if (response.statusCode == 200) {
       //   // Add the AI's response to the list if the request is successful
