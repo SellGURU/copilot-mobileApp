@@ -18,7 +18,8 @@ class Endpoints {
   static const clientInformationMobile = "${baseUrlCodie}client_information_mobile";
   static const google_form = "${baseUrlCodie}google_form";
   static const mobile_chat = "${baseUrlCodie}mobile_chat";
-    static const reportAichat = "${baseUrlCodie}mobile_chat/report";
+  static const reportAichat = "${baseUrlCodie}mobile_chat/report";
+  static const likeDislikeMessage = "${baseUrlCodie}mobile_chat/feedback";
   static const getHistoryChat = "${baseUrlCodie}mobile_chat/get_messages_id";
   static const getQuestionary = "${baseUrlCodie}mobile/tasks/show_assigned_questionaries";
   static const getCheckin = "${baseUrlCodie}mobile/tasks/show_checkin_questions";

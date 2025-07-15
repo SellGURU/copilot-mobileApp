@@ -132,6 +132,21 @@ class ChatCubit extends Cubit<ChatState> {
     }
   }
 
+  Future<void> likeDislikeMessage(String id,feedback) async {
+     var token = await getTokenLocally();  // Retrieve token locally
+    _dio.options.headers['Authorization'] = "Bearer $token";  // Set authorization header
+    try {
+      final response = await _dio.post(
+        Endpoints.likeDislikeMessage,
+        data: {
+          "current_conversation_id":num.parse(id),
+          "feedback":feedback
+        },
+      );
+    }catch(e){
+      // emit(ChatError("An error occurred: $e"));
+    }
+  }
   /// Fetches the chat history from the server and updates the chat state.
   Future<void> getHistoryChat({String messageType = "ai"}) async {
     emit(ChatHistoryLoading());  // Emit loading state

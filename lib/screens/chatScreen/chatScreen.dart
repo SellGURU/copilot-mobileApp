@@ -69,25 +69,29 @@ class _ChatscreenState extends State<Chatscreen> {
   }
 
   // Toggle like status
-  void _toggleLike(int messageIndex) {
+  void _toggleLike(int messageIndex,String conversationId) {
     setState(() {
       if (_likedMessages[messageIndex] == true) {
+        BlocProvider.of<ChatCubit>(context).likeDislikeMessage(conversationId, null);
         _likedMessages[messageIndex] = false;
       } else {
         _likedMessages[messageIndex] = true;
+        BlocProvider.of<ChatCubit>(context).likeDislikeMessage(conversationId, "like");
         _dislikedMessages[messageIndex] = false; // Remove dislike if liked
       }
     });
   }
 
   // Toggle dislike status
-  void _toggleDislike(int messageIndex) {
+  void _toggleDislike(int messageIndex,String conversationId) {
     setState(() {
       if (_dislikedMessages[messageIndex] == true) {
+        BlocProvider.of<ChatCubit>(context).likeDislikeMessage(conversationId, null);
         _dislikedMessages[messageIndex] = false;
       } else {
         _dislikedMessages[messageIndex] = true;
-        _likedMessages[messageIndex] = false; // Remove like if disliked
+        _likedMessages[messageIndex] = false; 
+        BlocProvider.of<ChatCubit>(context).likeDislikeMessage(conversationId, "dislike");// Remove like if disliked
       }
     });
   }
@@ -870,7 +874,10 @@ class _ChatscreenState extends State<Chatscreen> {
                   ),
                   const SizedBox(width: 2),
                   GestureDetector(
-                    onTap: () => _toggleLike(messageIndex),
+                    onTap: () => {
+                      _toggleLike(messageIndex,conversationId),
+                      
+                    },
                     child: Container(
                       padding: const EdgeInsets.all(4),
                       child: Icon(
@@ -886,7 +893,9 @@ class _ChatscreenState extends State<Chatscreen> {
                   ),
                   const SizedBox(width: 2),
                   GestureDetector(
-                    onTap: () => _toggleDislike(messageIndex),
+                    onTap: () => {
+                      _toggleDislike(messageIndex,conversationId),
+                    },
                     child: Container(
                       padding: const EdgeInsets.all(4),
                       child: Icon(
