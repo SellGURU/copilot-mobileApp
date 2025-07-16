@@ -255,11 +255,54 @@ class _ChatscreenState extends State<Chatscreen> {
                         });
                         BlocProvider.of<ChatCubit>(context).ReportMessage(conversationIdReport, _selectedReportReason!, _reportDetailsController.text);
                         Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text('Report submitted: ${_selectedReportReason}'),
-                            duration: const Duration(seconds: 2),
-                          ),
+                        showDialog(
+                          context: context,
+                          barrierDismissible: true,
+                          builder: (BuildContext context) {
+                            Future.delayed(const Duration(seconds: 2), () {
+                              if (Navigator.of(context).canPop()) {
+                                Navigator.of(context).pop();
+                              }
+                            });
+                            return Align(
+                              alignment: Alignment.topCenter,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 60.0),
+                                child: Material(
+                                  color: Colors.transparent,
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(20.0),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Color.fromRGBO(24, 39, 75, 0.08),
+                                          blurRadius: 24,
+                                          offset: Offset(0, 8),
+                                        ),
+                                      ],
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Icon(
+                                          Icons.check_circle,
+                                          color: Colors.green,
+                                          size: 22,
+                                        ),
+                                        const SizedBox(width: 8),
+                                        const Text(
+                                          'Your feedback has been submitted.',
+                                          style: TextStyle(color: Colors.black, fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
                         );
                       },
                   child: Container(
@@ -391,7 +434,7 @@ class _ChatscreenState extends State<Chatscreen> {
                             DropdownMenuItem(
                               value: ChatMode.ai,
                               child: Text(
-                                "AI Assistant",
+                                "AI Copilot",
                                 style: const TextStyle(
                                   color: Color(0xFF383838),
                                   fontWeight: FontWeight.w500,
@@ -780,19 +823,44 @@ class _ChatscreenState extends State<Chatscreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 textDirection: TextDirection.ltr,
                 children: [
-                  CircleAvatar(
-                    radius: 15,
-                    backgroundColor: AppColors.purpleDark,
-                    child: Text(
-                      _selectedMode == ChatMode.coach ? "C" : "A",
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
+                  Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: AppColors.gray50, // or any color you want for the border
+                        width: 1,
                       ),
                     ),
+                    child: CircleAvatar(
+                      radius: 15,
+                      backgroundColor:_selectedMode == ChatMode.coach?AppColors.purpleDark : AppColors.bgScreen,
+                      child: _selectedMode == ChatMode.coach ?
+                      Text(
+                            _selectedMode == ChatMode.coach ? "C" : "A",
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 14,
+                            ),
+                          )          
+                      : SvgPicture.asset(
+                        "assets/aiAssistant.svg",
+                        width: 24,
+                        height: 24,
+                        fit: BoxFit.cover,
+                      ),
+                      // child: Text(
+                      //   _selectedMode == ChatMode.coach ? "C" : "A",
+                      //   style: const TextStyle(
+                      //     color: Colors.white,
+                      //     fontWeight: FontWeight.bold,
+                      //     fontSize: 14,
+                      //   ),
+                      // ),
+                    ),
                   ),
-                  const SizedBox(width: 10),
+                 
+                 const SizedBox(width: 10),
                   Expanded(
                     child: Column(
                       textDirection: TextDirection.ltr,
@@ -803,7 +871,7 @@ class _ChatscreenState extends State<Chatscreen> {
                           textDirection: TextDirection.ltr,
                           children: [
                             Text(
-                              _selectedMode == ChatMode.coach ? "Coach" : "AI Assistant",
+                              _selectedMode == ChatMode.coach ? "Coach" : "AI Copilot",
                               style: AppTextStyles.title2
                                   .copyWith(fontWeight: FontWeight.bold),
                               overflow: TextOverflow.ellipsis,
