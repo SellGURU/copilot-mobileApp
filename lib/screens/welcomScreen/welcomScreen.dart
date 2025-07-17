@@ -53,7 +53,7 @@ class _WelcomscreenState extends State<Welcomscreen> {
                             child: Text(
                               "If you received an invitation email, please click the button below.",
                               textAlign: TextAlign.center,
-                              style: AppTextStyles.whiteTitle1,
+                              style: AppTextStyles.title2White,
                             )),
                         const SizedBox(
                           height: 40,
@@ -73,8 +73,12 @@ class _WelcomscreenState extends State<Welcomscreen> {
                             // margin:
                             //     EdgeInsets.symmetric(horizontal: size.width / 10),
                             decoration: BoxDecoration(
-                                color: AppColors.purpleDark,
-                                borderRadius: BorderRadius.circular(20)),
+                                color: AppColors.primaryDeepTeal,
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 1, // 1px
+                                )),
                             // width: size.width,
                             child: Text(
                               "Continue",
