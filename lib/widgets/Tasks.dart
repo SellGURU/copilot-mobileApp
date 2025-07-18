@@ -87,7 +87,7 @@ class _TasksState extends State<Tasks> {
               'type': "Check-In",
               'completed': item['Status'] ==true?'Done':'' // Add custom key
             };
-          }
+            }
           if(item['Task_Type'] == 'Action'){
             if(item['Category'] == 'Diet' || item['Category'] == 'Supplement' || item['Category'] == 'Lifestyle'){
               return {
@@ -128,7 +128,7 @@ class _TasksState extends State<Tasks> {
             'id': item['unique_id'],
             'title': item['title'],
             'type': "Questionary",
-            'completed':item['Status'] ==true?'Done':'' // Add custom key
+            'completed':item['Status'] ==true || item['status'] =='Done'?'Done':'' // Add custom key
           };
         }).toList(); 
         tasks = modifiedData;

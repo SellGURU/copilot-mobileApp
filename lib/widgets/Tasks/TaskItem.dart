@@ -50,7 +50,7 @@ class _TaskItemState extends State<TaskItem> {
       if (taskData['type'] == 'Check-In' || taskData['type'] == 'Questionary') {
         String taskType = taskData['type'] == 'Check-In' ? 'checkin' : 'questionary';
         _controller = WebViewController()
-          ..loadRequest(Uri.parse("https://holisticare.vercel.app/$taskType/$encodeId/${taskData["id"]}"));
+          ..loadRequest(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${taskData["id"]}"));
         setState(() {});
       }
     }else {
@@ -58,7 +58,7 @@ class _TaskItemState extends State<TaskItem> {
         String taskType = taskData['type'] == 'Check-In' ? 'checkin' : 'questionary';
         _controller = WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          ..loadRequest(Uri.parse("https://holisticare.vercel.app/$taskType/$encodeId/${taskData["id"]}"));
+          ..loadRequest(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${taskData["id"]}"));
         setState(() {});
       }
 
@@ -119,7 +119,7 @@ class _TaskItemState extends State<TaskItem> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(100),
                       border: Border.all(
-                        color: taskData["completed"] == 'Done' ? AppColors.greenBega : AppColors.SilverGray,
+                        color: taskData["completed"] == 'Done' || taskData["status"] == 'Done' ? AppColors.greenBega : AppColors.SilverGray,
                         width: 3,
                       )
                     ),
@@ -129,7 +129,7 @@ class _TaskItemState extends State<TaskItem> {
                         width: 16,
                         height: 16,
                         fit: BoxFit.contain,
-                        color: taskData["completed"] == 'Done' ? AppColors.greenBega : AppColors.TextTriarty,
+                        color: taskData["completed"] == 'Done' || taskData["status"] == 'Done' ? AppColors.greenBega : AppColors.TextTriarty,
                       )
                     )
                   ),
@@ -146,7 +146,7 @@ class _TaskItemState extends State<TaskItem> {
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: taskData["completed"] == 'Done'
+                child: taskData["completed"] == 'Done' || taskData["status"] == 'Done'
                   ? GestureDetector(
                       child: Center(
                         child: SvgPicture.asset('assets/tick.svg'),
