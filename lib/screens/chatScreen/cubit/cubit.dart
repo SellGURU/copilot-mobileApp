@@ -115,9 +115,9 @@ class ChatCubit extends Cubit<ChatState> {
         },
       );
       if(response.statusCode == 200){
-        // messages.firstWhere((element) => element.conversation_id == id).reported = true;
-        // emit(ChatHistoryLoaded(List.from(messages)));
-        getHistoryChat(messageType: 'ai'); 
+        messages.firstWhere((element) => element.conversation_id == id).reported = true;
+        emit(ChatHistoryLoaded(List.from(messages)));
+        // getHistoryChat(messageType: 'ai'); 
       }
 
       // if (response.statusCode == 200) {
