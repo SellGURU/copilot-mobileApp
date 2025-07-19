@@ -151,7 +151,7 @@ class _ChatscreenState extends State<Chatscreen> {
           }
         });
         
-                return WillPopScope(
+        return WillPopScope(
           onWillPop: () async {
             setState(() {
               _isReportModalOpen = false;
@@ -182,11 +182,32 @@ class _ChatscreenState extends State<Chatscreen> {
                 //   ),
                 // ),
                 const SizedBox(height: 20),
-                Center(
-                  child: Text(
-                    'Report AI Response',
-                    style: AppTextStyles.headline5,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SizedBox(width: 40), // Empty space to center the title
+                    Expanded(
+                      child: Center(
+                        child: Text(
+                          'Report AI Response',
+                          style: AppTextStyles.headline5,
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        child: SvgPicture.asset(
+                          'assets/close-circle.svg',
+                          width: 24,
+                          height: 24,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 20),
                 Text("Tell us what was wrong with this response.", style: AppTextStyles.body2,),
@@ -204,7 +225,7 @@ class _ChatscreenState extends State<Chatscreen> {
                   ),
                   child: DropdownButtonFormField<String>(
                     value: _selectedReportReason,
-                    
+                    dropdownColor: Colors.white,
                     style: AppTextStyles.body2,
                     // alignment: Alignment.center,
 
@@ -293,15 +314,11 @@ class _ChatscreenState extends State<Chatscreen> {
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Icon(
-                                          Icons.check_circle,
-                                          color: Colors.green,
-                                          size: 22,
-                                        ),
+                                        SvgPicture.asset("assets/iconTick.svg"),
                                         const SizedBox(width: 8),
                                         const Text(
                                           'Your feedback has been submitted.',
-                                          style: TextStyle(color: Colors.black, fontSize: 16),
+                                          style: TextStyle(color:  AppColors.textPrimary, fontSize: 16),
                                         ),
                                       ],
                                     ),
