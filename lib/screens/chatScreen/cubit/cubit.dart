@@ -116,6 +116,7 @@ class ChatCubit extends Cubit<ChatState> {
       );
       if(response.statusCode == 200){
         messages.firstWhere((element) => element.conversation_id == id).reported = true;
+        print(messages);
         emit(ChatHistoryLoaded(List.from(messages)));
         // getHistoryChat(messageType: 'ai'); 
       }
@@ -156,6 +157,59 @@ class ChatCubit extends Cubit<ChatState> {
       // emit(ChatError("An error occurred: $e"));
     }
   }
+
+  /// Regenerates the last AI response by removing the last AI message and resending the last user message
+  Future<void> regenerateMessage({String message_to = "ai"}) async {
+    if (messages.isEmpty) return;
+    
+    // Find the last user message and last AI message
+    Message? lastUserMessage;
+    int lastAiMessageIndex = -1;
+    int lastUserMessageIndex = -1;
+    String? lastAiConversationId;
+    
+    for (int i = messages.length - 1; i >= 0; i--) {
+      if (messages[i].sender == "User") {
+        lastUserMessage = messages[i];
+        lastUserMessageIndex = i;
+        break;
+      }
+    }
+    
+    for (int i = messages.length - 1; i >= 0; i--) {
+      if (messages[i].sender == "Ai") {
+        lastAiMessageIndex = i;
+        if(i-2 >= 0){
+          lastAiConversationId = messages[i-2].conversation_id;
+        }else {
+          lastAiConversationId = "1";
+        }
+        break;
+      }
+    }
+    
+    // If no user message found or no AI message to remove, return
+    if (lastUserMessage == null || lastAiMessageIndex == -1) return;
+    
+    // Store the conversation ID from the last AI message
+    if (lastAiConversationId != null) {
+      conversationId = int.parse(lastAiConversationId);
+    }
+    
+    // Remove both the last AI message and the last user message
+    if (lastAiMessageIndex > lastUserMessageIndex) {
+      messages.removeAt(lastAiMessageIndex);
+      messages.removeAt(lastUserMessageIndex);
+    } else {
+      messages.removeAt(lastUserMessageIndex);
+      messages.removeAt(lastAiMessageIndex);
+    }
+    emit(ChatHistoryLoaded(List.from(messages)));
+    
+    // Resend the last user message to regenerate the response
+    await sendMessage(lastUserMessage.text, lastUserMessage.images.isNotEmpty ? lastUserMessage.images[0] : "", message_to: message_to);
+  }
+
   /// Fetches the chat history from the server and updates the chat state.
   Future<void> getHistoryChat({String messageType = "ai"}) async {
     emit(ChatHistoryLoading());  // Emit loading state

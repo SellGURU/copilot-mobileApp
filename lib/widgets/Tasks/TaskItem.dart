@@ -11,6 +11,7 @@ import 'cubit.dart';
 import 'state.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:url_launcher/url_launcher.dart';
 
 class TaskItem extends StatefulWidget {
   final Map<String, dynamic> task;
@@ -49,6 +50,7 @@ class _TaskItemState extends State<TaskItem> {
     if (kIsWeb) {
       if (taskData['type'] == 'Check-In' || taskData['type'] == 'Questionary') {
         String taskType = taskData['type'] == 'Check-In' ? 'checkin' : 'questionary';
+        // launchUrl(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${taskData["id"]}"));
         _controller = WebViewController()
           ..loadRequest(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${taskData["id"]}"));
         setState(() {});
@@ -56,6 +58,7 @@ class _TaskItemState extends State<TaskItem> {
     }else {
       if (taskData['type'] == 'Check-In' || taskData['type'] == 'Questionary') {
         String taskType = taskData['type'] == 'Check-In' ? 'checkin' : 'questionary';
+        // launchUrl(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${taskData["id"]}"));
         _controller = WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
           ..loadRequest(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${taskData["id"]}"));
@@ -67,35 +70,37 @@ class _TaskItemState extends State<TaskItem> {
 
   void _openWebViewModal(BuildContext context, String title) {
     if (taskData['type'] == 'Check-In' || taskData['type'] == 'Questionary') {
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        builder: (context) {
-          return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.9,
-            child: Column(
-              children: [
-                AppBar(
-                  title: Text(title, style: AppTextStyles.title1),
-                  automaticallyImplyLeading: false,
-                  actions: [
-                    IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,  // مهم
-                    child: WebViewWidget(controller: _controller),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      );
+      // showModalBottomSheet(
+      //   context: context,
+      //   isScrollControlled: true,
+      //   builder: (context) {
+      //     return SizedBox(
+      //       height: MediaQuery.of(context).size.height * 0.9,
+      //       child: Column(
+      //         children: [
+      //           AppBar(
+      //             title: Text(title, style: AppTextStyles.title1),
+      //             automaticallyImplyLeading: false,
+      //             actions: [
+      //               IconButton(
+      //                 icon: const Icon(Icons.close),
+      //                 onPressed: () => Navigator.pop(context),
+      //               ),
+      //             ],
+      //           ),
+      //           Expanded(
+      //             child: GestureDetector(
+      //               behavior: HitTestBehavior.opaque,  // مهم
+      //               child: WebViewWidget(controller: _controller),
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //     );
+      //   },
+      // );
+       String taskType = taskData['type'] == 'Check-In' ? 'checkin' : 'questionary';
+      launchUrl(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${taskData["id"]}"));
     }
   }
 
@@ -136,7 +141,12 @@ class _TaskItemState extends State<TaskItem> {
                   Text(taskData["title"], style: AppTextStyles.hintMedium)
                 ],
               ),
-              Container(
+              GestureDetector(
+                onTap: () {
+                  _openWebViewModal(context, taskData["title"]);
+                  context.read<TaskCubit>().completeTask(taskData);
+                },                
+                child: Container(
                 width: 24,
                 height: 24,
                 decoration: BoxDecoration(
@@ -156,12 +166,12 @@ class _TaskItemState extends State<TaskItem> {
                       child: Center(
                         child: SvgPicture.asset('assets/pelas.svg'),
                       ),
-                      onTap: () {
-                        _openWebViewModal(context, taskData["title"]);
-                        context.read<TaskCubit>().completeTask(taskData);
-                      },
+
                     )
               )
+             ,
+              )
+
             ],
           );
         }

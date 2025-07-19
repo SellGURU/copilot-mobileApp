@@ -68,6 +68,13 @@ class _ChatscreenState extends State<Chatscreen> {
     );
   }
 
+  // Regenerate the last AI message
+  void _regenerateMessage() {
+    BlocProvider.of<ChatCubit>(context).regenerateMessage(
+      message_to: _selectedMode == ChatMode.coach ? "coach" : "ai"
+    );
+  }
+
   // Toggle like status
   void _toggleLike(int messageIndex,String conversationId,String feedback) {
     setState(() {
@@ -938,19 +945,33 @@ class _ChatscreenState extends State<Chatscreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   // Copy button - available for both AI and Coach
-                  GestureDetector(
-                    onTap: reported ? null : () => _copyMessage(text),
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      child: Icon(
-                        Icons.copy,
-                        size: 16,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ),
+
                   // Like, Dislike, and More buttons - only for AI Assistant
                   if (_selectedMode == ChatMode.ai) ...[
+                    // Regenerate button - only for the last AI message
+                    if (messageIndex == context.read<ChatCubit>().messages.length - 1) ...[
+                      Opacity(
+                        opacity: reported ? 0.5 : 1.0,
+                        child:GestureDetector(
+                          onTap: reported ? null : () => _regenerateMessage(),
+                          child: Container(
+                          padding: const EdgeInsets.all(4),
+                          child: SvgPicture.asset('assets/refresh-2.svg',width: 16,height: 16)
+                        ),
+                      ),
+                      ),                    
+                      const SizedBox(width: 2),
+                    ],
+                    Opacity(
+                      opacity: reported ? 0.5 : 1.0,
+                      child:GestureDetector(
+                        onTap: reported ? null : () => _copyMessage(text),
+                        child: Container(
+                        padding: const EdgeInsets.all(4),
+                        child: SvgPicture.asset('assets/copy.svg',width: 16,height: 16)
+                      ),
+                    ),
+                    ),                    
                     const SizedBox(width: 2),
                     Opacity(
                       opacity: reported ? 0.5 : 1.0,
@@ -961,15 +982,7 @@ class _ChatscreenState extends State<Chatscreen> {
                         },
                         child: Container(
                           padding: const EdgeInsets.all(4),
-                          child: Icon(
-                            isMessageLiked(messageIndex,feedback)
-                                ? Icons.thumb_up
-                                : Icons.thumb_up_outlined,
-                            size: 16,
-                            color: isMessageLiked(messageIndex,feedback)
-                                ? AppColors.purpleDark
-                                : Colors.grey[600],
-                          ),
+                          child: isMessageLiked(messageIndex,feedback)?SvgPicture.asset('assets/likefill.svg',width: 16,height: 16):SvgPicture.asset('assets/like.svg',width: 16,height: 16),
                         ),
                       ),
                     ),
@@ -982,15 +995,9 @@ class _ChatscreenState extends State<Chatscreen> {
                         },
                         child: Container(
                           padding: const EdgeInsets.all(4),
-                          child: Icon(
-                            isMessageDisliked(messageIndex,feedback)
-                                ? Icons.thumb_down
-                                : Icons.thumb_down_outlined,
-                            size: 16,
-                            color: isMessageDisliked(messageIndex,feedback)
-                                ? AppColors.purpleDark
-                                : Colors.grey[600],
-                          ),
+                          child: isMessageDisliked(messageIndex,feedback)?
+                          SvgPicture.asset('assets/dislikefill.svg',width: 16,height: 16):
+                          SvgPicture.asset('assets/dislike.svg',width: 16,height: 16),
                         ),
                       ),
                     ),
@@ -999,17 +1006,9 @@ class _ChatscreenState extends State<Chatscreen> {
                       opacity: reported ? 0.5 : 1.0,
                       child: reported ? Container(
                         padding: const EdgeInsets.all(4),
-                        child: Icon(
-                          Icons.more_horiz,
-                          size: 16,
-                          color: Colors.grey[400],
-                        ),
+                        child: SvgPicture.asset('assets/treepoint.svg')
                       ) : PopupMenuButton<String>(
-                        icon: Icon(
-                          Icons.more_horiz,
-                          size: 16,
-                          color: Colors.grey[600],
-                        ),
+                        icon: SvgPicture.asset('assets/treepoint.svg'),
                         onSelected: (value) {
                           if (value == 'report') {
                             _showReportModal();
