@@ -24,7 +24,7 @@ class _TaskWrapperState extends State<TaskWrapper> {
                   spacing: 4,
                   children: [
                     SvgPicture.asset(
-                        "assets/firstline.svg",
+                        widget.typeName == 'Check-In'?'assets/firstline.svg':'assets/note.svg',
                         fit: BoxFit.cover,
                         width:18,
                         height:18

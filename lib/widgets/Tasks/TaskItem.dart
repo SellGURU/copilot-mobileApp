@@ -130,7 +130,7 @@ class _TaskItemState extends State<TaskItem> {
                     ),
                     child: Center(
                       child: SvgPicture.asset(
-                        'assets/firstline.svg',
+                        taskData['type'] == 'Check-In'?'assets/firstline.svg':'assets/note.svg',
                         width: 16,
                         height: 16,
                         fit: BoxFit.contain,
