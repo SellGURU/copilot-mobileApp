@@ -50,6 +50,9 @@ class _ChatscreenState extends State<Chatscreen> {
 
   // State to track if report modal is open
   bool _isReportModalOpen = false;
+  
+  // State to track if this is the first time loading messages
+  bool _isFirstLoad = true;
 
   Future<String?> getNameUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -396,13 +399,13 @@ class _ChatscreenState extends State<Chatscreen> {
   @override
   void initState() {
     super.initState();
-    // Add a listener to automatically scroll when messages are added
-    _scrollController.addListener(() {
-      if (_scrollController.position.atEdge &&
-          _scrollController.position.pixels != 0) {
-        _scrollToBottom();
-      }
-    });
+    // Remove the auto-scroll listener to prevent unwanted scrolling on like/dislike
+    // _scrollController.addListener(() {
+    //   if (_scrollController.position.atEdge &&
+    //       _scrollController.position.pixels != 0) {
+    //     _scrollToBottom();
+    //   }
+    // });
   }
 
   @override
@@ -483,6 +486,7 @@ class _ChatscreenState extends State<Chatscreen> {
                               setState(() {
                                 _selectedMode = newValue;
                                 _isDropdownOpen = false;
+                                _isFirstLoad = true; // Reset for new mode
                               });
                               // Clear messages and get history for the new mode
                               BlocProvider.of<ChatCubit>(context).clearMessages(messageType: _selectedMode == ChatMode.coach ? "coach" : "ai");
@@ -526,10 +530,13 @@ class _ChatscreenState extends State<Chatscreen> {
                             ),
                           );
                         } else {
-                          // Ensure scrolling after messages are loaded
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            _scrollToBottom();
-                          });
+                          // Scroll to bottom only on first load
+                          if (_isFirstLoad) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              _scrollToBottom();
+                              _isFirstLoad = false;
+                            });
+                          }
                           return Expanded(
                             child: ListView.builder(
                               controller: _scrollController,
