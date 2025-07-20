@@ -6,6 +6,7 @@ import 'package:copilet/screens/mainScreenV2/downloadWeaklyReportState/cubit.dar
 import 'package:copilet/screens/mainScreenV2/downloadWeaklyReportState/state.dart';
 import 'package:copilet/screens/mainScreenV2/userinfoCubit/cubit.dart';
 import 'package:copilet/screens/mainScreenV2/userinfoCubit/state.dart';
+import 'package:copilet/utility/resolveIcon.dart';
 import 'package:copilet/widgets/EmptyBox.dart';
 import 'package:copilet/widgets/SurveysCard/SurveysCard.dart';
 import 'package:copilet/widgets/SurveysCard/googleForm/cubit.dart';
@@ -762,7 +763,7 @@ class _Overview2State extends State<Overview2> {
                             String avg = biomarker["values"][0]?.toString() ?? "0";
                             String current = biomarker["values"][0]?.toString() ?? "0";
                             String unit = biomarker["unit"]?.toString() ?? "";
-                            String icon = biomarker["icon"]?.toString() ?? "assets/Hrate.svg";
+                            String icon = resolveAnalyseIcon(biomarker["subcategory"]?.toString() ?? "");
                             String status = biomarker["status"][0]?.toString() ?? "Unknown";
                             
                             // Safely convert values to List<num>
@@ -775,8 +776,8 @@ class _Overview2State extends State<Overview2> {
                               average: avg,
                               icon: SvgPicture.asset(
                                 icon,
-                                width: 40,
-                                height: 40,
+                                width: 16,
+                                height: 16,
                               ),
                               status: status,
                               current: current,
