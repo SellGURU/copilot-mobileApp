@@ -8,6 +8,7 @@ import 'package:copilet/screens/chatScreen/cubit/cubit.dart';
 import 'package:copilet/screens/chatScreen/cubit/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,6 +54,9 @@ class _ChatscreenState extends State<Chatscreen> {
   
   // State to track if this is the first time loading messages
   bool _isFirstLoad = true;
+  
+  // State to track previous message count for auto-scroll
+  int _previousMessageCount = 0;
 
   Future<String?> getNameUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -125,11 +129,13 @@ class _ChatscreenState extends State<Chatscreen> {
   final ScrollController _scrollController = ScrollController(); // Step 1
 
   void _scrollToBottom() {
-    _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent,
-      duration: Duration(milliseconds: 300),
-      curve: Curves.easeOut,
-    );
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
   }
 
   // Show report bottom modal
@@ -487,6 +493,7 @@ class _ChatscreenState extends State<Chatscreen> {
                                 _selectedMode = newValue;
                                 _isDropdownOpen = false;
                                 _isFirstLoad = true; // Reset for new mode
+                                _previousMessageCount = 0; // Reset message count for new mode
                               });
                               // Clear messages and get history for the new mode
                               BlocProvider.of<ChatCubit>(context).clearMessages(messageType: _selectedMode == ChatMode.coach ? "coach" : "ai");
@@ -530,12 +537,14 @@ class _ChatscreenState extends State<Chatscreen> {
                             ),
                           );
                         } else {
-                          // Scroll to bottom only on first load
-                          if (_isFirstLoad) {
-                            WidgetsBinding.instance.addPostFrameCallback((_) {
-                              _scrollToBottom();
-                              _isFirstLoad = false;
+                          // Scroll to bottom when message count changes (new message added)
+                          if (state.messages.length != _previousMessageCount) {
+                            SchedulerBinding.instance.addPostFrameCallback((_) {
+                              if (mounted && _scrollController.hasClients) {
+                                _scrollToBottom();
+                              }
                             });
+                            _previousMessageCount = state.messages.length;
                           }
                           return Expanded(
                             child: ListView.builder(
