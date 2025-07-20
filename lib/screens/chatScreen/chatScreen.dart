@@ -98,14 +98,11 @@ class _ChatscreenState extends State<Chatscreen> {
 
   // Toggle dislike status
   void _toggleDislike(int messageIndex,String conversationId,String feedback) {
-    print("Dislike tapped! messageIndex: $messageIndex, conversationId: $conversationId, feedback: $feedback");
     setState(() {
       if (isMessageDisliked(messageIndex,feedback)) {
-        print("Removing dislike");
         BlocProvider.of<ChatCubit>(context).likeDislikeMessage(conversationId, null);
         _dislikedMessages[messageIndex] = false;
       } else {
-        print("Adding dislike");
         _dislikedMessages[messageIndex] = true;
         _likedMessages[messageIndex] = false; 
         BlocProvider.of<ChatCubit>(context).likeDislikeMessage(conversationId, "dislike");// Remove like if disliked
@@ -1012,11 +1009,12 @@ class _ChatscreenState extends State<Chatscreen> {
                     Opacity(
                       opacity: reported ? 0.5 : 1.0,
                       child: GestureDetector(
-                        onTap: reported ? null : () {
-                          _toggleLike(messageIndex,conversationId,feedback);
+                        onTap: reported ? null : () => {
+                          _toggleLike(messageIndex,conversationId,feedback),
+                          
                         },
                         child: Container(
-                          padding: const EdgeInsets.all(8), // Increased padding for better touch target
+                          padding: const EdgeInsets.all(4),
                           child: isMessageLiked(messageIndex,feedback)?SvgPicture.asset('assets/likefill.svg',width: 16,height: 16):SvgPicture.asset('assets/like.svg',width: 16,height: 16),
                         ),
                       ),
@@ -1025,13 +1023,13 @@ class _ChatscreenState extends State<Chatscreen> {
                     Opacity(
                       opacity: reported ? 0.5 : 1.0,
                       child: GestureDetector(
-                        onTap: reported ? null : () {
-                          _toggleDislike(messageIndex,conversationId,feedback);
+                        onTap: reported ? null : () => {
+                          _toggleDislike(messageIndex,conversationId,feedback),
                         },
                         child: Container(
-                          padding: const EdgeInsets.all(8), // Increased padding for better touch target
+                          padding: const EdgeInsets.all(4),
                           child: isMessageDisliked(messageIndex,feedback)?
-                          SvgPicture.asset('assets/dislikefill.svg',width: 16,height: 16):
+                          SvgPicture.asset('assets/dislikeFill.svg',width: 16,height: 16):
                           SvgPicture.asset('assets/dislike.svg',width: 16,height: 16),
                         ),
                       ),
