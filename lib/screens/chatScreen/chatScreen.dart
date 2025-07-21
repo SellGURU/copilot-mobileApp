@@ -37,6 +37,8 @@ class _ChatscreenState extends State<Chatscreen> {
   // State management for like/dislike buttons
   Map<int, bool> _likedMessages = {};
   Map<int, bool> _dislikedMessages = {};
+  // State management for copied messages
+  Map<int, bool> _copiedMessages = {};
 
   // State management for report modal
   String? _selectedReportReason;
@@ -65,14 +67,26 @@ class _ChatscreenState extends State<Chatscreen> {
   }
 
   // Copy message to clipboard
-  void _copyMessage(String text) {
+  void _copyMessage(String text, [int? messageIndex]) {
     Clipboard.setData(ClipboardData(text: text));
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Message copied to clipboard'),
-        duration: Duration(seconds: 2),
-      ),
-    );
+    if (messageIndex != null) {
+      setState(() {
+        _copiedMessages[messageIndex] = true;
+      });
+      Future.delayed(const Duration(seconds: 2), () {
+        if (mounted) {
+          setState(() {
+            _copiedMessages[messageIndex] = false;
+          });
+        }
+      });
+    }
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   const SnackBar(
+    //     content: Text('Message copied to clipboard'),
+    //     duration: Duration(seconds: 2),
+    //   ),
+    // );
   }
 
   // Regenerate the last AI message
@@ -323,11 +337,11 @@ class _ChatscreenState extends State<Chatscreen> {
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        SvgPicture.asset("assets/iconTick.svg"),
+                                        SvgPicture.asset("assets/iconTick.svg",width: 16,height: 16),
                                         const SizedBox(width: 8),
                                         const Text(
                                           'Your feedback has been submitted.',
-                                          style: TextStyle(color:  AppColors.textPrimary, fontSize: 16),
+                                          style: TextStyle(color:  AppColors.textPrimary, fontSize: 12),
                                         ),
                                       ],
                                     ),
@@ -345,7 +359,7 @@ class _ChatscreenState extends State<Chatscreen> {
                     // margin:
                     //     EdgeInsets.symmetric(horizontal: size.width / 10),
                     decoration: BoxDecoration(
-                        color: AppColors.purpleDark,
+                        color: AppColors.mainSecandaryColor,
                         borderRadius: BorderRadius.circular(20)),
                     // width: size.width,
                     child: Text(
@@ -998,10 +1012,12 @@ class _ChatscreenState extends State<Chatscreen> {
                     Opacity(
                       opacity: reported ? 0.5 : 1.0,
                       child:GestureDetector(
-                        onTap: reported ? null : () => _copyMessage(text),
+                        onTap: reported ? null : () => _copyMessage(text, messageIndex),
                         child: Container(
                         padding: const EdgeInsets.all(4),
-                        child: SvgPicture.asset('assets/copy.svg',width: 16,height: 16)
+                        child: _copiedMessages[messageIndex] == true
+                          ? SvgPicture.asset('assets/tickNormal.svg',width: 10,height: 10)
+                          : SvgPicture.asset('assets/copy.svg',width: 16,height: 16)
                       ),
                     ),
                     ),                    
@@ -1051,7 +1067,7 @@ class _ChatscreenState extends State<Chatscreen> {
                         itemBuilder: (BuildContext context) => [
                           const PopupMenuItem<String>(
                             value: 'report',
-                            height: 40,
+                            height: 30,
                             child: SizedBox(
                               width: 60,
                               child: Text(
