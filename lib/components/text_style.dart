@@ -85,7 +85,7 @@ class AppTextStyles {
       fontWeight: FontWeight.w500);
 
   static TextStyle title2White = GoogleFonts.roboto(
-      textStyle: TextStyle(fontSize: 14, color: AppColors.mainBg),
+      textStyle: TextStyle(fontSize: 16, color: AppColors.mainBg),
       fontWeight: FontWeight.w500);
 
   static TextStyle title2Gray = GoogleFonts.roboto(
@@ -104,10 +104,13 @@ class AppTextStyles {
           height: 1.5));
   static TextStyle hintTextPrimaryWithHeight = GoogleFonts.roboto(
       textStyle: TextStyle(
-          fontSize: 12,
+          fontSize: 14,
           color: AppColors.textPrimary,
           fontWeight: FontWeight.w400,
           height: 1.5));
+    static TextStyle hintWhitexl = GoogleFonts.inter(
+      textStyle: TextStyle(
+          fontSize: 14, color: Colors.white, fontWeight: FontWeight.w400));        
   static TextStyle hintWhite = GoogleFonts.inter(
       textStyle: TextStyle(
           fontSize: 12, color: Colors.white, fontWeight: FontWeight.w400));

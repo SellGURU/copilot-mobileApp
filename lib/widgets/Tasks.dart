@@ -125,6 +125,8 @@ class _TasksState extends State<Tasks> {
           };
           
         }).toList(); 
+        // Sort by id
+        modifiedData.sort((a, b) => a['id'].toString().compareTo(b['id'].toString()));
         tasks = modifiedData;
         });
       }else {
@@ -137,6 +139,8 @@ class _TasksState extends State<Tasks> {
             'completed':item['Status'] ==true || item['status'] =='Done'?'Done':'' // Add custom key
           };
         }).toList(); 
+        // Sort by id
+        modifiedData.sort((a, b) => a['id'].toString().compareTo(b['id'].toString()));
         tasks = modifiedData;
         });
 

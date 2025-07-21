@@ -40,10 +40,10 @@ class _WelcomscreenState extends State<Welcomscreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset("assets/GermanClinic.png"),
+                        Image.asset("assets/logoH.png"),
                         // Text("Clinic Logo",
                         //     style: AppTextStyles.title4xlLiteWeight),
-                        Text("Welcome to German Clinic!",
+                        Text("Welcome to HolistiCare!",
                             style: AppTextStyles.title3xlLiteWeight),
                         const SizedBox(
                           height: 40,
@@ -82,7 +82,7 @@ class _WelcomscreenState extends State<Welcomscreen> {
                             // width: size.width,
                             child: Text(
                               "Continue",
-                              style: AppTextStyles.hintWhite,
+                              style: AppTextStyles.hintWhitexl,
                             ),
                           ),
                         ),

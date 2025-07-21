@@ -234,15 +234,22 @@ class _LoginPageState extends State<LoginPage> {
                           fit: BoxFit.cover,
                         ),
                         Positioned(
-                            left:
-                                (size.width > 420 ? 130 : size.width / 2 - 66),
-                            top: 100,
-                            // child: Image.asset(
-                            //   "assets/logoIcon.png",
-                            //   width: 80,
-                            //   height: 70,
-                            // ))
-                            child: Image.asset("assets/GermanClinic.png"))
+                          left: (size.width > 420 ? 130 : size.width / 2 - 66),
+                          top: 100,
+                          child: Container(
+                            width: 132,
+                            height: 132,
+                            child: Image.asset("assets/logoH.png"),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                              border: Border.all(
+                                color: AppColors.mainPrimaryColor,
+                                width: 2, // Adjust border thickness as needed
+                              ),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     Padding(
