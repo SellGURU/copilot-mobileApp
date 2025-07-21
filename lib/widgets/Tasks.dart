@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:copilet/components/text_style.dart';
 import 'package:copilet/constants/endPoints.dart';
@@ -32,6 +33,7 @@ class _TasksState extends State<Tasks> {
   // Static list to track all Tasks instances
   static final List<_TasksState> _instances = [];
   
+  Timer? _timer; // Timer for periodic fetch
   List<String> taskTypes = ['Check-In', 'Diet','Activity','Supplement','Lifestyle', 'Questionary'];
   List<Map<String, dynamic>> tasks = [
     // { "id": 1, "title": "Daily Check in", "type": "Check-In", "completed": false },
@@ -48,11 +50,15 @@ class _TasksState extends State<Tasks> {
     super.initState();
     _instances.add(this);
     fetchQuestionary();
+    _timer = Timer.periodic(const Duration(seconds: 20), (timer) {
+      fetchQuestionary();
+    });
   }
 
   @override
   void dispose() {
     _instances.remove(this);
+    _timer?.cancel(); // Cancel timer to avoid memory leaks
     super.dispose();
   }
 
