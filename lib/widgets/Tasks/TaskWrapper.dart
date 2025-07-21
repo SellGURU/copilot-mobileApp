@@ -16,6 +16,26 @@ class TaskWrapper extends StatefulWidget {
 }
 
 class _TaskWrapperState extends State<TaskWrapper> {
+  String getTypeIconAssetPath(String typeName) {
+    print(typeName);
+    switch (typeName) {
+      case 'Check-In':
+        return 'assets/firstline.svg';
+      // Add more cases here as needed
+      case 'Diet':
+        return 'assets/apple2.svg';
+      
+      case 'Supplement':
+        return 'assets/suppliment.svg';
+      case 'Lifestyle':
+        return 'assets/lifestyle2.svg';
+      case 'Activity':
+        return 'assets/activity.svg';
+      default:
+        return 'assets/note.svg';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -24,7 +44,7 @@ class _TaskWrapperState extends State<TaskWrapper> {
                   spacing: 4,
                   children: [
                     SvgPicture.asset(
-                        widget.typeName == 'Check-In'?'assets/firstline.svg':'assets/note.svg',
+                        getTypeIconAssetPath(widget.typeName),
                         fit: BoxFit.cover,
                         width:18,
                         height:18
