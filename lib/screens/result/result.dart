@@ -41,396 +41,391 @@ class _ResultScreenState extends State<ResultScreen> {
         }
         var data = state.getBiomarkerData();
         if (state is SuccessBiomarkerState) {
-          return SingleChildScrollView(
-
-            child: Container(
-              margin: EdgeInsets.only(top: size.height * .02),
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Your Results",
-                        style: AppTextStyles.title1,
-                      ),
-                      NotificationWidget(
-                        notificationCount: 2,
-                        notifications: [
-                          NotificationItem(
-                            title: "New Tasks, New You!",
-                            message: "Your latest health action plan is ready! Check out your new tasks in the Overview section and take the next step toward a longer, healthier life.",
-                            timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
-                            type: NotificationType.info,
-                            isRead: false,
-                          ),
-                          NotificationItem(
-                            title: "Your Progress Awaits!",
-                            message: "Ready to level up your health? Complete your Health Questionnaire to help us build a more personalized and effective wellness plan just for you.",
-                            timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
-                            type: NotificationType.info,
-                            isRead: false,
-                          ),    
-                        ],
-                        onNotificationTap: () {
-                          // Handle notification tap
-                          print('Notification tapped');
-                        },
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(15)),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(.1),
-                            spreadRadius: 2,
-                            blurRadius: 2,
-                            offset: const Offset(
-                                0, 1), // changes position of shadow
-                          ),
-                        ]),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: [
-                          // GestureDetector(
-                          //   onTap: () {
-                          //     setState(() {
-                          //       indexItem = 0;
-                          //       itemSelectedFiltered = "Blood";
-                          //     });
-                          //   },
-                          //   child: Container(
-                          //     decoration: BoxDecoration(
-                          //       borderRadius:
-                          //           BorderRadius.all(Radius.circular(15)),
-                          //       color: indexItem == 0
-                          //           ? AppColors.purpleDark
-                          //           : Colors.white,
-                          //     ),
-                          //     height: 40,
-                          //     child: Padding(
-                          //       padding: const EdgeInsets.symmetric(
-                          //           horizontal: 20.0, vertical: 12),
-                          //       child: Row(
-                          //         children: [
-                          //           // SvgPicture.asset("assets/drops.svg",
-                          //           //     colorFilter: ColorFilter.mode(
-                          //           //         indexItem == 0
-                          //           //             ? AppColors.mainBg
-                          //           //             : AppColors.textLite,
-                          //           //         BlendMode.srcIn)),
-                          //           // const SizedBox(
-                          //           //   width: 7,
-                          //           // ),
-                          //           Text(
-                          //             "Blood",
-                          //             style: indexItem == 0
-                          //                 ? AppTextStyles.hintWhite
-                          //                 : AppTextStyles.hint,
-                          //           )
-                          //         ],
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          // GestureDetector(
-                          //   onTap: () {
-                          //     setState(() {
-                          //       indexItem = 1;
-                          //       itemSelectedFiltered = "Activity";
-                          //     });
-                          //   },
-                          //   child: Container(
-                          //     decoration: BoxDecoration(
-                          //       borderRadius:
-                          //           BorderRadius.all(Radius.circular(15)),
-                          //       color: indexItem == 1
-                          //           ? AppColors.purpleDark
-                          //           : Colors.white,
-                          //     ),
-                          //     height: 40,
-                          //     child: Padding(
-                          //       padding: const EdgeInsets.symmetric(
-                          //           horizontal: 20, vertical: 8),
-                          //       child: Row(
-                          //         children: [
-                          //           // SvgPicture.asset("assets/weight.svg",
-                          //           //     colorFilter: ColorFilter.mode(
-                          //           //         indexItem == 1
-                          //           //             ? AppColors.mainBg
-                          //           //             : AppColors.textLite,
-                          //           //         BlendMode.srcIn)),
-                          //           // const SizedBox(
-                          //           //   width: 7,
-                          //           // ),
-                          //           Text(
-                          //             "Activity",
-                          //             style: indexItem == 1
-                          //                 ? AppTextStyles.hintWhite
-                          //                 : AppTextStyles.hint,
-                          //           )
-                          //         ],
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          // GestureDetector(
-                          //   onTap: () {
-                          //     setState(() {
-                          //       indexItem = 2;
-                          //       itemSelectedFiltered = "DNA";
-                          //     });
-                          //   },
-                          //   child: Container(
-                          //     decoration: BoxDecoration(
-                          //       borderRadius:
-                          //           BorderRadius.all(Radius.circular(15)),
-                          //       color: indexItem == 2
-                          //           ? AppColors.purpleDark
-                          //           : Colors.white,
-                          //     ),
-                          //     height: 40,
-                          //     child: Padding(
-                          //       padding: const EdgeInsets.symmetric(
-                          //           horizontal: 20, vertical: 8),
-                          //       child: Row(
-                          //         children: [
-                          //           // SvgPicture.asset("assets/dna.svg",
-                          //           //     colorFilter: ColorFilter.mode(
-                          //           //         indexItem == 2
-                          //           //             ? AppColors.mainBg
-                          //           //             : AppColors.textLite,
-                          //           //         BlendMode.srcIn)),
-                          //           // const SizedBox(
-                          //           //   width: 7,
-                          //           // ),
-                          //           Text(
-                          //             "DNA",
-                          //             style: indexItem == 2
-                          //                 ? AppTextStyles.hintWhite
-                          //                 : AppTextStyles.hint,
-                          //           )
-                          //         ],
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-                          // GestureDetector(
-                          //   onTap: () {
-                          //     setState(() {
-                          //       indexItem = 3;
-                          //       itemSelectedFiltered = "Aging";
-                          //     });
-                          //   },
-                          //   child: Container(
-                          //     decoration: BoxDecoration(
-                          //       borderRadius:
-                          //           BorderRadius.all(Radius.circular(15)),
-                          //       color: indexItem == 3
-                          //           ? AppColors.purpleDark
-                          //           : Colors.white,
-                          //     ),
-                          //     height: 40,
-                          //     child: Padding(
-                          //       padding: const EdgeInsets.symmetric(
-                          //           horizontal: 20.0, vertical: 8),
-                          //       child: Row(
-                          //         children: [
-                          //           // SvgPicture.asset("assets/monitor.svg",
-                          //           //     colorFilter: ColorFilter.mode(
-                          //           //         indexItem == 3
-                          //           //             ? AppColors.mainBg
-                          //           //             : AppColors.textLite,
-                          //           //         BlendMode.srcIn)),
-                          //           // const SizedBox(
-                          //           //   width: 7,
-                          //           // ),
-                          //           Text(
-                          //             "Aging",
-                          //             style: indexItem == 3
-                          //                 ? AppTextStyles.hintWhite
-                          //                 : AppTextStyles.hint,
-                          //           )
-                          //         ],
-                          //       ),
-                          //     ),
-                          //   ),
-                          // ),
-
-                        ],
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          // Text(
-                          //   "Last Update:",
-                          //   style: AppTextStyles.hint,
-                          // ),
-                          // Text(
-                          //   "May,12,2024",
-                          //   style: AppTextStyles.title2,
-                          // ),
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          SizedBox(
-                            height: 30,
-                            width: 50,
-                            child: FittedBox(
-                              fit: BoxFit.fill,
-                              child: BlocBuilder<SwitchValueGraphBloc,
-                                  SwitchValueState>(
-                                builder: (context, state) {
-                                  return CupertinoSwitch(
-                                    autofocus: false,
-                                    activeColor: AppColors.iconPurpleDark,
-                                    value: state.switchValue,
-                                    onChanged: (value) {
-                                      print(state.switchValue);
-                                      BlocProvider.of<SwitchValueGraphBloc>(context)
-                                          .add(UpdateSwitchValueGraph(value));
-                                      // valueSwitch = value;
-                                    },
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 5,),
-                          Text("Graph View",style: AppTextStyles.hintMedium,),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    width: size.width,
-                    height: size.height * .63,
-                    child: ListView.separated(
-                      itemCount: data["data"].length,
-                      itemBuilder: (BuildContext context, int index) {
-                        if (index ==0){
-                          return SizedBox(width: 0,);
-                        }
-                        return BioMarkerCard(
-                          label:data["data"][index]["name"],
-                          colorBadge:"red", 
-                          data: data["data"][index],
-                        );
-                        
-                      },
-                      separatorBuilder: (BuildContext context, int index) {
-                        if (itemSelectedFiltered ==
-                                data["data"][index]["tag"] ||
-                            itemSelectedFiltered == "all") {
-                          return const SizedBox(
-                            height: 20,
-                          );
-                        }
-                        return const SizedBox(
-                          height: 0,
-                        );
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        } else {
           return Container(
-              margin: EdgeInsets.only(top: size.height * .02),
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Your Results",
-                        style: AppTextStyles.title1,
-                      ),
-                      NotificationWidget(
-                        notificationCount: 2,
-                        notifications: [
-                            NotificationItem(
-                              title: "New Tasks, New You!",
-                              message: "Your latest health action plan is ready! Check out your new tasks in the Overview section and take the next step toward a longer, healthier life.",
-                              timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
-                              type: NotificationType.info,
-                              isRead: false,
-                            ),
-                            NotificationItem(
-                              title: "Your Progress Awaits!",
-                              message: "Ready to level up your health? Complete your Health Questionnaire to help us build a more personalized and effective wellness plan just for you.",
-                              timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
-                              type: NotificationType.info,
-                              isRead: false,
-                            ),                  
-                        ],           
-                        onNotificationTap: () {
-                          // Handle notification tap
-                          print('Notification tapped');
-                        },
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+            margin: EdgeInsets.only(top: size.height * .02),
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Your Results",
+                      style: AppTextStyles.title1,
+                    ),
+                    NotificationWidget(
+                      notificationCount: 2,
+                      notifications: [
+                        NotificationItem(
+                          title: "New Tasks, New You!",
+                          message: "Your latest health action plan is ready! Check out your new tasks in the Overview section and take the next step toward a longer, healthier life.",
+                          timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                          type: NotificationType.info,
+                          isRead: false,
+                        ),
+                        NotificationItem(
+                          title: "Your Progress Awaits!",
+                          message: "Ready to level up your health? Complete your Health Questionnaire to help us build a more personalized and effective wellness plan just for you.",
+                          timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                          type: NotificationType.info,
+                          isRead: false,
+                        ),
+                      ],
+                      onNotificationTap: () {
+                        // Handle notification tap
+                        print('Notification tapped');
+                      },
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius:
+                          const BorderRadius.all(Radius.circular(15)),
                       color: Colors.white,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(.1),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: const Offset(3, 0),
+                          spreadRadius: 2,
+                          blurRadius: 2,
+                          offset: const Offset(
+                              0, 1), // changes position of shadow
                         ),
                       ]),
-                    height: size.height -150,
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                            "assets/direct.svg",
-                            width: 48,
-                            height: 48,
-                            fit: BoxFit.cover,
-                          ),
-                          SizedBox(height: 8,),
-                          Text("No Results Available Yet",style: AppTextStyles.headline6,),
-                          SizedBox(height: 8,),
-                          Text("Once your test results are uploaded, you’ll see detailed results here",style: AppTextStyles.body2Secondary,)
-                        ],
-                      ),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     setState(() {
+                        //       indexItem = 0;
+                        //       itemSelectedFiltered = "Blood";
+                        //     });
+                        //   },
+                        //   child: Container(
+                        //     decoration: BoxDecoration(
+                        //       borderRadius:
+                        //           BorderRadius.all(Radius.circular(15)),
+                        //       color: indexItem == 0
+                        //           ? AppColors.purpleDark
+                        //           : Colors.white,
+                        //     ),
+                        //     height: 40,
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.symmetric(
+                        //           horizontal: 20.0, vertical: 12),
+                        //       child: Row(
+                        //         children: [
+                        //           // SvgPicture.asset("assets/drops.svg",
+                        //           //     colorFilter: ColorFilter.mode(
+                        //           //         indexItem == 0
+                        //           //             ? AppColors.mainBg
+                        //           //             : AppColors.textLite,
+                        //           //         BlendMode.srcIn)),
+                        //           // const SizedBox(
+                        //           //   width: 7,
+                        //           // ),
+                        //           Text(
+                        //             "Blood",
+                        //             style: indexItem == 0
+                        //                 ? AppTextStyles.hintWhite
+                        //                 : AppTextStyles.hint,
+                        //           )
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     setState(() {
+                        //       indexItem = 1;
+                        //       itemSelectedFiltered = "Activity";
+                        //     });
+                        //   },
+                        //   child: Container(
+                        //     decoration: BoxDecoration(
+                        //       borderRadius:
+                        //           BorderRadius.all(Radius.circular(15)),
+                        //       color: indexItem == 1
+                        //           ? AppColors.purpleDark
+                        //           : Colors.white,
+                        //     ),
+                        //     height: 40,
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.symmetric(
+                        //           horizontal: 20, vertical: 8),
+                        //       child: Row(
+                        //         children: [
+                        //           // SvgPicture.asset("assets/weight.svg",
+                        //           //     colorFilter: ColorFilter.mode(
+                        //           //         indexItem == 1
+                        //           //             ? AppColors.mainBg
+                        //           //             : AppColors.textLite,
+                        //           //         BlendMode.srcIn)),
+                        //           // const SizedBox(
+                        //           //   width: 7,
+                        //           // ),
+                        //           Text(
+                        //             "Activity",
+                        //             style: indexItem == 1
+                        //                 ? AppTextStyles.hintWhite
+                        //                 : AppTextStyles.hint,
+                        //           )
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     setState(() {
+                        //       indexItem = 2;
+                        //       itemSelectedFiltered = "DNA";
+                        //     });
+                        //   },
+                        //   child: Container(
+                        //     decoration: BoxDecoration(
+                        //       borderRadius:
+                        //           BorderRadius.all(Radius.circular(15)),
+                        //       color: indexItem == 2
+                        //           ? AppColors.purpleDark
+                        //           : Colors.white,
+                        //     ),
+                        //     height: 40,
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.symmetric(
+                        //           horizontal: 20, vertical: 8),
+                        //       child: Row(
+                        //         children: [
+                        //           // SvgPicture.asset("assets/dna.svg",
+                        //           //     colorFilter: ColorFilter.mode(
+                        //           //         indexItem == 2
+                        //           //             ? AppColors.mainBg
+                        //           //             : AppColors.textLite,
+                        //           //         BlendMode.srcIn)),
+                        //           // const SizedBox(
+                        //           //   width: 7,
+                        //           // ),
+                        //           Text(
+                        //             "DNA",
+                        //             style: indexItem == 2
+                        //                 ? AppTextStyles.hintWhite
+                        //                 : AppTextStyles.hint,
+                        //           )
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+                        // GestureDetector(
+                        //   onTap: () {
+                        //     setState(() {
+                        //       indexItem = 3;
+                        //       itemSelectedFiltered = "Aging";
+                        //     });
+                        //   },
+                        //   child: Container(
+                        //     decoration: BoxDecoration(
+                        //       borderRadius:
+                        //           BorderRadius.all(Radius.circular(15)),
+                        //       color: indexItem == 3
+                        //           ? AppColors.purpleDark
+                        //           : Colors.white,
+                        //     ),
+                        //     height: 40,
+                        //     child: Padding(
+                        //       padding: const EdgeInsets.symmetric(
+                        //           horizontal: 20.0, vertical: 8),
+                        //       child: Row(
+                        //         children: [
+                        //           // SvgPicture.asset("assets/monitor.svg",
+                        //           //     colorFilter: ColorFilter.mode(
+                        //           //         indexItem == 3
+                        //           //             ? AppColors.mainBg
+                        //           //             : AppColors.textLite,
+                        //           //         BlendMode.srcIn)),
+                        //           // const SizedBox(
+                        //           //   width: 7,
+                        //           // ),
+                        //           Text(
+                        //             "Aging",
+                        //             style: indexItem == 3
+                        //                 ? AppTextStyles.hintWhite
+                        //                 : AppTextStyles.hint,
+                        //           )
+                        //         ],
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
+
+                      ],
                     ),
-                    )
-                ],
-              ),
-            );
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        // Text(
+                        //   "Last Update:",
+                        //   style: AppTextStyles.hint,
+                        // ),
+                        // Text(
+                        //   "May,12,2024",
+                        //   style: AppTextStyles.title2,
+                        // ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          height: 30,
+                          width: 50,
+                          child: FittedBox(
+                            fit: BoxFit.fill,
+                            child: BlocBuilder<SwitchValueGraphBloc,
+                                SwitchValueState>(
+                              builder: (context, state) {
+                                return CupertinoSwitch(
+                                  autofocus: false,
+                                  activeColor: AppColors.iconPurpleDark,
+                                  value: state.switchValue,
+                                  onChanged: (value) {
+                                    print(state.switchValue);
+                                    BlocProvider.of<SwitchValueGraphBloc>(context)
+                                        .add(UpdateSwitchValueGraph(value));
+                                    // valueSwitch = value;
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 5,),
+                        Text("Graph View",style: AppTextStyles.hintMedium,),
+                      ],
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  child: ListView.separated(
+                    itemCount: data["data"].length,
+                    itemBuilder: (BuildContext context, int index) {
+                      if (index == 0) {
+                        return SizedBox(width: 0);
+                      }
+                      return BioMarkerCard(
+                        label: data["data"][index]["name"],
+                        colorBadge: "red",
+                        data: data["data"][index],
+                      );
+                    },
+                    separatorBuilder: (BuildContext context, int index) {
+                      if (itemSelectedFiltered == data["data"][index]["tag"] ||
+                          itemSelectedFiltered == "all") {
+                        return const SizedBox(
+                          height: 20,
+                        );
+                      }
+                      return const SizedBox(
+                        height: 0,
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          );
+        } else {
+          // Fallback UI when not loading or success
+          return Container(
+            margin: EdgeInsets.only(top: size.height * .02),
+            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Your Results",
+                      style: AppTextStyles.title1,
+                    ),
+                    NotificationWidget(
+                      notificationCount: 2,
+                      notifications: [
+                        NotificationItem(
+                          title: "New Tasks, New You!",
+                          message: "Your latest health action plan is ready! Check out your new tasks in the Overview section and take the next step toward a longer, healthier life.",
+                          timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                          type: NotificationType.info,
+                          isRead: false,
+                        ),
+                        NotificationItem(
+                          title: "Your Progress Awaits!",
+                          message: "Ready to level up your health? Complete your Health Questionnaire to help us build a more personalized and effective wellness plan just for you.",
+                          timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                          type: NotificationType.info,
+                          isRead: false,
+                        ),
+                      ],
+                      onNotificationTap: () {
+                        // Handle notification tap
+                        print('Notification tapped');
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(.1),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: const Offset(3, 0),
+                      ),
+                    ],
+                  ),
+                  height: size.height - 150,
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/direct.svg",
+                          width: 48,
+                          height: 48,
+                          fit: BoxFit.cover,
+                        ),
+                        SizedBox(height: 8,),
+                        Text("No Results Available Yet", style: AppTextStyles.headline6,),
+                        SizedBox(height: 8,),
+                        Text("Once your test results are uploaded, you’ll see detailed results here", style: AppTextStyles.body2Secondary,)
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
         }
       },
     );

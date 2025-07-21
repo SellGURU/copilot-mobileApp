@@ -116,62 +116,94 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          Tooltip(
-                            message: (widget.data as Map<String, dynamic>)['subcategory'] as String,
-                            child: Text(
-                              (widget.data as Map<String, dynamic>)['subcategory'] as String,
-                              style: AppTextStyles.hint,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                          SizedBox(height: 8,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                            Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFE3F2FD), // light blue
+                                  borderRadius: BorderRadius.all(Radius.circular(20)),
+                                ),
+                                child: Tooltip(
+                                  message: (widget.data as Map<String, dynamic>)['subcategory'] as String,
+                                  child: Text(
+                                    (widget.data as Map<String, dynamic>)['subcategory'] as String,
+                                    style: AppTextStyles.hint,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                                  
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 5),
+                                decoration: BoxDecoration(
+                                  color:resolveStatusColor((widget.data as Map<String, dynamic>)['status'][0]) ,
+                                  borderRadius:
+                                    BorderRadius.all(Radius.circular(15))),
+                                  child: Center(
+                                    child: Tooltip(
+                                      message: (widget.data as Map<String, dynamic>)['status'][0],
+                                      child: Text(
+                                        (widget.data as Map<String, dynamic>)['status'][0],
+                                        style:AppTextStyles.hint.copyWith(color: Colors.white),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ),
+                                ),                            
+
+                            ],
                           ),
+                            
+                            Row(children: [
+                              Text((widget.data as Map<String, dynamic>)['values'][0], style: AppTextStyles.titleLg,),
+                              SizedBox(width: 4,),
+                              Text((widget.data as Map<String, dynamic>)['unit'], style: AppTextStyles.hint,),
+                            ],)
+                            
+                          ],)
                         ],
                       ),
                     ),
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 5),
-                        decoration: BoxDecoration(
-                            color:resolveStatusColor((widget.data as Map<String, dynamic>)['status'][0]) ,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(15))),
-                        child: Center(
-                          child: Tooltip(
-                            message: (widget.data as Map<String, dynamic>)['status'][0],
-                            child: Text(
-                              (widget.data as Map<String, dynamic>)['status'][0],
-                              style:AppTextStyles.hint.copyWith(color: Colors.white),
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ),
-                      ),
-                      // Row(
-                      //   children: [
-                      //     SvgPicture.asset('assets/dangerIcon.svg'),
-                      //     const SizedBox(
-                      //       width: 5,
-                      //     ),
-                      //     // Text(
-                      //     //   "Need to work",
-                      //     //   style: TextStyle(
-                      //     //       color: widget.colorBadge,
-                      //     //       fontWeight: FontWeight.w400,
-                      //     //       fontSize: 12),
-                      //     // )
-                      //   ],
-                      // )
-                    ],
-                  )
+                  // Column(
+                  //   mainAxisAlignment: MainAxisAlignment.end,
+                  //   crossAxisAlignment: CrossAxisAlignment.end,
+                  //   children: [
+                  //     Container(
+                  //       padding: const EdgeInsets.symmetric(
+                  //           horizontal: 15, vertical: 5),
+                  //       decoration: BoxDecoration(
+                  //           color:resolveStatusColor((widget.data as Map<String, dynamic>)['status'][0]) ,
+                  //           borderRadius:
+                  //               BorderRadius.all(Radius.circular(15))),
+                  //       child: Center(
+                  //         child: Tooltip(
+                  //           message: (widget.data as Map<String, dynamic>)['status'][0],
+                  //           child: Text(
+                  //             (widget.data as Map<String, dynamic>)['status'][0],
+                  //             style:AppTextStyles.hint.copyWith(color: Colors.white),
+                  //             overflow: TextOverflow.ellipsis,
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // )
                 ],
               ),
-              const SizedBox(
-                height: 15,
-              ),
+              // const SizedBox(
+              //   height: 15,
+              // ),
               // Row(
               //   children: [
               //     Row(
@@ -227,13 +259,14 @@ class _CardresultscreenState extends State<Cardresultscreen> {
               //     )
               //   ],
               // ),
-              const SizedBox(
-                height: 35,
-              ),
+              // const SizedBox(
+              //   height: 35,
+              // ),
+              const SizedBox(height: 24,),
               state.switchValue && getUnit() !="" ? ChartDot(spots: getSpots(), labels: getLabels()) : const SizedBox(),
-              const SizedBox(
-                height: 25,
-              ),
+              // const SizedBox(
+              //   height: 8,
+              // ),
             ],
           ),
         );
