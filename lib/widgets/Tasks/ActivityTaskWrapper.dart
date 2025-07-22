@@ -47,7 +47,7 @@ class _ActivityTaskWrapperState extends State<ActivityTaskWrapper> {
                     children: [
                       Padding(
                       padding: const EdgeInsets.only(left: 16, top: 4),
-                      child: Text('Subtask',style: AppTextStyles.hintMedium,),
+                      child: Text(widget.tasks[index]["title"] ?? "", style: AppTextStyles.hintMedium,),
                     ),
                     
                   ],

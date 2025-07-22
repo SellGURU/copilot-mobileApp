@@ -35,7 +35,7 @@ class _TasksState extends State<Tasks> {
   static final List<_TasksState> _instances = [];
   
   Timer? _timer; // Timer for periodic fetch
-  List<String> taskTypes = ['Check-In', 'Diet','Activity','Supplement','Lifestyle', 'Questionary'];
+  List<String> taskTypes = ['Check-In', 'Diet','Activity','Supplement','Lifestyle', 'Questionnaire'];
   List<Map<String, dynamic>> tasks = [
     // { "id": 1, "title": "Daily Check in", "type": "Check-In", "completed": false },
     // { "id": 2, "title": "Profile Data", "type": "Questionary", "completed": true },
@@ -99,7 +99,7 @@ class _TasksState extends State<Tasks> {
           return {
             'id': item['unique_id'],
             'title': item['title'],
-            'type': "Questionary",
+            'type': "Questionnaire",
             'completed':item['Status'] ==true || item['status'] =='Done'?'Done':''
           };
         }).toList();
@@ -176,7 +176,7 @@ class _TasksState extends State<Tasks> {
           return {
             'id': item['unique_id'],
             'title': item['title'],
-            'type': "Questionary",
+            'type': "Questionnaire",
             'completed':item['Status'] ==true || item['status'] =='Done'?'Done':''
           };
         }).toList();
@@ -267,7 +267,7 @@ class _TasksState extends State<Tasks> {
           return {
             'id': item['unique_id'],
             'title': item['title'],
-            'type': "Questionary",
+            'type': "Questionnaire",
             'completed':item['Status'] ==true || item['status'] =='Done'?'Done':'' // Add custom key
           };
         }).toList(); 
@@ -284,15 +284,15 @@ class _TasksState extends State<Tasks> {
 
   int resolveTasksLength (){
     if(widget.title == 'Daily Tasks'){
-      return tasks.where((task) => task['type'] !="Questionary").length;
+      return tasks.where((task) => task['type'] !="Questionnaire").length;
     }
-    return tasks.where((task) => task['type'] =="Questionary").length;
+    return tasks.where((task) => task['type'] =="Questionnaire").length;
   }
   int resolveCompletedTasksLength (){
     if(widget.title == 'Daily Tasks'){
-      return tasks.where((task) => task['type'] !="Questionary" && (task["completed"] =='Done' || task["Status"] ==true)).length;
+      return tasks.where((task) => task['type'] !="Questionnaire" && (task["completed"] =='Done' || task["Status"] ==true)).length;
     }
-    return tasks.where((task) => task['type'] =="Questionary"  && (task["completed"] =='Done'||task["Status"] ==true)).length;
+    return tasks.where((task) => task['type'] =="Questionnaire"  && (task["completed"] =='Done'||task["Status"] ==true)).length;
   }
   @override
   Widget build(BuildContext context) {
