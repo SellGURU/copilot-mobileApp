@@ -135,7 +135,11 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
               GestureDetector(
                 onTap: () {
                     _openWebViewModal(context, taskData["Title"]);
-                    context.read<TaskCubit>().completeTask(taskData);
+                    if (taskData['completed'] == 'Done') {
+                      context.read<TaskCubit>().uncheckTask(taskData);
+                    } else {
+                      context.read<TaskCubit>().completeTask(taskData);
+                    }
                 },
                 child: Container(
                 width: 24,

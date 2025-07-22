@@ -161,6 +161,11 @@ class _TaskItemState extends State<TaskItem> {
                     setState(() {
                       widget.task["completed"] = 'Done';
                     });
+                  }else {
+                    context.read<TaskCubit>().uncheckTask(widget.task);
+                    setState(() {
+                      widget.task["completed"] = '';
+                    });
                   }
                 },                
                 child: Container(

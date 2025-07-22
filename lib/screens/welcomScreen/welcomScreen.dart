@@ -89,13 +89,13 @@ class _WelcomscreenState extends State<Welcomscreen> {
                         const SizedBox(
                           height: 10,
                         ),
-                        SizedBox(
-                            width: 350,
-                            child: Text(
-                              "Holisticare is an invite-only app. You'll need an invitation email from LPC to create an account.",
-                              textAlign: TextAlign.center,
-                              style: AppTextStyles.hintWhite,
-                            ))
+                        // SizedBox(
+                        //     width: 350,
+                        //     child: Text(
+                        //       "Holisticare is an invite-only app. You'll need an invitation email from LPC to create an account.",
+                        //       textAlign: TextAlign.center,
+                        //       style: AppTextStyles.hintWhite,
+                        //     ))
                       ],
                     ),
                   ),
