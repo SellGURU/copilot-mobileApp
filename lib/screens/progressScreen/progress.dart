@@ -3,7 +3,7 @@ import 'package:copilet/widgets/Tasks.dart';
 import 'package:copilet/widgets/notification_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'dart:async';
 import '../../components/text_style.dart';
 import '../../widgets/PercentIndicator.dart';
 import '../../widgets/friendsThumbnail.dart';
@@ -26,7 +26,7 @@ class _ProgressScreenState extends State<ProgressScreen>
   late AnimationController _animationController;
   late Animation<double> _planProgressOpacity;
   late Animation<double> _calendarOpacity;
-
+  Timer? _weeklyTasksTimer;
   bool _isPlanProgressVisible = true; // Tracks which item is visible
   int selectedDate = DateTime.now().day;
 
@@ -113,13 +113,17 @@ class _ProgressScreenState extends State<ProgressScreen>
 
     _scrollController.addListener(_onScroll);
     fetchWeeklyTasks();
+    _weeklyTasksTimer = Timer.periodic(Duration(seconds: 20), (timer) {
+      fetchWeeklyTasks();
+    });
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
-    _animationController.dispose();
-    super.dispose();
+  _scrollController.dispose();
+  _animationController.dispose();
+  _weeklyTasksTimer?.cancel();
+  super.dispose();
   }
 
   void _onScroll() {
@@ -191,7 +195,9 @@ class _ProgressScreenState extends State<ProgressScreen>
                 const SizedBox(height: 30),
                 FadeTransition(
                   opacity: _planProgressOpacity,
-                  child: PlanProgressSection(),
+                  child: PlanProgressSection(
+                    weeklyTasks: weeklyTasks,
+                  ),
                 ),
                 !_isPlanProgressVisible
                     ? FadeTransition(
@@ -226,16 +232,41 @@ class _ProgressScreenState extends State<ProgressScreen>
 
 // Plan Progress Section
 class PlanProgressSection extends StatelessWidget {
+  final List<Map<String, dynamic>> weeklyTasks;
+
+  PlanProgressSection({required this.weeklyTasks});
+
+  // ساختن map از روز به مقدار progress
+  Map<String, double> getProgressByDay() {
+    Map<String, double> progressMap = {
+      'Sun': 0,
+      'Mon': 0,
+      'Tue': 0,
+      'Wed': 0,
+      'Thu': 0,
+      'Fri': 0,
+      'Sat': 0,
+    };
+    for (var item in weeklyTasks) {
+      String? day = item['day'];
+      double progress = 0;
+      if (item['progress'] != null) {
+        if (item['progress'] is int) {
+          progress = (item['progress'] as int).toDouble();
+        } else if (item['progress'] is double) {
+          progress = item['progress'];
+        }
+      }
+      if (day != null && progressMap.containsKey(day)) {
+        progressMap[day] = progress;
+      }
+    }
+    return progressMap;
+  }
+
   @override
-  List<DateTime> getDaysRange() {
-    DateTime today = DateTime.now();
-    return [
-      today.subtract(const Duration(days: 3)), // 3 days ago
-      today,                             // Today
-      today.add(const Duration(days: 3)),      // 3 days after
-    ];
-  }  
   Widget build(BuildContext context) {
+    final progressByDay = getProgressByDay();
     return Container(
       padding: EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -296,45 +327,44 @@ class PlanProgressSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               BarChartWidget(
                   day: 'Sun',
-                  mainPlan: 0,
+                  mainPlan: progressByDay['Sun'] ?? 0,
                   color: AppColors.greenLite,
                   alternativePlan: 0),
               BarChartWidget(
                   day: 'Mon',
-                  mainPlan: 0,
+                  mainPlan: progressByDay['Mon'] ?? 0,
                   color: AppColors.greenLite,
                   alternativePlan: 0),
               BarChartWidget(
                   day: 'Tue',
-                  mainPlan: 0,
+                  mainPlan: progressByDay['Tue'] ?? 0,
                   color: AppColors.greenLite,
                   alternativePlan: 0),
               BarChartWidget(
                   day: 'Wed',
-                  mainPlan: 0,
+                  mainPlan: progressByDay['Wed'] ?? 2,
                   color: AppColors.greenLite,
                   alternativePlan: 0),
               BarChartWidget(
                   day: 'Thu',
-                  mainPlan: 0,
+                  mainPlan: progressByDay['Thu'] ?? 0,
                   color: AppColors.greenLite,
                   alternativePlan: 0),
               BarChartWidget(
                   day: 'Fri',
-                  mainPlan: 0,
+                  mainPlan: progressByDay['Fri'] ?? 0,
                   color: AppColors.greenLite,
                   alternativePlan: 0),
               BarChartWidget(
                   day: 'Sat',
-                  mainPlan: 0,
+                  mainPlan: progressByDay['Sat'] ?? 0,
                   color: AppColors.greenLite,
                   alternativePlan: 0),
-            
             ],
           ),
         ],
