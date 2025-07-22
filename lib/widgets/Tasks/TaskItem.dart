@@ -162,6 +162,7 @@ class _TaskItemState extends State<TaskItem> {
                       widget.task["completed"] = 'Done';
                     });
                   }else {
+                    _openWebViewModal(context, widget.task["title"]);
                     context.read<TaskCubit>().uncheckTask(widget.task);
                     setState(() {
                       widget.task["completed"] = '';
