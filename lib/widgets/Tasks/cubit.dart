@@ -23,18 +23,35 @@ class TaskCubit extends Cubit<TaskState> {
     try {
       var token = await getTokenLocally();
       _dio.options.headers['Authorization'] = "bearer $token";
-      
-      // Call the checkTask endpoint
+      // فقط تیک زدن
       final response = await _dio.post(Endpoints.checkTask, data: {
         "task_id": task["task_id"] ,
       });
-
-      // Only update task completion status if the API call was successful
       if (response.statusCode == 200) {
         task['completed'] = 'Done';
         emit(TaskCompleted(task));
       } else {
         emit(TaskError("Failed to complete task"));
+      }
+    } catch (e) {
+      emit(TaskError(e.toString()));
+    }
+  }
+
+  Future<void> uncheckTask(Map<String, dynamic> task) async {
+    emit(TaskLoading());
+    try {
+      var token = await getTokenLocally();
+      _dio.options.headers['Authorization'] = "bearer $token";
+      // فقط برداشتن تیک
+      final response = await _dio.post(Endpoints.uncheckTask, data: {
+        "task_id": task["task_id"] ,
+      });
+      if (response.statusCode == 200) {
+        task['completed'] = 'Pending';
+        emit(TaskCompleted(task));
+      } else {
+        emit(TaskError("Failed to uncheck task"));
       }
     } catch (e) {
       emit(TaskError(e.toString()));

@@ -10,17 +10,22 @@ class AppColors {
   static const Color text = Color.fromARGB(255, 48, 68, 91);
   static const Color primary = Color.fromARGB(255, 48, 68, 91);
   static const Color secandary = Color.fromARGB(255, 136, 136, 136);
-  static const Color textLite = Color.fromARGB(255,123, 147, 175);
-  static const Color TextTriarty = Color.fromARGB(255,176, 176, 176);
-  static const Color gray100 = Color.fromARGB(255,243, 244, 246);
-   static const Color gray50 = Color.fromARGB(255,243, 244, 246);
+  static const Color textLite = Color.fromARGB(255, 123, 147, 175);
+  static const Color TextTriarty = Color.fromARGB(255, 176, 176, 176);
+  static const Color gray100 = Color.fromARGB(255, 243, 244, 246);
+  static const Color gray50 = Color.fromARGB(255, 243, 244, 246);
   static const Color grayDark = Color.fromRGBO(132, 138, 148, 1);
   // rgba(, 1)
 
+  // figma color
+  static const Color primaryDeepTeal = Color.fromARGB(255, 0, 95, 115);
+  static const Color textPrimary = Color.fromARGB(255, 56, 56, 56);
+  static const Color textSecondary = Color.fromARGB(255, 136, 136, 136);
+  static const Color backgroundColorCard = Color.fromARGB(255, 253, 253, 253);
 
   static const Color mainPrimaryColor = Color.fromARGB(255, 108, 194, 74);
   static const Color mainSecandaryColor = Color.fromARGB(255, 0, 95, 115);
-  static const Color textLiteGray = Color.fromARGB(255,174, 193, 218);
+  static const Color textLiteGray = Color.fromARGB(255, 174, 193, 218);
   // static const Color purpleDark = Color.fromARGB(255, 147, 129, 255);
   static const Color purpleDark = Color.fromARGB(255, 38, 126, 149);
   // rgba(184, 184, 255, 1)
@@ -38,7 +43,8 @@ class AppColors {
   static const Color yellowBegaDarker = Color.fromRGBO(255, 228, 94, 1);
   static const Color yellowLite = Color.fromRGBO(251, 236, 196, 1);
   static const Color yellowText = Color.fromRGBO(242, 211, 130, 1);
-  static const Color shadowColorWithOpacity = Color.fromRGBO(153, 171, 198, 0.18);
+  static const Color shadowColorWithOpacity =
+      Color.fromRGBO(153, 171, 198, 0.18);
   static const Color shadowColor = Color.fromARGB(153, 171, 198, 100);
   static const Color brandSecondaryColor = Color.fromARGB(255, 147, 129, 255);
   static const Color gray = Color.fromRGBO(245, 247, 250, 1);
@@ -47,7 +53,6 @@ class AppColors {
   static const Color redBorder = Color.fromRGBO(238, 193, 193, 1);
   static const Color blueBorder = Color.fromRGBO(166, 208, 238, 1);
   static const Color mainShadow = Color.fromRGBO(202, 202, 215, 0.25);
-  static const Color bgChartProgress = Color.fromRGBO(248,247,255,1);
+  static const Color bgChartProgress = Color.fromRGBO(248, 247, 255, 1);
   static const Color hintLite = Color.fromRGBO(174, 193, 218, 1);
-
 }

@@ -83,7 +83,13 @@ class _MainscreenState extends State<Mainscreen> {
                 Navigator(
                   key: _settingScreenKey,
                   onGenerateRoute: (settings) => MaterialPageRoute(
-                    builder: (context) => SettingPage(),
+                    builder: (context) => SettingPage(
+                      onLogoutModalChanged: (isOpen) {
+                        setState(() {
+                          _isReportModalOpen = isOpen;
+                        });
+                      },
+                    ),
                   ),
                 ),
                 Navigator(

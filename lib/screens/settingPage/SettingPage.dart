@@ -15,7 +15,8 @@ import '../login/login.dart'; // For date formatting
 import 'package:flutter/foundation.dart';
 
 class SettingPage extends StatefulWidget {
-  const SettingPage({super.key});
+  final ValueChanged<bool>? onLogoutModalChanged;
+  const SettingPage({super.key, this.onLogoutModalChanged});
 
   @override
   State<SettingPage> createState() => _SettingPageState();
@@ -35,6 +36,98 @@ class _SettingPageState extends State<SettingPage> {
       // Handle error silently or show a toast if needed
       print('Could not launch URL: $url');
     }
+  }
+
+  void _showLogoutConfirmation() {
+    widget.onLogoutModalChanged?.call(true);
+    showModalBottomSheet(
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (BuildContext context) {
+        return Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  const Center(
+                    child: Text(
+                      'Logout',
+                      style: TextStyle(fontSize: 14,color: AppColors.textPrimary, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: const Icon(Icons.close, size: 24),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              const Center(child: Text(
+                'You are attempting to log out. Are you sure?',
+                style: TextStyle(fontSize: 12,color: AppColors.textPrimary),
+              ),
+              ),
+              const SizedBox(height: 32),
+              Row(
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: 32,
+                      child: OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(color: AppColors.mainSecandaryColor),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text('Cancel', style: TextStyle(color: AppColors.mainSecandaryColor, fontWeight: FontWeight.w400,fontSize: 12)),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: SizedBox(
+                      height: 32,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.mainSecandaryColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                        onPressed: () async {
+                          Navigator.of(context).pop();
+                          await BlocProvider.of<AuthCubit>(this.context).logOut();
+                          RestartWidget.restartApp(this.context);
+                        },
+                        child: const Text('Confirm', style: TextStyle(fontWeight: FontWeight.w400,color: Colors.white,fontSize: 12)),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+            ],
+          ),
+        );
+      },
+    ).whenComplete(() {
+      widget.onLogoutModalChanged?.call(false);
+    });
   }
 
   @override
@@ -148,11 +241,8 @@ class _SettingPageState extends State<SettingPage> {
               BlocBuilder<AuthCubit, AuthState>(
                 builder: (context, state) {
                   return GestureDetector(
-                    onTap: () async {
-                      // Clear all tokens and data, reset everything
-                      await BlocProvider.of<AuthCubit>(context).logOut();
-                      // Navigate to login page and clear the navigation stack
-                      RestartWidget.restartApp(context);
+                    onTap: () {
+                      _showLogoutConfirmation();
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,

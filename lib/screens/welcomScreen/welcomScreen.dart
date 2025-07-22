@@ -40,10 +40,10 @@ class _WelcomscreenState extends State<Welcomscreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset("assets/GermanClinic.png"),
+                        Image.asset("assets/logoH.png"),
                         // Text("Clinic Logo",
                         //     style: AppTextStyles.title4xlLiteWeight),
-                        Text("Welcome to German Clinic!",
+                        Text("Welcome to HolistiCare!",
                             style: AppTextStyles.title3xlLiteWeight),
                         const SizedBox(
                           height: 40,
@@ -53,7 +53,7 @@ class _WelcomscreenState extends State<Welcomscreen> {
                             child: Text(
                               "If you received an invitation email, please click the button below.",
                               textAlign: TextAlign.center,
-                              style: AppTextStyles.whiteTitle1,
+                              style: AppTextStyles.title2White,
                             )),
                         const SizedBox(
                           height: 40,
@@ -73,25 +73,29 @@ class _WelcomscreenState extends State<Welcomscreen> {
                             // margin:
                             //     EdgeInsets.symmetric(horizontal: size.width / 10),
                             decoration: BoxDecoration(
-                                color: AppColors.purpleDark,
-                                borderRadius: BorderRadius.circular(20)),
+                                color: AppColors.primaryDeepTeal,
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 1, // 1px
+                                )),
                             // width: size.width,
                             child: Text(
                               "Continue",
-                              style: AppTextStyles.hintWhite,
+                              style: AppTextStyles.hintWhitexl,
                             ),
                           ),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        SizedBox(
-                            width: 350,
-                            child: Text(
-                              "Holisticare is an invite-only app. You'll need an invitation email from LPC to create an account.",
-                              textAlign: TextAlign.center,
-                              style: AppTextStyles.hintWhite,
-                            ))
+                        // SizedBox(
+                        //     width: 350,
+                        //     child: Text(
+                        //       "Holisticare is an invite-only app. You'll need an invitation email from LPC to create an account.",
+                        //       textAlign: TextAlign.center,
+                        //       style: AppTextStyles.hintWhite,
+                        //     ))
                       ],
                     ),
                   ),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../res/colors.dart';
+
 /// This file defines a centralized collection of text styles for a Flutter application.
 class AppTextStyles {
   AppTextStyles._();
@@ -20,7 +21,9 @@ class AppTextStyles {
 
   static TextStyle title3xlLiteGray = GoogleFonts.roboto(
       textStyle: TextStyle(
-          fontSize: 24, color: AppColors.grayDark, fontWeight: FontWeight.w500));
+          fontSize: 24,
+          color: AppColors.grayDark,
+          fontWeight: FontWeight.w500));
   static TextStyle title3xlWhite = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 24, color: AppColors.mainBg, fontWeight: FontWeight.w500));
@@ -34,18 +37,22 @@ class AppTextStyles {
 
   static TextStyle titleXlYellow = GoogleFonts.roboto(
       textStyle: TextStyle(
-          fontSize: 20, color: AppColors.yellowText,
+          fontSize: 20,
+          color: AppColors.yellowText,
           fontWeight: FontWeight.w500));
   static TextStyle titleXlGreen = GoogleFonts.roboto(
       textStyle: TextStyle(
-          fontSize: 20, color: AppColors.greenVaryLite,
+          fontSize: 20,
+          color: AppColors.greenVaryLite,
           fontWeight: FontWeight.w500));
 
   // --------------
 
   static TextStyle title1 = GoogleFonts.roboto(
       textStyle: TextStyle(
-          fontSize: 16, color: AppColors.text, fontWeight: FontWeight.w500));
+          fontSize: 16,
+          color: AppColors.textPrimary,
+          fontWeight: FontWeight.w500));
   static TextStyle titleLg = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 16, color: AppColors.text, fontWeight: FontWeight.w400));
@@ -73,22 +80,20 @@ class AppTextStyles {
       textStyle: TextStyle(
           fontSize: 14, color: Colors.white, fontWeight: FontWeight.w400));
 
-
   static TextStyle title2 = GoogleFonts.roboto(
       textStyle: TextStyle(fontSize: 14, color: AppColors.text),
       fontWeight: FontWeight.w500);
 
   static TextStyle title2White = GoogleFonts.roboto(
-      textStyle: TextStyle(fontSize: 14, color: AppColors.mainBg),
+      textStyle: TextStyle(fontSize: 16, color: AppColors.mainBg),
       fontWeight: FontWeight.w500);
-
 
   static TextStyle title2Gray = GoogleFonts.roboto(
       textStyle: TextStyle(fontSize: 14, color: AppColors.grayDark),
       fontWeight: FontWeight.w500);
 
   static TextStyle title2Purple = GoogleFonts.roboto(
-      textStyle: TextStyle(fontSize: 14, color: AppColors.purpleDark),
+      textStyle: TextStyle(fontSize: 14, color: AppColors.primaryDeepTeal),
       fontWeight: FontWeight.w500);
   // -----------
   static TextStyle hintBlackWithHeight = GoogleFonts.roboto(
@@ -97,6 +102,15 @@ class AppTextStyles {
           color: AppColors.black,
           fontWeight: FontWeight.w400,
           height: 1.5));
+  static TextStyle hintTextPrimaryWithHeight = GoogleFonts.roboto(
+      textStyle: TextStyle(
+          fontSize: 14,
+          color: AppColors.textPrimary,
+          fontWeight: FontWeight.w400,
+          height: 1.5));
+    static TextStyle hintWhitexl = GoogleFonts.inter(
+      textStyle: TextStyle(
+          fontSize: 14, color: Colors.white, fontWeight: FontWeight.w400));        
   static TextStyle hintWhite = GoogleFonts.inter(
       textStyle: TextStyle(
           fontSize: 12, color: Colors.white, fontWeight: FontWeight.w400));
@@ -106,6 +120,11 @@ class AppTextStyles {
   static TextStyle hintBlack = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 12, color: AppColors.black, fontWeight: FontWeight.w400));
+  static TextStyle hintTextPrimary = GoogleFonts.roboto(
+      textStyle: TextStyle(
+          fontSize: 12,
+          color: AppColors.textPrimary,
+          fontWeight: FontWeight.w500));
   static TextStyle hint = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 12,
@@ -147,7 +166,7 @@ class AppTextStyles {
       textStyle: TextStyle(
           fontSize: 10,
           color: AppColors.purpleDark,
-          fontWeight: FontWeight.w400));          
+          fontWeight: FontWeight.w400));
   static TextStyle hintSmaleYellow = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 10,
@@ -169,7 +188,9 @@ class AppTextStyles {
   // --------------
   static TextStyle textXmLiteGray = GoogleFonts.roboto(
       textStyle: TextStyle(
-          fontSize: 6.5, color: AppColors.textLiteGray, fontWeight: FontWeight.w400));
+          fontSize: 6.5,
+          color: AppColors.textLiteGray,
+          fontWeight: FontWeight.w400));
   static TextStyle textXmLiteBlack = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 6.5, color: AppColors.black, fontWeight: FontWeight.w400));
@@ -182,18 +203,27 @@ class AppTextStyles {
           fontSize: 6, color: AppColors.black, fontWeight: FontWeight.w400));
   static TextStyle hintSmaleGray = GoogleFonts.roboto(
       textStyle: TextStyle(
-          fontSize: 10, color: AppColors.textLiteGray, fontWeight: FontWeight.w400));
-    static TextStyle headline5 = GoogleFonts.roboto(
+          fontSize: 10,
+          color: AppColors.textLiteGray,
+          fontWeight: FontWeight.w400));
+  static TextStyle headline5 = GoogleFonts.roboto(
       textStyle: TextStyle(
-          fontSize: 14, color: AppColors.primary, fontWeight: FontWeight.w500)); 
-    static TextStyle headline6 = GoogleFonts.roboto(
+          fontSize: 14, color: AppColors.primary, fontWeight: FontWeight.w500));
+  static TextStyle headline6 = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 12, color: AppColors.primary, fontWeight: FontWeight.w500));
 
-    static TextStyle body2  = GoogleFonts.roboto(
+  static TextStyle body2 = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 12, color: AppColors.primary, fontWeight: FontWeight.w400));
-    static TextStyle holderEmpty  = GoogleFonts.roboto(
+  static TextStyle body2Secondary = GoogleFonts.roboto(
       textStyle: TextStyle(
-          fontSize: 12, color: AppColors.TextTriarty, fontWeight: FontWeight.w300));
+          fontSize: 12,
+          color: AppColors.textSecondary,
+          fontWeight: FontWeight.w400));
+  static TextStyle holderEmpty = GoogleFonts.roboto(
+      textStyle: TextStyle(
+          fontSize: 12,
+          color: AppColors.TextTriarty,
+          fontWeight: FontWeight.w300));
 }

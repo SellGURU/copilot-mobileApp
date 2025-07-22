@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:copilet/components/text_style.dart';
 import 'package:copilet/constants/endPoints.dart';
@@ -15,7 +16,8 @@ import 'package:http/http.dart' as http;
 
 class Tasks extends StatefulWidget{
   final String title;
-  const Tasks({super.key,required this.title});
+  final List<Map<String, dynamic>>? tasksList; // پراپ اختیاری
+  const Tasks({super.key,required this.title, this.tasksList});
 
   @override
   State<Tasks> createState() {
@@ -32,7 +34,8 @@ class _TasksState extends State<Tasks> {
   // Static list to track all Tasks instances
   static final List<_TasksState> _instances = [];
   
-  List<String> taskTypes = ['Check-In', 'Diet','Activity','Supplement','Lifestyle', 'Questionary'];
+  Timer? _timer; // Timer for periodic fetch
+  List<String> taskTypes = ['Check-In', 'Diet','Activity','Supplement','Lifestyle', 'Questionnaire'];
   List<Map<String, dynamic>> tasks = [
     // { "id": 1, "title": "Daily Check in", "type": "Check-In", "completed": false },
     // { "id": 2, "title": "Profile Data", "type": "Questionary", "completed": true },
@@ -47,17 +50,152 @@ class _TasksState extends State<Tasks> {
   void initState() {
     super.initState();
     _instances.add(this);
-    fetchQuestionary();
+    if (widget.tasksList != null) {
+      // اگر لیست تسک‌ها از پراپ آمد، تبدیل به فرمت داخلی کن
+      if (widget.title == 'Daily Tasks') {
+        List<Map<String, dynamic>> modifiedData = widget.tasksList!.map((item) {
+          if(item['Task_Type'] == 'Checkin'){
+            return {
+              'id': item['task_id'],
+              'task_id': item['task_id'],
+              'title': item['Title'],
+              'type': "Check-In",
+              'completed': item['Status'] ==true?'Done':''
+            };
+          }
+          if(item['Task_Type'] == 'Action'){
+            if(item['Category'] == 'Diet' || item['Category'] == 'Supplement' || item['Category'] == 'Lifestyle'){
+              return {
+                'id': item['task_id'],
+                'task_id': item['task_id'],
+                'title': item['Title'],
+                'type': item['Category'],
+                'completed': item['Status'] ==true?'Done':''
+              };
+            }
+            if(item['Category'] == 'Activity'){
+              return {
+                'id': item['task_id'],
+                'task_id': item['task_id'],
+                'title': item['Title'],
+                'type': "Activity",
+                'Sections': item['Sections'],
+                'completed': item['Status'] ==true?'Done':''
+              };
+            }
+          }
+          return {
+            'id': "",
+            'title': "test",
+            'task_id': item['task_id'],
+            'type': "Check-In",
+            'completed': "Done"
+          };
+        }).toList();
+        modifiedData.sort((a, b) => a['id'].toString().compareTo(b['id'].toString()));
+        tasks = modifiedData;
+      } else {
+        List<Map<String, dynamic>> modifiedData = widget.tasksList!.map((item) {
+          return {
+            'id': item['unique_id'],
+            'title': item['title'],
+            'type': "Questionnaire",
+            'completed':item['Status'] ==true || item['status'] =='Done'?'Done':''
+          };
+        }).toList();
+        modifiedData.sort((a, b) => a['id'].toString().compareTo(b['id'].toString()));
+        tasks = modifiedData;
+      }
+      // تایمر را راه‌اندازی نکن
+    } else {
+      fetchQuestionary();
+      _timer = Timer.periodic(const Duration(seconds: 20), (timer) {
+        fetchQuestionary();
+      });
+    }
   }
 
   @override
   void dispose() {
     _instances.remove(this);
+    _timer?.cancel(); // Cancel timer to avoid memory leaks
     super.dispose();
+  }
+
+  @override
+  void didUpdateWidget(covariant Tasks oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.tasksList != null && widget.tasksList != oldWidget.tasksList) {
+      // اگر لیست تسک‌ها از پراپ آمد، تبدیل به فرمت داخلی کن
+      if (widget.title == 'Daily Tasks') {
+        List<Map<String, dynamic>> modifiedData = widget.tasksList!.map((item) {
+          if(item['Task_Type'] == 'Checkin'){
+            return {
+              'id': item['task_id'],
+              'task_id': item['task_id'],
+              'title': item['Title'],
+              'type': "Check-In",
+              'completed': item['Status'] ==true?'Done':''
+            };
+          }
+          if(item['Task_Type'] == 'Action'){
+            if(item['Category'] == 'Diet' || item['Category'] == 'Supplement' || item['Category'] == 'Lifestyle'){
+              return {
+                'id': item['task_id'],
+                'task_id': item['task_id'],
+                'title': item['Title'],
+                'type': item['Category'],
+                'completed': item['Status'] ==true?'Done':''
+              };
+            }
+            if(item['Category'] == 'Activity'){
+              return {
+                'id': item['task_id'],
+                'task_id': item['task_id'],
+                'title': item['Title'],
+                'type': "Activity",
+                'Sections': item['Sections'],
+                'completed': item['Status'] ==true?'Done':''
+              };
+            }
+          }
+          return {
+            'id': "",
+            'title': "test",
+            'task_id': item['task_id'],
+            'type': "Check-In",
+            'completed': "Done"
+          };
+        }).toList();
+        modifiedData.sort((a, b) => a['id'].toString().compareTo(b['id'].toString()));
+        setState(() {
+          tasks = modifiedData;
+        });
+      } else {
+        List<Map<String, dynamic>> modifiedData = widget.tasksList!.map((item) {
+          return {
+            'id': item['unique_id'],
+            'title': item['title'],
+            'type': "Questionnaire",
+            'completed':item['Status'] ==true || item['status'] =='Done'?'Done':''
+          };
+        }).toList();
+        modifiedData.sort((a, b) => a['id'].toString().compareTo(b['id'].toString()));
+        setState(() {
+          tasks = modifiedData;
+        });
+      }
+      // اگر قبلاً تایمر فعال بوده و حالا پراپ آمد، تایمر را متوقف کن
+      if (_timer != null) {
+        _timer!.cancel();
+        _timer = null;
+      }
+    }
   }
 
   /// Refresh tasks data from the server
   Future<void> refreshTasks() async {
+    if (widget.tasksList != null) return;
     await fetchQuestionary();
   }
 
@@ -87,7 +225,7 @@ class _TasksState extends State<Tasks> {
               'type': "Check-In",
               'completed': item['Status'] ==true?'Done':'' // Add custom key
             };
-          }
+            }
           if(item['Task_Type'] == 'Action'){
             if(item['Category'] == 'Diet' || item['Category'] == 'Supplement' || item['Category'] == 'Lifestyle'){
               return {
@@ -119,6 +257,8 @@ class _TasksState extends State<Tasks> {
           };
           
         }).toList(); 
+        // Sort by id
+        modifiedData.sort((a, b) => a['id'].toString().compareTo(b['id'].toString()));
         tasks = modifiedData;
         });
       }else {
@@ -127,10 +267,12 @@ class _TasksState extends State<Tasks> {
           return {
             'id': item['unique_id'],
             'title': item['title'],
-            'type': "Questionary",
-            'completed':item['Status'] ==true?'Done':'' // Add custom key
+            'type': "Questionnaire",
+            'completed':item['Status'] ==true || item['status'] =='Done'?'Done':'' // Add custom key
           };
         }).toList(); 
+        // Sort by id
+        modifiedData.sort((a, b) => a['id'].toString().compareTo(b['id'].toString()));
         tasks = modifiedData;
         });
 
@@ -142,15 +284,15 @@ class _TasksState extends State<Tasks> {
 
   int resolveTasksLength (){
     if(widget.title == 'Daily Tasks'){
-      return tasks.where((task) => task['type'] !="Questionary").length;
+      return tasks.where((task) => task['type'] !="Questionnaire").length;
     }
-    return tasks.where((task) => task['type'] =="Questionary").length;
+    return tasks.where((task) => task['type'] =="Questionnaire").length;
   }
   int resolveCompletedTasksLength (){
     if(widget.title == 'Daily Tasks'){
-      return tasks.where((task) => task['type'] !="Questionary" && (task["completed"] =='Done' || task["Status"] ==true)).length;
+      return tasks.where((task) => task['type'] !="Questionnaire" && (task["completed"] =='Done' || task["Status"] ==true)).length;
     }
-    return tasks.where((task) => task['type'] =="Questionary"  && (task["completed"] =='Done'||task["Status"] ==true)).length;
+    return tasks.where((task) => task['type'] =="Questionnaire"  && (task["completed"] =='Done'||task["Status"] ==true)).length;
   }
   @override
   Widget build(BuildContext context) {

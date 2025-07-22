@@ -8,6 +8,7 @@ import 'package:copilet/screens/chatScreen/cubit/cubit.dart';
 import 'package:copilet/screens/chatScreen/cubit/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,6 +37,8 @@ class _ChatscreenState extends State<Chatscreen> {
   // State management for like/dislike buttons
   Map<int, bool> _likedMessages = {};
   Map<int, bool> _dislikedMessages = {};
+  // State management for copied messages
+  Map<int, bool> _copiedMessages = {};
 
   // State management for report modal
   String? _selectedReportReason;
@@ -50,6 +53,12 @@ class _ChatscreenState extends State<Chatscreen> {
 
   // State to track if report modal is open
   bool _isReportModalOpen = false;
+  
+  // State to track if this is the first time loading messages
+  bool _isFirstLoad = true;
+  
+  // State to track previous message count for auto-scroll
+  int _previousMessageCount = 0;
 
   Future<String?> getNameUser() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -58,13 +67,32 @@ class _ChatscreenState extends State<Chatscreen> {
   }
 
   // Copy message to clipboard
-  void _copyMessage(String text) {
+  void _copyMessage(String text, [int? messageIndex]) {
     Clipboard.setData(ClipboardData(text: text));
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Message copied to clipboard'),
-        duration: Duration(seconds: 2),
-      ),
+    if (messageIndex != null) {
+      setState(() {
+        _copiedMessages[messageIndex] = true;
+      });
+      Future.delayed(const Duration(seconds: 2), () {
+        if (mounted) {
+          setState(() {
+            _copiedMessages[messageIndex] = false;
+          });
+        }
+      });
+    }
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   const SnackBar(
+    //     content: Text('Message copied to clipboard'),
+    //     duration: Duration(seconds: 2),
+    //   ),
+    // );
+  }
+
+  // Regenerate the last AI message
+  void _regenerateMessage() {
+    BlocProvider.of<ChatCubit>(context).regenerateMessage(
+      message_to: _selectedMode == ChatMode.coach ? "coach" : "ai"
     );
   }
 
@@ -115,11 +143,13 @@ class _ChatscreenState extends State<Chatscreen> {
   final ScrollController _scrollController = ScrollController(); // Step 1
 
   void _scrollToBottom() {
-    _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent,
-      duration: Duration(milliseconds: 300),
-      curve: Curves.easeOut,
-    );
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    }
   }
 
   // Show report bottom modal
@@ -144,7 +174,7 @@ class _ChatscreenState extends State<Chatscreen> {
           }
         });
         
-                return WillPopScope(
+        return WillPopScope(
           onWillPop: () async {
             setState(() {
               _isReportModalOpen = false;
@@ -175,11 +205,32 @@ class _ChatscreenState extends State<Chatscreen> {
                 //   ),
                 // ),
                 const SizedBox(height: 20),
-                Center(
-                  child: Text(
-                    'Report AI Response',
-                    style: AppTextStyles.headline5,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SizedBox(width: 40), // Empty space to center the title
+                    Expanded(
+                      child: Center(
+                        child: Text(
+                          'Report AI Response',
+                          style: AppTextStyles.headline5,
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        child: SvgPicture.asset(
+                          'assets/close-circle.svg',
+                          width: 24,
+                          height: 24,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 20),
                 Text("Tell us what was wrong with this response.", style: AppTextStyles.body2,),
@@ -197,7 +248,7 @@ class _ChatscreenState extends State<Chatscreen> {
                   ),
                   child: DropdownButtonFormField<String>(
                     value: _selectedReportReason,
-                    
+                    dropdownColor: Colors.white,
                     style: AppTextStyles.body2,
                     // alignment: Alignment.center,
 
@@ -286,15 +337,11 @@ class _ChatscreenState extends State<Chatscreen> {
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        Icon(
-                                          Icons.check_circle,
-                                          color: Colors.green,
-                                          size: 22,
-                                        ),
+                                        SvgPicture.asset("assets/iconTick.svg",width: 16,height: 16),
                                         const SizedBox(width: 8),
                                         const Text(
                                           'Your feedback has been submitted.',
-                                          style: TextStyle(color: Colors.black, fontSize: 16),
+                                          style: TextStyle(color:  AppColors.textPrimary, fontSize: 12),
                                         ),
                                       ],
                                     ),
@@ -312,7 +359,7 @@ class _ChatscreenState extends State<Chatscreen> {
                     // margin:
                     //     EdgeInsets.symmetric(horizontal: size.width / 10),
                     decoration: BoxDecoration(
-                        color: AppColors.purpleDark,
+                        color: AppColors.mainSecandaryColor,
                         borderRadius: BorderRadius.circular(20)),
                     // width: size.width,
                     child: Text(
@@ -372,13 +419,13 @@ class _ChatscreenState extends State<Chatscreen> {
   @override
   void initState() {
     super.initState();
-    // Add a listener to automatically scroll when messages are added
-    _scrollController.addListener(() {
-      if (_scrollController.position.atEdge &&
-          _scrollController.position.pixels != 0) {
-        _scrollToBottom();
-      }
-    });
+    // Remove the auto-scroll listener to prevent unwanted scrolling on like/dislike
+    // _scrollController.addListener(() {
+    //   if (_scrollController.position.atEdge &&
+    //       _scrollController.position.pixels != 0) {
+    //     _scrollToBottom();
+    //   }
+    // });
   }
 
   @override
@@ -459,6 +506,8 @@ class _ChatscreenState extends State<Chatscreen> {
                               setState(() {
                                 _selectedMode = newValue;
                                 _isDropdownOpen = false;
+                                _isFirstLoad = true; // Reset for new mode
+                                _previousMessageCount = 0; // Reset message count for new mode
                               });
                               // Clear messages and get history for the new mode
                               BlocProvider.of<ChatCubit>(context).clearMessages(messageType: _selectedMode == ChatMode.coach ? "coach" : "ai");
@@ -502,10 +551,15 @@ class _ChatscreenState extends State<Chatscreen> {
                             ),
                           );
                         } else {
-                          // Ensure scrolling after messages are loaded
-                          WidgetsBinding.instance.addPostFrameCallback((_) {
-                            _scrollToBottom();
-                          });
+                          // Scroll to bottom when message count changes (new message added)
+                          if (state.messages.length != _previousMessageCount) {
+                            SchedulerBinding.instance.addPostFrameCallback((_) {
+                              if (mounted && _scrollController.hasClients) {
+                                _scrollToBottom();
+                              }
+                            });
+                            _previousMessageCount = state.messages.length;
+                          }
                           return Expanded(
                             child: ListView.builder(
                               controller: _scrollController,
@@ -938,19 +992,35 @@ class _ChatscreenState extends State<Chatscreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   // Copy button - available for both AI and Coach
-                  GestureDetector(
-                    onTap: reported ? null : () => _copyMessage(text),
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      child: Icon(
-                        Icons.copy,
-                        size: 16,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                  ),
+
                   // Like, Dislike, and More buttons - only for AI Assistant
                   if (_selectedMode == ChatMode.ai) ...[
+                    // Regenerate button - only for the last AI message
+                    if (messageIndex == context.read<ChatCubit>().messages.length - 1) ...[
+                      Opacity(
+                        opacity: reported ? 0.5 : 1.0,
+                        child:GestureDetector(
+                          onTap: reported ? null : () => _regenerateMessage(),
+                          child: Container(
+                          padding: const EdgeInsets.all(4),
+                          child: SvgPicture.asset('assets/refresh-2.svg',width: 16,height: 16)
+                        ),
+                      ),
+                      ),                    
+                      const SizedBox(width: 2),
+                    ],
+                    Opacity(
+                      opacity: reported ? 0.5 : 1.0,
+                      child:GestureDetector(
+                        onTap: reported ? null : () => _copyMessage(text, messageIndex),
+                        child: Container(
+                        padding: const EdgeInsets.all(4),
+                        child: _copiedMessages[messageIndex] == true
+                          ? SvgPicture.asset('assets/tickNormal.svg',width: 10,height: 10)
+                          : SvgPicture.asset('assets/copy.svg',width: 16,height: 16)
+                      ),
+                    ),
+                    ),                    
                     const SizedBox(width: 2),
                     Opacity(
                       opacity: reported ? 0.5 : 1.0,
@@ -961,15 +1031,7 @@ class _ChatscreenState extends State<Chatscreen> {
                         },
                         child: Container(
                           padding: const EdgeInsets.all(4),
-                          child: Icon(
-                            isMessageLiked(messageIndex,feedback)
-                                ? Icons.thumb_up
-                                : Icons.thumb_up_outlined,
-                            size: 16,
-                            color: isMessageLiked(messageIndex,feedback)
-                                ? AppColors.purpleDark
-                                : Colors.grey[600],
-                          ),
+                          child: isMessageLiked(messageIndex,feedback)?SvgPicture.asset('assets/likefill.svg',width: 16,height: 16):SvgPicture.asset('assets/like.svg',width: 16,height: 16),
                         ),
                       ),
                     ),
@@ -982,15 +1044,9 @@ class _ChatscreenState extends State<Chatscreen> {
                         },
                         child: Container(
                           padding: const EdgeInsets.all(4),
-                          child: Icon(
-                            isMessageDisliked(messageIndex,feedback)
-                                ? Icons.thumb_down
-                                : Icons.thumb_down_outlined,
-                            size: 16,
-                            color: isMessageDisliked(messageIndex,feedback)
-                                ? AppColors.purpleDark
-                                : Colors.grey[600],
-                          ),
+                          child: isMessageDisliked(messageIndex,feedback)?
+                          SvgPicture.asset('assets/dislikeFill.svg',width: 16,height: 16):
+                          SvgPicture.asset('assets/dislike.svg',width: 16,height: 16),
                         ),
                       ),
                     ),
@@ -999,17 +1055,9 @@ class _ChatscreenState extends State<Chatscreen> {
                       opacity: reported ? 0.5 : 1.0,
                       child: reported ? Container(
                         padding: const EdgeInsets.all(4),
-                        child: Icon(
-                          Icons.more_horiz,
-                          size: 16,
-                          color: Colors.grey[400],
-                        ),
+                        child: SvgPicture.asset('assets/treepoint.svg')
                       ) : PopupMenuButton<String>(
-                        icon: Icon(
-                          Icons.more_horiz,
-                          size: 16,
-                          color: Colors.grey[600],
-                        ),
+                        icon: SvgPicture.asset('assets/treepoint.svg'),
                         onSelected: (value) {
                           if (value == 'report') {
                             _showReportModal();
@@ -1019,7 +1067,7 @@ class _ChatscreenState extends State<Chatscreen> {
                         itemBuilder: (BuildContext context) => [
                           const PopupMenuItem<String>(
                             value: 'report',
-                            height: 40,
+                            height: 30,
                             child: SizedBox(
                               width: 60,
                               child: Text(

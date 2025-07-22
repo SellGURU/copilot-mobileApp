@@ -11,6 +11,7 @@ import 'cubit.dart';
 import 'state.dart';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:url_launcher/url_launcher.dart';
 
 class TaskItem extends StatefulWidget {
   final Map<String, dynamic> task;
@@ -22,14 +23,14 @@ class TaskItem extends StatefulWidget {
 }
 
 class _TaskItemState extends State<TaskItem> {
-  late Map<String, dynamic> taskData;
+  // late Map<String, dynamic> taskData;
   late final WebViewController _controller;
   late String encodeId;
   
   @override
   void initState() {
     super.initState();
-    taskData = widget.task;
+    // taskData = widget.task;
     _initializeTask();
   }
 
@@ -47,18 +48,20 @@ class _TaskItemState extends State<TaskItem> {
 
   void _initializeWebView() {
     if (kIsWeb) {
-      if (taskData['type'] == 'Check-In' || taskData['type'] == 'Questionary') {
-        String taskType = taskData['type'] == 'Check-In' ? 'checkin' : 'questionary';
+      if (widget.task['type'] == 'Check-In' || widget.task['type'] == 'Questionary') {
+        String taskType = widget.task['type'] == 'Check-In' ? 'checkin' : 'questionary';
+        // launchUrl(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${taskData["id"]}"));
         _controller = WebViewController()
-          ..loadRequest(Uri.parse("https://holisticare.vercel.app/$taskType/$encodeId/${taskData["id"]}"));
+          ..loadRequest(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
         setState(() {});
       }
     }else {
-      if (taskData['type'] == 'Check-In' || taskData['type'] == 'Questionary') {
-        String taskType = taskData['type'] == 'Check-In' ? 'checkin' : 'questionary';
+      if (widget.task['type'] == 'Check-In' || widget.task['type'] == 'Questionary') {
+        String taskType = widget.task['type'] == 'Check-In' ? 'checkin' : 'questionary';
+        // launchUrl(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
         _controller = WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          ..loadRequest(Uri.parse("https://holisticare.vercel.app/$taskType/$encodeId/${taskData["id"]}"));
+          ..loadRequest(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
         setState(() {});
       }
 
@@ -66,43 +69,45 @@ class _TaskItemState extends State<TaskItem> {
   }
 
   void _openWebViewModal(BuildContext context, String title) {
-    if (taskData['type'] == 'Check-In' || taskData['type'] == 'Questionary') {
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        builder: (context) {
-          return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.9,
-            child: Column(
-              children: [
-                AppBar(
-                  title: Text(title, style: AppTextStyles.title1),
-                  automaticallyImplyLeading: false,
-                  actions: [
-                    IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,  // مهم
-                    child: WebViewWidget(controller: _controller),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      );
+    if (widget.task['type'] == 'Check-In' || widget.task['type'] == 'Questionary') {
+      // showModalBottomSheet(
+      //   context: context,
+      //   isScrollControlled: true,
+      //   builder: (context) {
+      //     return SizedBox(
+      //       height: MediaQuery.of(context).size.height * 0.9,
+      //       child: Column(
+      //         children: [
+      //           AppBar(
+      //             title: Text(title, style: AppTextStyles.title1),
+      //             automaticallyImplyLeading: false,
+      //             actions: [
+      //               IconButton(
+      //                 icon: const Icon(Icons.close),
+      //                 onPressed: () => Navigator.pop(context),
+      //               ),
+      //             ],
+      //           ),
+      //           Expanded(
+      //             child: GestureDetector(
+      //               behavior: HitTestBehavior.opaque,  // مهم
+      //               child: WebViewWidget(controller: _controller),
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //     );
+      //   },
+      // );
+       String taskType = widget.task['type'] == 'Check-In' ? 'checkin' : 'questionary';
+      launchUrl(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TaskCubit()..loadTask(taskData),
+      create: (context) => TaskCubit()..loadTask(widget.task),
       child: BlocBuilder<TaskCubit, TaskState>(
         builder: (context, state) {
           return Row(
@@ -119,34 +124,62 @@ class _TaskItemState extends State<TaskItem> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(100),
                       border: Border.all(
-                        color: taskData["completed"] == 'Done' ? AppColors.greenBega : AppColors.SilverGray,
+                        color: widget.task["completed"] == 'Done' || widget.task["status"] == 'Done' ? AppColors.greenBega : AppColors.SilverGray,
                         width: 3,
                       )
                     ),
                     child: Center(
                       child: SvgPicture.asset(
-                        'assets/firstline.svg',
+                        widget.task['type'] == 'Check-In'?'assets/firstline.svg':'assets/note.svg',
                         width: 16,
                         height: 16,
                         fit: BoxFit.contain,
-                        color: taskData["completed"] == 'Done' ? AppColors.greenBega : AppColors.TextTriarty,
+                        color: widget.task["completed"] == 'Done' || widget.task["status"] == 'Done' ? AppColors.greenBega : AppColors.TextTriarty,
                       )
                     )
                   ),
-                  Text(taskData["title"], style: AppTextStyles.hintMedium)
+                  Container(
+                  width: 140, // یا هر عددی که مناسب طراحی‌ات است
+                  child: Tooltip(
+                    message: widget.task["title"] ?? "",
+                    child: Text(
+                      widget.task["title"] ?? "",
+                      style: AppTextStyles.hintMedium,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ),
+                )
+                
                 ],
               ),
-              Container(
+              GestureDetector(
+                onTap: () {
+                  if(widget.task["completed"] != 'Done' ){
+                    _openWebViewModal(context, widget.task["title"]);
+                    context.read<TaskCubit>().completeTask(widget.task);
+                    setState(() {
+                      widget.task["completed"] = 'Done';
+                    });
+                  }else {
+                    _openWebViewModal(context, widget.task["title"]);
+                    context.read<TaskCubit>().uncheckTask(widget.task);
+                    setState(() {
+                      widget.task["completed"] = '';
+                    });
+                  }
+                },                
+                child: Container(
                 width: 24,
                 height: 24,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: taskData["completed"] == 'Done' ? AppColors.greenBega : AppColors.SilverGray,
+                    color: widget.task["completed"] == 'Done' ? AppColors.greenBega : AppColors.SilverGray,
                     width: 1,
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: taskData["completed"] == 'Done'
+                child: widget.task["completed"] == 'Done' || widget.task["status"] == 'Done'
                   ? GestureDetector(
                       child: Center(
                         child: SvgPicture.asset('assets/tick.svg'),
@@ -156,12 +189,12 @@ class _TaskItemState extends State<TaskItem> {
                       child: Center(
                         child: SvgPicture.asset('assets/pelas.svg'),
                       ),
-                      onTap: () {
-                        _openWebViewModal(context, taskData["title"]);
-                        context.read<TaskCubit>().completeTask(taskData);
-                      },
+
                     )
               )
+             ,
+              )
+
             ],
           );
         }

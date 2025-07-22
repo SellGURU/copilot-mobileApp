@@ -234,19 +234,26 @@ class _LoginPageState extends State<LoginPage> {
                           fit: BoxFit.cover,
                         ),
                         Positioned(
-                            left:
-                                (size.width > 420 ? 130 : size.width / 2 - 66),
-                            top: 100,
-                            // child: Image.asset(
-                            //   "assets/logoIcon.png",
-                            //   width: 80,
-                            //   height: 70,
-                            // ))
-                            child: Image.asset("assets/GermanClinic.png"))
+                          left: (size.width > 420 ? 130 : size.width / 2 - 66),
+                          top: 100,
+                          child: Container(
+                            width: 132,
+                            height: 132,
+                            child: Image.asset("assets/logoH.png"),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                              border: Border.all(
+                                color: AppColors.mainPrimaryColor,
+                                width: 2, // Adjust border thickness as needed
+                              ),
+                            ),
+                          ),
+                        )
                       ],
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 24, right: 24,top: 36),
+                      padding: EdgeInsets.only(left: 24, right: 24, top: 36),
                       child: Column(
                         children: [
                           //
@@ -255,7 +262,7 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           Text(
                             "To continue, please enter your email and password. Your password can be found in the invitation email.",
-                            style: AppTextStyles.hintBlackWithHeight,
+                            style: AppTextStyles.hintTextPrimaryWithHeight,
                             textAlign: TextAlign.center,
                           ),
                           SizedBox(
@@ -334,11 +341,12 @@ class _LoginPageState extends State<LoginPage> {
                                           _passwordController.value.text);
                                       if (_errorMessageEmail == null &&
                                           _errorMessagePass == null) {
-                                        BlocProvider.of<AuthCubit>(context).logIn(
-                                            _emailController.value.text,
-                                            _passwordController
-                                                .value.text // Pass the password
-                                            );
+                                        BlocProvider.of<AuthCubit>(context)
+                                            .logIn(
+                                                _emailController.value.text,
+                                                _passwordController.value
+                                                    .text // Pass the password
+                                                );
                                       }
                                     },
                                     child: Container(
@@ -346,8 +354,13 @@ class _LoginPageState extends State<LoginPage> {
                                       padding: const EdgeInsets.only(
                                           top: 10, bottom: 10),
                                       decoration: BoxDecoration(
-                                          color: AppColors.greenBega,
-                                          borderRadius: BorderRadius.circular(10)),
+                                        color: AppColors.primaryDeepTeal,
+                                        borderRadius: BorderRadius.circular(20),
+                                        border: Border.all(
+                                          color: Colors.white,
+                                          width: 1, // 1px
+                                        ),
+                                      ),
                                       width: size.width,
                                       child: Text(
                                         "Log in",
@@ -361,24 +374,28 @@ class _LoginPageState extends State<LoginPage> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => const RegisterPage(),
+                                          builder: (context) =>
+                                              const RegisterPage(),
                                         ),
                                       );
                                     },
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           "Don't have an account? ",
-                                          style: AppTextStyles.titleMedium.copyWith(
+                                          style: AppTextStyles.titleMedium
+                                              .copyWith(
                                             color: const Color(0xFF888888),
                                             fontSize: 12,
                                           ),
                                         ),
                                         Text(
                                           "Sign Up",
-                                          style: AppTextStyles.titleMedium.copyWith(
-                                            color: AppColors.greenBega,
+                                          style: AppTextStyles.titleMedium
+                                              .copyWith(
+                                            color: AppColors.primaryDeepTeal,
                                             fontSize: 12,
                                           ),
                                         ),

@@ -3,13 +3,16 @@ import 'package:copilet/widgets/Tasks.dart';
 import 'package:copilet/widgets/notification_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-
+import 'dart:async';
 import '../../components/text_style.dart';
 import '../../widgets/PercentIndicator.dart';
 import '../../widgets/friendsThumbnail.dart';
 import '../../widgets/normal-Gauges.dart';
 import '../../widgets/smallGauge.dart';
 import '../../widgets/totalScoreGauge.dart';
+import 'package:dio/dio.dart';
+import '../../constants/endPoints.dart';
+import '../../utility/token/getTokenLocaly.dart';
 
 class ProgressScreen extends StatefulWidget {
   @override
@@ -23,9 +26,65 @@ class _ProgressScreenState extends State<ProgressScreen>
   late AnimationController _animationController;
   late Animation<double> _planProgressOpacity;
   late Animation<double> _calendarOpacity;
-
+  Timer? _weeklyTasksTimer;
   bool _isPlanProgressVisible = true; // Tracks which item is visible
   int selectedDate = DateTime.now().day;
+
+  // --- Weekly Tasks State ---
+  List<Map<String, dynamic>> weeklyTasks = [];
+  bool isWeeklyTasksLoading = false;
+  String? weeklyTasksError;
+
+  // --- Fetch Weekly Tasks Function ---
+  Future<void> fetchWeeklyTasks() async {
+    setState(() {
+      isWeeklyTasksLoading = true;
+      weeklyTasksError = null;
+    });
+    try {
+      var token = await getTokenLocally();
+      Dio dio = Dio();
+      dio.options.headers['Authorization'] = "bearer $token";
+      final response = await dio.post(Endpoints.getWeeklyTasks);
+      if (response.statusCode == 200) {
+        List<dynamic> jsonData = response.data;
+        setState(() {
+          weeklyTasks = jsonData.cast<Map<String, dynamic>>();
+          isWeeklyTasksLoading = false;
+        });
+      } else {
+        setState(() {
+          weeklyTasksError = 'Failed to load weekly tasks';
+          isWeeklyTasksLoading = false;
+        });
+      }
+    } catch (e) {
+      setState(() {
+        weeklyTasksError = e.toString();
+        isWeeklyTasksLoading = false;
+      });
+    }
+  }
+
+  /// Returns the weeklyTasks object for the currently selected day
+  Map<String, dynamic>? getSelectedDayTasksObject(List<DateTime> dates) {
+    final selected = dates.firstWhere(
+      (d) => d.day == selectedDate && d.month == d.month && d.year == d.year,
+      orElse: () => DateTime(1900),
+    );
+    if (selected.year == 1900) return null;
+    String selectedDateString = _formatDate(selected);
+    final found = weeklyTasks.firstWhere(
+      (obj) => obj['date'] == selectedDateString,
+      orElse: () => {},
+    );
+    if (found.isEmpty) return null;
+    return found;
+  }
+
+  String _formatDate(DateTime date) {
+    return "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
+  }
 
   @override
   void initState() {
@@ -53,13 +112,18 @@ class _ProgressScreenState extends State<ProgressScreen>
     );
 
     _scrollController.addListener(_onScroll);
+    fetchWeeklyTasks();
+    _weeklyTasksTimer = Timer.periodic(Duration(seconds: 20), (timer) {
+      fetchWeeklyTasks();
+    });
   }
 
   @override
   void dispose() {
-    _scrollController.dispose();
-    _animationController.dispose();
-    super.dispose();
+  _scrollController.dispose();
+  _animationController.dispose();
+  _weeklyTasksTimer?.cancel();
+  super.dispose();
   }
 
   void _onScroll() {
@@ -89,121 +153,78 @@ class _ProgressScreenState extends State<ProgressScreen>
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(
-            height: 16,
+      body: SingleChildScrollView(
+        controller: _scrollController,
+        physics: AlwaysScrollableScrollPhysics(),
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height,
           ),
-          // Header Section
-          Padding(
-            // margin: EdgeInsets.only(top: size.height * .02),
+          child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Progress",
-                  style: AppTextStyles.title1,
-                ),
-                NotificationWidget(
-                  notificationCount: 2,
-                  notifications: [
-                    NotificationItem(
-                      title: "New Tasks, New You!",
-                      message: "Your latest health action plan is ready! Check out your new tasks in the Overview section and take the next step toward a longer, healthier life.",
-                      timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
-                      type: NotificationType.info,
-                      isRead: false,
+                const SizedBox(height: 16),
+                // Header Section
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Progress", style: AppTextStyles.title1),
+                    NotificationWidget(
+                      notificationCount: 2,
+                      notifications: [
+                        NotificationItem(
+                          title: "New Tasks, New You!",
+                          message: "Your latest health action plan is ready! Check out your new tasks in the Overview section and take the next step toward a longer, healthier life.",
+                          timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                          type: NotificationType.info,
+                          isRead: false,
+                        ),
+                        NotificationItem(
+                          title: "Your Progress Awaits!",
+                          message: "Ready to level up your health? Complete your Health Questionnaire to help us build a more personalized and effective wellness plan just for you.",
+                          timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                          type: NotificationType.info,
+                          isRead: false,
+                        ),
+                      ],
                     ),
-                    NotificationItem(
-                      title: "Your Progress Awaits!",
-                      message: "Ready to level up your health? Complete your Health Questionnaire to help us build a more personalized and effective wellness plan just for you.",
-                      timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
-                      type: NotificationType.info,
-                      isRead: false,
-                    ),     
                   ],
-                ),                
-                // Row(
-                //   children: [
-                //     Icon(
-                //       Icons.notifications_none_outlined,
-                //       color: Colors.black,
-                //     ),
-                //     SizedBox(width: 5),
-                //     Icon(Icons.more_vert),
-                //   ],
-                // ),
+                ),
+                const SizedBox(height: 30),
+                FadeTransition(
+                  opacity: _planProgressOpacity,
+                  child: PlanProgressSection(
+                    weeklyTasks: weeklyTasks,
+                  ),
+                ),
+                !_isPlanProgressVisible
+                    ? FadeTransition(
+                        opacity: _calendarOpacity,
+                        child: HorizontalCalendar(
+                          dates: dates,
+                          selectedDate: selectedDate,
+                          onDateSelected: (date) {
+                            setState(() {
+                              selectedDate = date;
+                            });
+                            final selectedDayObject = getSelectedDayTasksObject(dates);
+                            print('Selected day object:');
+                            print(selectedDayObject);
+                          },
+                        ),
+                      )
+                    : SizedBox(width: 0),
+                const SizedBox(height: 16),
+                Tasks(
+                  title: "Daily Tasks",
+                  tasksList: getSelectedDayTasksObject(dates)?['tasks']?.cast<Map<String, dynamic>>(),
+                ),
               ],
             ),
           ),
-          Expanded(
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 20,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(height: 30),
-                    // PlanProgressSection with FadeTransition
-                    FadeTransition(
-                      opacity: _planProgressOpacity, // Use Animation<double>
-                      child: PlanProgressSection(),
-                    ),
-                    // HorizontalCalendar with FadeTransition
-                    !_isPlanProgressVisible
-                        ? FadeTransition(
-                            opacity: _calendarOpacity, // Use Animation<double>
-                            child: HorizontalCalendar(
-                              dates: dates,
-                              selectedDate: selectedDate,
-                              onDateSelected: (date) {
-                                setState(() {
-                                  selectedDate = date;
-                                });
-                              },
-                            ),
-                          )
-                        : SizedBox(
-                            width: 0,
-                          ),
-                    // const SizedBox(height: 16),
-                    // Daily Goals Section
-                    // GoalCompletionSection(),
-                    // const SizedBox(height: 16),
-                    // Challenges Section
-                    // ChallengesSection(),
-                    const SizedBox(height: 16),
-                    // Tasks Section
-                    // Text(
-                    //   "Tasks",
-                    //   style: AppTextStyles.title2,
-                    // ),
-                    const Tasks(title: "Daily Tasks"),
-                    // const SizedBox(height: 10),
-                    // WaterTaskWidget(
-                    //   title: 'Drink the water',
-                    //   des: '500/2000 ML',
-                    //   iconSrc: 'assets/Emoji11.png',value: 0.3
-                    // ),
-                    // const SizedBox(height: 10),
-                    // WaterTaskWidget(
-                    //   title: 'Walk',
-                    //   des: '0/10000 STEPS',
-                    //   iconSrc: 'assets/Emoji21.png', value: 0.0,
-                    // ),
-                    // const SizedBox(height: 150),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -211,16 +232,54 @@ class _ProgressScreenState extends State<ProgressScreen>
 
 // Plan Progress Section
 class PlanProgressSection extends StatelessWidget {
+  final List<Map<String, dynamic>> weeklyTasks;
+
+  PlanProgressSection({required this.weeklyTasks});
+
+  // ساختن map از روز به مقدار progress
+  Map<String, double> getProgressByDay() {
+    Map<String, List<double>> tempMap = {
+      'Sun': [],
+      'Mon': [],
+      'Tue': [],
+      'Wed': [],
+      'Thu': [],
+      'Fri': [],
+      'Sat': [],
+    };
+    for (var item in weeklyTasks) {
+      String? day = item['day'];
+      double progress = 0;
+      if (item['progress'] != null) {
+        if (item['progress'] is int) {
+          progress = (item['progress'] as int).toDouble();
+        } else if (item['progress'] is double) {
+          progress = item['progress'];
+        }
+        // نرمالایز کردن مقدار progress
+        if (progress > 1) {
+          progress = progress / 100.0;
+        }
+      }
+      if (day != null && tempMap.containsKey(day)) {
+        tempMap[day]!.add(progress);
+      }
+    }
+    // محاسبه میانگین برای هر روز
+    Map<String, double> progressMap = {};
+    tempMap.forEach((day, progresses) {
+      if (progresses.isNotEmpty) {
+        progressMap[day] = progresses.reduce((a, b) => a + b) / progresses.length;
+      } else {
+        progressMap[day] = 0;
+      }
+    });
+    return progressMap;
+  }
+
   @override
-  List<DateTime> getDaysRange() {
-    DateTime today = DateTime.now();
-    return [
-      today.subtract(const Duration(days: 3)), // 3 days ago
-      today,                             // Today
-      today.add(const Duration(days: 3)),      // 3 days after
-    ];
-  }  
   Widget build(BuildContext context) {
+    final progressByDay = getProgressByDay();
     return Container(
       padding: EdgeInsets.all(16.0),
       decoration: BoxDecoration(
@@ -281,45 +340,44 @@ class PlanProgressSection extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 16),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               BarChartWidget(
                   day: 'Sun',
-                  mainPlan: 0,
+                  mainPlan: progressByDay['Sun'] ?? 0,
                   color: AppColors.greenLite,
                   alternativePlan: 0),
               BarChartWidget(
                   day: 'Mon',
-                  mainPlan: 0,
+                  mainPlan: progressByDay['Mon'] ?? 0,
                   color: AppColors.greenLite,
                   alternativePlan: 0),
               BarChartWidget(
                   day: 'Tue',
-                  mainPlan: 0,
+                  mainPlan: progressByDay['Tue'] ?? 0,
                   color: AppColors.greenLite,
                   alternativePlan: 0),
               BarChartWidget(
                   day: 'Wed',
-                  mainPlan: 0,
+                  mainPlan: progressByDay['Wed'] ?? 2,
                   color: AppColors.greenLite,
                   alternativePlan: 0),
               BarChartWidget(
                   day: 'Thu',
-                  mainPlan: 0,
+                  mainPlan: progressByDay['Thu'] ?? 0,
                   color: AppColors.greenLite,
                   alternativePlan: 0),
               BarChartWidget(
                   day: 'Fri',
-                  mainPlan: 0,
+                  mainPlan: progressByDay['Fri'] ?? 0,
                   color: AppColors.greenLite,
                   alternativePlan: 0),
               BarChartWidget(
                   day: 'Sat',
-                  mainPlan: 0,
+                  mainPlan: progressByDay['Sat'] ?? 0,
                   color: AppColors.greenLite,
                   alternativePlan: 0),
-            
             ],
           ),
         ],
@@ -359,7 +417,7 @@ class BarChartWidget extends StatelessWidget {
             Positioned(
               bottom: 0,
               child: Container(
-                height: 150 * alternativePlan,
+                height: 150 * mainPlan,
                 width: 22,
                 decoration: BoxDecoration(
                   color: this.color,
@@ -367,6 +425,7 @@ class BarChartWidget extends StatelessWidget {
                 ),
               ),
             ),
+          
           ],
         ),
         SizedBox(height: 8),

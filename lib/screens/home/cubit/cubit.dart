@@ -18,23 +18,11 @@ class BiomarkerCubit extends Cubit<BiomarkerState> {
   List<Map<String, dynamic>> getAllBiomarkers(Map<String, dynamic> data) {
     List<Map<String, dynamic>> allBiomarkers = [];
     // Check if data has categories
-    if (data.containsKey('categories')) {
+    if (data.containsKey('biomarkers')) {
+      allBiomarkers.addAll(
+        List<Map<String, dynamic>>.from(data['biomarkers'])
+      );
       // Iterate through each category
-      for (var category in data['categories']) {
-        // Check if category has subcategories
-        if (category.containsKey('subcategories')) {
-          // Iterate through each subcategory
-          for (var subcategory in category['subcategories']) {
-            // Check if subcategory has biomarkers
-            if (subcategory.containsKey('biomarkers')) {
-              // Add all biomarkers to the result list
-              allBiomarkers.addAll(
-                List<Map<String, dynamic>>.from(subcategory['biomarkers'])
-              );
-            }
-          }
-        }
-      }
     }
     print("All biomarkers: ${allBiomarkers}");
     return allBiomarkers;

@@ -23,7 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
-  
+
   int _currentStep = 0;
   String? _errorMessageEmail;
   String? _errorMessagePassword;
@@ -52,8 +52,11 @@ class _RegisterPageState extends State<RegisterPage> {
         _errorMessagePassword = 'Please enter a password';
       } else if (value.length < 8) {
         _errorMessagePassword = 'Password must be at least 8 characters long';
-      } else if (!RegExp(r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]').hasMatch(value)) {
-        _errorMessagePassword = 'Password must include uppercase, lowercase, numbers and special characters';
+      } else if (!RegExp(
+              r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]')
+          .hasMatch(value)) {
+        _errorMessagePassword =
+            'Password must include uppercase, lowercase, numbers and special characters';
       } else {
         _errorMessagePassword = null;
       }
@@ -113,7 +116,7 @@ class _RegisterPageState extends State<RegisterPage> {
         } else if (responseData['errors'] != null) {
           errorMessage = responseData['errors'].toString();
         }
-        
+
         Fluttertoast.showToast(
           msg: errorMessage,
           toastLength: Toast.LENGTH_LONG,
@@ -158,7 +161,9 @@ class _RegisterPageState extends State<RegisterPage> {
       case 1:
         _validatePassword(_passwordController.text);
         _validateConfirmPassword(_confirmPasswordController.text);
-        if (_errorMessagePassword == null && _errorMessageConfirmPassword == null && _acceptTerms) {
+        if (_errorMessagePassword == null &&
+            _errorMessageConfirmPassword == null &&
+            _acceptTerms) {
           _registerUser();
         } else if (!_acceptTerms) {
           Fluttertoast.showToast(
@@ -233,7 +238,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         Positioned(
                           left: (size.width > 420 ? 130 : size.width / 2 - 66),
                           top: 100,
-                          child:Container(
+                          child: Container(
                             width: 132,
                             height: 132,
                             child: Image.asset("assets/logoH.png"),
@@ -249,18 +254,20 @@ class _RegisterPageState extends State<RegisterPage> {
                         )
                       ],
                     ),
-                    
                     Padding(
                       padding: EdgeInsets.only(left: 24, right: 24, top: 36),
                       child: Column(
                         children: [
-                          Text('Welcome to HolistiCare!', style: AppTextStyles.title1,),
+                          Text(
+                            'Welcome to HolistiCare!',
+                            style: AppTextStyles.title1,
+                          ),
                           const SizedBox(height: 64),
                           Text(
                             _currentStep == 0
                                 ? "We're excited to have you join our community. Please enter your email address to create your account.​"
                                 : "Set a password. It must be strong to ensure your security.",
-                            style: AppTextStyles.hintBlackWithHeight,
+                            style: AppTextStyles.hintTextPrimaryWithHeight,
                             textAlign: TextAlign.center,
                           ),
                           const SizedBox(height: 30),
@@ -281,7 +288,8 @@ class _RegisterPageState extends State<RegisterPage> {
                               isPassword: true,
                               errorText: _errorMessagePassword,
                               onChanged: _validatePassword,
-                              tooltipMessage: 'At least 8 characters.\n(Use Uppercase & Lowercase letters, Numbers and Special characters).\nAvoid using personal information or patterns.',
+                              tooltipMessage:
+                                  'At least 8 characters.\n(Use Uppercase & Lowercase letters, Numbers and Special characters).\nAvoid using personal information or patterns.',
                             ),
                             const SizedBox(height: 20),
                             AppTextField(
@@ -302,7 +310,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                       _acceptTerms = value ?? false;
                                     });
                                   },
-                                  activeColor: AppColors.greenBega,
+                                  activeColor: AppColors.primaryDeepTeal,
                                 ),
                                 Expanded(
                                   child: GestureDetector(
@@ -313,7 +321,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                     },
                                     child: RichText(
                                       text: TextSpan(
-                                        style: AppTextStyles.titleMedium.copyWith(
+                                        style:
+                                            AppTextStyles.titleMedium.copyWith(
                                           color: const Color(0xFF888888),
                                           fontSize: 12,
                                         ),
@@ -322,24 +331,28 @@ class _RegisterPageState extends State<RegisterPage> {
                                           TextSpan(
                                             text: 'Privacy Policy',
                                             style: TextStyle(
-                                              color: AppColors.greenBega,
-                                              decoration: TextDecoration.underline,
+                                              color: AppColors.primaryDeepTeal,
+                                              decoration:
+                                                  TextDecoration.underline,
                                             ),
                                             recognizer: TapGestureRecognizer()
                                               ..onTap = () {
-                                                _launchURL('https://holisticare.io/privacy-policy/');
+                                                _launchURL(
+                                                    'https://holisticare.io/privacy-policy/');
                                               },
                                           ),
                                           const TextSpan(text: ' and '),
                                           TextSpan(
                                             text: 'Terms of Service',
                                             style: TextStyle(
-                                              color: AppColors.greenBega,
-                                              decoration: TextDecoration.underline,
+                                              color: AppColors.primaryDeepTeal,
+                                              decoration:
+                                                  TextDecoration.underline,
                                             ),
                                             recognizer: TapGestureRecognizer()
                                               ..onTap = () {
-                                                _launchURL('https://holisticare.io/terms-of-service/');
+                                                _launchURL(
+                                                    'https://holisticare.io/terms-of-service/');
                                               },
                                           ),
                                         ],
@@ -355,10 +368,17 @@ class _RegisterPageState extends State<RegisterPage> {
                             onTap: _isLoading ? null : _handleContinue,
                             child: Container(
                               alignment: Alignment.center,
-                              padding: const EdgeInsets.only(top: 10, bottom: 10),
+                              padding:
+                                  const EdgeInsets.only(top: 10, bottom: 10),
                               decoration: BoxDecoration(
-                                color: _isLoading ? AppColors.greenBega.withOpacity(0.7) : AppColors.greenBega,
-                                borderRadius: BorderRadius.circular(10)
+                                color: _isLoading
+                                    ? AppColors.primaryDeepTeal.withOpacity(0.7)
+                                    : AppColors.primaryDeepTeal,
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: Colors.white,
+                                  width: 1, // 1px
+                                ),
                               ),
                               width: size.width,
                               child: _isLoading
@@ -371,7 +391,9 @@ class _RegisterPageState extends State<RegisterPage> {
                                       ),
                                     )
                                   : Text(
-                                      _currentStep == 1 ? "Sign Up" : "Continue",
+                                      _currentStep == 1
+                                          ? "Sign Up"
+                                          : "Continue",
                                       style: AppTextStyles.titleMediumWhite,
                                     ),
                             ),
@@ -400,7 +422,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   Text(
                                     "Log in",
                                     style: AppTextStyles.titleMedium.copyWith(
-                                      color: AppColors.greenBega,
+                                      color: AppColors.primaryDeepTeal,
                                       fontSize: 12,
                                     ),
                                   ),
@@ -419,4 +441,4 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
   }
-} 
+}

@@ -21,7 +21,10 @@ class AppTextField extends StatefulWidget {
     required this.isPassword,
     required this.hint,
     required this.controller,
-    this.icon = const SizedBox(width: 0,height: 0,),
+    this.icon = const SizedBox(
+      width: 0,
+      height: 0,
+    ),
     this.prefixLabel = '',
     this.textAlign = TextAlign.start,
     this.inputType,
@@ -59,7 +62,7 @@ class _AppTextFieldState extends State<AppTextField> {
             children: [
               Text(
                 widget.label,
-                style: AppTextStyles.hintBlack,
+                style: AppTextStyles.hintTextPrimary,
               ),
               if (widget.isPassword && widget.tooltipMessage != null) ...[
                 const SizedBox(width: 8),
@@ -111,22 +114,26 @@ class _AppTextFieldState extends State<AppTextField> {
             style: TextStyle(color: Colors.black),
             onChanged: widget.onChanged,
             decoration: InputDecoration(
+              filled: true,
+              fillColor: AppColors.backgroundColorCard,
               hintText: widget.hint,
-              hintStyle: AppTextStyles.hint.copyWith(color: const Color(0xFFB0B0B0)),
+              hintStyle:
+                  AppTextStyles.hint.copyWith(color: const Color(0xFFB0B0B0)),
               // prefixIcon: widget.icon,
-              contentPadding: EdgeInsets.symmetric(vertical: 16,horizontal: 24), //Change this value to custom as you like
+              contentPadding: EdgeInsets.symmetric(
+                  vertical: 16,
+                  horizontal: 24), //Change this value to custom as you like
               isDense: true, // and add this line
               suffixIcon: widget.isPassword
-                  ? IconButton(  
+                  ? IconButton(
                       icon: Padding(
                         padding: const EdgeInsets.only(right: 8.0),
-                        child:  Icon(
+                        child: Icon(
                           _isObscured
                               ? Icons.visibility_off_outlined
                               : Icons.visibility_outlined,
                           color: const Color.fromRGBO(123, 147, 175, 1),
                         ),
-                        
                       ),
                       onPressed: () {
                         setState(() {
