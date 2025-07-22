@@ -103,7 +103,7 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(100),
                       border: Border.all(
-                        color: taskData["Status"] == true ? AppColors.greenBega : AppColors.SilverGray,
+                        color: taskData["completed"] == 'Done' ? AppColors.greenBega : AppColors.SilverGray,
                         width: 3,
                       )
                     ),
@@ -113,11 +113,23 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                         width: 16,
                         height: 16,
                         fit: BoxFit.contain,
-                        color: taskData["Status"]== true ? AppColors.greenBega : AppColors.TextTriarty,
+                        color: taskData["completed"] == 'Done' ? AppColors.greenBega : AppColors.TextTriarty,
                       )
                     )
                   ),
-                  Text(taskData["Title"], style: AppTextStyles.hintMedium)
+                  Container(
+                    width: 140, // یا هر عددی که مناسب طراحی‌ات است
+                    child: Tooltip(
+                      message: taskData["Title"] ?? "",
+                      child: Text(
+                         taskData["Title"]?? "",
+                        style: AppTextStyles.hintMedium,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ),
+                  )
+                
                 ],
               ),
               Container(
@@ -125,12 +137,12 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                 height: 24,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: taskData["Status"]== true ? AppColors.greenBega : AppColors.SilverGray,
+                    color: taskData["completed"] == 'Done' ? AppColors.greenBega : AppColors.SilverGray,
                     width: 1,
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: taskData["Status"]== true
+                child: taskData["completed"] == 'Done'
                   ? GestureDetector(
                       child: Center(
                         child: SvgPicture.asset('assets/tick.svg'),

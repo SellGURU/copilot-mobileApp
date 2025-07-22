@@ -138,7 +138,19 @@ class _TaskItemState extends State<TaskItem> {
                       )
                     )
                   ),
-                  Text(widget.task["title"], style: AppTextStyles.hintMedium)
+                  Container(
+                  width: 140, // یا هر عددی که مناسب طراحی‌ات است
+                  child: Tooltip(
+                    message: widget.task["title"] ?? "",
+                    child: Text(
+                      widget.task["title"] ?? "",
+                      style: AppTextStyles.hintMedium,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 1,
+                    ),
+                  ),
+                )
+                
                 ],
               ),
               GestureDetector(
