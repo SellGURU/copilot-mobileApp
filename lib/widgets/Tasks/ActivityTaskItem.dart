@@ -132,7 +132,12 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                 
                 ],
               ),
-              Container(
+              GestureDetector(
+                onTap: () {
+                    _openWebViewModal(context, taskData["Title"]);
+                    context.read<TaskCubit>().completeTask(taskData);
+                },
+                child: Container(
                 width: 24,
                 height: 24,
                 decoration: BoxDecoration(
@@ -153,10 +158,10 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                         child: SvgPicture.asset('assets/pelas.svg'),
                       ),
                       onTap: () {
-                        _openWebViewModal(context, taskData["Title"]);
-                        context.read<TaskCubit>().completeTask(taskData);
+                        
                       },
                     )
+              )
               )
             ],
           );

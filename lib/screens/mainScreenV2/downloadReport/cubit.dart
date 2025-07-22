@@ -28,7 +28,7 @@ class DownloadReportPdfCubit extends Cubit<DownloadPdfState> {
       
       if (storedUserId != null) {
         String userId = jsonDecode(storedUserId);
-        String pdfUrl = "https://holisticare.vercel.app/share/$userId/ZXCVMNBBASDFLKJHRTYU";
+        String pdfUrl = "https://holisticare-develop.vercel.app/share/$userId/ZXCVMNBBASDFLKJHRTYU";
         emit(SuccessDownloadPdf(pdfUrl: pdfUrl));
       } else {
         emit(ErrorDownloadPdf());

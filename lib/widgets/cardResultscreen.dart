@@ -124,7 +124,7 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
                                 decoration: BoxDecoration(
                                   color: Color(0xFFE3F2FD), // light blue
                                   borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -133,18 +133,18 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                                   message: (widget.data as Map<String, dynamic>)['subcategory'] as String,
                                   child: Text(
                                     (widget.data as Map<String, dynamic>)['subcategory'] as String,
-                                    style: AppTextStyles.hint,
+                                    style: AppTextStyles.hint.copyWith(fontSize: 10),
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                 ),
                               ),
                               const SizedBox(
-                                width: 10,
+                                width: 4,
                               ),
                                   
                               Container(
                                 padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 5),
+                                horizontal: 8, vertical: 5),
                                 decoration: BoxDecoration(
                                   color:resolveStatusColor((widget.data as Map<String, dynamic>)['status'][0]) ,
                                   borderRadius:
@@ -154,7 +154,7 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                                       message: (widget.data as Map<String, dynamic>)['status'][0],
                                       child: Text(
                                         (widget.data as Map<String, dynamic>)['status'][0],
-                                        style:AppTextStyles.hint.copyWith(color: Colors.white),
+                                        style:AppTextStyles.hint.copyWith(color: Colors.white, fontSize: 10),
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
