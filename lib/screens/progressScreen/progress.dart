@@ -238,14 +238,14 @@ class PlanProgressSection extends StatelessWidget {
 
   // ساختن map از روز به مقدار progress
   Map<String, double> getProgressByDay() {
-    Map<String, double> progressMap = {
-      'Sun': 0,
-      'Mon': 0,
-      'Tue': 0,
-      'Wed': 0,
-      'Thu': 0,
-      'Fri': 0,
-      'Sat': 0,
+    Map<String, List<double>> tempMap = {
+      'Sun': [],
+      'Mon': [],
+      'Tue': [],
+      'Wed': [],
+      'Thu': [],
+      'Fri': [],
+      'Sat': [],
     };
     for (var item in weeklyTasks) {
       String? day = item['day'];
@@ -256,11 +256,24 @@ class PlanProgressSection extends StatelessWidget {
         } else if (item['progress'] is double) {
           progress = item['progress'];
         }
+        // نرمالایز کردن مقدار progress
+        if (progress > 1) {
+          progress = progress / 100.0;
+        }
       }
-      if (day != null && progressMap.containsKey(day)) {
-        progressMap[day] = progress;
+      if (day != null && tempMap.containsKey(day)) {
+        tempMap[day]!.add(progress);
       }
     }
+    // محاسبه میانگین برای هر روز
+    Map<String, double> progressMap = {};
+    tempMap.forEach((day, progresses) {
+      if (progresses.isNotEmpty) {
+        progressMap[day] = progresses.reduce((a, b) => a + b) / progresses.length;
+      } else {
+        progressMap[day] = 0;
+      }
+    });
     return progressMap;
   }
 
@@ -404,7 +417,7 @@ class BarChartWidget extends StatelessWidget {
             Positioned(
               bottom: 0,
               child: Container(
-                height: 150 * alternativePlan,
+                height: 150 * mainPlan,
                 width: 22,
                 decoration: BoxDecoration(
                   color: this.color,
@@ -412,6 +425,7 @@ class BarChartWidget extends StatelessWidget {
                 ),
               ),
             ),
+          
           ],
         ),
         SizedBox(height: 8),
