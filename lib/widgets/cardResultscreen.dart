@@ -33,13 +33,13 @@ class _CardresultscreenState extends State<Cardresultscreen> {
   Color resolveStatusColor(String status) {
     switch (status.toLowerCase()) {
       case 'good':
-        return Colors.green;
+        return  const Color.fromRGBO(114, 193, 59, 1);
       case 'excellent':
-        return const Color.fromRGBO(127, 57, 251, 1);
+        return const Color.fromRGBO(55, 180, 94, 1);
       case 'needs focus':
-        return const Color(0xFFFF3E5D);
+        return const Color.fromRGBO(178, 48, 46, 1);
       case 'ok':
-        return const Color.fromRGBO(251, 173, 55, 1);
+        return const Color.fromRGBO(216, 216, 0, 1);
       default:
         return Colors.grey;
     }
@@ -153,7 +153,15 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                                     child: Tooltip(
                                       message: (widget.data as Map<String, dynamic>)['status'][0],
                                       child: Text(
-                                        (widget.data as Map<String, dynamic>)['status'][0],
+                                        (() {
+                                          String currentStatus = (widget.data as Map<String, dynamic>)['status'][0];
+                                          List<dynamic> chartBounds = (widget.data as Map<String, dynamic>)['chart_bounds'];
+                                          var found = chartBounds.firstWhere(
+                                            (element) => (element['status'] as String).toLowerCase() == currentStatus.toLowerCase(),
+                                            orElse: () => null,
+                                          );
+                                          return found != null ? found['label'] : currentStatus;
+                                        })(),
                                         style:AppTextStyles.hint.copyWith(color: Colors.white, fontSize: 10),
                                         overflow: TextOverflow.ellipsis,
                                       ),

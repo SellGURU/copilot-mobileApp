@@ -69,7 +69,7 @@ class _TaskItemState extends State<TaskItem> {
   }
 
   void _openWebViewModal(BuildContext context, String title) {
-    if (widget.task['type'] == 'Check-In' || widget.task['type'] == 'Questionary') {
+    if (widget.task['type'] == 'Check-In' || widget.task['type'] == 'Questionnaire') {
       // showModalBottomSheet(
       //   context: context,
       //   isScrollControlled: true,
@@ -99,6 +99,7 @@ class _TaskItemState extends State<TaskItem> {
       //     );
       //   },
       // );
+      print('widget.task["completed"] ${widget.task}');
        String taskType = widget.task['type'] == 'Check-In' ? 'checkin' : 'questionary';
       launchUrl(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
     }
@@ -156,6 +157,7 @@ class _TaskItemState extends State<TaskItem> {
               GestureDetector(
                 onTap: () {
                   if(widget.task["completed"] != 'Done' ){
+                    print('widget.task["completed"] ${widget.task}');
                     _openWebViewModal(context, widget.task["title"]);
                     context.read<TaskCubit>().completeTask(widget.task);
                     setState(() {
