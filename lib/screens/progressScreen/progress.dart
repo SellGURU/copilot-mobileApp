@@ -301,42 +301,42 @@ class PlanProgressSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                width: 20,
-                height: 2,
-                decoration: BoxDecoration(
-                    border: Border.all(width: 2, color: AppColors.greenLite),
-                    color: AppColors.yellowBega),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Text(
-                'Main Plan',
-                style: AppTextStyles.hint,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: 20,
-                    height: 2,
-                    decoration: BoxDecoration(
-                        border:
-                            Border.all(width: 2, color: AppColors.yellowBega),
-                        color: AppColors.yellowBega),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    'Alternative Plan',
-                    style: AppTextStyles.hint,
-                  ),
-                ],
-              ),
+              // Container(
+              //   width: 20,
+              //   height: 2,
+              //   decoration: BoxDecoration(
+              //       border: Border.all(width: 2, color: AppColors.greenLite),
+              //       color: AppColors.yellowBega),
+              // ),
+              // const SizedBox(
+              //   width: 5,
+              // ),
+              // Text(
+              //   'Main Plan',
+              //   style: AppTextStyles.hint,
+              // ),
+              // const SizedBox(
+              //   width: 10,
+              // ),
+              // Row(
+              //   children: [
+              //     Container(
+              //       width: 20,
+              //       height: 2,
+              //       decoration: BoxDecoration(
+              //           border:
+              //               Border.all(width: 2, color: AppColors.yellowBega),
+              //           color: AppColors.yellowBega),
+              //     ),
+              //     const SizedBox(
+              //       width: 5,
+              //     ),
+              //     Text(
+              //       'Alternative Plan',
+              //       style: AppTextStyles.hint,
+              //     ),
+              //   ],
+              // ),
             ],
           ),
           const SizedBox(height: 16),
