@@ -27,6 +27,9 @@ class AppTextStyles {
   static TextStyle title3xlWhite = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 24, color: AppColors.mainBg, fontWeight: FontWeight.w500));
+  static TextStyle title3xlgreen = GoogleFonts.roboto(
+      textStyle: TextStyle(
+          fontSize: 24, color: AppColors.mainSecandaryColor, fontWeight: FontWeight.w500));
 
   static TextStyle title2xl = GoogleFonts.roboto(
       textStyle: TextStyle(
@@ -86,6 +89,9 @@ class AppTextStyles {
 
   static TextStyle title2White = GoogleFonts.roboto(
       textStyle: TextStyle(fontSize: 16, color: AppColors.mainBg),
+      fontWeight: FontWeight.w500);
+  static TextStyle title2Primary = GoogleFonts.roboto(
+      textStyle: TextStyle(fontSize: 16, color: AppColors.mainSecandaryColor),
       fontWeight: FontWeight.w500);
 
   static TextStyle title2Gray = GoogleFonts.roboto(
