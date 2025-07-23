@@ -202,7 +202,7 @@ class _ProgressScreenState extends State<ProgressScreen>
                         right: 0,
                         top: 0,
                         child: IconButton(
-                          icon: Icon(Icons.keyboard_arrow_down, color: AppColors.purpleDark, size: 32),
+                          icon: Icon(Icons.keyboard_arrow_down, color: AppColors.purpleDark.withOpacity(0.35), size: 32),
                           onPressed: () {
                             setState(() {
                               _isPlanProgressVisible = false;
@@ -262,7 +262,7 @@ class _ProgressScreenState extends State<ProgressScreen>
                       right: 0,
                       top: 0,
                       child: IconButton(
-                        icon: Icon(Icons.keyboard_arrow_up, color: AppColors.purpleDark, size: 32),
+                        icon: Icon(Icons.keyboard_arrow_up, color: AppColors.purpleDark.withOpacity(0.35), size: 32),
                         onPressed: () {
                           setState(() {
                             _isPlanProgressVisible = true;
