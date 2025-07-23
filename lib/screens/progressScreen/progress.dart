@@ -153,14 +153,9 @@ class _ProgressScreenState extends State<ProgressScreen>
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: SingleChildScrollView(
-        controller: _scrollController,
-        physics: AlwaysScrollableScrollPhysics(),
-        child: ConstrainedBox(
-          constraints: BoxConstraints(
-            minHeight: MediaQuery.of(context).size.height,
-          ),
-          child: Padding(
+      body: Stack(
+        children: [
+          Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,38 +188,94 @@ class _ProgressScreenState extends State<ProgressScreen>
                   ],
                 ),
                 const SizedBox(height: 30),
-                FadeTransition(
-                  opacity: _planProgressOpacity,
-                  child: PlanProgressSection(
-                    weeklyTasks: weeklyTasks,
-                  ),
-                ),
-                !_isPlanProgressVisible
-                    ? FadeTransition(
-                        opacity: _calendarOpacity,
-                        child: HorizontalCalendar(
-                          dates: dates,
-                          selectedDate: selectedDate,
-                          onDateSelected: (date) {
+                // PlanProgressSection (فقط وقتی فعال است)
+                if (_isPlanProgressVisible)
+                  Stack(
+                    children: [
+                      FadeTransition(
+                        opacity: _planProgressOpacity,
+                        child: PlanProgressSection(
+                          weeklyTasks: weeklyTasks,
+                        ),
+                      ),
+                      Positioned(
+                        right: 0,
+                        top: 0,
+                        child: IconButton(
+                          icon: Icon(Icons.keyboard_arrow_down, color: AppColors.purpleDark.withOpacity(0.35), size: 32),
+                          onPressed: () {
                             setState(() {
-                              selectedDate = date;
+                              _isPlanProgressVisible = false;
                             });
-                            final selectedDayObject = getSelectedDayTasksObject(dates);
-                            print('Selected day object:');
-                            print(selectedDayObject);
+                            _animationController.forward();
                           },
                         ),
-                      )
-                    : SizedBox(width: 0),
+                      ),
+                    ],
+                  ),
+                // اگر کلندر فعال است، فضای خالی بگذار (ارتفاع کلندر)
+                if (!_isPlanProgressVisible)
+                  SizedBox(height: 110),
                 const SizedBox(height: 16),
-                Tasks(
-                  title: "Daily Tasks",
-                  tasksList: getSelectedDayTasksObject(dates)?['tasks']?.cast<Map<String, dynamic>>(),
+                // بقیه محتوای اسکرول‌شونده
+                Expanded(
+                  child: SingleChildScrollView(
+                    controller: _scrollController,
+                    physics: AlwaysScrollableScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Tasks(
+                          title: "Daily Tasks",
+                          tasksList: getSelectedDayTasksObject(dates)?['tasks']?.cast<Map<String, dynamic>>(),
+                        ),
+                        // ... سایر بخش‌ها ...
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),
           ),
-        ),
+          // کلندر را فیکس بالا قرار بده و فقط وقتی _isPlanProgressVisible=false باشد نمایش بده
+          if (!_isPlanProgressVisible)
+            FadeTransition(
+              opacity: _calendarOpacity,
+              child: Container(
+                color: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Stack(
+                  children: [
+                    HorizontalCalendar(
+                      dates: dates,
+                      selectedDate: selectedDate,
+                      onDateSelected: (date) {
+                        setState(() {
+                          selectedDate = date;
+                        });
+                        final selectedDayObject = getSelectedDayTasksObject(dates);
+                        print('Selected day object:');
+                        print(selectedDayObject);
+                      },
+                    ),
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      child: IconButton(
+                        icon: Icon(Icons.keyboard_arrow_up, color: AppColors.purpleDark.withOpacity(0.35), size: 32),
+                        onPressed: () {
+                          setState(() {
+                            _isPlanProgressVisible = true;
+                          });
+                          _animationController.reverse();
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }
@@ -301,42 +352,42 @@ class PlanProgressSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                width: 20,
-                height: 2,
-                decoration: BoxDecoration(
-                    border: Border.all(width: 2, color: AppColors.greenLite),
-                    color: AppColors.yellowBega),
-              ),
-              const SizedBox(
-                width: 5,
-              ),
-              Text(
-                'Main Plan',
-                style: AppTextStyles.hint,
-              ),
-              const SizedBox(
-                width: 10,
-              ),
-              Row(
-                children: [
-                  Container(
-                    width: 20,
-                    height: 2,
-                    decoration: BoxDecoration(
-                        border:
-                            Border.all(width: 2, color: AppColors.yellowBega),
-                        color: AppColors.yellowBega),
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    'Alternative Plan',
-                    style: AppTextStyles.hint,
-                  ),
-                ],
-              ),
+              // Container(
+              //   width: 20,
+              //   height: 2,
+              //   decoration: BoxDecoration(
+              //       border: Border.all(width: 2, color: AppColors.greenLite),
+              //       color: AppColors.yellowBega),
+              // ),
+              // const SizedBox(
+              //   width: 5,
+              // ),
+              // Text(
+              //   'Main Plan',
+              //   style: AppTextStyles.hint,
+              // ),
+              // const SizedBox(
+              //   width: 10,
+              // ),
+              // Row(
+              //   children: [
+              //     Container(
+              //       width: 20,
+              //       height: 2,
+              //       decoration: BoxDecoration(
+              //           border:
+              //               Border.all(width: 2, color: AppColors.yellowBega),
+              //           color: AppColors.yellowBega),
+              //     ),
+              //     const SizedBox(
+              //       width: 5,
+              //     ),
+              //     Text(
+              //       'Alternative Plan',
+              //       style: AppTextStyles.hint,
+              //     ),
+              //   ],
+              // ),
             ],
           ),
           const SizedBox(height: 16),
@@ -932,12 +983,13 @@ class _HorizontalCalendarState extends State<HorizontalCalendar> {
           return GestureDetector(
             onTap: () => widget.onDateSelected(date.day),
             child: Container(
-              width: 65,
+              width: 64,
               height: 95,
               margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
               decoration: BoxDecoration(
-                color: isSelected ? AppColors.PurpleLiteText : Colors.white,
-                borderRadius: BorderRadius.circular(10),
+                color:  Colors.white,
+                borderRadius: BorderRadius.circular(16),
+                border: Border.all(color: isSelected ? AppColors.purpleDark : Colors.white, width: 1.5),
                 boxShadow: const [
                   BoxShadow(
                     color: AppColors.shadowColorWithOpacity,
@@ -952,12 +1004,12 @@ class _HorizontalCalendarState extends State<HorizontalCalendar> {
                   Text("${date.day}",
                       style: !isSelected
                           ? AppTextStyles.title3xlLiteGray
-                          : AppTextStyles.title3xlWhite),
+                          : AppTextStyles.title3xlgreen),
                   const SizedBox(height: 4),
                   Text(_getWeekdayName(date.weekday),
                       style: !isSelected
                           ? AppTextStyles.title2Gray
-                          : AppTextStyles.title2White),
+                          : AppTextStyles.title2Primary),
                 ],
               ),
             ),

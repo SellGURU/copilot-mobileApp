@@ -282,17 +282,54 @@ class _TasksState extends State<Tasks> {
     }
   }
 
-  int resolveTasksLength (){
-    if(widget.title == 'Daily Tasks'){
-      return tasks.where((task) => task['type'] !="Questionnaire").length;
+  int resolveTasksLength() {
+    int count = 0;
+    if (widget.title == 'Daily Tasks') {
+      for (var task in tasks) {
+        if (task['type'] != "Questionnaire") {
+          if (task['type'] == "Activity" && task['Sections'] != null && task['Sections'] is List) {
+            for (var section in task['Sections']) {
+              if (section is Map && section['Exercises'] != null && section['Exercises'] is List) {
+                count += (section['Exercises'] as List).length;
+              }
+            }
+          } else {
+            count++;
+          }
+        }
+      }
+    } else {
+      count = tasks.where((task) => task['type'] == "Questionnaire").length;
     }
-    return tasks.where((task) => task['type'] =="Questionnaire").length;
+    return count;
   }
-  int resolveCompletedTasksLength (){
-    if(widget.title == 'Daily Tasks'){
-      return tasks.where((task) => task['type'] !="Questionnaire" && (task["completed"] =='Done' || task["Status"] ==true)).length;
+  int resolveCompletedTasksLength() {
+    int count = 0;
+    if (widget.title == 'Daily Tasks') {
+      for (var task in tasks) {
+        if (task['type'] != "Questionnaire") {
+          if (task['type'] == "Activity" && task['Sections'] != null && task['Sections'] is List) {
+            for (var section in task['Sections']) {
+              if (section is Map && section['Exercises'] != null && section['Exercises'] is List) {
+                for (var exercise in section['Exercises']) {
+                  if (exercise is Map && (exercise['completed'] == 'Done' || exercise['Status'] == true)) {
+                    count++;
+                  }
+                }
+              }
+            }
+          } else if (task["completed"] == 'Done' || task["Status"] == true) {
+            count++;
+          }
+        }
+      }
+    } else {
+      count = tasks.where((task) =>
+        task['type'] == "Questionnaire" &&
+        (task["completed"] == 'Done' || task["Status"] == true)
+      ).length;
     }
-    return tasks.where((task) => task['type'] =="Questionnaire"  && (task["completed"] =='Done'||task["Status"] ==true)).length;
+    return count;
   }
   @override
   Widget build(BuildContext context) {
