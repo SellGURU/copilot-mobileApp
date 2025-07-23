@@ -20,14 +20,14 @@ class ActivityTaskItem extends StatefulWidget {
 }
 
 class _ActivityTaskItemState extends State<ActivityTaskItem> {
-  late Map<String, dynamic> taskData;
+  // late Map<String, dynamic> taskData;
   late final WebViewController _controller;
   late String encodeId;
   
   @override
   void initState() {
     super.initState();
-    taskData = widget.task;
+    // taskData = widget.task;
     _initializeTask();
   }
 
@@ -44,16 +44,16 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
   }  
 
   void _initializeWebView() {
-    if (taskData['type'] == 'Check-In' || taskData['type'] == 'Questionary') {
-      String taskType = taskData['type'] == 'Check-In' ? 'checkin' : 'questionary';
+    if (widget.task['type'] == 'Check-In' || widget.task['type'] == 'Questionary') {
+      String taskType = widget.task['type'] == 'Check-In' ? 'checkin' : 'questionary';
       _controller = WebViewController()
-        ..loadRequest(Uri.parse("https://holisticare.vercel.app/$taskType/$encodeId/${taskData["id"]}"));
+        ..loadRequest(Uri.parse("https://holisticare.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
       setState(() {});
     }
   }
 
   void _openWebViewModal(BuildContext context, String title) {
-    if (taskData['type'] == 'Check-In' || taskData['type'] == 'Questionary') {
+    if (widget.task['type'] == 'Check-In' || widget.task['type'] == 'Questionary') {
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -86,7 +86,7 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => TaskCubit()..loadTask(taskData),
+      create: (context) => TaskCubit()..loadTask(widget.task),
       child: BlocBuilder<TaskCubit, TaskState>(
         builder: (context, state) {
           return Row(
@@ -103,7 +103,7 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(100),
                       border: Border.all(
-                        color: taskData["completed"] == 'Done' ? AppColors.greenBega : AppColors.SilverGray,
+                        color: widget.task["completed"] == 'Done' || widget.task["Status"] == true ? AppColors.greenBega : AppColors.SilverGray,
                         width: 3,
                       )
                     ),
@@ -113,16 +113,16 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                         width: 16,
                         height: 16,
                         fit: BoxFit.contain,
-                        color: taskData["completed"] == 'Done' ? AppColors.greenBega : AppColors.TextTriarty,
+                        color:  widget.task["completed"] == 'Done' || widget.task["Status"] == true  ? AppColors.greenBega : AppColors.TextTriarty,
                       )
                     )
                   ),
                   Container(
                     width: 140, // یا هر عددی که مناسب طراحی‌ات است
                     child: Tooltip(
-                      message: taskData["Title"] ?? "",
+                      message: widget.task["Title"] ?? "",
                       child: Text(
-                         taskData["Title"]?? "",
+                         widget.task["Title"]?? "",
                         style: AppTextStyles.hintMedium,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
@@ -134,11 +134,11 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
               ),
               GestureDetector(
                 onTap: () {
-                    _openWebViewModal(context, taskData["Title"]);
-                    if (taskData['completed'] == 'Done') {
-                      context.read<TaskCubit>().uncheckTask(taskData);
+                    _openWebViewModal(context, widget.task["Title"]);
+                    if ( widget.task["completed"] == 'Done' || widget.task["Status"] == true ) {
+                      context.read<TaskCubit>().uncheckTask(widget.task);
                     } else {
-                      context.read<TaskCubit>().completeTask(taskData);
+                      context.read<TaskCubit>().completeTask(widget.task);
                     }
                 },
                 child: Container(
@@ -146,12 +146,12 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                 height: 24,
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: taskData["completed"] == 'Done' ? AppColors.greenBega : AppColors.SilverGray,
+                    color:  widget.task["completed"] == 'Done' || widget.task["Status"] == true  ? AppColors.greenBega : AppColors.SilverGray,
                     width: 1,
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: taskData["completed"] == 'Done'
+                child:  widget.task["completed"] == 'Done' || widget.task["Status"] == true 
                   ? GestureDetector(
                       child: Center(
                         child: SvgPicture.asset('assets/tick.svg'),
