@@ -74,11 +74,7 @@ class _WelcomscreenState extends State<Welcomscreen> {
                             //     EdgeInsets.symmetric(horizontal: size.width / 10),
                             decoration: BoxDecoration(
                                 color: AppColors.primaryDeepTeal,
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
-                                  color: Colors.white,
-                                  width: 1, // 1px
-                                )),
+                                borderRadius: BorderRadius.circular(20),),
                             // width: size.width,
                             child: Text(
                               "Continue",
