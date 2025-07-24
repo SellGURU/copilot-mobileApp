@@ -324,9 +324,9 @@ class _ResultScreenState extends State<ResultScreen> {
                   child: ListView.separated(
                     itemCount: data["data"].length,
                     itemBuilder: (BuildContext context, int index) {
-                      if (index == 0) {
-                        return SizedBox(width: 0);
-                      }
+                      // if (index == 0) {
+                      //   return SizedBox(width: 0);
+                      // }
                       return BioMarkerCard(
                         label: data["data"][index]["name"],
                         colorBadge: "red",

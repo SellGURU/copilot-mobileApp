@@ -68,7 +68,11 @@ void _downloadPdfWebFromUrl(String pdfUrl) {
 String getFormattedDate(DateTime date) {
   return DateFormat("MMMM, d").format(date);
 }
-
+Future<String?> getNameUser() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  return prefs
+      .getString('name'); // Assuming 'name' is the key for the user's name
+}
 /// Android: Download the PDF from a URL and save it using app-specific storage or SAF (File Picker)
 Future<void> _downloadPdfAndroidFromUrl(
     BuildContext context, String pdfUrl) async {
@@ -701,16 +705,20 @@ class _Overview2State extends State<Overview2> {
                             builder: (context, state) {
                               if (state is SuccessClientInformation) {
                                 // Display the user's name when data is successfully loaded
-                                return GestureDetector(
-                                  // onTap: () => {widget.onToggleDropDown()},
-                                  child:Padding(
-                                    padding: const EdgeInsets.only(top: 20.0), // 20 pixels top margin
-                                    child:Text(
-                                    getFormattedDate(DateTime.now()),
-                                    // state.userInfo["name"],
-                                    style: AppTextStyles.titleXl,
-                                  ),
-                                  )
+    
+                                return FutureBuilder<String?>(future: getNameUser(), builder: (BuildContext context, AsyncSnapshot<String?> snapshot) { 
+                                    return GestureDetector(
+                                        // onTap: () => {widget.onToggleDropDown()},
+                                        child:Padding(
+                                          padding: const EdgeInsets.only(top: 20.0), // 20 pixels top margin
+                                          child:Text(
+                                          snapshot.data ?? "",
+                                          // state.userInfo["name"],
+                                          style: AppTextStyles.titleXl,
+                                        ),
+                                        )
+                                      );
+                                 },                                 
                                 );
                               }
                               // Render an empty widget for other states

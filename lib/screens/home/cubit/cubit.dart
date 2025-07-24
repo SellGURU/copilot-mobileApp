@@ -51,7 +51,7 @@ class BiomarkerCubit extends Cubit<BiomarkerState> {
               "data": biomarkers 
             };
             
-            // print("Transformed data: ${json.encode(transformedData)}");
+            print("Transformed data: ${json.encode(transformedData)}");
             // print("Number of biomarkers: ${(transformedData['data'] as List).length}");
             //  print("Transformed data: ${transformedData['data']}");
             if(transformedData['data'].isNotEmpty){
