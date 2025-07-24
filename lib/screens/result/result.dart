@@ -418,7 +418,7 @@ class _ResultScreenState extends State<ResultScreen> {
                         SizedBox(height: 8,),
                         Text("No Results Available Yet", style: AppTextStyles.headline6,),
                         SizedBox(height: 8,),
-                        Text("Once your test results are uploaded, you’ll see detailed results here", style: AppTextStyles.body2Secondary,)
+                        Text("Once your test results are uploaded, you’ll see detailed results here", style: AppTextStyles.body2Secondary,textAlign: TextAlign.center,)
                       ],
                     ),
                   ),

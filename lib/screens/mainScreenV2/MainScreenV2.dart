@@ -562,80 +562,91 @@ class _Overview2State extends State<Overview2> {
                                 
                                 Row(
                                   children: [
-                                 BlocConsumer<DownloadReportPdfCubit, DownloadPdfState>(
-                                    listener: (context, state) {
-                                      // TODO: Implement listener for handling side effects based on state changes.
-                                    },
-                                    builder: (context, state) {
-                                      print("State is: \$state");
-                                      
-                                      // State: SuccessDownloadPdf
-                                      if (state is SuccessDownloadPdf) {
-                                        return GestureDetector(
-                                          onTap: () async {
-                                            // Launch the URL for the PDF download
-                                            LaunchURL(state.pdfUrl);
-                                          },
-                                          child: Row(
-                                            children: [
-                                              SvgPicture.asset(
-                                                "assets/document-download.svg",
-                                                width: 16,
-                                                height: 16,
-                                                colorFilter: const ColorFilter.mode(
-                                                  AppColors.purpleDark,
-                                                  BlendMode.srcIn,
-                                                ),
-                                              ),
-                                              const SizedBox(width: 5),
-                                              Text(
-                                                "Report",
-                                                style: AppTextStyles.hintPurple,
-                                              ),
-                                            ],
-                                          ),
-                                        );
-                                         return const SizedBox();
-                                      }
+                                    // Only show report button when biomarker data is loaded
+                                    BlocBuilder<BiomarkerCubit, BiomarkerState>(
+                                      builder: (context, biomarkerState) {
+                                        // Only show report button if biomarker data is successfully loaded and has data
+                                        if (biomarkerState is SuccessBiomarkerState) {
+                                          var biomarkerData = biomarkerState.getBiomarkerData();
+                                          if (biomarkerData["data"] != null && biomarkerData["data"].length > 0) {
+                                            return BlocConsumer<DownloadReportPdfCubit, DownloadPdfState>(
+                                              listener: (context, state) {
+                                                // TODO: Implement listener for handling side effects based on state changes.
+                                              },
+                                              builder: (context, state) {
+                                                print("State is: \$state");
+                                                
+                                                // State: SuccessDownloadPdf
+                                                if (state is SuccessDownloadPdf) {
+                                                  return GestureDetector(
+                                                    onTap: () async {
+                                                      // Launch the URL for the PDF download
+                                                      LaunchURL(state.pdfUrl);
+                                                    },
+                                                    child: Row(
+                                                      children: [
+                                                        SvgPicture.asset(
+                                                          "assets/document-download.svg",
+                                                          width: 16,
+                                                          height: 16,
+                                                          colorFilter: const ColorFilter.mode(
+                                                            AppColors.purpleDark,
+                                                            BlendMode.srcIn,
+                                                          ),
+                                                        ),
+                                                        const SizedBox(width: 5),
+                                                        Text(
+                                                          "Report",
+                                                          style: AppTextStyles.hintPurple,
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                }
 
-                                      // State: LoadingDownloadPdf
-                                      if (state is LoadingDownloadPdf) {
-                                        return const SizedBox(
-                                          width: 15,
-                                          height: 15,
-                                          child: CircularProgressIndicator(color: AppColors.mainSecandaryColor),
-                                        );
-                                      }
+                                                // State: LoadingDownloadPdf
+                                                if (state is LoadingDownloadPdf) {
+                                                  return const SizedBox(
+                                                    width: 15,
+                                                    height: 15,
+                                                    child: CircularProgressIndicator(color: AppColors.mainSecandaryColor),
+                                                  );
+                                                }
 
-                                      // State: ErrorDownloadPdf
-                                      if (state is ErrorDownloadPdf) {
-                                        return Row(
-                                          children: [
-                                            SvgPicture.asset(
-                                              "assets/document-download.svg",
-                                              width: 16,
-                                              height: 16,
-                                              colorFilter: const ColorFilter.mode(
-                                                AppColors.purpleLite,
-                                                BlendMode.srcIn,
-                                              ),
-                                            ),
-                                            const SizedBox(width: 5),
-                                            Text(
-                                              "Report",
-                                              style: AppTextStyles.hintLitePurple,
-                                            ),
-                                          ],
-                                        );
-                                      }
+                                                // State: ErrorDownloadPdf
+                                                if (state is ErrorDownloadPdf) {
+                                                  return Row(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                        "assets/document-download.svg",
+                                                        width: 16,
+                                                        height: 16,
+                                                        colorFilter: const ColorFilter.mode(
+                                                          AppColors.purpleLite,
+                                                          BlendMode.srcIn,
+                                                        ),
+                                                      ),
+                                                      const SizedBox(width: 5),
+                                                      Text(
+                                                        "Report",
+                                                        style: AppTextStyles.hintLitePurple,
+                                                      ),
+                                                    ],
+                                                  );
+                                                }
 
-                                      // Default: Unknown State
-                                      return const SizedBox(
-                                        child: Text("An error occurred"),
-                                      );
-                                    },
-                                  ), 
-                                   SizedBox(width: 8,),                                 
+                                                // Default: Unknown State
+                                                return const SizedBox();
+                                              },
+                                            );
+                                          }
+                                        }
+                                        // Return empty SizedBox if biomarker data is not loaded or empty
+                                        return const SizedBox();
+                                      },
+                                    ),
+                                    
+                                    SizedBox(width: 8,),                                 
                                     NotificationWidget(
                                       notificationCount: 2,
                                       notifications: [
@@ -735,66 +746,66 @@ class _Overview2State extends State<Overview2> {
                       if(biomarkerData["data"].length>0){
                         return Column(
                           children: [
-                                            const SizedBox(
-                  height: 20,
-                ),
-                  Container(
-                    padding: const EdgeInsets.only(top: 20),
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      "Biomarkers",
-                      style: AppTextStyles.title1,
-                    ),
-                  ),
-                    SizedBox(
-                        height: 280,
-                        child: ListView.separated(
-                          itemCount: biomarkerData["data"].length,
-                          
-                          scrollDirection: Axis.horizontal,
-                          shrinkWrap: false,
-                          physics: const BouncingScrollPhysics(),
-                          padding: const EdgeInsets.only(
-                              top: 20, bottom: 20, left: 8, right: 10),
-                          itemBuilder: (BuildContext context, int index) {
-                            var biomarker = biomarkerData["data"][index];
-                            // Ensure all values are properly typed
-                            String name = biomarker["name"]?.toString() ?? "Unknown Biomarker";
-                            String avg = biomarker["values"][0]?.toString() ?? "0";
-                            String current = biomarker["values"][0]?.toString() ?? "0";
-                            String unit = biomarker["unit"]?.toString() ?? "";
-                            String icon = resolveAnalyseIcon(biomarker["subcategory"]?.toString() ?? "");
-                            String status = biomarker["status"][0]?.toString() ?? "Unknown";
-                            
-                            // Safely convert values to List<num>
-                            List<double> values = (biomarker["values"] as Iterable)
-                                .map((e) => double.tryParse(e.toString()) ?? 0.0)
-                                .toList();
-
-                            return ItemCard(
-                              title: name,
-                              average: avg,
-                              icon: SvgPicture.asset(
-                                icon,
-                                width: 16,
-                                height: 16,
+                            const SizedBox(
+                                  height: 20,
+                            ),
+                            Container(
+                              padding: const EdgeInsets.only(top: 20),
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Biomarkers",
+                                style: AppTextStyles.title1,
                               ),
-                              status: status,
-                              current: current,
-                              scale: unit,
-                              valuesData: values,
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return const SizedBox(
-                              width: 10,
-                            );
-                          },
-                        ),
-                      )                          ],
-                        ); 
+                            ),
+                              SizedBox(
+                                  height: 280,
+                                  child: ListView.separated(
+                                    itemCount: biomarkerData["data"].length,
+                                    
+                                    scrollDirection: Axis.horizontal,
+                                    shrinkWrap: false,
+                                    physics: const BouncingScrollPhysics(),
+                                    padding: const EdgeInsets.only(
+                                        top: 20, bottom: 20, left: 8, right: 10),
+                                    itemBuilder: (BuildContext context, int index) {
+                                      var biomarker = biomarkerData["data"][index];
+                                      // Ensure all values are properly typed
+                                      String name = biomarker["name"]?.toString() ?? "Unknown Biomarker";
+                                      String avg = biomarker["values"][0]?.toString() ?? "0";
+                                      String current = biomarker["values"][0]?.toString() ?? "0";
+                                      String unit = biomarker["unit"]?.toString() ?? "";
+                                      String icon = resolveAnalyseIcon(biomarker["subcategory"]?.toString() ?? "");
+                                      String status = biomarker["status"][0]?.toString() ?? "Unknown";
+                                      
+                                      // Safely convert values to List<num>
+                                      List<double> values = (biomarker["values"] as Iterable)
+                                          .map((e) => double.tryParse(e.toString()) ?? 0.0)
+                                          .toList();
+
+                                      return ItemCard(
+                                        title: name,
+                                        average: avg,
+                                        icon: SvgPicture.asset(
+                                          icon,
+                                          width: 16,
+                                          height: 16,
+                                        ),
+                                        status: status,
+                                        current: current,
+                                        scale: unit,
+                                        valuesData: values,
+                                      );
+                                    },
+                                    separatorBuilder: (BuildContext context, int index) {
+                                      return const SizedBox(
+                                        width: 10,
+                                      );
+                                    },
+                                  ),
+                                )                          ],
+                                  ); 
                       }else {
-                        return const EmptyBox(text: 'No Biomarker Data Yet', iconPath: 'assets/', title: "Biomarkers");
+                        return const EmptyBox(text: 'No Biomarker Data Yet', iconPath: 'assets/glass.svg', title: "Biomarkers");
                       }
                     }
                     
