@@ -250,7 +250,14 @@ class _ResultMainTabState extends State<ResultMainTab> {
                       child: SvgPicture.asset(resolveAnalyseIcon((widget.data as Map<String, dynamic>)['subcategory']?? "")),
                     ),
                     const SizedBox(width: 10),
-                    Text(widget.title, style: AppTextStyles.title1),
+                    Expanded(
+                      child: Text(
+                        widget.title, 
+                        style: AppTextStyles.title1,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -320,7 +327,14 @@ class _HowToImproveTabState extends State<HowToImproveTab> {
                   child: SvgPicture.asset(resolveAnalyseIcon((widget.data as Map<String, dynamic>)['subcategory']?? "")),
                 ),
                 const SizedBox(width: 10),
-                Text("How to Improve", style: AppTextStyles.title1),
+                Expanded(
+                  child: Text(
+                    "How to Improve", 
+                    style: AppTextStyles.title1,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 10),
@@ -371,7 +385,14 @@ class _InsightTabState extends State<InsightTab> {
                   child: SvgPicture.asset(resolveAnalyseIcon((widget.data as Map<String, dynamic>)['subcategory']?? "")),
                 ),
                 const SizedBox(width: 10),
-                Text("Insights", style: AppTextStyles.title1),
+                Expanded(
+                  child: Text(
+                    "Insights", 
+                    style: AppTextStyles.title1,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 10),
