@@ -632,7 +632,7 @@ class _ChatscreenState extends State<Chatscreen> {
               BlocBuilder<ImageHandlerCubit, ImageHandlerState>(
                 builder: (context, state) {
                   return Positioned(
-                    bottom: 50,
+                    bottom: 30,
                     width: size.width * .9,
                     //  > 420 ? 400 : size.width * .9,
                     child: Container(
@@ -697,10 +697,7 @@ class _ChatscreenState extends State<Chatscreen> {
                                 hintStyle: AppTextStyles.hint,
                                 hintText: "Ask me anything...",
                                 suffixIcon: IconButton(
-                                  icon: const Icon(
-                                    Icons.send,
-                                    color: AppColors.purpleDark,
-                                  ),
+                                  icon: SvgPicture.asset('assets/send-2.svg',width: 24,height: 24),
                                   onPressed: () {
                                     _sendMessage(state is HaveImage
                                         ? state.imageBase64
