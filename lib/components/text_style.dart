@@ -134,7 +134,7 @@ class AppTextStyles {
   static TextStyle hint = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 12,
-          color: AppColors.textLite,
+          color: AppColors.textTriarty,
           fontWeight: FontWeight.w400));
   static TextStyle hintPurple = GoogleFonts.roboto(
       textStyle: TextStyle(

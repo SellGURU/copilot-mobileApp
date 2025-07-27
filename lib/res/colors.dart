@@ -22,6 +22,9 @@ class AppColors {
   static const Color textPrimary = Color.fromARGB(255, 56, 56, 56);
   static const Color textSecondary = Color.fromARGB(255, 136, 136, 136);
   static const Color backgroundColorCard = Color.fromARGB(255, 253, 253, 253);
+  static const Color textTriarty = Color.fromARGB(255, 176, 176, 176);
+
+
 
   static const Color mainPrimaryColor = Color.fromARGB(255, 108, 194, 74);
   static const Color mainSecandaryColor = Color.fromARGB(255, 0, 95, 115);

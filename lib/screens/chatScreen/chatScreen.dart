@@ -725,8 +725,13 @@ class _ChatscreenState extends State<Chatscreen> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10)),
                                 ),
+                                  focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide.none,
+                                ),
                               ),
                             ),
+                          
                           ],
                         ),
                       ),
