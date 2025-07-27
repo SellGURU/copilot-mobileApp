@@ -86,6 +86,20 @@ class _ProgressScreenState extends State<ProgressScreen>
     return "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
   }
 
+  /// Returns true if the selected date is today, false otherwise
+  bool _isSelectedDateToday(List<DateTime> dates) {
+    final selected = dates.firstWhere(
+      (d) => d.day == selectedDate && d.month == d.month && d.year == d.year,
+      orElse: () => DateTime(1900),
+    );
+    if (selected.year == 1900) return false;
+    
+    final today = DateTime.now();
+    return selected.year == today.year && 
+           selected.month == today.month && 
+           selected.day == today.day;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -228,6 +242,7 @@ class _ProgressScreenState extends State<ProgressScreen>
                         Tasks(
                           title: "Daily Tasks",
                           tasksList: getSelectedDayTasksObject(dates)?['tasks']?.cast<Map<String, dynamic>>(),
+                          readOnly: !_isSelectedDateToday(dates),
                         ),
                         // ... سایر بخش‌ها ...
                       ],

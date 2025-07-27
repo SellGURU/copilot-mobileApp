@@ -15,7 +15,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class TaskItem extends StatefulWidget {
   final Map<String, dynamic> task;
-  const TaskItem({super.key,required this.task});
+  final bool readOnly; // پراپ جدید برای حالت فقط خواندن
+  const TaskItem({super.key,required this.task, this.readOnly = false});
   @override
   State<TaskItem> createState() {
     return _TaskItemState();
@@ -155,7 +156,7 @@ class _TaskItemState extends State<TaskItem> {
                 ],
               ),
               GestureDetector(
-                onTap: () {
+                onTap: widget.readOnly ? null : () {
                   if(widget.task["completed"] != 'Done' ){
                     print('widget.task["completed"] ${widget.task}');
                     _openWebViewModal(context, widget.task["title"]);
@@ -181,18 +182,16 @@ class _TaskItemState extends State<TaskItem> {
                   ),
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: widget.task["completed"] == 'Done' || widget.task["status"] == 'Done'
-                  ? GestureDetector(
-                      child: Center(
+                child: Opacity(
+                  opacity: widget.readOnly ? 0.5 : 1.0,
+                  child: widget.task["completed"] == 'Done' || widget.task["status"] == 'Done'
+                    ? Center(
                         child: SvgPicture.asset('assets/tick.svg'),
-                      ),
-                    )
-                  : GestureDetector(
-                      child: Center(
+                      )
+                    : Center(
                         child: SvgPicture.asset('assets/pelas.svg'),
-                      ),
-
-                    )
+                      )
+                ),
               )
              ,
               )
