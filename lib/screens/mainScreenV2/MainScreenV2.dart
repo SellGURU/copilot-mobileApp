@@ -1093,7 +1093,7 @@ class _Longevity2State extends State<Longevity2> {
                                           style: AppTextStyles.titleSmaleBold,
                                         ),
                                         Text(
-                                          "/100",
+                                          "/10",
                                           style: AppTextStyles.hintSmale,
                                         ),
                                       ],
@@ -1189,7 +1189,7 @@ class _Longevity2State extends State<Longevity2> {
                                             style: AppTextStyles.titleSmaleBold,
                                           ),
                                           Text(
-                                            "/100",
+                                            "/10",
                                             style: AppTextStyles.hintSmale,
                                           ),
                                         ],
@@ -1280,7 +1280,7 @@ class _Longevity2State extends State<Longevity2> {
                                           style: AppTextStyles.titleSmaleBold,
                                         ),
                                         Text(
-                                          "/100",
+                                          "/10",
                                           style: AppTextStyles.hintSmale,
                                         ),
                                       ],

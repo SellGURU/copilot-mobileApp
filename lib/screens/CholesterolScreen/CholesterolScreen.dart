@@ -124,7 +124,7 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(15)),
-        color: isActive ? AppColors.purpleDark : Colors.white,
+        color: isActive ? AppColors.mainPrimaryColor.withOpacity(0.5) : Colors.white,
       ),
       height: 50,
       child: Padding(
@@ -245,7 +245,7 @@ class _ResultMainTabState extends State<ResultMainTab> {
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(99),
-                        color: AppColors.greenBorder,
+                        color: Color.fromARGB(255, 234, 243, 240),
                       ),
                       child: SvgPicture.asset(resolveAnalyseIcon((widget.data as Map<String, dynamic>)['subcategory']?? "")),
                     ),
@@ -322,7 +322,7 @@ class _HowToImproveTabState extends State<HowToImproveTab> {
                   padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(99),
-                    color: AppColors.greenBorder,
+                    color: Color.fromARGB(255, 234, 243, 240),
                   ),
                   child: SvgPicture.asset(resolveAnalyseIcon((widget.data as Map<String, dynamic>)['subcategory']?? "")),
                 ),
@@ -380,7 +380,7 @@ class _InsightTabState extends State<InsightTab> {
                   padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(99),
-                    color: AppColors.greenBorder,
+                    color: Color.fromARGB(255, 234, 243, 240),
                   ),
                   child: SvgPicture.asset(resolveAnalyseIcon((widget.data as Map<String, dynamic>)['subcategory']?? "")),
                 ),
