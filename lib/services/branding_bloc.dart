@@ -63,15 +63,7 @@ class BrandingBloc extends Bloc<BrandingEvent, BrandingState> {
     Emitter<BrandingState> emit,
   ) async {
     try {
-      // Check if we already have cached data
-      if (_brandingService.cachedData != null) {
-        final data = _brandingService.cachedData!;
-        // Set the color in AppColors
-        BrandingColorSetter.setPrimaryColorFromBranding(data);
-        emit(BrandingLoaded(data));
-        return;
-      }
-
+      // Always try to load data (service will use cache if available)
       emit(BrandingLoading());
       final data = await _brandingService.loadBrandingData();
       // Set the color in AppColors

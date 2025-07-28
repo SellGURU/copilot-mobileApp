@@ -27,15 +27,19 @@ class BrandingService {
   Future<BrandingData> loadBrandingData() async {
     // Return cached data if available
     if (_cachedData != null) {
+      print('BrandingService: Using in-memory cache');
       return _cachedData!;
     }
 
     // Check local cache first
     final cached = await getCachedBrandingData();
     if (cached != null) {
+      print('BrandingService: Using local cache');
       _cachedData = cached;
       return cached;
     }
+
+    print('BrandingService: No cache found, loading from API');
 
     // Load from API if not cached
     _isLoading = true;

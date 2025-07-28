@@ -1,7 +1,9 @@
 import 'package:copilet/components/text_style.dart';
 import 'package:copilet/screens/Wearable%20Device/WearableDevice.dart';
+import 'package:copilet/services/branding_service.dart';
 import 'package:copilet/widgets/notification_widget.dart';
 import 'package:copilet/widgets/restart/RestartWidget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 import 'package:flutter/material.dart';

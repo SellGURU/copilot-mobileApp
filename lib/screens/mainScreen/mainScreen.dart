@@ -45,9 +45,7 @@ class _MainscreenState extends State<Mainscreen> {
     // Load branding data when app starts
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) {
-        // Clear cache first to force API call
-        _clearBrandingCache();
-        // Load branding data
+        // Load branding data (will use cache if available)
         context.read<BrandingBloc>().add(LoadBrandingData());
       }
     });
@@ -56,21 +54,6 @@ class _MainscreenState extends State<Mainscreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-  }
-
-  // Clear branding cache to force API call
-  Future<void> _clearBrandingCache() async {
-    try {
-      // Clear in-memory cache
-      BrandingService.instance.clearCache();
-      
-      // Clear local cache
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.remove('branding_data');
-      
-    } catch (e) {
-      print('MainScreen: Error clearing cache: $e');
-    }
   }
 
   // override the back btn

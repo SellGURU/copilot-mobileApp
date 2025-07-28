@@ -133,21 +133,26 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
               ),
               TabItem(
                 title: "",
-                icon: Container(
-                  alignment: Alignment.center,
-                  margin: const EdgeInsets.all(5),
-                  padding: EdgeInsets.all(1),
-                  height: (size.height),
-                  decoration: BoxDecoration(
-                      color: AppColors.dynamicPrimaryColor,
-                      borderRadius: BorderRadius.circular(99),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Color.fromRGBO(97, 62, 234, 0.5),
-                            offset: Offset(0, 4),
-                            blurRadius: 12)
-                      ]),
-                  child: SvgPicture.asset("assets/star.svg"),
+                icon: ValueListenableBuilder<Color>(
+                  valueListenable: AppColors.dynamicPrimaryColorNotifier,
+                  builder: (context, color, child) {
+                    return Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.all(5),
+                      padding: EdgeInsets.all(1),
+                      height: (size.height),
+                      decoration: BoxDecoration(
+                          color: color,
+                          borderRadius: BorderRadius.circular(99),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color.fromRGBO(97, 62, 234, 0.5),
+                                offset: Offset(0, 4),
+                                blurRadius: 12)
+                          ]),
+                      child: SvgPicture.asset("assets/star.svg"),
+                    );
+                  },
                 ),
               ),
               TabItem(
