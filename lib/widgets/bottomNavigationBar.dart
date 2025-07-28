@@ -139,7 +139,7 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
                   padding: EdgeInsets.all(1),
                   height: (size.height),
                   decoration: BoxDecoration(
-                      color: AppColors.mainPrimaryColor,
+                      color: AppColors.dynamicPrimaryColor,
                       borderRadius: BorderRadius.circular(99),
                       boxShadow: [
                         BoxShadow(

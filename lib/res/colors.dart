@@ -2,6 +2,18 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   AppColors._();
+  
+  // Dynamic branding color - will be set from API
+  static Color? _dynamicPrimaryColor;
+  
+  // Getter for dynamic primary color
+  static Color get dynamicPrimaryColor => _dynamicPrimaryColor ?? mainPrimaryColor;
+  
+  // Setter for dynamic primary color
+  static void setDynamicPrimaryColor(Color color) {
+    _dynamicPrimaryColor = color;
+  }
+  
   // rgba(132, 138, 148, 1)
   static const Color mainBg = Colors.white;
   static const Color SilverGray = Color.fromARGB(255, 229, 229, 229);

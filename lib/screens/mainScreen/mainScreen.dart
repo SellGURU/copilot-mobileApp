@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:colorful_safe_area/colorful_safe_area.dart';
+import 'package:copilet/services/branding_service.dart';
+import 'package:copilet/services/branding_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -35,7 +37,12 @@ class _MainscreenState extends State<Mainscreen> {
   final GlobalKey<NavigatorState> _settingScreenKey = GlobalKey();
   final GlobalKey<NavigatorState> _resultScreenKey = GlobalKey();
   final GlobalKey<NavigatorState> _chatScreenKey = GlobalKey();
-
+  @override
+  void initState() {
+    super.initState();
+    // Load branding data using BlocProvider
+    context.read<BrandingBloc>().add(LoadBrandingData());
+  }
   // override the back btn
   Future<bool> _onWillPop() async {
     if (_healthPlanScreenKey.currentState!.canPop()) {

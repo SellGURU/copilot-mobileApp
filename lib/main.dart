@@ -29,6 +29,7 @@ import 'package:copilet/utility/changeScreanBloc/PageIndex_Bloc.dart';
 import 'package:copilet/utility/switchValueBloc/PageIndex_Bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:copilet/services/branding_bloc.dart';
 
 
 void main() async {
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => ChatCubit()),
         BlocProvider(create: (_) => ImageHandlerCubit()),
         BlocProvider(create: (_) => TaskCubit()),
+        BlocProvider(create: (_) => BrandingBloc()),
         BlocProvider(
           lazy: false,
           create: (context) {
