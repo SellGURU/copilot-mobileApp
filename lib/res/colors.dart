@@ -5,13 +5,18 @@ class AppColors {
   
   // Dynamic branding color - will be set from API
   static Color? _dynamicPrimaryColor;
+  static final ValueNotifier<Color> _dynamicPrimaryColorNotifier = ValueNotifier<Color>(mainPrimaryColor);
   
   // Getter for dynamic primary color
-  static Color get dynamicPrimaryColor => _dynamicPrimaryColor ?? mainPrimaryColor;
+  static Color get dynamicPrimaryColor => _dynamicPrimaryColorNotifier.value;
+  
+  // Getter for ValueNotifier (for reactive UI)
+  static ValueNotifier<Color> get dynamicPrimaryColorNotifier => _dynamicPrimaryColorNotifier;
   
   // Setter for dynamic primary color
   static void setDynamicPrimaryColor(Color color) {
     _dynamicPrimaryColor = color;
+    _dynamicPrimaryColorNotifier.value = color;
   }
   
   // rgba(132, 138, 148, 1)

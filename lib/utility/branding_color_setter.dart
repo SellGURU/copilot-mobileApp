@@ -8,8 +8,13 @@ class BrandingColorSetter {
   
   /// Set the dynamic primary color from branding data
   static void setPrimaryColorFromBranding(BrandingData brandingData) {
+    
     final primaryColor = hexToColor(brandingData.primaryColorHex);
+    
     AppColors.setDynamicPrimaryColor(primaryColor);
+    
+    // Verify the color was set
+    final currentColor = AppColors.dynamicPrimaryColor;
   }
   
   /// Set the dynamic primary color from hex string

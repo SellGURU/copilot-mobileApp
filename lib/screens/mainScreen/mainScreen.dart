@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:popover/popover.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../res/colors.dart';
 import '../../utility/changeScreanBloc/PageIndex_Bloc.dart';
@@ -37,12 +38,41 @@ class _MainscreenState extends State<Mainscreen> {
   final GlobalKey<NavigatorState> _settingScreenKey = GlobalKey();
   final GlobalKey<NavigatorState> _resultScreenKey = GlobalKey();
   final GlobalKey<NavigatorState> _chatScreenKey = GlobalKey();
+
   @override
   void initState() {
     super.initState();
-    // Load branding data using BlocProvider
-    context.read<BrandingBloc>().add(LoadBrandingData());
+    // Load branding data when app starts
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        // Clear cache first to force API call
+        _clearBrandingCache();
+        // Load branding data
+        context.read<BrandingBloc>().add(LoadBrandingData());
+      }
+    });
   }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
+
+  // Clear branding cache to force API call
+  Future<void> _clearBrandingCache() async {
+    try {
+      // Clear in-memory cache
+      BrandingService.instance.clearCache();
+      
+      // Clear local cache
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.remove('branding_data');
+      
+    } catch (e) {
+      print('MainScreen: Error clearing cache: $e');
+    }
+  }
+
   // override the back btn
   Future<bool> _onWillPop() async {
     if (_healthPlanScreenKey.currentState!.canPop()) {

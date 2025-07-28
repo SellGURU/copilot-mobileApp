@@ -3,8 +3,8 @@ import 'package:http/http.dart' as http;
 import '../models/branding_data.dart';
 import '../utility/branding_helper.dart';
 import 'package:dio/dio.dart';
-import '../../../utility/token/getTokenLocaly.dart';
-import '../../../constants/endPoints.dart';
+import '../utility/token/getTokenLocaly.dart';
+import '../constants/endPoints.dart';
 
 // Global branding service singleton
 class BrandingService {
@@ -40,29 +40,47 @@ class BrandingService {
     // Load from API if not cached
     _isLoading = true;
     Dio _dio = Dio();
-    var token = await getTokenLocally();
-    _dio.options.headers['Authorization'] = "Bearer $token";
     
     try {
+      var token = await getTokenLocally();
+      
+      _dio.options.headers['Authorization'] = "Bearer $token";
+      
       final response = await _dio.post(
         Endpoints.brandingInfo,
         data: {},
       );
 
       if (response.statusCode == 200) {
-        final data = BrandingData.fromJson(jsonDecode(response.data));
+        final data = BrandingData.fromJson(response.data);
         await cacheBrandingData(data);
         _cachedData = data;
         _isLoading = false;
         return data;
       } else {
         _isLoading = false;
-        throw Exception('Failed to load branding data');
+        throw Exception('Failed to load branding data: Status ${response.statusCode}');
       }
     } catch (e) {
       _isLoading = false;
-      throw Exception('Failed to load branding data');
+      
+      // Return fallback data instead of throwing exception
+      return _getFallbackBrandingData();
     }
+  }
+
+  // Fallback branding data when API fails
+  BrandingData _getFallbackBrandingData() {
+    return BrandingData(
+      name: 'Holisticare',
+      headline: 'Your Health, Our Priority',
+      primaryColorHex: '#006073', // mainSecandaryColor
+      secondaryColorHex: '#dce7ea',
+      tone: 'Professional and Caring',
+      focusArea: 'holistic_health',
+      logo: '',
+      lastUpdate: DateTime.now().toIso8601String(),
+    );
   }
 
   // Clear cached data

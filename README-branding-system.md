@@ -1,145 +1,164 @@
-# سیستم مدیریت Branding Data
+# Branding System Documentation
 
-این سیستم به شما امکان می‌دهد تا اطلاعات برندینگ (عنوان، شعار، رنگ اصلی) را در کل اپلیکیشن ذخیره کرده و از آن استفاده کنید.
+## Overview
+This system manages dynamic branding data (colors, text, etc.) that can be loaded from a backend API and applied throughout the application.
 
-## ساختار فایل‌ها
+## Architecture
 
-### 1. `lib/services/branding_service.dart`
-- سرویس اصلی برای بارگذاری و ذخیره اطلاعات برندینگ
-- از الگوی Singleton استفاده می‌کند
-- اطلاعات را در حافظه و SharedPreferences ذخیره می‌کند
+### Core Components
 
-### 2. `lib/services/branding_bloc.dart`
-- مدیریت state برای اطلاعات برندینگ
-- از BLoC pattern استفاده می‌کند
-- امکان بارگذاری، بروزرسانی و پاک کردن cache
+1. **BrandingService** (`lib/services/branding_service.dart`)
+   - Singleton service for loading and caching branding data
+   - Handles API calls and local storage
+   - Provides fallback data if API fails
 
-### 3. `lib/widgets/branding_display.dart`
-- Widget آماده برای نمایش اطلاعات برندینگ
-- Helper class برای دسترسی آسان به اطلاعات
+2. **BrandingBloc** (`lib/services/branding_bloc.dart`)
+   - State management for branding data
+   - Handles loading, error, and success states
+   - Provides reactive updates to UI
 
-### 4. `lib/utility/branding_usage_examples.dart`
-- مثال‌های مختلف استفاده از سیستم برندینگ
+3. **BrandingData** (`lib/models/branding_data.dart`)
+   - Data model for branding information
+   - Maps to JSON response from API
+   - Includes colors, text, and other branding elements
 
-## نحوه استفاده
+### Key Features
 
-### 1. بارگذاری اطلاعات برندینگ
+- **Automatic Loading**: Branding data loads automatically when the app starts
+- **Caching**: Data is cached locally for offline access
+- **Dynamic Colors**: Primary and secondary colors can be updated dynamically
+- **Error Handling**: Fallback data provided if API fails
+- **Reactive UI**: UI components automatically update when branding changes
+
+## Usage
+
+### Basic Usage
 
 ```dart
-// در initState یا هر جای دیگر
-context.read<BrandingBloc>().add(LoadBrandingData());
-```
-
-### 2. استفاده در Widget با BlocBuilder
-
-```dart
+// Access branding data anywhere in the app
 BlocBuilder<BrandingBloc, BrandingState>(
   builder: (context, state) {
     if (state is BrandingLoaded) {
-      final brandingData = state.data;
-      return Text(
-        brandingData.name, // یا brandingData.title برای backward compatibility
-        style: TextStyle(
-          color: hexToColor(brandingData.primaryColorHex),
-        ),
-      );
+      return Text(state.data.name);
     }
     return CircularProgressIndicator();
   },
 )
 ```
 
-### 3. استفاده از BrandingDataHelper
+### Using Dynamic Colors
 
 ```dart
-// دریافت رنگ اصلی
-Color primaryColor = BrandingDataHelper.getPrimaryColor(context);
-
-// دریافت رنگ ثانویه
-Color secondaryColor = BrandingDataHelper.getSecondaryColor(context);
-
-// دریافت عنوان
-String title = BrandingDataHelper.getTitle(context);
-
-// دریافت شعار
-String slogan = BrandingDataHelper.getSlogan(context);
-
-// دریافت tone
-String tone = BrandingDataHelper.getTone(context);
-
-// دریافت focus area
-String focusArea = BrandingDataHelper.getFocusArea(context);
-```
-
-### 4. استفاده از Widget آماده
-
-```dart
-// نمایش کامل اطلاعات برندینگ
-BrandingDisplay()
-
-// دکمه بروزرسانی
-BrandingRefreshButton()
-```
-
-### 5. بروزرسانی اطلاعات
-
-```dart
-// بروزرسانی از سرور
-context.read<BrandingBloc>().add(RefreshBrandingData());
-
-// پاک کردن cache
-context.read<BrandingBloc>().add(ClearBrandingData());
-```
-
-## مثال‌های کاربردی
-
-### استفاده در AppBar
-
-```dart
-AppBar(
-  backgroundColor: BrandingDataHelper.getPrimaryColor(context),
-  title: Text(BrandingDataHelper.getTitle(context)),
-  actions: [BrandingRefreshButton()],
-)
-```
-
-### استفاده در Theme
-
-```dart
-Theme(
-  data: Theme.of(context).copyWith(
-    primaryColor: BrandingDataHelper.getPrimaryColor(context),
-  ),
-  child: YourWidget(),
-)
-```
-
-### استفاده در Container
-
-```dart
+// Use the dynamic primary color
 Container(
-  color: BrandingDataHelper.getPrimaryColor(context).withOpacity(0.1),
-  child: Text(
-    BrandingDataHelper.getSlogan(context),
-    style: TextStyle(
-      color: BrandingDataHelper.getPrimaryColor(context),
-    ),
-  ),
+  color: AppColors.dynamicPrimaryColor,
+  child: Text('Styled with branding color'),
 )
 ```
 
-## مزایای این سیستم
+### Reactive Color Updates
 
-1. **دسترسی آسان**: در هر جای اپلیکیشن می‌توانید به اطلاعات برندینگ دسترسی داشته باشید
-2. **Cache هوشمند**: اطلاعات در حافظه و SharedPreferences ذخیره می‌شود
-3. **بروزرسانی آسان**: امکان بروزرسانی اطلاعات از سرور
-4. **Widget آماده**: کامپوننت‌های آماده برای استفاده سریع
-5. **Helper Classes**: کلاس‌های کمکی برای دسترسی آسان
-6. **State Management**: مدیریت state با BLoC pattern
+```dart
+// Widget that updates when color changes
+ValueListenableBuilder<Color>(
+  valueListenable: AppColors.dynamicPrimaryColorNotifier,
+  builder: (context, color, child) {
+    return Container(
+      color: color,
+      child: Text('Reactive color widget'),
+    );
+  },
+)
+```
 
-## نکات مهم
+## API Integration
 
-- اطلاعات برندینگ در `main.dart` به عنوان BlocProvider اضافه شده است
-- در `mainScreen.dart` اطلاعات در `initState` بارگذاری می‌شود
-- از `equatable` برای مقایسه state ها استفاده می‌شود
-- اطلاعات در SharedPreferences ذخیره می‌شود تا در بارگذاری بعدی سریع‌تر باشد 
+The system expects a JSON response with this structure:
+
+```json
+{
+  "brand_elements": {
+    "name": "Brand Name",
+    "headline": "Brand Headline",
+    "primary_color": "#000000",
+    "secondary_color": "#dce7ea",
+    "tone": "Motivational and Supportive",
+    "focus_area": "longivity"
+  }
+}
+```
+
+## Setup
+
+1. **Add BlocProvider** in `main.dart`:
+```dart
+MultiBlocProvider(
+  providers: [
+    BlocProvider(create: (_) => BrandingBloc()),
+    // ... other providers
+  ],
+  child: MyApp(),
+)
+```
+
+2. **Load branding data** in your main screen:
+```dart
+@override
+void initState() {
+  super.initState();
+  context.read<BrandingBloc>().add(LoadBrandingData());
+}
+```
+
+## File Structure
+
+```
+lib/
+├── services/
+│   ├── branding_service.dart      # API and caching logic
+│   └── branding_bloc.dart         # State management
+├── models/
+│   └── branding_data.dart         # Data model
+├── utility/
+│   ├── branding_helper.dart       # Utility functions
+│   └── branding_color_setter.dart # Color setting utilities
+└── res/
+    └── colors.dart                # Dynamic color definitions
+```
+
+## Configuration
+
+### Endpoints
+Configure the branding API endpoint in `lib/constants/endPoints.dart`:
+```dart
+static const String brandingInfo = '/api/branding/info';
+```
+
+### Caching
+Branding data is automatically cached using `shared_preferences`. Cache can be cleared programmatically:
+```dart
+BrandingService.instance.clearCache();
+```
+
+## Troubleshooting
+
+### Common Issues
+
+1. **Colors not updating**: Ensure you're using `AppColors.dynamicPrimaryColor` instead of static colors
+2. **API not called**: Check network connectivity and token authentication
+3. **Cache issues**: Clear cache using `BrandingService.instance.clearCache()`
+
+### Debug Information
+
+Check console logs for detailed information about:
+- API call status
+- Cache operations
+- Color application
+- Error messages
+
+## Best Practices
+
+1. **Always use reactive widgets** when displaying branding colors
+2. **Handle loading states** in your UI
+3. **Provide fallback colors** for error states
+4. **Test with different network conditions** to ensure reliability 
