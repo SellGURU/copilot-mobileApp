@@ -152,7 +152,7 @@ class AppTextStyles {
       textStyle: TextStyle(
           fontSize: 11,
           fontWeight: FontWeight.w500,
-          color: AppColors.greenBega));
+          color: AppColors.dynamicPrimaryColor));
   static TextStyle error = GoogleFonts.inter(
       textStyle: TextStyle(
           fontSize: 11, fontWeight: FontWeight.w400, color: AppColors.red));

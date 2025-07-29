@@ -63,7 +63,7 @@ class BrandingBloc extends Bloc<BrandingEvent, BrandingState> {
     Emitter<BrandingState> emit,
   ) async {
     try {
-      // Always try to load data (service will use cache if available)
+      // Load data (will try API first, then use cache if needed)
       emit(BrandingLoading());
       final data = await _brandingService.loadBrandingData();
       // Set the color in AppColors

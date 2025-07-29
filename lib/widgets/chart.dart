@@ -27,8 +27,8 @@ class ChartDot extends StatelessWidget {
 
   // Define gradient colors for the chart
   List<Color> gradientColors = [
-    AppColors.greenBega,
-    AppColors.greenBega,
+    AppColors.dynamicPrimaryColor,
+    AppColors.dynamicPrimaryColor,
   ];
 
   // Calculate min and max Y values from spots
@@ -117,7 +117,7 @@ class ChartDot extends StatelessWidget {
               radius: 3,
               color: Colors.white,
               strokeWidth: 2,
-              strokeColor: AppColors.greenBega,
+              strokeColor: AppColors.dynamicPrimaryColor,
             ),
           ),
           belowBarData: BarAreaData(

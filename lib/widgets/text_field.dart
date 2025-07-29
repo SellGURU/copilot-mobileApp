@@ -146,11 +146,11 @@ class _AppTextFieldState extends State<AppTextField> {
               errorText: widget.errorText,
               border: borderStyle,
               enabledBorder: borderStyle,
-              focusedBorder: const OutlineInputBorder(
+              focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
                 gapPadding: 0,
                 borderSide: BorderSide(
-                  color: AppColors.greenBega,
+                  color: AppColors.dynamicPrimaryColor,
                   width: 2.0,
                 ),
               ),
