@@ -3,20 +3,33 @@ import 'package:flutter/material.dart';
 class AppColors {
   AppColors._();
   
-  // Dynamic branding color - will be set from API
+  // Dynamic branding colors - will be set from API
   static Color? _dynamicPrimaryColor;
   static final ValueNotifier<Color> _dynamicPrimaryColorNotifier = ValueNotifier<Color>(mainPrimaryColor);
+  
+  static Color? _dynamicSecondaryColor;
+  static final ValueNotifier<Color> _dynamicSecondaryColorNotifier = ValueNotifier<Color>(mainSecandaryColor);
   
   // Getter for dynamic primary color
   static Color get dynamicPrimaryColor => _dynamicPrimaryColorNotifier.value;
   
+  // Getter for dynamic secondary color
+  static Color get dynamicSecondaryColor => _dynamicSecondaryColorNotifier.value;
+  
   // Getter for ValueNotifier (for reactive UI)
   static ValueNotifier<Color> get dynamicPrimaryColorNotifier => _dynamicPrimaryColorNotifier;
+  static ValueNotifier<Color> get dynamicSecondaryColorNotifier => _dynamicSecondaryColorNotifier;
   
   // Setter for dynamic primary color
   static void setDynamicPrimaryColor(Color color) {
     _dynamicPrimaryColor = color;
     _dynamicPrimaryColorNotifier.value = color;
+  }
+  
+  // Setter for dynamic secondary color
+  static void setDynamicSecondaryColor(Color color) {
+    _dynamicSecondaryColor = color;
+    _dynamicSecondaryColorNotifier.value = color;
   }
   
   // rgba(132, 138, 148, 1)

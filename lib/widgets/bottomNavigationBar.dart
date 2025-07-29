@@ -105,30 +105,39 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
             items: [
               TabItem(
                 title: "Overview",
-                icon: SizedBox(
-                  height: (size.width),
-                  // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
-                  child: SvgPicture.asset("assets/overviewIcon.svg",
-                      width: 5,
-                      height: 5,
-                      colorFilter: pageIndex == 0
-                          ? ColorFilter.mode(AppColors.mainSecandaryColor, BlendMode.srcIn)
-                          : ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
+                icon: ValueListenableBuilder<Color>(
+                  valueListenable: AppColors.dynamicSecondaryColorNotifier,
+                  builder: (context, secondaryColor, child) {
+                    return SizedBox(
+                      height: (size.width),
+                      // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
+                      child: SvgPicture.asset("assets/overviewIcon.svg",
+                          width: 5,
+                          height: 5,
+                          colorFilter: pageIndex == 0
+                              ? ColorFilter.mode(secondaryColor, BlendMode.srcIn)
+                              : ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
+                    );
+                  },
                 ),
               ),
               TabItem(
                 title: "Results",
-                icon: SizedBox(
-                  height: (size.height),
-                  // decoration: BoxDecoration(color: AppDecoration.color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
-                  child: SvgPicture.asset("assets/resultIcon.svg",
-                      width: 5,
-                      height: 5,
-                      colorFilter: pageIndex == 1
-                          ? const ColorFilter.mode(
-                              AppColors.mainSecandaryColor, BlendMode.srcIn)
-                          : const ColorFilter.mode(
-                              AppColors.textLite, BlendMode.srcIn)),
+                icon: ValueListenableBuilder<Color>(
+                  valueListenable: AppColors.dynamicSecondaryColorNotifier,
+                  builder: (context, secondaryColor, child) {
+                    return SizedBox(
+                      height: (size.height),
+                      // decoration: BoxDecoration(color: AppDecoration.color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
+                      child: SvgPicture.asset("assets/resultIcon.svg",
+                          width: 5,
+                          height: 5,
+                          colorFilter: pageIndex == 1
+                              ? ColorFilter.mode(secondaryColor, BlendMode.srcIn)
+                              : const ColorFilter.mode(
+                                  AppColors.textLite, BlendMode.srcIn)),
+                    );
+                  },
                 ),
               ),
               TabItem(
@@ -157,32 +166,40 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
               ),
               TabItem(
                   title: "Progress",
-                  icon: SizedBox(
-                    height: (size.height),
-                    // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
-                    child: SvgPicture.asset("assets/planIcon.svg",
-                        width: 5,
-                        height: 5,
-                        alignment: Alignment.center,
-                        colorFilter: pageIndex == 3
-                            ? const ColorFilter.mode(
-                                AppColors.mainSecandaryColor, BlendMode.srcIn)
-                            : const ColorFilter.mode(
-                                AppColors.textLite, BlendMode.srcIn)),
+                  icon: ValueListenableBuilder<Color>(
+                    valueListenable: AppColors.dynamicSecondaryColorNotifier,
+                    builder: (context, secondaryColor, child) {
+                      return SizedBox(
+                        height: (size.height),
+                        // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
+                        child: SvgPicture.asset("assets/planIcon.svg",
+                            width: 5,
+                            height: 5,
+                            alignment: Alignment.center,
+                            colorFilter: pageIndex == 3
+                                ? ColorFilter.mode(secondaryColor, BlendMode.srcIn)
+                                : const ColorFilter.mode(
+                                    AppColors.textLite, BlendMode.srcIn)),
+                      );
+                    },
                   )),
               TabItem(
                   title: "Setting",
-                  icon: SizedBox(
-                    height: (size.height),
-                    // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
-                    child: SvgPicture.asset("assets/settingIcon.svg",
-                        width: 5,
-                        height: 5,
-                        colorFilter: pageIndex == 4
-                            ? const ColorFilter.mode(
-                                AppColors.mainSecandaryColor, BlendMode.srcIn)
-                            : const ColorFilter.mode(
-                                AppColors.textLite, BlendMode.srcIn)),
+                  icon: ValueListenableBuilder<Color>(
+                    valueListenable: AppColors.dynamicSecondaryColorNotifier,
+                    builder: (context, secondaryColor, child) {
+                      return SizedBox(
+                        height: (size.height),
+                        // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
+                        child: SvgPicture.asset("assets/settingIcon.svg",
+                            width: 5,
+                            height: 5,
+                            colorFilter: pageIndex == 4
+                                ? ColorFilter.mode(secondaryColor, BlendMode.srcIn)
+                                : const ColorFilter.mode(
+                                    AppColors.textLite, BlendMode.srcIn)),
+                      );
+                    },
                   )),
             ],
           ),
@@ -259,13 +276,18 @@ class _ListItemsState extends State<ListItems> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SvgPicture.asset(
-                    "assets/message-text.svg",
-                    width: 24,
-                    height: 24,
-                    colorFilter: BlocProvider.of<PageIndexBloc>(widget.Parentcontext).state.pageIndex == 5
-                        ? ColorFilter.mode(AppColors.mainSecandaryColor, BlendMode.srcIn)
-                        : ColorFilter.mode(AppColors.textLite, BlendMode.srcIn),
+                  ValueListenableBuilder<Color>(
+                    valueListenable: AppColors.dynamicSecondaryColorNotifier,
+                    builder: (context, secondaryColor, child) {
+                      return SvgPicture.asset(
+                        "assets/message-text.svg",
+                        width: 24,
+                        height: 24,
+                        colorFilter: BlocProvider.of<PageIndexBloc>(widget.Parentcontext).state.pageIndex == 5
+                            ? ColorFilter.mode(secondaryColor, BlendMode.srcIn)
+                            : ColorFilter.mode(AppColors.textLite, BlendMode.srcIn),
+                      );
+                    },
                   ),
                   SizedBox(
                     height: 5,
