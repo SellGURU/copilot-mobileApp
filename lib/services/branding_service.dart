@@ -24,7 +24,7 @@ class BrandingService {
   bool get isLoading => _isLoading;
 
   // Load branding data and cache it globally
-  Future<BrandingData> loadBrandingData() async {
+Future<BrandingData> loadBrandingData() async {
     // Return cached data if available
     if (_cachedData != null) {
       print('BrandingService: Using in-memory cache');
@@ -43,28 +43,28 @@ class BrandingService {
 
     // Load from API if not cached
     _isLoading = true;
-    Dio _dio = Dio();
+  Dio _dio = Dio();
     
     try {
       var token = await getTokenLocally();
       
-      _dio.options.headers['Authorization'] = "Bearer $token";
+  _dio.options.headers['Authorization'] = "Bearer $token"; 
       
-      final response = await _dio.post(
-        Endpoints.brandingInfo,
+    final response = await _dio.post(
+      Endpoints.brandingInfo,
         data: {},
-      );
+    );
 
-      if (response.statusCode == 200) {
+    if (response.statusCode == 200) {
         final data = BrandingData.fromJson(response.data);
-        await cacheBrandingData(data);
+      await cacheBrandingData(data);
         _cachedData = data;
         _isLoading = false;
-        return data;
-      } else {
+      return data;
+    } else {
         _isLoading = false;
         throw Exception('Failed to load branding data: Status ${response.statusCode}');
-      }
+    }
     } catch (e) {
       _isLoading = false;
       

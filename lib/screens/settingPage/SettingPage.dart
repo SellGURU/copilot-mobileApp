@@ -160,64 +160,64 @@ class _SettingPageState extends State<SettingPage> {
           padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 20),
           width:  size.width,
           child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Setting",
-                      style: AppTextStyles.title1,
-                    ),
-                    NotificationWidget(
-                      notificationCount: 2,
-                      notifications: [
-                        NotificationItem(
-                          title: "New Tasks, New You!",
-                          message: "Your latest health action plan is ready! Check out your new tasks in the Overview section and take the next step toward a longer, healthier life.",
-                          timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
-                          type: NotificationType.info,
-                          isRead: false,
-                        ),
-                        NotificationItem(
-                          title: "Your Progress Awaits!",
-                          message: "Ready to level up your health? Complete your Health Questionnaire to help us build a more personalized and effective wellness plan just for you.",
-                          timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
-                          type: NotificationType.info,
-                          isRead: false,
-                        ),                       
-                      ],      
-                    ),                  
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _launchURL('https://holisticare.io/privacy-policy/');
-                  },
-                    child:WearableDevicesTile(
-                    srcImage: 'lock.svg',
-                    textTitle: 'Privacy Policy',
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Setting",
+                    style: AppTextStyles.title1,
                   ),
-                ),
-
-                const SizedBox(
-                  height: 20,
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _launchURL('https://holisticare.io/terms-of-service/');
-                  },
+                  NotificationWidget(
+                    notificationCount: 2,
+                    notifications: [
+                      NotificationItem(
+                        title: "New Tasks, New You!",
+                        message: "Your latest health action plan is ready! Check out your new tasks in the Overview section and take the next step toward a longer, healthier life.",
+                        timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                        type: NotificationType.info,
+                        isRead: false,
+                      ),
+                      NotificationItem(
+                        title: "Your Progress Awaits!",
+                        message: "Ready to level up your health? Complete your Health Questionnaire to help us build a more personalized and effective wellness plan just for you.",
+                        timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                        type: NotificationType.info,
+                        isRead: false,
+                      ),                       
+                    ],      
+                  ),                  
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              GestureDetector(
+                onTap: () {
+                  _launchURL('https://holisticare.io/privacy-policy/');
+                },
                   child:WearableDevicesTile(
-                  srcImage: 'security-safe.svg',
-                  textTitle: 'Terms of Service',
+                  srcImage: 'lock.svg',
+                  textTitle: 'Privacy Policy',
                 ),
-                ),
+              ),
+
+              const SizedBox(
+                height: 20,
+              ),
+              GestureDetector(
+                onTap: () {
+                  _launchURL('https://holisticare.io/terms-of-service/');
+                },
+                child:WearableDevicesTile(
+                srcImage: 'security-safe.svg',
+                textTitle: 'Terms of Service',
+              ),
+              ),
               
                 const SizedBox(
                   height: 30,
@@ -226,40 +226,40 @@ class _SettingPageState extends State<SettingPage> {
 
                 
 
-                
-                const SizedBox(
-                  height: 30,
-                ),
-                BlocBuilder<AuthCubit, AuthState>(
-                  builder: (context, state) {
-                    return GestureDetector(
-                      onTap: () {
-                        _showLogoutConfirmation();
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                            "assets/logout.svg",
-                            width: 30,
-                            height: 16,
-                            colorFilter: ColorFilter.mode(
-                                AppColors.mainSecandaryColor, BlendMode.srcIn),
-                          ),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            "Log out",
-                            style: AppTextStyles.title2Purple,
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ],
+            
+              const SizedBox(
+                height: 30,
+              ),
+              BlocBuilder<AuthCubit, AuthState>(
+                builder: (context, state) {
+                  return GestureDetector(
+                    onTap: () {
+                      _showLogoutConfirmation();
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          "assets/logout.svg",
+                          width: 30,
+                          height: 16,
+                          colorFilter: ColorFilter.mode(
+                              AppColors.mainSecandaryColor, BlendMode.srcIn),
+                        ),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Text(
+                          "Log out",
+                          style: AppTextStyles.title2Purple,
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ],
             ),
           ),
         ),

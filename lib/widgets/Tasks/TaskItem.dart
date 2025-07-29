@@ -119,27 +119,33 @@ class _TaskItemState extends State<TaskItem> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 spacing: 4,
                 children: [
-                  Container(
-                    width: 36,
-                    height: 36,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(100),
-                      border: Border.all(
-                        color: widget.task["completed"] == 'Done' || widget.task["status"] == 'Done' ? AppColors.greenBega : AppColors.SilverGray,
-                        width: 3,
-                      )
-                    ),
-                    child: Center(
-                      child: SvgPicture.asset(
-                        widget.task['type'] == 'Check-In'?'assets/firstline.svg':'assets/note.svg',
-                        width: 16,
-                        height: 16,
-                        fit: BoxFit.contain,
-                        color: widget.task["completed"] == 'Done' || widget.task["status"] == 'Done' ? AppColors.greenBega : AppColors.TextTriarty,
-                      )
-                    )
+                  ValueListenableBuilder<Color>(
+                    valueListenable: AppColors.dynamicPrimaryColorNotifier,
+                    builder: (context, secondaryColor, child) {
+                      return  Container(
+                            width: 36,
+                            height: 36,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(100),
+                              border: Border.all(
+                                color: widget.task["completed"] == 'Done' || widget.task["status"] == 'Done' ? AppColors.dynamicPrimaryColor : AppColors.SilverGray,
+                                width: 3,
+                              )
+                            ),
+                            child: Center(
+                              child: SvgPicture.asset(
+                                widget.task['type'] == 'Check-In'?'assets/firstline.svg':'assets/note.svg',
+                                width: 16,
+                                height: 16,
+                                fit: BoxFit.contain,
+                                color: widget.task["completed"] == 'Done' || widget.task["status"] == 'Done' ? AppColors.dynamicPrimaryColor : AppColors.TextTriarty,
+                              )
+                            )
+                          );
+                    }
                   ),
+
                   Container(
                   width: 140, // یا هر عددی که مناسب طراحی‌ات است
                   child: Tooltip(
@@ -172,27 +178,32 @@ class _TaskItemState extends State<TaskItem> {
                     });
                   }
                 },                
-                child: Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: widget.task["completed"] == 'Done' ? AppColors.greenBega : AppColors.SilverGray,
-                    width: 1,
-                  ),
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Opacity(
-                  opacity: widget.readOnly ? 0.5 : 1.0,
-                  child: widget.task["completed"] == 'Done' || widget.task["status"] == 'Done'
-                    ? Center(
-                        child: SvgPicture.asset('assets/tick.svg'),
-                      )
-                    : Center(
-                        child: SvgPicture.asset('assets/pelas.svg'),
-                      )
-                ),
-              )
+                child:ValueListenableBuilder<Color>(
+                  valueListenable: AppColors.dynamicPrimaryColorNotifier,
+                  builder: (context, secondaryColor, child) {
+                    return Container(
+                            width: 24,
+                            height: 24,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: widget.task["completed"] == 'Done' ? AppColors.dynamicPrimaryColor : AppColors.SilverGray,
+                                width: 1,
+                              ),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Opacity(
+                              opacity: widget.readOnly ? 0.5 : 1.0,
+                              child: widget.task["completed"] == 'Done' || widget.task["status"] == 'Done'
+                                ? Center(
+                                    child: SvgPicture.asset('assets/tick.svg', color: AppColors.dynamicPrimaryColor),
+                                  )
+                                : Center(
+                                    child: SvgPicture.asset('assets/pelas.svg', color: AppColors.dynamicPrimaryColor),
+                                  )
+                            ),
+                          );
+                  }
+                ) 
              ,
               )
 
