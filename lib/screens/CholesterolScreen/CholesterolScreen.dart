@@ -124,7 +124,7 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(15)),
-        color: isActive ? AppColors.mainPrimaryColor.withOpacity(0.5) : Colors.white,
+        color: isActive ? AppColors.dynamicPrimaryColor.withOpacity(0.5) : Colors.white,
       ),
       height: 50,
       child: Padding(

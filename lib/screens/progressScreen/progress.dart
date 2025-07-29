@@ -1004,7 +1004,7 @@ class _HorizontalCalendarState extends State<HorizontalCalendar> {
               decoration: BoxDecoration(
                 color:  Colors.white,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: isSelected ? AppColors.purpleDark : Colors.white, width: 1.5),
+                border: Border.all(color: isSelected ? AppColors.dynamicSecondaryColor: Colors.white, width: 1.5),
                 boxShadow: const [
                   BoxShadow(
                     color: AppColors.shadowColorWithOpacity,

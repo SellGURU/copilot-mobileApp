@@ -298,7 +298,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               builder: (context, state) {
                                 return CupertinoSwitch(
                                   autofocus: false,
-                                  activeColor: AppColors.mainPrimaryColor,
+                                  activeColor: AppColors.dynamicPrimaryColor,
                                   value: state.switchValue,
                                   onChanged: (value) {
                                     print(state.switchValue);
