@@ -74,7 +74,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
     if (_overlayEntry != null) {
       _removeOverlay();
     } else {
-      _showNotificationDropdown();
+      // _showNotificationDropdown();
     }
   }
 
