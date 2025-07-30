@@ -13,7 +13,7 @@ class ChartDot extends StatelessWidget {
   Widget bottomTitleWidgets(double value, TitleMeta meta) {
     return Text(
       labels[value.toInt()],
-      style: TextStyle(fontSize: 6, color: Colors.grey),
+      style: TextStyle(fontSize: 8, color: Colors.grey),
     );
   }
 
@@ -27,8 +27,8 @@ class ChartDot extends StatelessWidget {
 
   // Define gradient colors for the chart
   List<Color> gradientColors = [
-    AppColors.greenBega,
-    AppColors.greenBega,
+    AppColors.dynamicPrimaryColor,
+    AppColors.dynamicPrimaryColor,
   ];
 
   // Calculate min and max Y values from spots
@@ -81,8 +81,11 @@ class ChartDot extends StatelessWidget {
         bottomTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
-            reservedSize: 20,
-            getTitlesWidget: (value, meta) => bottomTitleWidgets(value, meta),
+            reservedSize: 30,
+            getTitlesWidget: (value, meta) => Container(
+              margin: const EdgeInsets.only(top: 8),
+              child: bottomTitleWidgets(value, meta),
+            ),
           ),
         ),
         leftTitles: AxisTitles(
@@ -114,7 +117,7 @@ class ChartDot extends StatelessWidget {
               radius: 3,
               color: Colors.white,
               strokeWidth: 2,
-              strokeColor: AppColors.greenBega,
+              strokeColor: AppColors.dynamicPrimaryColor,
             ),
           ),
           belowBarData: BarAreaData(

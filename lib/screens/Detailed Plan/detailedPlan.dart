@@ -150,7 +150,7 @@ class _CheckInDayState extends State<CheckInDay> {
         Container(
           padding: EdgeInsets.all(5),
           decoration: BoxDecoration(
-              color: widget.checkedIn ? AppColors.greenBega : AppColors.gray,
+              color: widget.checkedIn ? AppColors.dynamicPrimaryColor : AppColors.gray,
               borderRadius: BorderRadius.circular(600)),
           child: GestureDetector(
             onTap: () => setState(() {

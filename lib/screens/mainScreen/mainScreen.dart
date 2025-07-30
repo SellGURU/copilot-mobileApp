@@ -1,10 +1,13 @@
 import 'dart:math';
 
 import 'package:colorful_safe_area/colorful_safe_area.dart';
+import 'package:copilet/services/branding_service.dart';
+import 'package:copilet/services/branding_bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:popover/popover.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../res/colors.dart';
 import '../../utility/changeScreanBloc/PageIndex_Bloc.dart';
@@ -35,6 +38,23 @@ class _MainscreenState extends State<Mainscreen> {
   final GlobalKey<NavigatorState> _settingScreenKey = GlobalKey();
   final GlobalKey<NavigatorState> _resultScreenKey = GlobalKey();
   final GlobalKey<NavigatorState> _chatScreenKey = GlobalKey();
+
+  @override
+  void initState() {
+    super.initState();
+    // Load branding data when app starts
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        // Load branding data (will use cache if available)
+        context.read<BrandingBloc>().add(LoadBrandingData());
+      }
+    });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+  }
 
   // override the back btn
   Future<bool> _onWillPop() async {

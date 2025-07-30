@@ -298,7 +298,7 @@ class _ResultScreenState extends State<ResultScreen> {
                               builder: (context, state) {
                                 return CupertinoSwitch(
                                   autofocus: false,
-                                  activeColor: AppColors.iconPurpleDark,
+                                  activeColor: AppColors.dynamicPrimaryColor,
                                   value: state.switchValue,
                                   onChanged: (value) {
                                     print(state.switchValue);
@@ -324,9 +324,9 @@ class _ResultScreenState extends State<ResultScreen> {
                   child: ListView.separated(
                     itemCount: data["data"].length,
                     itemBuilder: (BuildContext context, int index) {
-                      if (index == 0) {
-                        return SizedBox(width: 0);
-                      }
+                      // if (index == 0) {
+                      //   return SizedBox(width: 0);
+                      // }
                       return BioMarkerCard(
                         label: data["data"][index]["name"],
                         colorBadge: "red",
@@ -418,7 +418,7 @@ class _ResultScreenState extends State<ResultScreen> {
                         SizedBox(height: 8,),
                         Text("No Results Available Yet", style: AppTextStyles.headline6,),
                         SizedBox(height: 8,),
-                        Text("Once your test results are uploaded, you’ll see detailed results here", style: AppTextStyles.body2Secondary,)
+                        Text("Once your test results are uploaded, you’ll see detailed results here", style: AppTextStyles.body2Secondary,textAlign: TextAlign.center,)
                       ],
                     ),
                   ),

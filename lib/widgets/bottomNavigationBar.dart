@@ -13,6 +13,7 @@ import '../screens/camera/camaraScreen.dart';
 import '../utility/camareControlerBloc/camera_Bloc.dart';
 import '../utility/changeScreanBloc/PageIndex_Bloc.dart';
 import '../utility/changeScreanBloc/PageIndex_events.dart';
+import '../utility/changeScreanBloc/PageIndex_states.dart';
 import '../utility/deviceName.dart';
 import '../utility/refreshData.dart';
 import '../screens/mainScreenV2/userinfoCubit/cubit.dart';
@@ -47,132 +48,163 @@ class _BottomNavigationBarCustomState extends State<BottomNavigationBarCustom> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
 
-    return StyleProvider(
-      style: Style(),
-      child: ConvexAppBar(
-        shadowColor: Color.fromRGBO(153, 171, 198, 0.18),
-        onTap: (index) => setState(() {
-          if (index != 2) {
-            setState(() {
-              pageIndex = index;
-            });
+    return BlocBuilder<PageIndexBloc, PageIndexState>(
+      builder: (context, state) {
+        pageIndex = state.pageIndex ?? 0;
+                return StyleProvider(
+          style: Style(),
+          child: ConvexAppBar(
+            shadowColor: Color.fromRGBO(153, 171, 198, 0.18),
+            onTap: (index) => setState(() {
+              if (index != 2) {
+                setState(() {
+                  pageIndex = index;
+                });
 
-            BlocProvider.of<PageIndexBloc>(context).add(UpdatePageIndex(index));
-            
-            // Refresh data when switching to different pages
-            _refreshDataForPage(index);
-          } else {
-            PlatformType platform = getPlatformType();
+                BlocProvider.of<PageIndexBloc>(context).add(UpdatePageIndex(index));
+                
+                // Refresh data when switching to different pages
+                _refreshDataForPage(index);
+              } else {
+                PlatformType platform = getPlatformType();
 
-            showPopover(
-              context: context,
-              bodyBuilder: (contextBodyBuilder) => ListItems(
-                Parentcontext: context,
-                takeItem: itemSelect,
+                showPopover(
+                  context: context,
+                  bodyBuilder: (contextBodyBuilder) => ListItems(
+                    Parentcontext: context,
+                    takeItem: itemSelect,
+                  ),
+                  onPop: () {
+                    // widget.takeScreenShot();
+                    print("takeItem $itemSelectName");
+                  },
+                  direction: PopoverDirection.bottom,
+                  // width: platform == PlatformType.web
+                  //     ? (size.width > 440)
+                  //         ? size.width
+                  //         : 600
+                  //     : null,
+                  height: 140,
+                  arrowHeight: 0,
+                  shadow: [BoxShadow(color: Colors.transparent)],
+                  backgroundColor: Colors.transparent,
+                  barrierColor: Colors.transparent.withOpacity(.65),
+                  arrowWidth: 0,
+                );
+              }
+            }),
+            disableDefaultTabController: true,
+            elevation: 5,
+            height: 60,
+            style: TabStyle.fixed,
+            backgroundColor: AppColors.mainBg,
+            color: AppColors.textLite,
+            activeColor: AppColors.iconPurpleDark,
+            // top: ((size.width*.06)*-1),
+            curveSize: 70,
+            items: [
+              TabItem(
+                title: "Overview",
+                icon: ValueListenableBuilder<Color>(
+                  valueListenable: AppColors.dynamicSecondaryColorNotifier,
+                  builder: (context, secondaryColor, child) {
+                    return SizedBox(
+                      height: (size.width),
+                      // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
+                      child: SvgPicture.asset("assets/overviewIcon.svg",
+                          width: 5,
+                          height: 5,
+                          colorFilter: pageIndex == 0
+                              ? ColorFilter.mode(secondaryColor, BlendMode.srcIn)
+                              : ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
+                    );
+                  },
+                ),
               ),
-              onPop: () {
-                // widget.takeScreenShot();
-                print("takeItem $itemSelectName");
-              },
-              direction: PopoverDirection.bottom,
-              width:600,
-              height: 140,
-              arrowHeight: 0,
-              shadow: [BoxShadow(color: Colors.transparent)],
-              backgroundColor: Colors.transparent,
-              barrierColor: Colors.transparent.withOpacity(.65),
-              arrowWidth: 0,
-            );
-          }
-        }),
-        disableDefaultTabController: true,
-        elevation: 5,
-        height: 60,
-        style: TabStyle.fixed,
-        backgroundColor: AppColors.mainBg,
-        color: AppColors.textLite,
-        activeColor: AppColors.iconPurpleDark,
-        // top: ((size.width*.06)*-1),
-        curveSize: 70,
-        items: [
-          TabItem(
-            title: "Overview",
-            icon: SizedBox(
-              height: (size.width),
-              // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
-              child: SvgPicture.asset("assets/overviewIcon.svg",
-                  width: 5,
-                  height: 5,
-                  colorFilter: pageIndex == 0
-                      ? ColorFilter.mode(AppColors.mainSecandaryColor, BlendMode.srcIn)
-                      : ColorFilter.mode(AppColors.textLite, BlendMode.srcIn)),
-            ),
+              TabItem(
+                title: "Results",
+                icon: ValueListenableBuilder<Color>(
+                  valueListenable: AppColors.dynamicSecondaryColorNotifier,
+                  builder: (context, secondaryColor, child) {
+                    return SizedBox(
+                      height: (size.height),
+                      // decoration: BoxDecoration(color: AppDecoration.color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
+                      child: SvgPicture.asset("assets/resultIcon.svg",
+                          width: 5,
+                          height: 5,
+                          colorFilter: pageIndex == 1
+                              ? ColorFilter.mode(secondaryColor, BlendMode.srcIn)
+                              : const ColorFilter.mode(
+                                  AppColors.textLite, BlendMode.srcIn)),
+                    );
+                  },
+                ),
+              ),
+              TabItem(
+                title: "",
+                icon: ValueListenableBuilder<Color>(
+                  valueListenable: AppColors.dynamicPrimaryColorNotifier,
+                  builder: (context, color, child) {
+                    return Container(
+                      alignment: Alignment.center,
+                      margin: const EdgeInsets.all(5),
+                      padding: EdgeInsets.all(1),
+                      height: (size.height),
+                      decoration: BoxDecoration(
+                          color: color,
+                          borderRadius: BorderRadius.circular(99),
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color.fromRGBO(97, 62, 234, 0.5),
+                                offset: Offset(0, 4),
+                                blurRadius: 12)
+                          ]),
+                      child: SvgPicture.asset("assets/star.svg"),
+                    );
+                  },
+                ),
+              ),
+              TabItem(
+                  title: "Progress",
+                  icon: ValueListenableBuilder<Color>(
+                    valueListenable: AppColors.dynamicSecondaryColorNotifier,
+                    builder: (context, secondaryColor, child) {
+                      return SizedBox(
+                        height: (size.height),
+                        // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
+                        child: SvgPicture.asset("assets/planIcon.svg",
+                            width: 5,
+                            height: 5,
+                            alignment: Alignment.center,
+                            colorFilter: pageIndex == 3
+                                ? ColorFilter.mode(secondaryColor, BlendMode.srcIn)
+                                : const ColorFilter.mode(
+                                    AppColors.textLite, BlendMode.srcIn)),
+                      );
+                    },
+                  )),
+              TabItem(
+                  title: "Setting",
+                  icon: ValueListenableBuilder<Color>(
+                    valueListenable: AppColors.dynamicSecondaryColorNotifier,
+                    builder: (context, secondaryColor, child) {
+                      return SizedBox(
+                        height: (size.height),
+                        // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
+                        child: SvgPicture.asset("assets/settingIcon.svg",
+                            width: 5,
+                            height: 5,
+                            colorFilter: pageIndex == 4
+                                ? ColorFilter.mode(secondaryColor, BlendMode.srcIn)
+                                : const ColorFilter.mode(
+                                    AppColors.textLite, BlendMode.srcIn)),
+                      );
+                    },
+                  )),
+            ],
           ),
-          TabItem(
-            title: "Results",
-            icon: SizedBox(
-              height: (size.height),
-              // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
-              child: SvgPicture.asset("assets/resultIcon.svg",
-                  width: 5,
-                  height: 5,
-                  colorFilter: pageIndex == 1
-                      ? const ColorFilter.mode(
-                          AppColors.mainSecandaryColor, BlendMode.srcIn)
-                      : const ColorFilter.mode(
-                          AppColors.textLite, BlendMode.srcIn)),
-            ),
-          ),
-          TabItem(
-            title: "",
-            icon: Container(
-              alignment: Alignment.center,
-              margin: const EdgeInsets.all(5),
-              padding: EdgeInsets.all(1),
-              height: (size.height),
-              decoration: BoxDecoration(
-                  color: AppColors.mainPrimaryColor,
-                  borderRadius: BorderRadius.circular(99),
-                  boxShadow: [
-                    BoxShadow(
-                        color: Color.fromRGBO(97, 62, 234, 0.5),
-                        offset: Offset(0, 4),
-                        blurRadius: 12)
-                  ]),
-              child: SvgPicture.asset("assets/star.svg"),
-            ),
-          ),
-          TabItem(
-              title: "Progress",
-              icon: SizedBox(
-                height: (size.height),
-                // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
-                child: SvgPicture.asset("assets/planIcon.svg",
-                    width: 5,
-                    height: 5,
-                    alignment: Alignment.center,
-                    colorFilter: pageIndex == 3
-                        ? const ColorFilter.mode(
-                            AppColors.mainSecandaryColor, BlendMode.srcIn)
-                        : const ColorFilter.mode(
-                            AppColors.textLite, BlendMode.srcIn)),
-              )),
-          TabItem(
-              title: "Setting",
-              icon: SizedBox(
-                height: (size.height),
-                // decoration: BoxDecoration(color: AppColors.iconPurpleDark,borderRadius:BorderRadius.circular(99) ),
-                child: SvgPicture.asset("assets/settingIcon.svg",
-                    width: 5,
-                    height: 5,
-                    colorFilter: pageIndex == 4
-                        ? const ColorFilter.mode(
-                            AppColors.mainSecandaryColor, BlendMode.srcIn)
-                        : const ColorFilter.mode(
-                            AppColors.textLite, BlendMode.srcIn)),
-              )),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -244,10 +276,18 @@ class _ListItemsState extends State<ListItems> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SvgPicture.asset(
-                    "assets/message-text.svg",
-                    width: 24,
-                    height: 24,
+                  ValueListenableBuilder<Color>(
+                    valueListenable: AppColors.dynamicSecondaryColorNotifier,
+                    builder: (context, secondaryColor, child) {
+                      return SvgPicture.asset(
+                        "assets/message-text.svg",
+                        width: 24,
+                        height: 24,
+                        colorFilter: BlocProvider.of<PageIndexBloc>(widget.Parentcontext).state.pageIndex == 5
+                            ? ColorFilter.mode(secondaryColor, BlendMode.srcIn)
+                            : ColorFilter.mode(AppColors.textLite, BlendMode.srcIn),
+                      );
+                    },
                   ),
                   SizedBox(
                     height: 5,

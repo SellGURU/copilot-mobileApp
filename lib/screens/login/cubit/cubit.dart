@@ -72,7 +72,7 @@ class AuthCubit extends Cubit<AuthState> {
     } catch (e) {
       print("catch: $e");
       // emit(SuccessState());
-      emit(ErrorState("server error"));
+      emit(ErrorState("The email or password is incorrect."));
     }
   }
 

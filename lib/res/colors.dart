@@ -2,6 +2,36 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   AppColors._();
+  
+  // Dynamic branding colors - will be set from API
+  static Color? _dynamicPrimaryColor;
+  static final ValueNotifier<Color> _dynamicPrimaryColorNotifier = ValueNotifier<Color>(mainPrimaryColor);
+  
+  static Color? _dynamicSecondaryColor;
+  static final ValueNotifier<Color> _dynamicSecondaryColorNotifier = ValueNotifier<Color>(mainSecandaryColor);
+  
+  // Getter for dynamic primary color
+  static Color get dynamicPrimaryColor => _dynamicPrimaryColorNotifier.value;
+  
+  // Getter for dynamic secondary color
+  static Color get dynamicSecondaryColor => _dynamicSecondaryColorNotifier.value;
+  
+  // Getter for ValueNotifier (for reactive UI)
+  static ValueNotifier<Color> get dynamicPrimaryColorNotifier => _dynamicPrimaryColorNotifier;
+  static ValueNotifier<Color> get dynamicSecondaryColorNotifier => _dynamicSecondaryColorNotifier;
+  
+  // Setter for dynamic primary color
+  static void setDynamicPrimaryColor(Color color) {
+    _dynamicPrimaryColor = color;
+    _dynamicPrimaryColorNotifier.value = color;
+  }
+  
+  // Setter for dynamic secondary color
+  static void setDynamicSecondaryColor(Color color) {
+    _dynamicSecondaryColor = color;
+    _dynamicSecondaryColorNotifier.value = color;
+  }
+  
   // rgba(132, 138, 148, 1)
   static const Color mainBg = Colors.white;
   static const Color SilverGray = Color.fromARGB(255, 229, 229, 229);
@@ -22,6 +52,9 @@ class AppColors {
   static const Color textPrimary = Color.fromARGB(255, 56, 56, 56);
   static const Color textSecondary = Color.fromARGB(255, 136, 136, 136);
   static const Color backgroundColorCard = Color.fromARGB(255, 253, 253, 253);
+  static const Color textTriarty = Color.fromARGB(255, 176, 176, 176);
+
+
 
   static const Color mainPrimaryColor = Color.fromARGB(255, 108, 194, 74);
   static const Color mainSecandaryColor = Color.fromARGB(255, 0, 95, 115);

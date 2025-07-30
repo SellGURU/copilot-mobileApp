@@ -1,6 +1,6 @@
 /// This file defines the CholesterolScreen widget, which provides a screen with multiple tabs
 /// to display information about cholesterol, including results, ways to improve cholesterol levels, and insights.
-
+import 'package:copilet/utility/resolveIcon.dart';
 import 'dart:math';
 import 'package:accordion/accordion.dart';
 import 'package:accordion/controllers.dart';
@@ -124,7 +124,7 @@ class _CholesterolScreenState extends State<CholesterolScreen> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(15)),
-        color: isActive ? AppColors.purpleDark : Colors.white,
+        color: isActive ? AppColors.dynamicPrimaryColor.withOpacity(0.5) : Colors.white,
       ),
       height: 50,
       child: Padding(
@@ -245,12 +245,19 @@ class _ResultMainTabState extends State<ResultMainTab> {
                       padding: const EdgeInsets.all(5),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(99),
-                        color: AppColors.yellowBega,
+                        color: Color.fromARGB(255, 234, 243, 240),
                       ),
-                      child: SvgPicture.asset("assets/ldIcon.svg"),
+                      child: SvgPicture.asset(resolveAnalyseIcon((widget.data as Map<String, dynamic>)['subcategory']?? "")),
                     ),
                     const SizedBox(width: 10),
-                    Text(widget.title, style: AppTextStyles.title1),
+                    Expanded(
+                      child: Text(
+                        widget.title, 
+                        style: AppTextStyles.title1,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                      ),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 10),
@@ -315,12 +322,19 @@ class _HowToImproveTabState extends State<HowToImproveTab> {
                   padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(99),
-                    color: AppColors.yellowBega,
+                    color: Color.fromARGB(255, 234, 243, 240),
                   ),
-                  child: SvgPicture.asset("assets/ldIcon.svg"),
+                  child: SvgPicture.asset(resolveAnalyseIcon((widget.data as Map<String, dynamic>)['subcategory']?? "")),
                 ),
                 const SizedBox(width: 10),
-                Text("How to Improve", style: AppTextStyles.title1),
+                Expanded(
+                  child: Text(
+                    "How to Improve", 
+                    style: AppTextStyles.title1,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 10),
@@ -366,12 +380,19 @@ class _InsightTabState extends State<InsightTab> {
                   padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(99),
-                    color: AppColors.yellowBega,
+                    color: Color.fromARGB(255, 234, 243, 240),
                   ),
-                  child: SvgPicture.asset("assets/ldIcon.svg"),
+                  child: SvgPicture.asset(resolveAnalyseIcon((widget.data as Map<String, dynamic>)['subcategory']?? "")),
                 ),
                 const SizedBox(width: 10),
-                Text("Insights", style: AppTextStyles.title1),
+                Expanded(
+                  child: Text(
+                    "Insights", 
+                    style: AppTextStyles.title1,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                  ),
+                ),
               ],
             ),
             const SizedBox(height: 10),

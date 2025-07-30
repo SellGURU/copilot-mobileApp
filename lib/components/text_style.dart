@@ -9,7 +9,7 @@ class AppTextStyles {
   AppTextStyles._();
   static TextStyle title4xl = GoogleFonts.alice(
       textStyle: TextStyle(
-          fontSize: 32, color: AppColors.mainBg, fontWeight: FontWeight.w700));
+          fontSize: 32, color: AppColors.dynamicPrimaryColor, fontWeight: FontWeight.w700));
 
   static TextStyle title4xlLiteWeight = GoogleFonts.alice(
       textStyle: TextStyle(
@@ -29,7 +29,7 @@ class AppTextStyles {
           fontSize: 24, color: AppColors.mainBg, fontWeight: FontWeight.w500));
   static TextStyle title3xlgreen = GoogleFonts.roboto(
       textStyle: TextStyle(
-          fontSize: 24, color: AppColors.mainSecandaryColor, fontWeight: FontWeight.w500));
+          fontSize: 24, color: AppColors.dynamicSecondaryColor, fontWeight: FontWeight.w500));
 
   static TextStyle title2xl = GoogleFonts.roboto(
       textStyle: TextStyle(
@@ -91,7 +91,7 @@ class AppTextStyles {
       textStyle: TextStyle(fontSize: 16, color: AppColors.mainBg),
       fontWeight: FontWeight.w500);
   static TextStyle title2Primary = GoogleFonts.roboto(
-      textStyle: TextStyle(fontSize: 16, color: AppColors.mainSecandaryColor),
+      textStyle: TextStyle(fontSize: 16, color: AppColors.dynamicSecondaryColor),
       fontWeight: FontWeight.w500);
 
   static TextStyle title2Gray = GoogleFonts.roboto(
@@ -134,7 +134,7 @@ class AppTextStyles {
   static TextStyle hint = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 12,
-          color: AppColors.textLite,
+          color: AppColors.textTriarty,
           fontWeight: FontWeight.w400));
   static TextStyle hintPurple = GoogleFonts.roboto(
       textStyle: TextStyle(
@@ -152,7 +152,7 @@ class AppTextStyles {
       textStyle: TextStyle(
           fontSize: 11,
           fontWeight: FontWeight.w500,
-          color: AppColors.greenBega));
+          color: AppColors.dynamicPrimaryColor));
   static TextStyle error = GoogleFonts.inter(
       textStyle: TextStyle(
           fontSize: 11, fontWeight: FontWeight.w400, color: AppColors.red));

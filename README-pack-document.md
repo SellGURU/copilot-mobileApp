@@ -5,7 +5,7 @@
 ---
 
 #### 1. **cupertino_icons**
-- کاربرد: این پکیج ایکون‌های استایل iOS (کوپرتینو) را فراهم می‌کند.
+- کاربرد: ایکون‌های استایل iOS (کوپرتینو) را فراهم می‌کند.
 - مثال استفاده:
   ```dart
   import 'package:flutter/cupertino.dart';
@@ -348,4 +348,70 @@
 - کاربرد: مدیریت SafeArea با رنگ‌بندی.
 
 ---
+
+# Tasks Widget - Read-Only Mode
+
+## New Feature: Read-Only Mode
+
+The Tasks widget now supports a `readOnly` prop that allows you to disable task completion actions.
+
+### Usage
+
+```dart
+// Normal mode (default) - users can complete tasks
+Tasks(title: "Daily Tasks")
+
+// Read-only mode - users cannot complete tasks
+Tasks(title: "Daily Tasks", readOnly: true)
+
+// Dynamic read-only based on date selection
+// In progress screen - tasks are editable only for today's date
+Tasks(
+  title: "Daily Tasks",
+  tasksList: getSelectedDayTasksObject(dates)?['tasks']?.cast<Map<String, dynamic>>(),
+  readOnly: !_isSelectedDateToday(dates), // false for today, true for other dates
+)
+```
+
+### Dynamic Read-Only Logic
+
+In the progress screen, the `readOnly` prop is dynamically set based on the selected date:
+
+- **Today's date**: `readOnly: false` - Users can complete tasks
+- **Other dates**: `readOnly: true` - Users can only view tasks (read-only mode)
+
+This ensures that:
+- Users can only modify tasks for the current day
+- Historical task data is displayed in read-only mode
+- Future dates are also in read-only mode
+
+### Features
+
+- When `readOnly` is `true`:
+  - Action buttons are disabled (no tap functionality)
+  - Visual feedback with reduced opacity (0.5) on action buttons
+  - Tasks can still be viewed but not modified
+  - Timer-based fetching is still active for data updates
+
+- When `readOnly` is `false` (default):
+  - Normal functionality with full interactivity
+  - Users can complete/uncomplete tasks
+  - Full opacity on action buttons
+
+### Implementation Details
+
+The read-only functionality is implemented across all task components:
+- `Tasks` widget (main container)
+- `TaskWrapper` widget (regular tasks)
+- `ActivityTaskWrapper` widget (activity tasks)
+- `TaskItem` widget (individual task items)
+- `ActivityTaskItem` widget (individual activity task items)
+
+### Example Use Cases
+
+1. **View-only dashboards**: Show task progress without allowing modifications
+2. **Historical data**: Display completed tasks from previous days
+3. **Demo mode**: Present task structure without actual functionality
+4. **Admin views**: Allow administrators to view user tasks without editing
+5. **Date-based editing**: Allow editing only for current day's tasks
 

@@ -1,7 +1,11 @@
 import 'package:copilet/components/text_style.dart';
 import 'package:copilet/screens/Wearable%20Device/WearableDevice.dart';
+import 'package:copilet/services/branding_service.dart';
 import 'package:copilet/widgets/notification_widget.dart';
 import 'package:copilet/widgets/restart/RestartWidget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -94,11 +98,17 @@ class _SettingPageState extends State<SettingPage> {
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: const Text('Cancel', style: TextStyle(color: AppColors.mainSecandaryColor, fontWeight: FontWeight.w400,fontSize: 12)),
+                        child: const Text(
+                          'Cancel',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: AppColors.mainSecandaryColor,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 12),
                   Expanded(
                     child: SizedBox(
                       height: 32,
@@ -110,44 +120,46 @@ class _SettingPageState extends State<SettingPage> {
                           ),
                         ),
                         onPressed: () async {
+                          await BlocProvider.of<AuthCubit>(context).logOut();
+                          RestartWidget.restartApp(context);
                           Navigator.of(context).pop();
-                          await BlocProvider.of<AuthCubit>(this.context).logOut();
-                          RestartWidget.restartApp(this.context);
                         },
-                        child: const Text('Confirm', style: TextStyle(fontWeight: FontWeight.w400,color: Colors.white,fontSize: 12)),
+                        child: const Text(
+                          'Logout',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                          ),
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
-              const SizedBox(height: 8),
             ],
           ),
         );
       },
-    ).whenComplete(() {
-      widget.onLogoutModalChanged?.call(false);
-    });
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    final size = MediaQuery.of(context).size;
+    final now = DateTime.now();
+    final formatter = DateFormat('EEEE, MMMM d');
+    final formattedDate = formatter.format(now);
 
-    DateTime now = DateTime.now();
-    // Format the date to show month name and day
-    String formattedDate = DateFormat('MMMM, d').format(now);
-    // 00
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.bgScreen,
       body: Container(
-        alignment: Alignment.center,
         height: size.height,
         width: size.width,
         margin:EdgeInsets.only(top: size.height * .02),
         child: Container(
           padding: const EdgeInsets.symmetric(vertical: 5,horizontal: 20),
           width:  size.width,
+          child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -179,39 +191,11 @@ class _SettingPageState extends State<SettingPage> {
                       ),                       
                     ],      
                   ),                  
-                  // SvgPicture.asset("assets/notification.svg",width: 24,height: 24,)
                 ],
               ),
-              // const SizedBox(
-              //   height: 20,
-              // ),
-              // Text(
-              //   formattedDate,
-              //   style: AppTextStyles.titleXl,
-              // ),
               const SizedBox(
                 height: 20,
               ),
-              // GestureDetector(
-              //   onTap: () {
-              //     Navigator.of(context).push(MaterialPageRoute(
-              //         builder: (context) => WearableDevice()));
-              //   },
-              //   child: WearableDevicesTile(
-              //     srcImage: 'watch-status.svg',
-              //     textTitle: 'Wearable Devices',
-              //   ),
-              // ),
-              // const SizedBox(
-              //   height: 20,
-              // ),
-              // WearableDevicesTile(
-              //   srcImage: 'lock.svg',
-              //   textTitle: 'Change Password',
-              // ),
-              // const SizedBox(
-              //   height: 20,
-              // ),
               GestureDetector(
                 onTap: () {
                   _launchURL('https://holisticare.io/privacy-policy/');
@@ -234,6 +218,14 @@ class _SettingPageState extends State<SettingPage> {
                 textTitle: 'Terms of Service',
               ),
               ),
+              
+                const SizedBox(
+                  height: 30,
+                ),
+                
+
+                
+
             
               const SizedBox(
                 height: 30,
@@ -268,6 +260,7 @@ class _SettingPageState extends State<SettingPage> {
                 },
               ),
             ],
+            ),
           ),
         ),
       ),

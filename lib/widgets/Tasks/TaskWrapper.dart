@@ -7,7 +7,8 @@ import 'package:flutter_svg/svg.dart';
 class TaskWrapper extends StatefulWidget {
   final String typeName; // Accept type name as a parameter
   final List<Map<String, dynamic>> tasks;
-  const TaskWrapper({super.key,required this.typeName,required this.tasks});
+  final bool readOnly; // پراپ جدید برای حالت فقط خواندن
+  const TaskWrapper({super.key,required this.typeName,required this.tasks, this.readOnly = false});
 
   @override
   State<TaskWrapper> createState() {
@@ -65,7 +66,7 @@ class _TaskWrapperState extends State<TaskWrapper> {
             children: List.generate(widget.tasks.length,
               (index) => 
                 Padding(padding: const EdgeInsets.only(bottom: 4),
-                  child: TaskItem(task: widget.tasks[index],),
+                  child: TaskItem(task: widget.tasks[index], readOnly: widget.readOnly),
                 ),
             )
           )

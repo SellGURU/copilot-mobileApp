@@ -33,7 +33,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
-
+import 'package:copilet/services/branding_bloc.dart';
 // Custom Scroll Behavior
 class CustomScrollBehavior extends ScrollBehavior {
   @override
@@ -76,6 +76,7 @@ class CustomScrollBehavior extends ScrollBehavior {
 }
 
 
+
 void main() async {
   /// Ensures binding is initialized for widgets before running the app.
   WidgetsFlutterBinding.ensureInitialized();
@@ -110,6 +111,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => ChatCubit()),
         BlocProvider(create: (_) => ImageHandlerCubit()),
         BlocProvider(create: (_) => TaskCubit()),
+        BlocProvider(create: (_) => BrandingBloc()),
         BlocProvider(
           lazy: false,
           create: (context) {

@@ -632,7 +632,7 @@ class _ChatscreenState extends State<Chatscreen> {
               BlocBuilder<ImageHandlerCubit, ImageHandlerState>(
                 builder: (context, state) {
                   return Positioned(
-                    bottom: 50,
+                    bottom: 30,
                     width: 400,
                     //  > 420 ? 400 : size.width * .9,
                     child: Container(
@@ -697,10 +697,7 @@ class _ChatscreenState extends State<Chatscreen> {
                                 hintStyle: AppTextStyles.hint,
                                 hintText: "Ask me anything...",
                                 suffixIcon: IconButton(
-                                  icon: const Icon(
-                                    Icons.send,
-                                    color: AppColors.purpleDark,
-                                  ),
+                                  icon: SvgPicture.asset('assets/send-2.svg',width: 24,height: 24),
                                   onPressed: () {
                                     _sendMessage(state is HaveImage
                                         ? state.imageBase64
@@ -725,8 +722,13 @@ class _ChatscreenState extends State<Chatscreen> {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10)),
                                 ),
+                                  focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                  borderSide: BorderSide.none,
+                                ),
                               ),
                             ),
+                          
                           ],
                         ),
                       ),
@@ -757,60 +759,38 @@ class _ChatscreenState extends State<Chatscreen> {
           children: [
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              textDirection: TextDirection.rtl,
+              textDirection: TextDirection.ltr,
               children: [
-                FutureBuilder<String?>(
-                  future: getNameUser(),
-                  builder: (context, snapshot) {
-                    String initials = "U";
-                    if (snapshot.data != null && snapshot.data!.isNotEmpty) {
-                      initials = snapshot.data![0].toUpperCase();
-                    }
-                    return CircleAvatar(
-                      radius: 15,
-                      backgroundColor: AppColors.purpleDark,
-                      child: Text(
-                        initials,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-                const SizedBox(width: 10),
                 Expanded(
                   child: Column(
-                    textDirection: TextDirection.rtl,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    textDirection: TextDirection.ltr,
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        textDirection: TextDirection.rtl,
-                        children: [
-                          FutureBuilder<String?>(
-                            future: getNameUser(),
-                            builder: (context, snapshot) {
-                              return Text(
-                                snapshot.data ?? "User",
-                                style: AppTextStyles.title2
-                                    .copyWith(fontWeight: FontWeight.bold),
-                                overflow: TextOverflow.ellipsis,
-                                textDirection: TextDirection.rtl,
-                              );
-                            },
-                          ),
-                          const SizedBox(width: 8),
-                          Text(
-                            time,
-                            style: AppTextStyles.titleMedium
-                                .copyWith(color: Colors.grey),
-                            textDirection: TextDirection.rtl,
-                          ),
-                        ],
-                      ),
+                                              Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          textDirection: TextDirection.ltr,
+                          children: [
+                            Text(
+                              time,
+                              style: AppTextStyles.titleMedium
+                                  .copyWith(color: Colors.grey),
+                              textDirection: TextDirection.ltr,
+                            ),
+                            const SizedBox(width: 8),
+                            FutureBuilder<String?>(
+                              future: getNameUser(),
+                              builder: (context, snapshot) {
+                                return Text(
+                                  snapshot.data ?? "User",
+                                  style: AppTextStyles.title2
+                                      .copyWith(fontWeight: FontWeight.bold),
+                                  overflow: TextOverflow.ellipsis,
+                                  textDirection: TextDirection.ltr,
+                                );
+                              },
+                            ),
+                          ],
+                        ),
                       const SizedBox(height: 5),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -826,7 +806,7 @@ class _ChatscreenState extends State<Chatscreen> {
                             child: Text(
                               text,
                               style: AppTextStyles.titleMedium,
-                              textDirection: TextDirection.rtl,
+                              textDirection: TextDirection.ltr,
                             ),
                           ),
                           const SizedBox(
@@ -855,6 +835,28 @@ class _ChatscreenState extends State<Chatscreen> {
                       ),
                     ],
                   ),
+                ),
+                const SizedBox(width: 10),
+                FutureBuilder<String?>(
+                  future: getNameUser(),
+                  builder: (context, snapshot) {
+                    String initials = "U";
+                    if (snapshot.data != null && snapshot.data!.isNotEmpty) {
+                      initials = snapshot.data![0].toUpperCase();
+                    }
+                    return CircleAvatar(
+                      radius: 15,
+                      backgroundColor: AppColors.purpleDark,
+                      child: Text(
+                        initials,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),

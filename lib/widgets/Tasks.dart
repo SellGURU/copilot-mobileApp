@@ -17,7 +17,8 @@ import 'package:http/http.dart' as http;
 class Tasks extends StatefulWidget{
   final String title;
   final List<Map<String, dynamic>>? tasksList; // پراپ اختیاری
-  const Tasks({super.key,required this.title, this.tasksList});
+  final bool readOnly; // پراپ جدید برای حالت فقط خواندن - اگر true باشد، دکمه‌های اکشن غیرفعال می‌شوند
+  const Tasks({super.key,required this.title, this.tasksList, this.readOnly = false});
 
   @override
   State<Tasks> createState() {
@@ -369,12 +370,12 @@ class _TasksState extends State<Tasks> {
             children: List.generate(5, (index) => 
               Padding(
                 padding: const EdgeInsets.only(bottom: 10), // Adds gap of 10 pixels
-                child: taskTypes[index] !='Activity'? TaskWrapper(typeName: taskTypes[index],tasks: tasks.where((task) => task['type'] == taskTypes[index]).toList(),):ActivityTaskWrapper(typeName: taskTypes[index],tasks: tasks.where((task) => task['type'] == taskTypes[index]).toList(),) ,
+                child: taskTypes[index] !='Activity'? TaskWrapper(typeName: taskTypes[index],tasks: tasks.where((task) => task['type'] == taskTypes[index]).toList(),readOnly: widget.readOnly,):ActivityTaskWrapper(typeName: taskTypes[index],tasks: tasks.where((task) => task['type'] == taskTypes[index]).toList(),readOnly: widget.readOnly,) ,
               ),
             ),
           ): Padding(
                 padding: const EdgeInsets.only(bottom: 10), // Adds gap of 10 pixels
-                child: TaskWrapper(typeName: taskTypes[5],tasks: tasks.where((task) => task['type'] == taskTypes[5]).toList(),),
+                child: TaskWrapper(typeName: taskTypes[5],tasks: tasks.where((task) => task['type'] == taskTypes[5]).toList(),readOnly: widget.readOnly,),
               ),
         )          
           :

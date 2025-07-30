@@ -14,9 +14,16 @@ Future<void> cacheBrandingData(BrandingData data) async {
   prefs.setString(
       'branding_data',
       jsonEncode({
-        'title': data.title,
-        'slogan': data.slogan,
-        'primaryColorHex': data.primaryColorHex,
+        'brand_elements': {
+          'name': data.name,
+          'headline': data.headline,
+          'primary_color': data.primaryColorHex,
+          'secondary_color': data.secondaryColorHex,
+          'tone': data.tone,
+          'focus_area': data.focusArea,
+          'logo': data.logo,
+          'last_update': data.lastUpdate,
+        }
       }));
 }
 
