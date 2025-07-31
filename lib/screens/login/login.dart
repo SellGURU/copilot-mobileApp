@@ -203,237 +203,429 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
+  // @override
+  // Widget build(BuildContext context) {
+  //   var size = MediaQuery.of(context).size;
+  //   final GoogleSignInAccount? user = _currentUser;
+
+  //   return Scaffold(
+  //     backgroundColor: AppColors.bgScreen,
+  //     body: SafeArea(
+  //       child: Container(
+  //         width: size.width,
+  //         alignment: Alignment.topCenter,
+  //         child: Container(
+  //           width: size.width > 420 ? 420 : size.width,
+  //           child: SingleChildScrollView(
+  //             child: Container(
+  //               height: size.height,
+  //               width: size.width > 420 ? 420 : size.width,
+  //               alignment: Alignment.topCenter,
+  //               child: Column(
+  //                 mainAxisAlignment: MainAxisAlignment.start,
+  //                 children: [
+  //                   Stack(
+  //                     clipBehavior: Clip.none,
+  //                     children: [
+  //                       SvgPicture.asset(
+  //                         "assets/loginElips.svg",
+  //                         height: 200,
+  //                         width: size.width,
+  //                         fit: BoxFit.cover,
+  //                       ),
+  //                       Positioned(
+  //                         left: (size.width > 420 ? 130 : size.width / 2 - 66),
+  //                         top: 100,
+  //                         child: Container(
+  //                           width: 132,
+  //                           height: 132,
+  //                           child: Image.asset("assets/logoH.png"),
+  //                           decoration: BoxDecoration(
+  //                             shape: BoxShape.circle,
+  //                             color: Colors.white,
+  //                             border: Border.all(
+  //                               color: AppColors.mainPrimaryColor,
+  //                               width: 2, // Adjust border thickness as needed
+  //                             ),
+  //                           ),
+  //                         ),
+  //                       )
+  //                     ],
+  //                   ),
+  //                   Padding(
+  //                     padding: EdgeInsets.only(left: 24, right: 24, top: 36),
+  //                     child: Column(
+  //                       children: [
+  //                         //
+  //                         SizedBox(
+  //                           height: 16,
+  //                         ),
+  //                         Text(
+  //                           "To continue, please enter your email and password. Your password can be found in the invitation email.",
+  //                           style: AppTextStyles.hintTextPrimaryWithHeight,
+  //                           textAlign: TextAlign.center,
+  //                         ),
+  //                         SizedBox(
+  //                           height: 2,
+  //                         ),
+  //                         // Text(
+  //                         //   " Your password can be found in the invitation email.",
+  //                         //   style: AppTextStyles.title2,
+  //                         //   textAlign: TextAlign.center,
+  //                         // ),
+  //                         const SizedBox(height: 30),
+  //                         AppTextField(
+  //                           label: 'E-mail',
+  //                           hint: 'Enter your email ...',
+  //                           controller: _emailController,
+  //                           isPassword: false,
+  //                           errorText: _errorMessageEmail,
+  //                         ),
+  //                         // if (_errorMessageEmail != null)
+  //                         //   Padding(
+  //                         //     padding: const EdgeInsets.only(top: 5),
+  //                         //     child: Text(
+  //                         //       _errorMessageEmail!,
+  //                         //       style:
+  //                         //           TextStyle(color: Colors.red, fontSize: 12),
+  //                         //     ),
+  //                         //   ),
+  //                         const SizedBox(height: 30),
+  //                         AppTextField(
+  //                           label: 'Password',
+  //                           hint: 'Enter your password ....',
+  //                           controller: _passwordController,
+  //                           isPassword: true,
+  //                           errorText:
+  //                               _errorMessagePass, // Enable password obscuring
+  //                         ),
+  //                         // if (_errorMessagePass != null)
+  //                         //   Padding(
+  //                         //     padding: const EdgeInsets.only(top: 5),
+  //                         //     child: Text(
+  //                         //       _errorMessagePass!,
+  //                         //       style:
+  //                         //           TextStyle(color: Colors.red, fontSize: 12),
+  //                         //     ),
+  //                         //   ),
+  //                         const SizedBox(height: 30),
+  //                         BlocConsumer<AuthCubit, AuthState>(
+  //                           listener: (context, state) async {
+  //                             if (state is SuccessState) {
+  //                               SharedPreferences prefs =
+  //                                   await SharedPreferences.getInstance();
+  //                               prefs.setString(
+  //                                   'email', _emailController.value.text);
+  //                               prefs.setString(
+  //                                   'password',
+  //                                   _passwordController
+  //                                       .value.text); // Store password
+  //                               getInitData();
+  //                             }
+  //                             if (state is ErrorState) {
+  //                               ScaffoldMessenger.of(context).showSnackBar(
+  //                                   SnackBar(content: Text(state.errorText)));
+  //                             }
+  //                           },
+  //                           builder: (context, state) {
+  //                             if (state is LoadingState) {
+  //                               return const Center(
+  //                                   child: CircularProgressIndicator());
+  //                             }
+  //                             return Column(
+  //                               children: [
+  //                                 GestureDetector(
+  //                                   onTap: () async {
+  //                                     _validateEmail(_emailController.text);
+  //                                     _validatePassword(
+  //                                         _passwordController.value.text);
+  //                                     if (_errorMessageEmail == null &&
+  //                                         _errorMessagePass == null) {
+  //                                       BlocProvider.of<AuthCubit>(context)
+  //                                           .logIn(
+  //                                               _emailController.value.text,
+  //                                               _passwordController.value
+  //                                                   .text // Pass the password
+  //                                               );
+  //                                     }
+  //                                   },
+  //                                   child: Container(
+  //                                     alignment: Alignment.center,
+  //                                     padding: const EdgeInsets.only(
+  //                                         top: 10, bottom: 10),
+  //                                     decoration: BoxDecoration(
+  //                                       color: AppColors.primaryDeepTeal,
+  //                                       borderRadius: BorderRadius.circular(20),
+  //                                       border: Border.all(
+  //                                         color: Colors.white,
+  //                                         width: 1, // 1px
+  //                                       ),
+  //                                     ),
+  //                                     width: size.width,
+  //                                     child: Text(
+  //                                       "Log in",
+  //                                       style: AppTextStyles.titleMediumWhite,
+  //                                     ),
+  //                                   ),
+  //                                 ),
+  //                                 const SizedBox(height: 15),
+  //                                 GestureDetector(
+  //                                   onTap: () {
+  //                                     Navigator.push(
+  //                                       context,
+  //                                       MaterialPageRoute(
+  //                                         builder: (context) =>
+  //                                             const RegisterPage(),
+  //                                       ),
+  //                                     );
+  //                                   },
+  //                                   child: Row(
+  //                                     mainAxisAlignment:
+  //                                         MainAxisAlignment.center,
+  //                                     children: [
+  //                                       Text(
+  //                                         "Don't have an account? ",
+  //                                         style: AppTextStyles.titleMedium
+  //                                             .copyWith(
+  //                                           color: const Color(0xFF888888),
+  //                                           fontSize: 12,
+  //                                         ),
+  //                                       ),
+  //                                       Text(
+  //                                         "Sign Up",
+  //                                         style: AppTextStyles.titleMedium
+  //                                             .copyWith(
+  //                                           color: AppColors.primaryDeepTeal,
+  //                                           fontSize: 12,
+  //                                         ),
+  //                                       ),
+  //                                     ],
+  //                                   ),
+  //                                 ),
+  //                               ],
+  //                             );
+  //                           },
+  //                         ),
+  //                         // GestureDetector(
+  //                         //   onTap: () => _handleSignIn(context),
+  //                         //   child: Container(
+  //                         //     alignment: Alignment.center,
+  //                         //     padding: const EdgeInsets.only(top: 10, bottom: 10),
+  //                         //     decoration: BoxDecoration(
+  //                         //       border: Border.all(width: 2, color: AppColors.black),
+  //                         //       color: AppColors.mainBg,
+  //                         //       borderRadius: BorderRadius.circular(10),
+  //                         //     ),
+  //                         //     width: size.width,
+  //                         //     child: Row(
+  //                         //       mainAxisAlignment: MainAxisAlignment.center,
+  //                         //       children: [
+  //                         //         SvgPicture.asset("assets/Google.svg"),
+  //                         //         const SizedBox(width: 10),
+  //                         //         Text(
+  //                         //           "Continue with Google",
+  //                         //           style: AppTextStyles.titleMedium,
+  //                         //         ),
+  //                         //       ],
+  //                         //     ),
+  //                         //   ),
+  //                         // ),
+  //                       ],
+  //                     ),
+  //                   )
+  //                 ],
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    final GoogleSignInAccount? user = _currentUser;
+    final size = MediaQuery.of(context).size;
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
 
     return Scaffold(
       backgroundColor: AppColors.bgScreen,
+      resizeToAvoidBottomInset: true,
       body: SafeArea(
-        child: Container(
-          width: size.width,
-          alignment: Alignment.topCenter,
-          child: Container(
-            width: size.width > 420 ? 420 : size.width,
-            child: SingleChildScrollView(
-              child: Container(
-                height: size.height,
-                width: size.width > 420 ? 420 : size.width,
-                alignment: Alignment.topCenter,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        SvgPicture.asset(
-                          "assets/loginElips.svg",
-                          height: 200,
-                          width: size.width,
-                          fit: BoxFit.cover,
-                        ),
-                        Positioned(
-                          left: (size.width > 420 ? 130 : size.width / 2 - 66),
-                          top: 100,
-                          child: Container(
-                            width: 132,
-                            height: 132,
-                            child: Image.asset("assets/logoH.png"),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                              border: Border.all(
-                                color: AppColors.mainPrimaryColor,
-                                width: 2, // Adjust border thickness as needed
-                              ),
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 24, right: 24, top: 36),
-                      child: Column(
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: SingleChildScrollView(
+            reverse: true,
+            padding: EdgeInsets.only(bottom: bottomInset),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: 420,
+                  minHeight: size.height - MediaQuery.of(context).padding.top,
+                ),
+                child: IntrinsicHeight(
+                  child: Column(
+                    children: [
+                      // 🌀 بخش بالایی (لوگو و بنر)
+                      Stack(
+                        clipBehavior: Clip.none,
                         children: [
-                          //
-                          SizedBox(
-                            height: 16,
+                          SvgPicture.asset(
+                            "assets/loginElips.svg",
+                            height: 200,
+                            width: size.width,
+                            fit: BoxFit.cover,
                           ),
-                          Text(
-                            "To continue, please enter your email and password. Your password can be found in the invitation email.",
-                            style: AppTextStyles.hintTextPrimaryWithHeight,
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(
-                            height: 2,
-                          ),
-                          // Text(
-                          //   " Your password can be found in the invitation email.",
-                          //   style: AppTextStyles.title2,
-                          //   textAlign: TextAlign.center,
-                          // ),
-                          const SizedBox(height: 30),
-                          AppTextField(
-                            label: 'E-mail',
-                            hint: 'Enter your email ...',
-                            controller: _emailController,
-                            isPassword: false,
-                            errorText: _errorMessageEmail,
-                          ),
-                          // if (_errorMessageEmail != null)
-                          //   Padding(
-                          //     padding: const EdgeInsets.only(top: 5),
-                          //     child: Text(
-                          //       _errorMessageEmail!,
-                          //       style:
-                          //           TextStyle(color: Colors.red, fontSize: 12),
-                          //     ),
-                          //   ),
-                          const SizedBox(height: 30),
-                          AppTextField(
-                            label: 'Password',
-                            hint: 'Enter your password ....',
-                            controller: _passwordController,
-                            isPassword: true,
-                            errorText:
-                                _errorMessagePass, // Enable password obscuring
-                          ),
-                          // if (_errorMessagePass != null)
-                          //   Padding(
-                          //     padding: const EdgeInsets.only(top: 5),
-                          //     child: Text(
-                          //       _errorMessagePass!,
-                          //       style:
-                          //           TextStyle(color: Colors.red, fontSize: 12),
-                          //     ),
-                          //   ),
-                          const SizedBox(height: 30),
-                          BlocConsumer<AuthCubit, AuthState>(
-                            listener: (context, state) async {
-                              if (state is SuccessState) {
-                                SharedPreferences prefs =
-                                    await SharedPreferences.getInstance();
-                                prefs.setString(
-                                    'email', _emailController.value.text);
-                                prefs.setString(
-                                    'password',
-                                    _passwordController
-                                        .value.text); // Store password
-                                getInitData();
-                              }
-                              if (state is ErrorState) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(state.errorText)));
-                              }
-                            },
-                            builder: (context, state) {
-                              if (state is LoadingState) {
-                                return const Center(
-                                    child: CircularProgressIndicator());
-                              }
-                              return Column(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () async {
-                                      _validateEmail(_emailController.text);
-                                      _validatePassword(
-                                          _passwordController.value.text);
-                                      if (_errorMessageEmail == null &&
-                                          _errorMessagePass == null) {
-                                        BlocProvider.of<AuthCubit>(context)
-                                            .logIn(
-                                                _emailController.value.text,
-                                                _passwordController.value
-                                                    .text // Pass the password
-                                                );
-                                      }
-                                    },
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      padding: const EdgeInsets.only(
-                                          top: 10, bottom: 10),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.primaryDeepTeal,
-                                        borderRadius: BorderRadius.circular(20),
-                                        border: Border.all(
-                                          color: Colors.white,
-                                          width: 1, // 1px
-                                        ),
-                                      ),
-                                      width: size.width,
-                                      child: Text(
-                                        "Log in",
-                                        style: AppTextStyles.titleMediumWhite,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 15),
-                                  GestureDetector(
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              const RegisterPage(),
-                                        ),
-                                      );
-                                    },
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          "Don't have an account? ",
-                                          style: AppTextStyles.titleMedium
-                                              .copyWith(
-                                            color: const Color(0xFF888888),
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                        Text(
-                                          "Sign Up",
-                                          style: AppTextStyles.titleMedium
-                                              .copyWith(
-                                            color: AppColors.primaryDeepTeal,
-                                            fontSize: 12,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                          // GestureDetector(
-                          //   onTap: () => _handleSignIn(context),
-                          //   child: Container(
-                          //     alignment: Alignment.center,
-                          //     padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          //     decoration: BoxDecoration(
-                          //       border: Border.all(width: 2, color: AppColors.black),
-                          //       color: AppColors.mainBg,
-                          //       borderRadius: BorderRadius.circular(10),
-                          //     ),
-                          //     width: size.width,
-                          //     child: Row(
-                          //       mainAxisAlignment: MainAxisAlignment.center,
-                          //       children: [
-                          //         SvgPicture.asset("assets/Google.svg"),
-                          //         const SizedBox(width: 10),
-                          //         Text(
-                          //           "Continue with Google",
-                          //           style: AppTextStyles.titleMedium,
-                          //         ),
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
+                          Positioned(
+                            left:
+                                (size.width > 420 ? 130 : size.width / 2 - 66),
+                            top: 100,
+                            child: Container(
+                              width: 132,
+                              height: 132,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: AppColors.mainPrimaryColor,
+                                  width: 2,
+                                ),
+                              ),
+                              child: Image.asset("assets/logoH.png"),
+                            ),
+                          )
                         ],
                       ),
-                    )
-                  ],
+                      // 📝 فرم ورود
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 24, vertical: 36),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            Text(
+                              "To continue, please enter your email and password. Your password can be found in the invitation email.",
+                              style: AppTextStyles.hintTextPrimaryWithHeight,
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 30),
+
+                            AppTextField(
+                              label: 'E-mail',
+                              hint: 'Enter your email ...',
+                              controller: _emailController,
+                              isPassword: false,
+                              errorText: _errorMessageEmail,
+                            ),
+                            const SizedBox(height: 30),
+
+                            AppTextField(
+                              label: 'Password',
+                              hint: 'Enter your password ...',
+                              controller: _passwordController,
+                              isPassword: true,
+                              errorText: _errorMessagePass,
+                            ),
+                            const SizedBox(height: 30),
+
+                            // 🎯 دکمه ورود با BlocConsumer
+                            BlocConsumer<AuthCubit, AuthState>(
+                              listener: (context, state) async {
+                                if (state is SuccessState) {
+                                  SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  prefs.setString(
+                                      'email', _emailController.text);
+                                  prefs.setString(
+                                      'password', _passwordController.text);
+                                  getInitData();
+                                }
+                                if (state is ErrorState) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text(state.errorText)),
+                                  );
+                                }
+                              },
+                              builder: (context, state) {
+                                if (state is LoadingState) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                }
+                                return Column(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        _validateEmail(_emailController.text);
+                                        _validatePassword(
+                                            _passwordController.text);
+                                        if (_errorMessageEmail == null &&
+                                            _errorMessagePass == null) {
+                                          BlocProvider.of<AuthCubit>(context)
+                                              .logIn(
+                                            _emailController.text,
+                                            _passwordController.text,
+                                          );
+                                        }
+                                      },
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 10),
+                                        decoration: BoxDecoration(
+                                          color: AppColors.primaryDeepTeal,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          border: Border.all(
+                                              color: Colors.white, width: 1),
+                                        ),
+                                        child: Text(
+                                          "Log in",
+                                          style: AppTextStyles.titleMediumWhite,
+                                        ),
+                                      ),
+                                    ),
+                                    const SizedBox(height: 15),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) =>
+                                                const RegisterPage(),
+                                          ),
+                                        );
+                                      },
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            "Don't have an account? ",
+                                            style: AppTextStyles.titleMedium
+                                                .copyWith(
+                                              color: const Color(0xFF888888),
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                          Text(
+                                            "Sign Up",
+                                            style: AppTextStyles.titleMedium
+                                                .copyWith(
+                                              color: AppColors.primaryDeepTeal,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
