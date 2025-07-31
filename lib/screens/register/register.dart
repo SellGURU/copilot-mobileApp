@@ -213,226 +213,238 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       backgroundColor: AppColors.bgScreen,
       body: SafeArea(
-        child: Container(
-          width: size.width,
-          alignment: Alignment.topCenter,
-          child: Container(
-            width: size.width > 420 ? 420 : size.width,
-            child: SingleChildScrollView(
-              child: Container(
-                height: size.height,
-                width: size.width > 420 ? 420 : size.width,
-                alignment: Alignment.topCenter,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        SvgPicture.asset(
-                          "assets/loginElips.svg",
-                          height: 200,
-                          width: size.width,
-                          fit: BoxFit.cover,
-                        ),
-                        Positioned(
-                          left: (size.width > 420 ? 130 : size.width / 2 - 66),
-                          top: 100,
-                          child: Container(
-                            width: 132,
-                            height: 132,
-                            child: Image.asset("assets/logoH.png"),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                              border: Border.all(
-                                color: AppColors.mainPrimaryColor,
-                                width: 2, // Adjust border thickness as needed
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: SingleChildScrollView(
+            reverse: true,
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxWidth: 420,
+                  minHeight: MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).padding.top,
+                ),
+                child: IntrinsicHeight(
+                  child: Column(
+                    children: [
+                      Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          SvgPicture.asset(
+                            "assets/loginElips.svg",
+                            height: 200,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
+                          Positioned(
+                            left: ((MediaQuery.of(context).size.width > 420
+                                        ? 420
+                                        : MediaQuery.of(context).size.width) /
+                                    2) -
+                                66,
+                            top: 100,
+                            child: Container(
+                              width: 132,
+                              height: 132,
+                              child: Image.asset("assets/logoH.png"),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Colors.white,
+                                border: Border.all(
+                                  color: AppColors.mainPrimaryColor,
+                                  width: 2,
+                                ),
                               ),
                             ),
-                          ),
-                        )
-                      ],
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 24, right: 24, top: 36),
-                      child: Column(
-                        children: [
-                          Text(
-                            'Welcome to HolistiCare!',
-                            style: AppTextStyles.title1,
-                          ),
-                          const SizedBox(height: 64),
-                          Text(
-                            _currentStep == 0
-                                ? "We're excited to have you join our community. Please enter your email address to create your account.​"
-                                : "Set a password. It must be strong to ensure your security.",
-                            style: AppTextStyles.hintTextPrimaryWithHeight,
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(height: 30),
-                          if (_currentStep == 0)
-                            AppTextField(
-                              label: 'Email',
-                              hint: 'Enter your email ...',
-                              controller: _emailController,
-                              isPassword: false,
-                              errorText: _errorMessageEmail,
-                              onChanged: _validateEmail,
+                          )
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 24, right: 24, top: 36),
+                        child: Column(
+                          children: [
+                            Text(
+                              'Welcome to HolistiCare!',
+                              style: AppTextStyles.title1,
                             ),
-                          if (_currentStep == 1) ...[
-                            AppTextField(
-                              label: 'Password',
-                              hint: 'Enter your password ....',
-                              controller: _passwordController,
-                              isPassword: true,
-                              errorText: _errorMessagePassword,
-                              onChanged: _validatePassword,
-                              tooltipMessage:
-                                  'At least 8 characters.\n(Use Uppercase & Lowercase letters, Numbers and Special characters).\nAvoid using personal information or patterns.',
+                            const SizedBox(height: 64),
+                            Text(
+                              _currentStep == 0
+                                  ? "We're excited to have you join our community. Please enter your email address to create your account.​"
+                                  : "Set a password. It must be strong to ensure your security.",
+                              style: AppTextStyles.hintTextPrimaryWithHeight,
+                              textAlign: TextAlign.center,
                             ),
-                            const SizedBox(height: 20),
-                            AppTextField(
-                              label: 'Confirm Password',
-                              hint: 'Confirm your password ...',
-                              controller: _confirmPasswordController,
-                              isPassword: true,
-                              errorText: _errorMessageConfirmPassword,
-                              onChanged: _validateConfirmPassword,
-                            ),
-                            const SizedBox(height: 20),
-                            Row(
-                              children: [
-                                Checkbox(
-                                  value: _acceptTerms,
-                                  onChanged: (bool? value) {
-                                    setState(() {
-                                      _acceptTerms = value ?? false;
-                                    });
-                                  },
-                                  activeColor: AppColors.primaryDeepTeal,
-                                ),
-                                Expanded(
-                                  child: GestureDetector(
-                                    onTap: () {
+                            const SizedBox(height: 30),
+                            if (_currentStep == 0)
+                              AppTextField(
+                                label: 'Email',
+                                hint: 'Enter your email ...',
+                                controller: _emailController,
+                                isPassword: false,
+                                errorText: _errorMessageEmail,
+                                onChanged: _validateEmail,
+                              ),
+                            if (_currentStep == 1) ...[
+                              AppTextField(
+                                label: 'Password',
+                                hint: 'Enter your password ....',
+                                controller: _passwordController,
+                                isPassword: true,
+                                errorText: _errorMessagePassword,
+                                onChanged: _validatePassword,
+                                tooltipMessage:
+                                    'At least 8 characters.\n(Use Uppercase & Lowercase letters, Numbers and Special characters).\nAvoid using personal information or patterns.',
+                              ),
+                              const SizedBox(height: 20),
+                              AppTextField(
+                                label: 'Confirm Password',
+                                hint: 'Confirm your password ...',
+                                controller: _confirmPasswordController,
+                                isPassword: true,
+                                errorText: _errorMessageConfirmPassword,
+                                onChanged: _validateConfirmPassword,
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                children: [
+                                  Checkbox(
+                                    value: _acceptTerms,
+                                    onChanged: (bool? value) {
                                       setState(() {
-                                        _acceptTerms = !_acceptTerms;
+                                        _acceptTerms = value ?? false;
                                       });
                                     },
-                                    child: RichText(
-                                      text: TextSpan(
-                                        style:
-                                            AppTextStyles.titleMedium.copyWith(
-                                          color: const Color(0xFF888888),
-                                          fontSize: 12,
+                                    activeColor: AppColors.primaryDeepTeal,
+                                  ),
+                                  Expanded(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _acceptTerms = !_acceptTerms;
+                                        });
+                                      },
+                                      child: RichText(
+                                        text: TextSpan(
+                                          style: AppTextStyles.titleMedium
+                                              .copyWith(
+                                            color: const Color(0xFF888888),
+                                            fontSize: 12,
+                                          ),
+                                          children: [
+                                            const TextSpan(
+                                                text: 'I accept the '),
+                                            TextSpan(
+                                              text: 'Privacy Policy',
+                                              style: TextStyle(
+                                                color:
+                                                    AppColors.primaryDeepTeal,
+                                                decoration:
+                                                    TextDecoration.underline,
+                                              ),
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = () {
+                                                  _launchURL(
+                                                      'https://holisticare.io/privacy-policy/');
+                                                },
+                                            ),
+                                            const TextSpan(text: ' and '),
+                                            TextSpan(
+                                              text: 'Terms of Service',
+                                              style: TextStyle(
+                                                color:
+                                                    AppColors.primaryDeepTeal,
+                                                decoration:
+                                                    TextDecoration.underline,
+                                              ),
+                                              recognizer: TapGestureRecognizer()
+                                                ..onTap = () {
+                                                  _launchURL(
+                                                      'https://holisticare.io/terms-of-service/');
+                                                },
+                                            ),
+                                          ],
                                         ),
-                                        children: [
-                                          const TextSpan(text: 'I accept the '),
-                                          TextSpan(
-                                            text: 'Privacy Policy',
-                                            style: TextStyle(
-                                              color: AppColors.primaryDeepTeal,
-                                              decoration:
-                                                  TextDecoration.underline,
-                                            ),
-                                            recognizer: TapGestureRecognizer()
-                                              ..onTap = () {
-                                                _launchURL(
-                                                    'https://holisticare.io/privacy-policy/');
-                                              },
-                                          ),
-                                          const TextSpan(text: ' and '),
-                                          TextSpan(
-                                            text: 'Terms of Service',
-                                            style: TextStyle(
-                                              color: AppColors.primaryDeepTeal,
-                                              decoration:
-                                                  TextDecoration.underline,
-                                            ),
-                                            recognizer: TapGestureRecognizer()
-                                              ..onTap = () {
-                                                _launchURL(
-                                                    'https://holisticare.io/terms-of-service/');
-                                              },
-                                          ),
-                                        ],
                                       ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                          const SizedBox(height: 64),
-                          GestureDetector(
-                            onTap: _isLoading ? null : _handleContinue,
-                            child: Container(
-                              alignment: Alignment.center,
-                              padding:
-                                  const EdgeInsets.only(top: 10, bottom: 10),
-                              decoration: BoxDecoration(
-                                color: _isLoading
-                                    ? AppColors.primaryDeepTeal.withOpacity(0.7)
-                                    : AppColors.primaryDeepTeal,
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
-                                  color: Colors.white,
-                                  width: 1, // 1px
-                                ),
-                              ),
-                              width: size.width,
-                              child: _isLoading
-                                  ? const SizedBox(
-                                      width: 20,
-                                      height: 20,
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                        strokeWidth: 2,
-                                      ),
-                                    )
-                                  : Text(
-                                      _currentStep == 1
-                                          ? "Sign Up"
-                                          : "Continue",
-                                      style: AppTextStyles.titleMediumWhite,
-                                    ),
-                            ),
-                          ),
-                          const SizedBox(height: 15),
-                          if (_currentStep == 0)
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const LoginPage(),
-                                  ),
-                                );
-                              },
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "Already have an account? ",
-                                    style: AppTextStyles.titleMedium.copyWith(
-                                      color: const Color(0xFF888888),
-                                      fontSize: 12,
-                                    ),
-                                  ),
-                                  Text(
-                                    "Log in",
-                                    style: AppTextStyles.titleMedium.copyWith(
-                                      color: AppColors.primaryDeepTeal,
-                                      fontSize: 12,
                                     ),
                                   ),
                                 ],
                               ),
+                            ],
+                            const SizedBox(height: 64),
+                            GestureDetector(
+                              onTap: _isLoading ? null : _handleContinue,
+                              child: Container(
+                                alignment: Alignment.center,
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 10),
+                                decoration: BoxDecoration(
+                                  color: _isLoading
+                                      ? AppColors.primaryDeepTeal
+                                          .withOpacity(0.7)
+                                      : AppColors.primaryDeepTeal,
+                                  borderRadius: BorderRadius.circular(20),
+                                  border: Border.all(
+                                    color: Colors.white,
+                                    width: 1, // 1px
+                                  ),
+                                ),
+                                width: size.width,
+                                child: _isLoading
+                                    ? const SizedBox(
+                                        width: 20,
+                                        height: 20,
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                          strokeWidth: 2,
+                                        ),
+                                      )
+                                    : Text(
+                                        _currentStep == 1
+                                            ? "Sign Up"
+                                            : "Continue",
+                                        style: AppTextStyles.titleMediumWhite,
+                                      ),
+                              ),
                             ),
-                        ],
-                      ),
-                    )
-                  ],
+                            const SizedBox(height: 15),
+                            if (_currentStep == 0)
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const LoginPage(),
+                                    ),
+                                  );
+                                },
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Already have an account? ",
+                                      style: AppTextStyles.titleMedium.copyWith(
+                                        color: const Color(0xFF888888),
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Log in",
+                                      style: AppTextStyles.titleMedium.copyWith(
+                                        color: AppColors.primaryDeepTeal,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),
