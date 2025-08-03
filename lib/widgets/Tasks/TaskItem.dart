@@ -102,7 +102,7 @@ class _TaskItemState extends State<TaskItem> {
       // );
       print('widget.task["completed"] ${widget.task}');
        String taskType = widget.task['type'] == 'Check-In' ? 'checkin' : 'questionary';
-      launchUrl(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
+      launchUrl(Uri.parse("https://holisticare.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
     }
   }
 
