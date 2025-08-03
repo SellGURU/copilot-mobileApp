@@ -143,6 +143,8 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                               ),
                                   
                               Container(
+                                width: 100,
+                                
                                 padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 5),
                                 decoration: BoxDecoration(
