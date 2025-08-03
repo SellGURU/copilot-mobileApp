@@ -53,7 +53,7 @@ class _TaskItemState extends State<TaskItem> {
         String taskType = widget.task['type'] == 'Check-In' ? 'checkin' : 'questionary';
         // launchUrl(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${taskData["id"]}"));
         _controller = WebViewController()
-          ..loadRequest(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
+          ..loadRequest(Uri.parse("https://holisticare.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
         setState(() {});
       }
     }else {
@@ -62,7 +62,7 @@ class _TaskItemState extends State<TaskItem> {
         // launchUrl(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
         _controller = WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          ..loadRequest(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
+          ..loadRequest(Uri.parse("https://holisticare.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
         setState(() {});
       }
 
