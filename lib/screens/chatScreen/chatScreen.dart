@@ -693,6 +693,13 @@ class _ChatscreenState extends State<Chatscreen> {
                             TextFormField(
                               controller: _controller,
                               textAlign: TextAlign.left,
+                              onFieldSubmitted: (value) {
+                                _sendMessage(state is HaveImage
+                                    ? state.imageBase64
+                                    : "");
+                                BlocProvider.of<ImageHandlerCubit>(context)
+                                    .DeletImage();
+                              },
                               decoration: InputDecoration(
                                 hintStyle: AppTextStyles.hint,
                                 hintText: "Ask me anything...",
