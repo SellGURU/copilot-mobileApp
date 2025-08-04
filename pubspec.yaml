@@ -74,6 +74,7 @@ dependencies:
   colorful_safe_area: ^1.0.0
   fluttertoast: ^8.2.9
   equatable: ^2.0.5
+  dropdown_button2: ^2.3.9
 
 dev_dependencies:
   flutter_test:
