@@ -224,7 +224,8 @@ class _TasksState extends State<Tasks> {
               'task_id': item['task_id'],
               'title': item['Title'],
               'type': "Check-In",
-              'completed': item['Status'] ==true?'Done':'' // Add custom key
+              'completed': item['Status'] ==true?'Done':'',
+              'updated_at': item['updated_at'] ?? DateTime.now().toUtc().toIso8601String() // Add custom key
             };
             }
           if(item['Task_Type'] == 'Action'){
@@ -262,6 +263,7 @@ class _TasksState extends State<Tasks> {
         modifiedData.sort((a, b) => a['id'].toString().compareTo(b['id'].toString()));
         tasks = modifiedData;
         });
+      
       }else {
       setState((){
         List<Map<String, dynamic>> modifiedData = jsonData.map((item) {
