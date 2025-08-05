@@ -13,6 +13,7 @@ import '../../widgets/totalScoreGauge.dart';
 import 'package:dio/dio.dart';
 import '../../constants/endPoints.dart';
 import '../../utility/token/getTokenLocaly.dart';
+import '../../utility/refreshData.dart';
 
 class ProgressScreen extends StatefulWidget {
   @override
@@ -20,7 +21,7 @@ class ProgressScreen extends StatefulWidget {
 }
 
 class _ProgressScreenState extends State<ProgressScreen>
-    with SingleTickerProviderStateMixin {
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   final ScrollController _scrollController = ScrollController();
 
   late AnimationController _animationController;
@@ -33,7 +34,38 @@ class _ProgressScreenState extends State<ProgressScreen>
   // --- Weekly Tasks State ---
   List<Map<String, dynamic>> weeklyTasks = [];
   bool isWeeklyTasksLoading = false;
-  String? weeklyTasksError;
+  String? weeklyTasksError = null;
+  bool _isScreenVisible = false;
+  bool _needsRefresh = true;
+  Key _tasksKey = UniqueKey(); // Key to force Tasks widget refresh
+  bool _isRefreshing = false; // Flag to track refresh state
+
+  // --- Refresh Data Method ---
+  Future<void> refreshData() async {
+    // Clear previous data
+    setState(() {
+      weeklyTasks.clear();
+      isWeeklyTasksLoading = true;
+      weeklyTasksError = null;
+      _tasksKey = UniqueKey(); // Generate new key to force Tasks widget refresh
+      _isRefreshing = true; // Set refreshing flag
+    });
+    
+    // Fetch fresh data from backend
+    await fetchWeeklyTasks();
+    
+    // Clear refreshing flag after data is loaded
+    setState(() {
+      _isRefreshing = false;
+    });
+  }
+
+  // Method to reset refresh flag and trigger refresh
+  void resetAndRefresh() {
+    setState(() {
+      _needsRefresh = true;
+    });
+  }
 
   // --- Fetch Weekly Tasks Function ---
   Future<void> fetchWeeklyTasks() async {
@@ -104,6 +136,12 @@ class _ProgressScreenState extends State<ProgressScreen>
   void initState() {
     super.initState();
 
+    // Register observer for lifecycle changes
+    WidgetsBinding.instance.addObserver(this);
+
+    // Register refresh callback
+    DataRefreshUtil.registerProgressScreenRefresh(resetAndRefresh);
+
     // Initialize AnimationController
     _animationController = AnimationController(
       vsync: this,
@@ -127,17 +165,55 @@ class _ProgressScreenState extends State<ProgressScreen>
 
     _scrollController.addListener(_onScroll);
     fetchWeeklyTasks();
-    _weeklyTasksTimer = Timer.periodic(Duration(seconds: 20), (timer) {
-      fetchWeeklyTasks();
-    });
+    // Removed the timer that continuously calls the API
   }
 
   @override
   void dispose() {
-  _scrollController.dispose();
-  _animationController.dispose();
-  _weeklyTasksTimer?.cancel();
-  super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+    DataRefreshUtil.unregisterProgressScreenRefresh();
+    _scrollController.dispose();
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    
+    if (state == AppLifecycleState.resumed && _isScreenVisible) {
+      // Refresh data when app comes back to foreground and screen is visible
+      refreshData();
+    }
+  }
+
+  // Method to be called when tab becomes visible
+  void onTabVisible() {
+    if (!_isScreenVisible) {
+      _isScreenVisible = true;
+      refreshData();
+    }
+  }
+
+  // Method to be called when tab becomes hidden
+  void onTabHidden() {
+    _isScreenVisible = false;
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // This method is called when the widget's dependencies change
+    // We can use this to detect when the tab becomes visible
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // Check if this widget is currently visible in the IndexedStack
+      if (mounted) {
+        // If the widget is mounted and we haven't set it as visible yet, refresh data
+        if (!_isScreenVisible) {
+          onTabVisible();
+        }
+      }
+    });
   }
 
   void _onScroll() {
@@ -160,6 +236,18 @@ class _ProgressScreenState extends State<ProgressScreen>
 
   @override
   Widget build(BuildContext context) {
+    // Check if we need to refresh data when the screen becomes visible
+    if (_needsRefresh) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          setState(() {
+            _needsRefresh = false;
+          });
+          refreshData();
+        }
+      });
+    }
+
     final dates = List.generate(
       7,
       (index) => DateTime.now().add(Duration(days: index - 2)),
@@ -167,130 +255,184 @@ class _ProgressScreenState extends State<ProgressScreen>
 
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 16),
-                // Header Section
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Progress", style: AppTextStyles.title1),
-                    NotificationWidget(
-                      notificationCount: 2,
-                      notifications: [
-                        NotificationItem(
-                          title: "New Tasks, New You!",
-                          message: "Your latest health action plan is ready! Check out your new tasks in the Overview section and take the next step toward a longer, healthier life.",
-                          timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
-                          type: NotificationType.info,
-                          isRead: false,
+      body: RefreshIndicator(
+        onRefresh: refreshData,
+        child: Stack(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 16),
+                  // Header Section
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Progress", style: AppTextStyles.title1),
+                      NotificationWidget(
+                        notificationCount: 2,
+                        notifications: [
+                          NotificationItem(
+                            title: "New Tasks, New You!",
+                            message: "Your latest health action plan is ready! Check out your new tasks in the Overview section and take the next step toward a longer, healthier life.",
+                            timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                            type: NotificationType.info,
+                            isRead: false,
+                          ),
+                          NotificationItem(
+                            title: "Your Progress Awaits!",
+                            message: "Ready to level up your health? Complete your Health Questionnaire to help us build a more personalized and effective wellness plan just for you.",
+                            timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
+                            type: NotificationType.info,
+                            isRead: false,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 30),
+                  // PlanProgressSection (فقط وقتی فعال است)
+                  if (_isPlanProgressVisible)
+                    Stack(
+                      children: [
+                        FadeTransition(
+                          opacity: _planProgressOpacity,
+                          child: PlanProgressSection(
+                            weeklyTasks: weeklyTasks,
+                          ),
                         ),
-                        NotificationItem(
-                          title: "Your Progress Awaits!",
-                          message: "Ready to level up your health? Complete your Health Questionnaire to help us build a more personalized and effective wellness plan just for you.",
-                          timestamp: DateTime.now().subtract(const Duration(minutes: 1)),
-                          type: NotificationType.info,
-                          isRead: false,
+                        Positioned(
+                          right: 0,
+                          top: 0,
+                          child: IconButton(
+                            icon: Icon(Icons.keyboard_arrow_down, color: AppColors.purpleDark.withOpacity(0.35), size: 32),
+                            onPressed: () {
+                              setState(() {
+                                _isPlanProgressVisible = false;
+                              });
+                              _animationController.forward();
+                            },
+                          ),
                         ),
                       ],
                     ),
-                  ],
-                ),
-                const SizedBox(height: 30),
-                // PlanProgressSection (فقط وقتی فعال است)
-                if (_isPlanProgressVisible)
-                  Stack(
+                  // اگر کلندر فعال است، فضای خالی بگذار (ارتفاع کلندر)
+                  if (!_isPlanProgressVisible)
+                    SizedBox(height: 110),
+                  const SizedBox(height: 16),
+                  // بقیه محتوای اسکرول‌شونده
+                  Expanded(
+                    child: SingleChildScrollView(
+                      controller: _scrollController,
+                      physics: AlwaysScrollableScrollPhysics(),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (_isRefreshing || isWeeklyTasksLoading)
+                            Container(
+                              padding: EdgeInsets.all(20),
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(AppColors.purpleDark),
+                                    ),
+                                    SizedBox(height: 10),
+                                    Text(
+                                      'Loading...',
+                                      style: AppTextStyles.hint,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          else if (weeklyTasksError != null)
+                            Container(
+                              padding: EdgeInsets.all(20),
+                              child: Center(
+                                child: Column(
+                                  children: [
+                                    Icon(
+                                      Icons.error_outline,
+                                      color: Colors.red,
+                                      size: 48,
+                                    ),
+                                    SizedBox(height: 10),
+                                    Text(
+                                      'Error loading data',
+                                      style: AppTextStyles.hint,
+                                    ),
+                                    SizedBox(height: 5),
+                                    Text(
+                                      weeklyTasksError!,
+                                      style: AppTextStyles.hint.copyWith(fontSize: 12),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    SizedBox(height: 10),
+                                    ElevatedButton(
+                                      onPressed: refreshData,
+                                      child: Text('Retry'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          else
+                            Tasks(
+                              key: _tasksKey,
+                              title: "Daily Tasks",
+                              tasksList: getSelectedDayTasksObject(dates)?['tasks']?.cast<Map<String, dynamic>>(),
+                              readOnly: !_isSelectedDateToday(dates),
+                            ),
+                          // ... سایر بخش‌ها ...
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            // کلندر را فیکس بالا قرار بده و فقط وقتی _isPlanProgressVisible=false باشد نمایش بده
+            if (!_isPlanProgressVisible)
+              FadeTransition(
+                opacity: _calendarOpacity,
+                child: Container(
+                  color: Colors.white,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Stack(
                     children: [
-                      FadeTransition(
-                        opacity: _planProgressOpacity,
-                        child: PlanProgressSection(
-                          weeklyTasks: weeklyTasks,
-                        ),
+                      HorizontalCalendar(
+                        dates: dates,
+                        selectedDate: selectedDate,
+                        onDateSelected: (date) {
+                          setState(() {
+                            selectedDate = date;
+                          });
+                          final selectedDayObject = getSelectedDayTasksObject(dates);
+                          print('Selected day object:');
+                          print(selectedDayObject);
+                        },
                       ),
                       Positioned(
                         right: 0,
                         top: 0,
                         child: IconButton(
-                          icon: Icon(Icons.keyboard_arrow_down, color: AppColors.purpleDark.withOpacity(0.35), size: 32),
+                          icon: Icon(Icons.keyboard_arrow_up, color: AppColors.purpleDark.withOpacity(0.35), size: 32),
                           onPressed: () {
                             setState(() {
-                              _isPlanProgressVisible = false;
+                              _isPlanProgressVisible = true;
                             });
-                            _animationController.forward();
+                            _animationController.reverse();
                           },
                         ),
                       ),
                     ],
                   ),
-                // اگر کلندر فعال است، فضای خالی بگذار (ارتفاع کلندر)
-                if (!_isPlanProgressVisible)
-                  SizedBox(height: 110),
-                const SizedBox(height: 16),
-                // بقیه محتوای اسکرول‌شونده
-                Expanded(
-                  child: SingleChildScrollView(
-                    controller: _scrollController,
-                    physics: AlwaysScrollableScrollPhysics(),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Tasks(
-                          title: "Daily Tasks",
-                          tasksList: getSelectedDayTasksObject(dates)?['tasks']?.cast<Map<String, dynamic>>(),
-                          readOnly: !_isSelectedDateToday(dates),
-                        ),
-                        // ... سایر بخش‌ها ...
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          // کلندر را فیکس بالا قرار بده و فقط وقتی _isPlanProgressVisible=false باشد نمایش بده
-          if (!_isPlanProgressVisible)
-            FadeTransition(
-              opacity: _calendarOpacity,
-              child: Container(
-                color: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Stack(
-                  children: [
-                    HorizontalCalendar(
-                      dates: dates,
-                      selectedDate: selectedDate,
-                      onDateSelected: (date) {
-                        setState(() {
-                          selectedDate = date;
-                        });
-                        final selectedDayObject = getSelectedDayTasksObject(dates);
-                        print('Selected day object:');
-                        print(selectedDayObject);
-                      },
-                    ),
-                    Positioned(
-                      right: 0,
-                      top: 0,
-                      child: IconButton(
-                        icon: Icon(Icons.keyboard_arrow_up, color: AppColors.purpleDark.withOpacity(0.35), size: 32),
-                        onPressed: () {
-                          setState(() {
-                            _isPlanProgressVisible = true;
-                          });
-                          _animationController.reverse();
-                        },
-                      ),
-                    ),
-                  ],
                 ),
               ),
-            ),
-        ],
+          ],
+        ),
       ),
     );
   }

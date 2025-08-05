@@ -9,7 +9,9 @@ class AppTextStyles {
   AppTextStyles._();
   static TextStyle title4xl = GoogleFonts.alice(
       textStyle: TextStyle(
-          fontSize: 32, color: AppColors.dynamicPrimaryColor, fontWeight: FontWeight.w700));
+          fontSize: 32,
+          color: AppColors.dynamicPrimaryColor,
+          fontWeight: FontWeight.w700));
 
   static TextStyle title4xlLiteWeight = GoogleFonts.alice(
       textStyle: TextStyle(
@@ -29,7 +31,9 @@ class AppTextStyles {
           fontSize: 24, color: AppColors.mainBg, fontWeight: FontWeight.w500));
   static TextStyle title3xlgreen = GoogleFonts.roboto(
       textStyle: TextStyle(
-          fontSize: 24, color: AppColors.dynamicSecondaryColor, fontWeight: FontWeight.w500));
+          fontSize: 24,
+          color: AppColors.dynamicSecondaryColor,
+          fontWeight: FontWeight.w500));
 
   static TextStyle title2xl = GoogleFonts.roboto(
       textStyle: TextStyle(
@@ -91,7 +95,8 @@ class AppTextStyles {
       textStyle: TextStyle(fontSize: 16, color: AppColors.mainBg),
       fontWeight: FontWeight.w500);
   static TextStyle title2Primary = GoogleFonts.roboto(
-      textStyle: TextStyle(fontSize: 16, color: AppColors.dynamicSecondaryColor),
+      textStyle:
+          TextStyle(fontSize: 16, color: AppColors.dynamicSecondaryColor),
       fontWeight: FontWeight.w500);
 
   static TextStyle title2Gray = GoogleFonts.roboto(
@@ -114,12 +119,15 @@ class AppTextStyles {
           color: AppColors.textPrimary,
           fontWeight: FontWeight.w400,
           height: 1.5));
-    static TextStyle hintWhitexl = GoogleFonts.inter(
+  static TextStyle hintWhitexl = GoogleFonts.inter(
       textStyle: TextStyle(
-          fontSize: 14, color: Colors.white, fontWeight: FontWeight.w400));        
+          fontSize: 14, color: Colors.white, fontWeight: FontWeight.w400));
   static TextStyle hintWhite = GoogleFonts.inter(
       textStyle: TextStyle(
           fontSize: 12, color: Colors.white, fontWeight: FontWeight.w400));
+  static TextStyle hintWhiteMedium = GoogleFonts.inter(
+      textStyle: TextStyle(
+          fontSize: 12, color: Colors.white, fontWeight: FontWeight.w500));
   static TextStyle hintMedium = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 12, color: AppColors.black, fontWeight: FontWeight.w500));
@@ -214,14 +222,18 @@ class AppTextStyles {
           fontWeight: FontWeight.w400));
   static TextStyle headline5 = GoogleFonts.roboto(
       textStyle: TextStyle(
-          fontSize: 14, color: AppColors.primary, fontWeight: FontWeight.w500));
+          fontSize: 14,
+          color: AppColors.textPrimary,
+          fontWeight: FontWeight.w500));
   static TextStyle headline6 = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 12, color: AppColors.primary, fontWeight: FontWeight.w500));
 
   static TextStyle body2 = GoogleFonts.roboto(
       textStyle: TextStyle(
-          fontSize: 12, color: AppColors.primary, fontWeight: FontWeight.w400));
+          fontSize: 12,
+          color: AppColors.textPrimary,
+          fontWeight: FontWeight.w400));
   static TextStyle body2Secondary = GoogleFonts.roboto(
       textStyle: TextStyle(
           fontSize: 12,

@@ -16,7 +16,8 @@ import 'package:url_launcher/url_launcher.dart';
 class TaskItem extends StatefulWidget {
   final Map<String, dynamic> task;
   final bool readOnly; // پراپ جدید برای حالت فقط خواندن
-  const TaskItem({super.key,required this.task, this.readOnly = false});
+  final VoidCallback? onTaskCompletionChanged; // Callback for task completion changes
+  const TaskItem({super.key,required this.task, this.readOnly = false, this.onTaskCompletionChanged});
   @override
   State<TaskItem> createState() {
     return _TaskItemState();
@@ -170,12 +171,16 @@ class _TaskItemState extends State<TaskItem> {
                     setState(() {
                       widget.task["completed"] = 'Done';
                     });
+                    // Notify parent about completion change
+                    widget.onTaskCompletionChanged?.call();
                   }else {
                     // _openWebViewModal(context, widget.task["title"]);
                     context.read<TaskCubit>().uncheckTask(widget.task);
                     setState(() {
                       widget.task["completed"] = '';
                     });
+                    // Notify parent about completion change
+                    widget.onTaskCompletionChanged?.call();
                   }
                 },                
                 child:ValueListenableBuilder<Color>(

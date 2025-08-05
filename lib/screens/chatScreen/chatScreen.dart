@@ -249,13 +249,14 @@ class _ChatscreenState extends State<Chatscreen> {
                     Container(
                       // height: 44,
                       decoration: BoxDecoration(
+                        color: AppColors.backgroundColorCard,
                         border: Border.all(color: AppColors.gray50),
                         borderRadius: BorderRadius.circular(20),
                       ),
                       child: DropdownButtonFormField<String>(
                         value: _selectedReportReason,
                         dropdownColor: Colors.white,
-                        style: AppTextStyles.body2,
+                        style: AppTextStyles.body2Secondary,
                         // alignment: Alignment.center,
 
                         decoration: const InputDecoration(
@@ -288,24 +289,31 @@ class _ChatscreenState extends State<Chatscreen> {
                       style: AppTextStyles.headline6,
                     ),
                     const SizedBox(height: 10),
-                    TextField(
-                      controller: _reportDetailsController,
-                      maxLines: 5,
-                      style: AppTextStyles.body2,
-                      decoration: InputDecoration(
-                        hintStyle: AppTextStyles.hint,
-                        hintText: 'Describe the issue in more detail',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(color: AppColors.gray50),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(color: AppColors.gray50),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide(color: AppColors.gray50),
+                    Theme(
+                      data: Theme.of(context).copyWith(
+                        hoverColor: Colors.transparent,
+                      ),
+                      child: TextField(
+                        controller: _reportDetailsController,
+                        maxLines: 5,
+                        style: AppTextStyles.body2,
+                        decoration: InputDecoration(
+                          hintStyle: AppTextStyles.hint,
+                          hintText: 'Describe the issue in more detail',
+                          filled: true,
+                          fillColor: AppColors.backgroundColorCard,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide(color: AppColors.gray50),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide(color: AppColors.gray50),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            borderSide: BorderSide(color: AppColors.gray50),
+                          ),
                         ),
                       ),
                     ),
@@ -383,7 +391,7 @@ class _ChatscreenState extends State<Chatscreen> {
                         // width: size.width,
                         child: Text(
                           "Submit Report",
-                          style: AppTextStyles.hintWhite,
+                          style: AppTextStyles.hintWhiteMedium,
                         ),
                       ),
                     ),
@@ -1136,7 +1144,8 @@ class _ChatscreenState extends State<Chatscreen> {
                                       messageIndex, conversationId, feedback),
                                 },
                         child: Container(
-                          padding: const EdgeInsets.all(4),
+                          padding: const EdgeInsets.only(
+                              left: 4, top: 4, bottom: 4, right: 0),
                           child: isMessageDisliked(messageIndex, feedback)
                               ? SvgPicture.asset('assets/dislikeFill.svg',
                                   width: 16, height: 16)
@@ -1151,29 +1160,48 @@ class _ChatscreenState extends State<Chatscreen> {
                       child: reported
                           ? Container(
                               padding: const EdgeInsets.all(4),
-                              child: SvgPicture.asset('assets/treepoint.svg'))
-                          : PopupMenuButton<String>(
-                              icon: SvgPicture.asset('assets/treepoint.svg'),
-                              onSelected: (value) {
-                                if (value == 'report') {
-                                  _showReportModal();
-                                  conversationIdReport = conversationId;
-                                }
-                              },
-                              itemBuilder: (BuildContext context) => [
-                                const PopupMenuItem<String>(
-                                  value: 'report',
-                                  height: 30,
-                                  child: SizedBox(
-                                    width: 60,
-                                    child: Text(
-                                      'Report',
-                                      style: TextStyle(fontSize: 12),
-                                      textAlign: TextAlign.center,
+                              child: SvgPicture.asset('assets/treepoint.svg'),
+                            )
+                          : Theme(
+                              data: Theme.of(context).copyWith(
+                                popupMenuTheme: PopupMenuThemeData(
+                                  color: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  elevation: 5,
+                                ),
+                              ),
+                              child: PopupMenuButton<String>(
+                                icon: SvgPicture.asset('assets/treepoint.svg'),
+                                position: PopupMenuPosition.under,
+                                offset: const Offset(0, 5),
+                                constraints: const BoxConstraints(
+                                  minWidth: 60,
+                                  maxWidth: 80,
+                                ),
+                                onSelected: (value) {
+                                  if (value == 'report') {
+                                    _showReportModal();
+                                    conversationIdReport = conversationId;
+                                  }
+                                },
+                                itemBuilder: (BuildContext context) => [
+                                  const PopupMenuItem<String>(
+                                    value: 'report',
+                                    height: 30,
+                                    child: Center(
+                                      child: Text(
+                                        'Report',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black,
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                     ),
                   ],
