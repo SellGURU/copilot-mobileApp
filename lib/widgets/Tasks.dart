@@ -46,6 +46,13 @@ class _TasksState extends State<Tasks> {
     // { "id": 3, "title": "Meditate", "type": "Habits", "completed": false }
   ];
   Dio _dio = Dio();
+
+  // Callback to notify parent when task completion changes
+  void _onTaskCompletionChanged() {
+    setState(() {
+      // Force rebuild to update completion count
+    });
+  }
   
   @override
   void initState() {
@@ -110,7 +117,7 @@ class _TasksState extends State<Tasks> {
       // تایمر را راه‌اندازی نکن
     } else {
       fetchQuestionary();
-      _timer = Timer.periodic(const Duration(seconds: 20), (timer) {
+      _timer = Timer.periodic(const Duration(seconds: 100), (timer) {
         fetchQuestionary();
       });
     }
@@ -126,7 +133,16 @@ class _TasksState extends State<Tasks> {
   @override
   void didUpdateWidget(covariant Tasks oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.tasksList != null && widget.tasksList != oldWidget.tasksList) {
+    
+    // Handle refresh case - when tasksList becomes null or empty
+    if (widget.tasksList == null || widget.tasksList!.isEmpty) {
+      setState(() {
+        tasks.clear();
+      });
+      return;
+    }
+    
+    if (widget.tasksList != oldWidget.tasksList) {
       // اگر لیست تسک‌ها از پراپ آمد، تبدیل به فرمت داخلی کن
       if (widget.title == 'Daily Tasks') {
         List<Map<String, dynamic>> modifiedData = widget.tasksList!.map((item) {
@@ -150,6 +166,7 @@ class _TasksState extends State<Tasks> {
               };
             }
             if(item['Category'] == 'Activity'){
+              print(item);
               return {
                 'id': item['task_id'],
                 'task_id': item['task_id'],
@@ -157,7 +174,7 @@ class _TasksState extends State<Tasks> {
                 'type': "Activity",
                 'Sections': item['Sections'],
                 'completed': item['Status'] ==true?'Done':''
-              };
+              };  
             }
           }
           return {
@@ -167,7 +184,8 @@ class _TasksState extends State<Tasks> {
             'type': "Check-In",
             'completed': "Done"
           };
-        }).toList();
+        }).toList(); 
+        // Sort by id
         modifiedData.sort((a, b) => a['id'].toString().compareTo(b['id'].toString()));
         setState(() {
           tasks = modifiedData;
@@ -180,7 +198,8 @@ class _TasksState extends State<Tasks> {
             'type': "Questionnaire",
             'completed':item['Status'] ==true || item['status'] =='Done'?'Done':''
           };
-        }).toList();
+        }).toList(); 
+        // Sort by id
         modifiedData.sort((a, b) => a['id'].toString().compareTo(b['id'].toString()));
         setState(() {
           tasks = modifiedData;
@@ -370,12 +389,12 @@ class _TasksState extends State<Tasks> {
             children: List.generate(5, (index) => 
               Padding(
                 padding: const EdgeInsets.only(bottom: 10), // Adds gap of 10 pixels
-                child: taskTypes[index] !='Activity'? TaskWrapper(typeName: taskTypes[index],tasks: tasks.where((task) => task['type'] == taskTypes[index]).toList(),readOnly: widget.readOnly,):ActivityTaskWrapper(typeName: taskTypes[index],tasks: tasks.where((task) => task['type'] == taskTypes[index]).toList(),readOnly: widget.readOnly,) ,
+                child: taskTypes[index] !='Activity'? TaskWrapper(typeName: taskTypes[index],tasks: tasks.where((task) => task['type'] == taskTypes[index]).toList(),readOnly: widget.readOnly,onTaskCompletionChanged: _onTaskCompletionChanged,):ActivityTaskWrapper(typeName: taskTypes[index],tasks: tasks.where((task) => task['type'] == taskTypes[index]).toList(),readOnly: widget.readOnly,onTaskCompletionChanged: _onTaskCompletionChanged,) ,
               ),
             ),
           ): Padding(
                 padding: const EdgeInsets.only(bottom: 10), // Adds gap of 10 pixels
-                child: TaskWrapper(typeName: taskTypes[5],tasks: tasks.where((task) => task['type'] == taskTypes[5]).toList(),readOnly: widget.readOnly,),
+                child: TaskWrapper(typeName: taskTypes[5],tasks: tasks.where((task) => task['type'] == taskTypes[5]).toList(),readOnly: widget.readOnly,onTaskCompletionChanged: _onTaskCompletionChanged,),
               ),
         )          
           :
