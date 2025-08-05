@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:copilet/screens/camera/imageHandlerCubit/cubit.dart';
 import 'package:copilet/screens/camera/imageHandlerCubit/state.dart';
 import 'package:copilet/screens/chatScreen/cubit/cubit.dart';
-import 'package:copilet/screens/chatScreen/cubit/cubit.dart';
 import 'package:copilet/screens/chatScreen/cubit/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
