@@ -133,9 +133,9 @@ class VerticalStatusIndicator extends StatelessWidget {
     final statusLevels = _getStatusLevels();
     final currentPosition = _getStatusPosition(status);
 
-    return Container(
-      height: 120,
-      child: Row(
+         return Container(
+       height: 80, // کاهش ارتفاع برای جلوگیری از overflow
+       child: Row(
         children: [
           // Main status indicator
           Expanded(
@@ -151,34 +151,34 @@ class VerticalStatusIndicator extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         color: level['bgColor'],
-                        border: Border(
-                          bottom: BorderSide(color: Colors.grey.withOpacity(0.2), width: 1),
-                        ),
+                                                 border: Border(
+                           bottom: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1.5),
+                         ),
                       ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                level['name'],
-                                style: AppTextStyles.hint.copyWith(
-                                  color: Colors.grey[600],
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                                                         // Status dot indicator
-                             if (level['status'].toLowerCase() == status.toLowerCase())
-                               Container(
-                                 width: 12,
-                                 height: 12,
-                                 decoration: BoxDecoration(
-                                   color: level['color'],
-                                   shape: BoxShape.circle,
-                                   border: Border.all(color: Colors.white, width: 2),
+                                             child: Padding(
+                         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                         child: Row(
+                           children: [
+                             Expanded(
+                               child: Text(
+                                 level['name'],
+                                 style: AppTextStyles.hint.copyWith(
+                                   color: Colors.grey[600],
+                                   fontSize: 10,
                                  ),
                                ),
+                             ),
+                                                         // Status dot indicator
+                                                            if (level['status'].toLowerCase() == status.toLowerCase())
+                                 Container(
+                                   width: 8,
+                                   height: 8,
+                                   decoration: BoxDecoration(
+                                     color: level['color'],
+                                     shape: BoxShape.circle,
+                                     border: Border.all(color: Colors.white, width: 1),
+                                   ),
+                                 ),
                           ],
                         ),
                       ),
@@ -501,13 +501,7 @@ class _ItemCardState extends State<ItemCard> {
             Container(
               child: widget.scale != "" ?
                 ChartDot(spots: spots, labels:['1','2','3','4','5','6','7','8','9','10']) // Pass the same spots to ChartDot
-              : VerticalStatusIndicator(
-                  status: widget.status,
-                  current: widget.current,
-                  average: widget.average,
-                  date: "30.06.2025", // You can make this dynamic
-                  chartBounds: widget.chartBounds,
-                ),
+              : const SizedBox.shrink(), // Empty space when scale is empty
             )
           ],
         ),
