@@ -13,7 +13,8 @@ import 'state.dart';
 class ActivityTaskItem extends StatefulWidget {
   final Map<String, dynamic> task;
   final bool readOnly; // پراپ جدید برای حالت فقط خواندن
-  const ActivityTaskItem({super.key,required this.task, this.readOnly = false});
+  final VoidCallback? onTaskCompletionChanged; // Callback for task completion changes
+  const ActivityTaskItem({super.key,required this.task, this.readOnly = false, this.onTaskCompletionChanged});
   @override
   State<ActivityTaskItem> createState() {
     return _ActivityTaskItemState();
@@ -144,8 +145,12 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                     _openWebViewModal(context, widget.task["Title"]);
                     if ( widget.task["completed"] == 'Done' || widget.task["Status"] == true ) {
                       context.read<TaskCubit>().uncheckTask(widget.task);
+                      // Notify parent about completion change
+                      widget.onTaskCompletionChanged?.call();
                     } else {
                       context.read<TaskCubit>().completeTask(widget.task);
+                      // Notify parent about completion change
+                      widget.onTaskCompletionChanged?.call();
                     }
                 },
                 child: ValueListenableBuilder<Color>(

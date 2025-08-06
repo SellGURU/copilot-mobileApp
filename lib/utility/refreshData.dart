@@ -40,6 +40,7 @@ class DataRefreshUtil {
           break;
         case 3: // Progress page
           _refreshTasksData(context);
+          _refreshProgressScreenData(context);
           break;
         case 4: // Settings page
           // Add specific data refresh for settings page if needed
@@ -47,6 +48,38 @@ class DataRefreshUtil {
       }
     } catch (e) {
       print('Error refreshing data for page $pageIndex: $e');
+    }
+  }
+
+  /// Refresh progress screen data
+  static void _refreshProgressScreenData(BuildContext context) {
+    try {
+      // Use a static callback to refresh progress screen data
+      if (_progressScreenRefreshCallback != null) {
+        _progressScreenRefreshCallback!();
+      }
+    } catch (e) {
+      print('Error refreshing progress screen data: $e');
+    }
+  }
+
+  // Static callback for progress screen refresh
+  static VoidCallback? _progressScreenRefreshCallback;
+
+  /// Register progress screen refresh callback
+  static void registerProgressScreenRefresh(VoidCallback callback) {
+    _progressScreenRefreshCallback = callback;
+  }
+
+  /// Unregister progress screen refresh callback
+  static void unregisterProgressScreenRefresh() {
+    _progressScreenRefreshCallback = null;
+  }
+
+  /// Trigger progress screen refresh
+  static void triggerProgressScreenRefresh() {
+    if (_progressScreenRefreshCallback != null) {
+      _progressScreenRefreshCallback!();
     }
   }
 
