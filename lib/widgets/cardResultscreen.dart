@@ -143,8 +143,8 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                               ),
                                   
                               Container(
-                                width: 100,
-                                
+                                width: 60,
+                                // alignment: Alignment.bottomRight,
                                 padding: const EdgeInsets.symmetric(
                                 horizontal: 8, vertical: 5),
                                 decoration: BoxDecoration(
@@ -162,7 +162,10 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                                             (element) => (element['status'] as String).toLowerCase() == currentStatus.toLowerCase(),
                                             orElse: () => null,
                                           );
-                                          return found != null ? found['label'] : currentStatus;
+                                          if (found != null && found['label'] != null && found['label'].toString().isNotEmpty) {
+                                            return found['label'];
+                                          }
+                                          return currentStatus;
                                         })(),
                                         style:AppTextStyles.hint.copyWith(color: Colors.white, fontSize: 10),
                                         overflow: TextOverflow.ellipsis,
@@ -175,7 +178,16 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                           ),
                             
                             Row(children: [
-                              Text((widget.data as Map<String, dynamic>)['values'][0], style: AppTextStyles.titleLg,),
+                              Container(
+                                width: 100,
+                                alignment: Alignment.centerRight,
+                                child:Tooltip(
+                                  
+                                  message: (widget.data as Map<String, dynamic>)['values'][0],
+                                  child:Text((widget.data as Map<String, dynamic>)['values'][0], style: AppTextStyles.titleLg, overflow: TextOverflow.ellipsis,) ,
+                                ) ,
+                              ),
+                              
                               SizedBox(width: 4,),
                               Text((widget.data as Map<String, dynamic>)['unit'], style: AppTextStyles.hint,),
                             ],)
