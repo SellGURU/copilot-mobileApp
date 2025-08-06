@@ -792,7 +792,7 @@ class _Overview2State extends State<Overview2> {
                                       String unit = biomarker["unit"]?.toString() ?? "";
                                       String icon = resolveAnalyseIcon(biomarker["subcategory"]?.toString() ?? "");
                                       String status = biomarker["status"][0]?.toString() ?? "Unknown";
-                                      
+                                      List<Map<String, dynamic>> chartBounds = (biomarker["chart_bounds"] as List<dynamic>?)?.cast<Map<String, dynamic>>() ?? [];
                                       // Safely convert values to List<num>
                                       List<double> values = (biomarker["values"] as Iterable)
                                           .map((e) => double.tryParse(e.toString()) ?? 0.0)
@@ -809,6 +809,7 @@ class _Overview2State extends State<Overview2> {
                                         status: status,
                                         current: current,
                                         scale: unit,
+                                        chartBounds: chartBounds,
                                         valuesData: values,
                                       );
                                     },
