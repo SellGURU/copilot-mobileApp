@@ -6,6 +6,331 @@ import 'package:fl_chart/fl_chart.dart';
 import '../components/text_style.dart';
 import 'chart.dart';
 
+/*
+Example usage of ItemCard with chartBounds:
+
+List<Map<String, dynamic>> chartBounds = [
+  {
+    "high": "Enhanced Outcome",
+    "low": "Enhanced Outcome", 
+    "label": "",
+    "status": "Excellent",
+    "color": ""
+  },
+  {
+    "high": "Moderately Enhanced Outcome",
+    "low": "Moderately Enhanced Outcome",
+    "label": "",
+    "status": "Good", 
+    "color": ""
+  },
+  {
+    "high": "Moderately Compromised Outcome",
+    "low": "Moderately Compromised Outcome",
+    "label": "",
+    "status": "Ok",
+    "color": ""
+  },
+  {
+    "high": "Compromised Outcome", 
+    "low": "Compromised Outcome",
+    "label": "",
+    "status": "Needs Focus",
+    "color": ""
+  }
+];
+
+ItemCard(
+  title: "Your Title",
+  status: "Good", // This will show the dot in the "Good" section
+  current: "Current Value",
+  average: "Average Value", 
+  scale: "", // Empty scale will show VerticalStatusIndicator
+  icon: YourIcon(),
+  valuesData: [1.0, 2.0, 3.0],
+  chartBounds: chartBounds, // Pass the dynamic status data
+)
+*/
+
+// New vertical status indicator widget
+class VerticalStatusIndicator extends StatelessWidget {
+  final String status;
+  final String current;
+  final String average;
+  final String date;
+  final List<Map<String, dynamic>>? chartBounds;
+
+  const VerticalStatusIndicator({
+    super.key,
+    required this.status,
+    required this.current,
+    required this.average,
+    required this.date,
+    this.chartBounds,
+  });
+
+  List<Map<String, dynamic>> _getStatusLevels() {
+    if (chartBounds != null && chartBounds!.isNotEmpty) {
+      return chartBounds!.map((bound) {
+        Color statusColor = _getStatusColor(bound['status'] ?? '');
+        return {
+          'name': bound['high'] ?? bound['status'] ?? '',
+          'color': statusColor,
+          'bgColor': statusColor.withOpacity(0.1),
+          'status': bound['status'] ?? '',
+        };
+      }).toList();
+    }
+    
+    // Fallback to default statuses
+    return [
+      {'name': 'Good for Gut', 'color': Colors.green, 'bgColor': Colors.green.withOpacity(0.1)},
+      {'name': 'Bad for Gut', 'color': Colors.red, 'bgColor': Colors.red.withOpacity(0.1)},
+    ];
+  }
+
+  Color _getStatusColor(String status) {
+    switch (status.toLowerCase()) {
+      case 'excellent':
+      case 'enhanced outcome':
+        return Colors.green;
+      case 'good':
+      case 'moderately enhanced outcome':
+        return Colors.lightGreen;
+      case 'ok':
+      case 'moderately compromised outcome':
+        return Colors.orange;
+      case 'needs focus':
+      case 'compromised outcome':
+        return Colors.red;
+      default:
+        return Colors.grey;
+    }
+  }
+
+  double _getStatusPosition(String status) {
+    switch (status.toLowerCase()) {
+      case 'good':
+      case 'excellent':
+      case 'healthy':
+      case 'good for gut':
+        return 0.2; // Top 20% of the indicator
+      case 'bad':
+      case 'poor':
+      case 'unhealthy':
+      case 'bad for gut':
+        return 0.8; // Bottom 80% of the indicator
+      case 'warning':
+      case 'moderate':
+        return 0.5; // Middle of the indicator
+      default:
+        return 0.5;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final statusLevels = _getStatusLevels();
+    final currentPosition = _getStatusPosition(status);
+
+    return Container(
+      height: 120,
+      child: Row(
+        children: [
+          // Main status indicator
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  left: BorderSide(color: Colors.orange, width: 3),
+                ),
+              ),
+              child: Column(
+                children: statusLevels.map((level) {
+                  return Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: level['bgColor'],
+                        border: Border(
+                          bottom: BorderSide(color: Colors.grey.withOpacity(0.2), width: 1),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                level['name'],
+                                style: AppTextStyles.hint.copyWith(
+                                  color: Colors.grey[600],
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                                                         // Status dot indicator
+                             if (level['status'].toLowerCase() == status.toLowerCase())
+                               Container(
+                                 width: 12,
+                                 height: 12,
+                                 decoration: BoxDecoration(
+                                   color: level['color'],
+                                   shape: BoxShape.circle,
+                                   border: Border.all(color: Colors.white, width: 2),
+                                 ),
+                               ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          // Color scale bar
+          Container(
+            width: 4,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(2),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Colors.green,
+                  Colors.red,
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// New widget to display status-based string values
+class StatusDisplayWidget extends StatelessWidget {
+  final String status;
+  final String current;
+  final String average;
+
+  const StatusDisplayWidget({
+    super.key,
+    required this.status,
+    required this.current,
+    required this.average,
+  });
+
+  Color _getStatusColor(String status) {
+    switch (status.toLowerCase()) {
+      case 'good':
+      case 'excellent':
+      case 'healthy':
+        return Colors.green;
+      case 'bad':
+      case 'poor':
+      case 'unhealthy':
+        return Colors.red;
+      case 'warning':
+      case 'moderate':
+        return Colors.orange;
+      default:
+        return Colors.grey;
+    }
+  }
+
+  IconData _getStatusIcon(String status) {
+    switch (status.toLowerCase()) {
+      case 'good':
+      case 'excellent':
+      case 'healthy':
+        return Icons.check_circle;
+      case 'bad':
+      case 'poor':
+      case 'unhealthy':
+        return Icons.error;
+      case 'warning':
+      case 'moderate':
+        return Icons.warning;
+      default:
+        return Icons.info;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+      decoration: BoxDecoration(
+        color: _getStatusColor(status).withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: _getStatusColor(status).withOpacity(0.3),
+          width: 1,
+        ),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                _getStatusIcon(status),
+                color: _getStatusColor(status),
+                size: 20,
+              ),
+              const SizedBox(width: 8),
+              Text(
+                status,
+                style: AppTextStyles.title1.copyWith(
+                  color: _getStatusColor(status),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                children: [
+                  Text(
+                    "Current",
+                    style: AppTextStyles.hint,
+                  ),
+                  Text(
+                    current,
+                    style: AppTextStyles.title1.copyWith(
+                      color: _getStatusColor(status),
+                    ),
+                  ),
+                ],
+              ),
+              Column(
+                children: [
+                  Text(
+                    "Average",
+                    style: AppTextStyles.hint,
+                  ),
+                  Text(
+                    average,
+                    style: AppTextStyles.title1.copyWith(
+                      color: _getStatusColor(status),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class ItemCard extends StatefulWidget {
   final String title;
   final String status;
@@ -14,6 +339,7 @@ class ItemCard extends StatefulWidget {
   String scale;
   final Widget icon;
   final List<double> valuesData;
+  final List<Map<String, dynamic>>? chartBounds; // New property for dynamic status data
 
   ItemCard({
     super.key,
@@ -24,6 +350,7 @@ class ItemCard extends StatefulWidget {
     required this.icon,
     required this.status,
     required this.valuesData,
+    this.chartBounds, // Optional parameter
   });
 
   @override
@@ -113,7 +440,7 @@ class _ItemCardState extends State<ItemCard> {
             ),
             const SizedBox(height: 10),
             Container(
-              child:widget.average!='Bad for gut' && widget.average!='Good for gut'  ?
+              child: widget.scale != "" ?
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -162,13 +489,25 @@ class _ItemCardState extends State<ItemCard> {
                     ),
                   ],
                 )
-              : const Text(""),
+              : VerticalStatusIndicator(
+                  status: widget.status,
+                  current: widget.current,
+                  average: widget.average,
+                  date: "30.06.2025", // You can make this dynamic
+                  chartBounds: widget.chartBounds,
+                ),
             ),
             const SizedBox(height: 30),
             Container(
-              child:widget.average!='Bad for gut' && widget.average!='Good for gut' ?
-                ChartDot(spots: spots,  labels:['1','2','3','4','5','6','7','8','9','10'],  ) // Pass the same spots to ChartDot
-              :const Text(""),
+              child: widget.scale != "" ?
+                ChartDot(spots: spots, labels:['1','2','3','4','5','6','7','8','9','10']) // Pass the same spots to ChartDot
+              : VerticalStatusIndicator(
+                  status: widget.status,
+                  current: widget.current,
+                  average: widget.average,
+                  date: "30.06.2025", // You can make this dynamic
+                  chartBounds: widget.chartBounds,
+                ),
             )
           ],
         ),
