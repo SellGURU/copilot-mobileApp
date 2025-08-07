@@ -7,10 +7,14 @@ import 'package:accordion/controllers.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../components/text_style.dart';
 import '../../res/colors.dart';
 import '../../widgets/accordion.dart';
 import '../../widgets/chart.dart';
+import '../../widgets/vertical_status_indicator.dart';
+import '../../utility/switchValueBloc/PageIndex_Bloc.dart';
+import '../../utility/switchValueBloc/PageIndex_states.dart';
 
 /// CholesterolScreen displays information related to cholesterol levels. It has three tabs:
 /// "Result", "How to improve", and "Insight".
@@ -195,6 +199,10 @@ class _ResultMainTabState extends State<ResultMainTab> {
     return labels;
   }
 
+  String getUnit() {
+    return (widget.data as Map<String, dynamic>)['unit'] as String? ?? "";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -278,7 +286,15 @@ class _ResultMainTabState extends State<ResultMainTab> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 16),
-                AspectRatio(aspectRatio: 1.5, child: ChartDot(spots: getSpots(), labels: getLabels())),
+                getUnit() != "" 
+                  ? AspectRatio(aspectRatio: 1.5, child: ChartDot(spots: getSpots(), labels: getLabels()))
+                  : VerticalStatusIndicator(
+                      status: (widget.data as Map<String, dynamic>)['status']?[0] ?? "",
+                      chartBounds: ((widget.data as Map<String, dynamic>)["chart_bounds"] as List<dynamic>?)?.cast<Map<String, dynamic>>() ?? [], 
+                      current: (widget.data as Map<String, dynamic>)['current']?.toString() ?? "",
+                      average: (widget.data as Map<String, dynamic>)['average']?.toString() ?? "",
+                      date: (widget.data as Map<String, dynamic>)['date']?.toString() ?? ""
+                    )
               ],
             ),
           ),

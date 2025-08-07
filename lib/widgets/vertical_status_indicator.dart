@@ -85,53 +85,6 @@ class VerticalStatusIndicator extends StatelessWidget {
        height: 130, // کاهش ارتفاع برای جلوگیری از overflow
        child: Row(
         children: [
-          // Main status indicator
-          Expanded(
-            child: Container(
-              child: Column(
-                children: statusLevels.map((level) {
-                  return Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: level['bgColor'],
-                        border: Border(
-                           bottom: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1.5),
-                         ),
-                      ),
-                                             child: Padding(
-                         padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                         child: Row(
-                           children: [
-                             Expanded(
-                               child: Text(
-                                 level['name'],
-                                 style: AppTextStyles.hint.copyWith(
-                                   color: Colors.grey[600],
-                                   fontSize: 10,
-                                 ),
-                               ),
-                             ),
-                                                         // Status dot indicator
-                            if (level['status'].toLowerCase() == status.toLowerCase())
-                                 Container(
-                                   width: 8,
-                                   height: 8,
-                                   decoration: BoxDecoration(
-                                     color: level['color'],
-                                     shape: BoxShape.circle,
-                                     border: Border.all(color: Colors.white, width: 1),
-                                   ),
-                                 ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                }).toList(),
-              ),
-            ),
-          ),
-          const SizedBox(width: 8),
           // Color scale bar
           Container(
             width: 4,
@@ -147,8 +100,61 @@ class VerticalStatusIndicator extends StatelessWidget {
               ),
             ),
           ),
+          const SizedBox(width: 8),
+          // Main status indicator
+          Expanded(
+            child: Container(
+              child: Column(
+                children: statusLevels.map((level) {
+                  return Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: level['bgColor'],
+                        border: Border(
+                           bottom: BorderSide(color: Colors.grey.withOpacity(0.3), width: 1.5),
+                         ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                                                 child: Row(
+                           children: [
+                                                           Expanded(
+                                child: Tooltip(
+                                  message: level['name'],
+                                  child: Text(
+                                    level['name'].length > 5 
+                                        ? '${level['name'].substring(0, 5)}...'
+                                        : level['name'],
+                                    style: AppTextStyles.hint.copyWith(
+                                      color: Colors.grey[600],
+                                      fontSize: 10,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                             // Status dot indicator
+                             if (level['status'].toLowerCase() == status.toLowerCase())
+                               Container(
+                                 width: 8,
+                                 height: 8,
+                                 decoration: BoxDecoration(
+                                   color: level['color'],
+                                   shape: BoxShape.circle,
+                                   border: Border.all(color: Colors.white, width: 1),
+                                 ),
+                               ),
+                           ],
+                         ),
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 }
+
