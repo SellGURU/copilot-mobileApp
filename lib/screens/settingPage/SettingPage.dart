@@ -47,6 +47,7 @@ class _SettingPageState extends State<SettingPage> {
     widget.onLogoutModalChanged?.call(true);
     showModalBottomSheet(
       context: context,
+      backgroundColor: AppColors.bgScreen,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -62,11 +63,11 @@ class _SettingPageState extends State<SettingPage> {
                 children: [
                   const Center(
                     child: Text(
-                      'Logout',
+                      'Log out',
                       style: TextStyle(
                           fontSize: 14,
                           color: AppColors.textPrimary,
-                          fontWeight: FontWeight.bold),
+                          fontWeight: FontWeight.w500),
                     ),
                   ),
                   Positioned(
@@ -75,7 +76,13 @@ class _SettingPageState extends State<SettingPage> {
                       onTap: () {
                         Navigator.of(context).pop();
                       },
-                      child: const Icon(Icons.close, size: 24),
+                      child: ValueListenableBuilder<Color>(
+                        valueListenable: AppColors.dynamicPrimaryColorNotifier,
+                        builder: (context, primaryColor, child) {
+                          return Icon(Icons.close,
+                              size: 24, color: primaryColor);
+                        },
+                      ),
                     ),
                   ),
                 ],
@@ -84,7 +91,10 @@ class _SettingPageState extends State<SettingPage> {
               const Center(
                 child: Text(
                   'You are attempting to log out. Are you sure?',
-                  style: TextStyle(fontSize: 12, color: AppColors.textPrimary),
+                  style: TextStyle(
+                      fontSize: 12,
+                      color: AppColors.textPrimary,
+                      fontWeight: FontWeight.w400),
                 ),
               ),
               const SizedBox(height: 32),
@@ -95,7 +105,8 @@ class _SettingPageState extends State<SettingPage> {
                       height: 32,
                       child: OutlinedButton(
                         style: OutlinedButton.styleFrom(
-                          side: BorderSide(color: AppColors.mainSecandaryColor),
+                          side: BorderSide(
+                              color: AppColors.dynamicSecondaryColor),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -103,11 +114,12 @@ class _SettingPageState extends State<SettingPage> {
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: const Text(
+                        child: Text(
                           'Cancel',
                           style: TextStyle(
                             fontSize: 12,
-                            color: AppColors.mainSecandaryColor,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.dynamicSecondaryColor,
                           ),
                         ),
                       ),
@@ -119,7 +131,7 @@ class _SettingPageState extends State<SettingPage> {
                       height: 32,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.mainSecandaryColor,
+                          backgroundColor: AppColors.dynamicSecondaryColor,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -130,10 +142,11 @@ class _SettingPageState extends State<SettingPage> {
                           Navigator.of(context).pop();
                         },
                         child: const Text(
-                          'Logout',
+                          'Confirm',
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.white,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
@@ -227,21 +240,21 @@ class _SettingPageState extends State<SettingPage> {
                 //   textTitle: 'Terms of Service',
                 // ),
                 // ),
-                const SizedBox(height: 20),
+                // const SizedBox(height: 20),
 
-                GestureDetector(
-                  onTap: () {
-                    // Navigator.push(
-                    //   context,
-                    //   MaterialPageRoute(
-                    //       builder: (_) => const ChangePasswordPage()),
-                    // );
-                  },
-                  child: WearableDevicesTile(
-                    srcImage: 'lock.svg',
-                    textTitle: 'Change Password',
-                  ),
-                ),
+                // GestureDetector(
+                //   onTap: () {
+                //     // Navigator.push(
+                //     //   context,
+                //     //   MaterialPageRoute(
+                //     //       builder: (_) => const ChangePasswordPage()),
+                //     // );
+                //   },
+                //   child: WearableDevicesTile(
+                //     srcImage: 'lock.svg',
+                //     textTitle: 'Change Password',
+                //   ),
+                // ),
                 const SizedBox(height: 20),
 
                 GestureDetector(
@@ -293,17 +306,21 @@ class _SettingPageState extends State<SettingPage> {
                         children: [
                           SvgPicture.asset(
                             "assets/logout.svg",
-                            width: 30,
-                            height: 16,
+                            width: 20,
+                            height: 20,
                             colorFilter: ColorFilter.mode(
-                                AppColors.mainSecandaryColor, BlendMode.srcIn),
+                                AppColors.dynamicSecondaryColor,
+                                BlendMode.srcIn),
                           ),
                           const SizedBox(
                             width: 5,
                           ),
                           Text(
-                            "Log out",
-                            style: AppTextStyles.title2Purple,
+                            "Log Out",
+                            style: TextStyle(
+                                fontSize: 14,
+                                color: AppColors.dynamicSecondaryColor,
+                                fontWeight: FontWeight.w500),
                           ),
                         ],
                       ),
