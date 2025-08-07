@@ -12,6 +12,7 @@ import '../res/colors.dart';
 import '../utility/switchValueBloc/PageIndex_Bloc.dart';
 import '../utility/switchValueBloc/PageIndex_states.dart';
 import 'chart.dart';
+import 'vertical_status_indicator.dart';
 
 class Cardresultscreen extends StatefulWidget {
   late Color colorBadge;
@@ -285,7 +286,18 @@ class _CardresultscreenState extends State<Cardresultscreen> {
               //   height: 35,
               // ),
               const SizedBox(height: 24,),
-              state.switchValue && getUnit() !="" ? ChartDot(spots: getSpots(), labels: getLabels()) : const SizedBox(),
+              state.switchValue 
+                ? (getUnit() != "" 
+                    ? ChartDot(spots: getSpots(), labels: getLabels()) 
+                    : VerticalStatusIndicator(
+                        status: (widget.data as Map<String, dynamic>)['status']?[0] ?? "",
+                        chartBounds: ((widget.data as Map<String, dynamic>)["chart_bounds"] as List<dynamic>?)?.cast<Map<String, dynamic>>() ?? [], 
+                        current: (widget.data as Map<String, dynamic>)['current']?.toString() ?? "",
+                        average: (widget.data as Map<String, dynamic>)['average']?.toString() ?? "",
+                        date: (widget.data as Map<String, dynamic>)['date']?.toString() ?? ""
+                      )
+                  )
+                : Container() // Empty box when switch is off
               // const SizedBox(
               //   height: 8,
               // ),
