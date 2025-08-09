@@ -503,7 +503,7 @@ class _ChatscreenState extends State<Chatscreen> {
                             ),
                             dropdownStyleData: DropdownStyleData(
                               width: 150,
-                              offset: const Offset(-8, 5),
+                              offset: const Offset(-8, 0),
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(8),
