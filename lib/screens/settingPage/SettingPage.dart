@@ -75,6 +75,7 @@ class _SettingPageState extends State<SettingPage> {
                     child: GestureDetector(
                       onTap: () {
                         Navigator.of(context).pop();
+                        widget.onLogoutModalChanged?.call(false);
                       },
                       child: ValueListenableBuilder<Color>(
                         valueListenable: AppColors.dynamicPrimaryColorNotifier,
@@ -113,6 +114,7 @@ class _SettingPageState extends State<SettingPage> {
                         ),
                         onPressed: () {
                           Navigator.of(context).pop();
+                          widget.onLogoutModalChanged?.call(false);
                         },
                         child: Text(
                           'Cancel',
@@ -140,6 +142,7 @@ class _SettingPageState extends State<SettingPage> {
                           await BlocProvider.of<AuthCubit>(context).logOut();
                           RestartWidget.restartApp(context);
                           Navigator.of(context).pop();
+                          widget.onLogoutModalChanged?.call(false);
                         },
                         child: const Text(
                           'Confirm',
@@ -158,7 +161,10 @@ class _SettingPageState extends State<SettingPage> {
           ),
         );
       },
-    );
+    ).then((_) {
+      // This ensures the callback is called even if the modal is dismissed by tapping outside
+      widget.onLogoutModalChanged?.call(false);
+    });
   }
 
   @override
