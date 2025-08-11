@@ -11,9 +11,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../components/text_style.dart';
 import '../../res/colors.dart';
+import '../../widgets/mobile_keyboard_handler.dart';
 
 enum ChatMode { ai, coach }
 
@@ -461,187 +463,160 @@ class _ChatscreenState extends State<Chatscreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Container(
-        alignment: Alignment.center,
-        // height: size.height,
-        width: size.width,
-        child: Container(
-          // width: size.width > 440 ? 440 : size.width,
-          margin: EdgeInsets.only(top: size.height * .02),
-          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-          child: Stack(
-            children: [
-              Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: 150,
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          boxShadow: _isDropdownOpen
-                              ? [
-                                  BoxShadow(
-                                    color: Colors.grey.withOpacity(0.1),
-                                    spreadRadius: 1,
-                                    blurRadius: 3,
-                                    offset: const Offset(0, 1),
-                                  ),
-                                ]
-                              : null,
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton2<ChatMode>(
-                            value: _selectedMode,
-                            isExpanded: true,
-                            buttonStyleData: const ButtonStyleData(
-                              padding: EdgeInsets.symmetric(horizontal: 0),
-                              height: 40,
-                            ),
-                            dropdownStyleData: DropdownStyleData(
-                              width: 150,
-                              offset: const Offset(-8, 0),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.05),
-                                    blurRadius: 8,
-                                    offset: const Offset(0, 4),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            items: [
-                              DropdownMenuItem(
-                                value: ChatMode.coach,
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 4.0),
-                                  child: Text(
-                                    "Coach",
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xFF383838),
+    return MobileKeyboardHandler(
+      enableKeyboardAvoidance: kIsWeb,
+      child: Container(
+          alignment: Alignment.center,
+          // height: size.height,
+          width: size.width,
+          child: Container(
+            // width: size.width > 440 ? 440 : size.width,
+            margin: EdgeInsets.only(top: size.height * .02),
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+            child: Stack(
+              children: [
+                Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          width: 150,
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                            boxShadow: _isDropdownOpen
+                                ? [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.1),
+                                      spreadRadius: 1,
+                                      blurRadius: 3,
+                                      offset: const Offset(0, 1),
                                     ),
-                                  ),
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: ChatMode.ai,
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.symmetric(vertical: 4.0),
-                                  child: Text(
-                                    "AI Copilot",
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                      color: Color(0xFF383838),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                            iconStyleData: const IconStyleData(
-                              icon: Icon(Icons.arrow_drop_down,
-                                  size: 20, color: Color(0xFF383838)),
-                            ),
-                            onChanged: (ChatMode? newValue) {
-                              if (newValue != null) {
-                                setState(() {
-                                  _selectedMode = newValue;
-                                  _isDropdownOpen = false;
-                                  _isFirstLoad = true;
-                                  _previousMessageCount = 0;
-                                });
-                                BlocProvider.of<ChatCubit>(context)
-                                    .clearMessages(
-                                        messageType:
-                                            _selectedMode == ChatMode.coach
-                                                ? "coach"
-                                                : "ai");
-                                BlocProvider.of<ChatCubit>(context)
-                                    .getHistoryChat(
-                                        messageType:
-                                            _selectedMode == ChatMode.coach
-                                                ? "coach"
-                                                : "ai");
-                              }
-                            },
-                            onMenuStateChange: (isOpen) {
-                              setState(() {
-                                _isDropdownOpen = isOpen;
-                              });
-                            },
+                                  ]
+                                : null,
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  BlocConsumer<ChatCubit, ChatState>(
-                    builder: (context, state) {
-                      if (state is ChatHistoryLoading) {
-                        return const Center(child: CircularProgressIndicator());
-                      } else if (state is ChatHistoryLoaded) {
-                        if (state.messages.isEmpty) {
-                          return SizedBox(
-                            height: size.height * .65,
-                            child: Center(
-                              child: SvgPicture.asset("assets/empty.svg"),
-                            ),
-                          );
-                        } else {
-                          // Scroll to bottom when message count changes (new message added)
-                          if (state.messages.length != _previousMessageCount) {
-                            SchedulerBinding.instance.addPostFrameCallback((_) {
-                              if (mounted && _scrollController.hasClients) {
-                                _scrollToBottom();
-                              }
-                            });
-                            _previousMessageCount = state.messages.length;
-                          }
-                          return Expanded(
-                            child: ListView.builder(
-                              controller: _scrollController,
-                              itemCount: state.messages.length,
-                              itemBuilder: (context, index) {
-                                var message = state.messages[index];
-                                return _buildMessageBubble(
-                                    message.text,
-                                    message.sender,
-                                    message.time,
-                                    message.avatarUrl,
-                                    message.images.isNotEmpty
-                                        ? message.images[0]
-                                        : "",
-                                    index,
-                                    message.conversation_id,
-                                    message.feedback,
-                                    message.reported);
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton2<ChatMode>(
+                              value: _selectedMode,
+                              isExpanded: true,
+                              buttonStyleData: const ButtonStyleData(
+                                padding: EdgeInsets.symmetric(horizontal: 0),
+                                height: 40,
+                              ),
+                              dropdownStyleData: DropdownStyleData(
+                                width: 150,
+                                offset: const Offset(-8, 0),
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(8),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black.withOpacity(0.05),
+                                      blurRadius: 8,
+                                      offset: const Offset(0, 4),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              items: [
+                                DropdownMenuItem(
+                                  value: ChatMode.coach,
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 4.0),
+                                    child: Text(
+                                      "Coach",
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xFF383838),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                DropdownMenuItem(
+                                  value: ChatMode.ai,
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.symmetric(vertical: 4.0),
+                                    child: Text(
+                                      "AI Copilot",
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                        color: Color(0xFF383838),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                              iconStyleData: const IconStyleData(
+                                icon: Icon(Icons.arrow_drop_down,
+                                    size: 20, color: Color(0xFF383838)),
+                              ),
+                              onChanged: (ChatMode? newValue) {
+                                if (newValue != null) {
+                                  setState(() {
+                                    _selectedMode = newValue;
+                                    _isDropdownOpen = false;
+                                    _isFirstLoad = true;
+                                    _previousMessageCount = 0;
+                                  });
+                                  BlocProvider.of<ChatCubit>(context)
+                                      .clearMessages(
+                                          messageType:
+                                              _selectedMode == ChatMode.coach
+                                                  ? "coach"
+                                                  : "ai");
+                                  BlocProvider.of<ChatCubit>(context)
+                                      .getHistoryChat(
+                                          messageType:
+                                              _selectedMode == ChatMode.coach
+                                                  ? "coach"
+                                                  : "ai");
+                                }
+                              },
+                              onMenuStateChange: (isOpen) {
+                                setState(() {
+                                  _isDropdownOpen = isOpen;
+                                });
                               },
                             ),
-                          );
-                        }
-                      } else if (state is ChatHistoryError ||
-                          state is ChatError) {
-                        // Handle errors with messages
-                        return Column(
-                          children: [
-                            Expanded(
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    BlocConsumer<ChatCubit, ChatState>(
+                      builder: (context, state) {
+                        if (state is ChatHistoryLoading) {
+                          return const Center(child: CircularProgressIndicator());
+                        } else if (state is ChatHistoryLoaded) {
+                          if (state.messages.isEmpty) {
+                            return SizedBox(
+                              height: size.height * .65,
+                              child: Center(
+                                child: SvgPicture.asset("assets/empty.svg"),
+                              ),
+                            );
+                          } else {
+                            // Scroll to bottom when message count changes (new message added)
+                            if (state.messages.length != _previousMessageCount) {
+                              SchedulerBinding.instance.addPostFrameCallback((_) {
+                                if (mounted && _scrollController.hasClients) {
+                                  _scrollToBottom();
+                                }
+                              });
+                              _previousMessageCount = state.messages.length;
+                            }
+                            return Expanded(
                               child: ListView.builder(
                                 controller: _scrollController,
-                                itemCount:
-                                    context.read<ChatCubit>().messages.length,
+                                itemCount: state.messages.length,
                                 itemBuilder: (context, index) {
-                                  final message =
-                                      context.read<ChatCubit>().messages[index];
+                                  var message = state.messages[index];
                                   return _buildMessageBubble(
                                       message.text,
                                       message.sender,
@@ -656,151 +631,175 @@ class _ChatscreenState extends State<Chatscreen> {
                                       message.reported);
                                 },
                               ),
-                            ),
-                            const SizedBox(height: 16),
-                            const Center(
-                              child: Text(
-                                "An error occurred. Unable to load new messages.",
-                                style: TextStyle(color: Colors.red),
-                              ),
-                            ),
-                          ],
-                        );
-                      } else {
-                        return const Center(
-                            child: Text("No messages available."));
-                      }
-                    },
-                    listener: (context, state) {
-                      // if (state is ChatHistoryError || state is ChatError) {
-                      //   ScaffoldMessenger.of(context).showSnackBar(
-                      //     const SnackBar(content: Text("Internet error")),
-                      //   );
-                      // }
-                    },
-                  ),
-                  const SizedBox(height: 120),
-                ],
-              ),
-              BlocBuilder<ImageHandlerCubit, ImageHandlerState>(
-                builder: (context, state) {
-                  return Positioned(
-                    bottom: 30,
-                    width: 320,
-                    //  > 420 ? 400 : size.width * .9,
-                    child: Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 0, horizontal: 5),
-                      height: state is HaveImage ? 110 : 58,
-                      child: Material(
-                        color: AppColors.mainBg,
-                        elevation: 15,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                        shadowColor: AppColors.mainShadow,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            if (state is HaveImage)
-                              Row(
-                                children: [
-                                  Container(
-                                    width: 51,
-                                    height: 30,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                          width: 1,
-                                          color: AppColors.purpleDark),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(10)),
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(10)),
-                                      child: Image.memory(
-                                        state.imageByte,
-                                        fit: BoxFit.cover,
-                                        width: 51,
-                                        height: 30,
-                                      ),
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                      onTap: () {
-                                        BlocProvider.of<ImageHandlerCubit>(
-                                                context)
-                                            .DeletImage();
-                                      },
-                                      child: SvgPicture.asset(
-                                        "assets/close-circle.svg",
-                                        width: 24,
-                                        height: 24,
-                                        fit: BoxFit.cover,
-                                      )),
-                                ],
-                              ),
-                            if (state is HaveImage)
-                              const SizedBox(
-                                height: 5,
-                              ),
-                            TextFormField(
-                              controller: _controller,
-                              textAlign: TextAlign.left,
-                              onFieldSubmitted: (value) {
-                                _sendMessage(state is HaveImage
-                                    ? state.imageBase64
-                                    : "");
-                                BlocProvider.of<ImageHandlerCubit>(context)
-                                    .DeletImage();
-                              },
-                              decoration: InputDecoration(
-                                hintStyle: AppTextStyles.hint,
-                                hintText: "Ask me anything...",
-                                suffixIcon: IconButton(
-                                  icon: SvgPicture.asset('assets/send-2.svg',
-                                      width: 24, height: 24),
-                                  onPressed: () {
-                                    _sendMessage(state is HaveImage
-                                        ? state.imageBase64
-                                        : "");
-                                    BlocProvider.of<ImageHandlerCubit>(context)
-                                        .DeletImage();
+                            );
+                          }
+                        } else if (state is ChatHistoryError ||
+                            state is ChatError) {
+                          // Handle errors with messages
+                          return Column(
+                            children: [
+                              Expanded(
+                                child: ListView.builder(
+                                  controller: _scrollController,
+                                  itemCount:
+                                      context.read<ChatCubit>().messages.length,
+                                  itemBuilder: (context, index) {
+                                    final message =
+                                        context.read<ChatCubit>().messages[index];
+                                    return _buildMessageBubble(
+                                        message.text,
+                                        message.sender,
+                                        message.time,
+                                        message.avatarUrl,
+                                        message.images.isNotEmpty
+                                            ? message.images[0]
+                                            : "",
+                                        index,
+                                        message.conversation_id,
+                                        message.feedback,
+                                        message.reported);
                                   },
                                 ),
-                                border: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 0.0,
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                ),
-                                enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                    color: Colors.transparent,
-                                    width: 0.0,
-                                  ),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide.none,
+                              ),
+                              const SizedBox(height: 16),
+                              const Center(
+                                child: Text(
+                                  "An error occurred. Unable to load new messages.",
+                                  style: TextStyle(color: Colors.red),
                                 ),
                               ),
-                            ),
-                          ],
+                            ],
+                          );
+                        } else {
+                          return const Center(
+                              child: Text("No messages available."));
+                        }
+                      },
+                      listener: (context, state) {
+                        // if (state is ChatHistoryError || state is ChatError) {
+                        //   ScaffoldMessenger.of(context).showSnackBar(
+                        //     const SnackBar(content: Text("Internet error")),
+                        //   );
+                        // }
+                      },
+                    ),
+                    // Add bottom padding that adjusts with keyboard
+                    SizedBox(height: kIsWeb ? MediaQuery.of(context).viewInsets.bottom + 120 : 120),
+                  ],
+                ),
+                BlocBuilder<ImageHandlerCubit, ImageHandlerState>(
+                  builder: (context, state) {
+                    return Positioned(
+                      bottom:  30,
+                      width: 320,
+                      //  > 420 ? 400 : size.width * .9,
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 0, horizontal: 5),
+                        height: state is HaveImage ? 110 : 58,
+                        child: Material(
+                          color: AppColors.mainBg,
+                          elevation: 15,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(10)),
+                          shadowColor: AppColors.mainShadow,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              if (state is HaveImage)
+                                Row(
+                                  children: [
+                                    Container(
+                                      width: 51,
+                                      height: 30,
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 1,
+                                            color: AppColors.purpleDark),
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10)),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(10)),
+                                        child: Image.memory(
+                                          state.imageByte,
+                                          fit: BoxFit.cover,
+                                          width: 51,
+                                          height: 30,
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                        onTap: () {
+                                          BlocProvider.of<ImageHandlerCubit>(
+                                                  context)
+                                              .DeletImage();
+                                        },
+                                        child: SvgPicture.asset(
+                                          "assets/close-circle.svg",
+                                          width: 24,
+                                          height: 24,
+                                          fit: BoxFit.cover,
+                                        )),
+                                  ],
+                                ),
+                              if (state is HaveImage)
+                                const SizedBox(
+                                  height: 5,
+                                ),
+                              TextFormField(
+                                controller: _controller,
+                                textAlign: TextAlign.left,
+                                decoration: InputDecoration(
+                                  hintStyle: AppTextStyles.hint,
+                                  hintText: "Ask me anything...",
+                                  suffixIcon: IconButton(
+                                    icon: SvgPicture.asset('assets/send-2.svg',
+                                        width: 24, height: 24),
+                                    onPressed: () {
+                                      _sendMessage(state is HaveImage
+                                          ? state.imageBase64
+                                          : "");
+                                      BlocProvider.of<ImageHandlerCubit>(context)
+                                          .DeletImage();
+                                    },
+                                  ),
+                                  border: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                      width: 0.0,
+                                    ),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  enabledBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.transparent,
+                                      width: 0.0,
+                                    ),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide.none,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ));
+                    );
+                  },
+                ),
+              ],
+            ),
+          )),
+    );
   }
 
   Widget _buildMessageBubble(
