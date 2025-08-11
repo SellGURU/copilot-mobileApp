@@ -72,13 +72,15 @@ class ChatCubit extends Cubit<ChatState> {
       if (response.statusCode == 200) {
         // Add the AI's response to the list if the request is successful
         conversationId = response.data["current_conversation_id"];
-        messages.add(Message.fromResponse({
-          'entrytime': ": ${now.hour}:${now.minute}",
-          'response': response.data["answer"],
-          'conversation_id': conversationId.toString(),
-          'reported': false,
-          'feedback': "null",
-        }));
+        if(response.data["answer"] != null){
+          messages.add(Message.fromResponse({
+            'entrytime': ": ${now.hour}:${now.minute}",
+            'response': response.data["answer"],
+            'conversation_id': conversationId.toString(),
+            'reported': false,
+            'feedback': "null",
+          }));
+        }
 
         emit(ChatHistoryLoaded(List.from(messages)));  // Emit the updated messages
       } else {
