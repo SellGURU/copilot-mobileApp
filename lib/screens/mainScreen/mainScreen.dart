@@ -77,6 +77,7 @@ class _MainscreenState extends State<Mainscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: AppColors.bgScreen,
       body: ColorfulSafeArea(
         child: Center(
