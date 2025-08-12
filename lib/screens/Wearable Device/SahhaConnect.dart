@@ -19,12 +19,6 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
   }
 
   Future<void> _initSahha() async {
-    // var notificationSettings = {
-    //   'icon': 'Custom Icon',
-    //   'title': 'Custom Title',
-    //   'shortDescription': 'Custom Description'
-    // };
-
     setState(() {
       loading = true;
       log = "Configuring Sahha...";
@@ -33,8 +27,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
     try {
       // Configure
       bool configured = await SahhaFlutter.configure(
-        environment: SahhaEnvironment.sandbox, // Use .production for live
-        // notificationSettings: notificationSettings,
+        environment: SahhaEnvironment.sandbox,
       );
 
       if (!configured) {
@@ -57,18 +50,38 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
       }
 
       setState(() {
-        log = "Authentication successful! Enabling sensors...";
+        log = "Authentication successful! Checking sensor status...";
       });
 
-      // Enable sensors
-      // bool sensorsEnabled = (await SahhaFlutter.enableSensors(['steps'])) as bool;
+      // Check sensor status for steps & sleep
+      SahhaSensorStatus status = await SahhaFlutter.getSensorStatus(
+        [SahhaSensor.steps, SahhaSensor.heart_rate, SahhaSensor.floors_climbed],
+      );
 
-      // setState(() {
-      //   loading = false;
-      //   log = sensorsEnabled
-      //       ? "Sensors enabled. Device is ready."
-      //       : "Sensors could not be enabled. Please check permissions.";
-      // });
+      if (status == SahhaSensorStatus.pending) {
+        setState(() {
+          log = "Sensors pending... requesting permissions.";
+        });
+        bool sensorsEnabled = (await SahhaFlutter.enableSensors(
+          [SahhaSensor.steps, SahhaSensor.sleep],
+        )) as bool;
+        setState(() {
+          loading = false;
+          log = sensorsEnabled
+              ? "Sensors enabled. Device is ready."
+              : "Sensors not enabled by user.";
+        });
+      } else if (status == SahhaSensorStatus.enabled) {
+        setState(() {
+          loading = false;
+          log = "Sensors already enabled and ready.";
+        });
+      } else {
+        setState(() {
+          loading = false;
+          log = "Sensors disabled or unavailable.";
+        });
+      }
     } catch (e) {
       setState(() {
         loading = false;
@@ -91,11 +104,11 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
                 const CircularProgressIndicator()
               else
                 Icon(
-                  log.contains("successful") || log.contains("ready")
+                  log.contains("ready") || log.contains("enabled")
                       ? Icons.check_circle
                       : Icons.error,
                   size: 64,
-                  color: log.contains("successful") || log.contains("ready")
+                  color: log.contains("ready") || log.contains("enabled")
                       ? Colors.green
                       : Colors.red,
                 ),
