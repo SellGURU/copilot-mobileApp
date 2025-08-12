@@ -15,7 +15,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
   @override
   void initState() {
     super.initState();
-    _initSahha();
+    // _initSahha();
   }
 
   Future<void> _initSahha() async {
@@ -124,7 +124,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
               const SizedBox(height: 30),
               ElevatedButton(
                 onPressed: _initSahha,
-                child: const Text("Retry"),
+                child: const Text("connect"),
               ),
             ],
           ),
