@@ -19,11 +19,11 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
   }
 
   Future<void> _initSahha() async {
-    var notificationSettings = {
-      'icon': 'Custom Icon',
-      'title': 'Custom Title',
-      'shortDescription': 'Custom Description'
-    };
+    // var notificationSettings = {
+    //   'icon': 'Custom Icon',
+    //   'title': 'Custom Title',
+    //   'shortDescription': 'Custom Description'
+    // };
 
     setState(() {
       loading = true;
@@ -34,7 +34,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
       // Configure
       bool configured = await SahhaFlutter.configure(
         environment: SahhaEnvironment.sandbox, // Use .production for live
-        notificationSettings: notificationSettings,
+        // notificationSettings: notificationSettings,
       );
 
       if (!configured) {
