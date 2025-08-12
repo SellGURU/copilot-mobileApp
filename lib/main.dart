@@ -30,7 +30,7 @@ import 'package:copilet/utility/switchValueBloc/PageIndex_Bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:copilet/services/branding_bloc.dart';
-import 'package:sahha_flutter/sahha_flutter.dart';
+// import 'package:sahha_flutter/sahha_flutter.dart';
 
 void main() async {
   /// Ensures binding is initialized for widgets before running the app.
@@ -39,20 +39,7 @@ void main() async {
   // bool ok = await SahhaFlutter.configure(environment: SahhaEnvironment.sandbox);
 
   // 2) authenticate (با appId/appSecret از داشبورد)
-  bool auth = await SahhaFlutter.authenticate(
-    appId: 'o6rAnanD0tnm877eT73dV8BQhSvOEC7b',
-    appSecret: 'ayjYop9i8ZBPt7AFCvtfeLyXKBICFEa99aaCASGOPik4LgeqSQ7nROq0g3HndAOv',
-    externalId: 'SampleProfile-cb79d25f-f743-4d2b-b80b-ac943ecb5918' // شناسه‌ی منحصر به فرد کاربر
-  );
-  final sensors = [SahhaSensor.sleep, SahhaSensor.steps, SahhaSensor.heart_rate];
 
-// وضعیت فعلی سنسورها
-var status = await SahhaFlutter.getSensorStatus(sensors);
-print(status);
-
-// فعال‌سازی سنسورها (این‌جا UI سیستم برای گرفتن مجوز باز می‌شود)
-var enabledStatus = await SahhaFlutter.enableSensors(sensors);
-  // print('authenticated: $auth');
   runApp(const RestartWidget(child: MyApp()));
 }
 
