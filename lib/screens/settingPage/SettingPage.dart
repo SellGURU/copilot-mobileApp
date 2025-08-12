@@ -254,7 +254,7 @@ class _SettingPageState extends State<SettingPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => const WearableConnectPage()),
+                          builder: (_) => const WearableDevicePage()),
                     );
                   },
                   child: WearableDevicesTile(

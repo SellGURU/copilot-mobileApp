@@ -687,6 +687,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.4"
+  sahha_flutter:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "4a08b32ca807f56505b5b96a442c827c519729d6"
+      url: "https://github.com/sahha-ai/sahha_flutter.git"
+    source: git
+    version: "1.2.1"
   screenshot:
     dependency: "direct main"
     description:

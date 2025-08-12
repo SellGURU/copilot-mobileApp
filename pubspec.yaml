@@ -31,7 +31,10 @@ dependencies:
   flutter:
     sdk: flutter
 
-  sahha_flutter: ^1.1.4
+  # sahha_flutter: ^1.1.4
+  sahha_flutter:
+    git:
+      url: https://github.com/sahha-ai/sahha_flutter.git  
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.6
