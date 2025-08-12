@@ -40,9 +40,9 @@ void main() async {
 
   // 2) authenticate (با appId/appSecret از داشبورد)
   bool auth = await SahhaFlutter.authenticate(
-    appId: 'YOUR_APP_ID',
-    appSecret: 'YOUR_APP_SECRET',
-    externalId: 'user-123' // شناسه‌ی منحصر به فرد کاربر
+    appId: 'o6rAnanD0tnm877eT73dV8BQhSvOEC7b',
+    appSecret: 'ayjYop9i8ZBPt7AFCvtfeLyXKBICFEa99aaCASGOPik4LgeqSQ7nROq0g3HndAOv',
+    externalId: 'SampleProfile-cb79d25f-f743-4d2b-b80b-ac943ecb5918' // شناسه‌ی منحصر به فرد کاربر
   );
   final sensors = [SahhaSensor.sleep, SahhaSensor.steps, SahhaSensor.heart_rate];
 
