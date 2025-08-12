@@ -32,9 +32,9 @@ class _WearableConnectPageState extends State<WearableConnectPage> {
 
       // 3️⃣ احراز هویت
       bool authenticated = await SahhaFlutter.authenticate(
-        appId: 'YOUR_APP_ID',
-        appSecret: 'YOUR_APP_SECRET',
-        externalId: 'user-123',
+        appId: 'o6rAnanD0tnm877eT73dV8BQhSvOEC7b',
+        appSecret: 'ayjYop9i8ZBPt7AFCvtfeLyXKBICFEa99aaCASGOPik4LgeqSQ7nROq0g3HndAOv',
+        externalId: 'SampleProfile-cb79d25f-f743-4d2b-b80b-ac943ecb5918',
       );
       setState(() => log += "\nAuthenticated: $authenticated");
 
