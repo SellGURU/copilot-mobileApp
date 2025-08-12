@@ -25,9 +25,9 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
     });
 
     try {
-      // Configure
+      // Step 1: Configure Sahha
       bool configured = await SahhaFlutter.configure(
-        environment: SahhaEnvironment.sandbox,
+        environment: SahhaEnvironment.sandbox, // Use .production for live
       );
 
       if (!configured) {
@@ -38,7 +38,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
         log = "Configuration successful! Authenticating...";
       });
 
-      // Authenticate
+      // Step 2: Authenticate
       bool authSuccess = await SahhaFlutter.authenticate(
         appId: "o6rAnanD0tnm877eT73dV8BQhSvOEC7b",
         appSecret: "ayjYop9i8ZBPt7AFCvtfeLyXKBICFEa99aaCASGOPik4LgeqSQ7nROq0g3HndAOv",
@@ -50,21 +50,24 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
       }
 
       setState(() {
-        log = "Authentication successful! Checking sensor status...";
+        log = "Authentication successful! Checking sensors...";
       });
 
-      // Check sensor status for steps & sleep
+      // Step 3: Check sensor status
       SahhaSensorStatus status = await SahhaFlutter.getSensorStatus(
-        [SahhaSensor.steps, SahhaSensor.heart_rate, SahhaSensor.floors_climbed],
+        [SahhaSensor.steps, SahhaSensor.sleep],
       );
 
       if (status == SahhaSensorStatus.pending) {
         setState(() {
-          log = "Sensors pending... requesting permissions.";
+          log = "Sensors pending. Requesting permissions...";
         });
+
+        // Step 4: Enable sensors if pending
         bool sensorsEnabled = (await SahhaFlutter.enableSensors(
           [SahhaSensor.steps, SahhaSensor.sleep],
         )) as bool;
+
         setState(() {
           loading = false;
           log = sensorsEnabled
