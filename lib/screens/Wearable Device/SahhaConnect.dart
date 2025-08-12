@@ -61,14 +61,14 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
       });
 
       // Enable sensors
-      bool sensorsEnabled = (await SahhaFlutter.enableSensors([])) as bool;
+      // bool sensorsEnabled = (await SahhaFlutter.enableSensors(['steps'])) as bool;
 
-      setState(() {
-        loading = false;
-        log = sensorsEnabled
-            ? "Sensors enabled. Device is ready."
-            : "Sensors could not be enabled. Please check permissions.";
-      });
+      // setState(() {
+      //   loading = false;
+      //   log = sensorsEnabled
+      //       ? "Sensors enabled. Device is ready."
+      //       : "Sensors could not be enabled. Please check permissions.";
+      // });
     } catch (e) {
       setState(() {
         loading = false;
