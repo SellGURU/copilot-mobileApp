@@ -291,7 +291,7 @@ class _ResultMainTabState extends State<ResultMainTab> {
                   : VerticalStatusIndicator(
                       status: (widget.data as Map<String, dynamic>)['status']?[0] ?? "",
                       chartBounds: ((widget.data as Map<String, dynamic>)["chart_bounds"] as List<dynamic>?)?.cast<Map<String, dynamic>>() ?? [], 
-                      current: (widget.data as Map<String, dynamic>)['current']?.toString() ?? "",
+                      current: (widget.data as Map<String, dynamic>)['values'][0]?.toString() ?? "",
                       average: (widget.data as Map<String, dynamic>)['average']?.toString() ?? "",
                       date: (widget.data as Map<String, dynamic>)['date']?.toString() ?? ""
                     )

@@ -31,21 +31,43 @@ class Cardresultscreen extends StatefulWidget {
 }
 
 class _CardresultscreenState extends State<Cardresultscreen> {
-  Color resolveStatusColor(String status) {
-    switch (status.toLowerCase()) {
-      case 'good':
-        return  const Color.fromRGBO(114, 193, 59, 1);
-      case 'excellent':
-        return const Color.fromRGBO(55, 180, 94, 1);
-      case 'needs focus':
-        return const Color.fromRGBO(178, 48, 46, 1);
-      case 'ok':
-        return const Color.fromRGBO(216, 216, 0, 1);
-      default:
-        return Colors.grey;
-    }
-  }
+Color resolveStatusColor(String status) {
+  final s = status.toLowerCase().trim();
 
+  switch (s) {
+    // --- CriticalRange ---
+    case 'critical':
+    case 'criticalrange':
+    case 'needs focus':
+      return const Color.fromRGBO(178, 48, 46, 1);
+
+    // --- DiseaseRange ---
+    case 'disease':
+    case 'diseaserange':
+      return const Color.fromRGBO(186, 82, 37, 1);
+
+    // --- BorderlineRange ---
+    case 'borderline':
+    case 'borderlinerange':
+    case 'ok':
+      return const Color.fromRGBO(216, 216, 0, 1);
+
+    // --- HealthyRange ---
+    case 'healthy':
+    case 'healthyrange':
+    case 'good':
+      return const Color.fromRGBO(114, 193, 59, 1);
+
+    // --- OptimalRange ---
+    case 'optimal':
+    case 'optimalrange':
+    case 'excellent':
+      return const Color.fromRGBO(55, 180, 94, 1);
+
+    default:
+      return Colors.grey;
+  }
+}
   double nextGaussian() {
     final random = Random();
     double u1 = random.nextDouble();
@@ -292,7 +314,7 @@ class _CardresultscreenState extends State<Cardresultscreen> {
                     : VerticalStatusIndicator(
                         status: (widget.data as Map<String, dynamic>)['status']?[0] ?? "",
                         chartBounds: ((widget.data as Map<String, dynamic>)["chart_bounds"] as List<dynamic>?)?.cast<Map<String, dynamic>>() ?? [], 
-                        current: (widget.data as Map<String, dynamic>)['current']?.toString() ?? "",
+                        current: (widget.data as Map<String, dynamic>)['values'][0]?.toString() ?? "",
                         average: (widget.data as Map<String, dynamic>)['average']?.toString() ?? "",
                         date: (widget.data as Map<String, dynamic>)['date']?.toString() ?? ""
                       )
