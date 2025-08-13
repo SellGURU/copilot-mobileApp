@@ -7,6 +7,22 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
+
+    <!-- steps -->
+    <uses-permission android:name="android.permission.health.READ_STEPS" />
+
+    <!-- floors_climbed -->
+    <uses-permission android:name="android.permission.health.READ_FLOORS_CLIMBED" />
+    <!-- heart_rate -->
+    <uses-permission android:name="android.permission.health.READ_HEART_RATE" />
+
+    <!-- heart_rate_variability_rmssd -->
+    <uses-permission android:name="android.permission.health.READ_HEART_RATE_VARIABILITY" />
+
+     <!-- resting_heart_rate -->
+    <uses-permission android:name="android.permission.health.READ_RESTING_HEART_RATE" />
+
+
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
