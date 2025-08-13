@@ -22,6 +22,24 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
   String descText =
       "We need your permission to connect with your wearable device and access its data (e.g. heart rate, steps, sensor data). This will allow the app to sync information seamlessly and provide you with real-time insights.";
 
+  @override
+  void initState() {
+    super.initState();
+    _checkSavedStatus();
+  }
+
+  Future<void> _checkSavedStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool alreadyConnected = prefs.getBool('wearableConnected') ?? false;
+    if (alreadyConnected) {
+      setState(() {
+        success = true;
+        titleText = "Device connected successfully!";
+        descText = "Your wearable device is now synced and ready.";
+      });
+    }
+  }
+
   Future<void> _initSahha() async {
     setState(() {
       connecting = true;
@@ -31,12 +49,15 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
     });
 
     if (kIsWeb) {
+      // حالت وب که ساپورت نمیشه → بعد از 5 ثانیه موفقیت نشون میدیم
       await Future.delayed(const Duration(seconds: 5));
+      // SharedPreferences prefs = await SharedPreferences.getInstance();
+      // await prefs.setBool('wearableConnected', true);
       setState(() {
         connecting = false;
         success = true;
-        titleText = "Device connected successfully!";
-        descText = "Your wearable device is now synced and ready.";
+        titleText = "Use Our Mobile App to Connect";
+        descText = "Currently, connecting to wearable devices is only supported through our mobile application—not available on the web. Please open our mobile app on your phone to establish a connection and sync data smoothly.";
         log = "";
       });
       return;
@@ -69,6 +90,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
           [SahhaSensor.steps, SahhaSensor.sleep],
         );
         if (enableStatus == SahhaSensorStatus.enabled) {
+          await prefs.setBool('wearableConnected', true);
           setState(() {
             connecting = false;
             success = true;
@@ -84,6 +106,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
           });
         }
       } else if (status == SahhaSensorStatus.enabled) {
+        await prefs.setBool('wearableConnected', true);
         setState(() {
           connecting = false;
           success = true;
@@ -146,14 +169,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
               if (connecting)
                 const CircularProgressIndicator()
               else if (success)
-                Container(
-                  // decoration: BoxDecoration(
-                  //   shape: BoxShape.circle,
-                  //   color: Colors.green[100],
-                  // ),
-                  // padding: const EdgeInsets.all(24),
-                  child: SvgPicture.asset("assets/connected.svg"),
-                )
+                SvgPicture.asset("assets/connected.svg")
               else
                 SvgPicture.asset(
                   'assets/wearabledevice.svg',
@@ -192,12 +208,12 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
                   ),
                 ),
               const SizedBox(height: 20),
-              // if (log.isNotEmpty)
-              //   Text(
-              //     log,
-              //     style: const TextStyle(fontSize: 14, color: Colors.black87),
-              //     textAlign: TextAlign.center,
-              //   ),
+              if (log.isNotEmpty)
+                Text(
+                  log,
+                  style: const TextStyle(fontSize: 14, color: Colors.black87),
+                  textAlign: TextAlign.center,
+                ),
             ],
           ),
         ),
