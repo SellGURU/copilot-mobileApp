@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:sahha_flutter/sahha_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WearableDevicePage extends StatefulWidget {
   const WearableDevicePage({super.key});
@@ -18,6 +21,9 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
   }
 
   Future<void> _initSahha() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? storedUserId = prefs.getString('userInfoid');   
+    String userId = jsonDecode(storedUserId!); 
     setState(() {
       loading = true;
       log = "Configuring Sahha...";
@@ -41,7 +47,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
       bool authSuccess = await SahhaFlutter.authenticate(
         appId: "o6rAnanD0tnm877eT73dV8BQhSvOEC7b",
         appSecret: "ayjYop9i8ZBPt7AFCvtfeLyXKBICFEa99aaCASGOPik4LgeqSQ7nROq0g3HndAOv",
-        externalId: "SampleProfile-2a4b389b-0b0a-43d3-bbfc-990f7e0acf15",
+        externalId: userId,
       );
 
       if (!authSuccess) {
