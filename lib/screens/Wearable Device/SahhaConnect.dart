@@ -1,6 +1,8 @@
 import 'dart:convert';
-
+import 'package:copilet/components/text_style.dart';
+import 'package:copilet/res/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:sahha_flutter/sahha_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -103,38 +105,88 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
   }
 
   @override
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Wearable Devices")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Center(
+      backgroundColor: AppColors.bgScreen,
+      appBar: AppBar(
+        leadingWidth: 60,
+        titleSpacing: 0,
+        title: const Text(
+          'Wearable Device',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: AppColors.textPrimary,
+          ),
+        ),
+        backgroundColor: AppColors.bgScreen,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 20, top: 7, bottom: 7),
+          child: IconButton(
+            padding: EdgeInsets.zero,
+            icon: SizedBox(
+              height: 20,
+              width: 20,
+              child: SvgPicture.asset('assets/arrow-left.svg'),
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
+        elevation: 0,
+      ),
+      
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (loading)
-                const CircularProgressIndicator()
-              else
-                Icon(
-                  log.contains("ready") || log.contains("enabled")
-                      ? Icons.check_circle
-                      : Icons.error,
-                  size: 64,
-                  color: log.contains("ready") || log.contains("enabled")
-                      ? Colors.green
-                      : Colors.red,
-                ),
-              const SizedBox(height: 20),
+              SvgPicture.asset('assets/wearabledevice.svg'),
+              const SizedBox(height: 0),
               Text(
-                log,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16),
+                "Connect to Wearable Devices",
+                // textAlign: TextAlign.center,
+                style: AppTextStyles.headline5,
               ),
-              const SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: _initSahha,
-                child: const Text("Connect"),
+              const SizedBox(height: 16),
+              Text(
+                "We need your permission to connect with your wearable device and access its data (e.g. heart rate, steps, sensor data). This will allow the app to sync information seamlessly and provide you with real-time insights.",
+                style: AppTextStyles.body2.copyWith(),
+                textAlign: TextAlign.justify,
               ),
+              const SizedBox(height: 40),
+              GestureDetector(
+                onTap:loading ? null : _initSahha,
+                child: Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.only(
+                      top: 6, bottom: 6),
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryDeepTeal,
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 1, // 1px
+                    ),
+                  ),
+                  width: double.infinity,
+                  // width: size.width,
+                  child: Text(
+                    "Allow Access",
+                    style: AppTextStyles.titleMediumWhite,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 20),
+              if (log.isNotEmpty)
+                Text(
+                  log,
+                  style:
+                      const TextStyle(fontSize: 14, color: Colors.black87),
+                  textAlign: TextAlign.center,
+                ),
             ],
           ),
         ),
