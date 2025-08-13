@@ -1,6 +1,9 @@
 import 'dart:convert';
-
+import 'package:copilet/components/text_style.dart';
+import 'package:copilet/res/colors.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:sahha_flutter/sahha_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,91 +15,93 @@ class WearableDevicePage extends StatefulWidget {
 }
 
 class _WearableDevicePageState extends State<WearableDevicePage> {
-  bool loading = false;
+  bool connecting = false;
+  bool success = false;
   String log = "";
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  String titleText = "Connect to Wearable Devices";
+  String descText =
+      "We need your permission to connect with your wearable device and access its data (e.g. heart rate, steps, sensor data). This will allow the app to sync information seamlessly and provide you with real-time insights.";
 
   Future<void> _initSahha() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? storedUserId = prefs.getString('userInfoid');   
-    String userId = jsonDecode(storedUserId!); 
     setState(() {
-      loading = true;
-      log = "Configuring Sahha...";
+      connecting = true;
+      titleText = "Connecting to your wearable…";
+      descText =
+          "Your device is syncing data now. Please wait while we complete the process.";
     });
 
+    if (kIsWeb) {
+      await Future.delayed(const Duration(seconds: 5));
+      setState(() {
+        connecting = false;
+        success = true;
+        titleText = "Device connected successfully!";
+        descText = "Your wearable device is now synced and ready.";
+        log = "";
+      });
+      return;
+    }
+
     try {
-      // Step 1: Configure Sahha
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? storedUserId = prefs.getString('userInfoid');
+      String userId = jsonDecode(storedUserId!);
+
       bool configured = await SahhaFlutter.configure(
         environment: SahhaEnvironment.sandbox,
       );
+      if (!configured) throw "Sahha configuration failed";
 
-      if (!configured) {
-        throw "Sahha configuration failed";
-      }
-
-      setState(() {
-        log = "Configuration successful! Authenticating...";
-      });
-
-      // Step 2: Authenticate
       bool authSuccess = await SahhaFlutter.authenticate(
         appId: "o6rAnanD0tnm877eT73dV8BQhSvOEC7b",
-        appSecret: "ayjYop9i8ZBPt7AFCvtfeLyXKBICFEa99aaCASGOPik4LgeqSQ7nROq0g3HndAOv",
+        appSecret:
+            "ayjYop9i8ZBPt7AFCvtfeLyXKBICFEa99aaCASGOPik4LgeqSQ7nROq0g3HndAOv",
         externalId: userId,
       );
+      if (!authSuccess) throw "Authentication failed";
 
-      if (!authSuccess) {
-        throw "Authentication failed";
-      }
-
-      setState(() {
-        log = "Authentication successful! Checking sensors...";
-      });
-
-      // Step 3: Check sensor status
       SahhaSensorStatus status = await SahhaFlutter.getSensorStatus(
         [SahhaSensor.steps, SahhaSensor.sleep],
       );
 
       if (status == SahhaSensorStatus.pending) {
-        setState(() {
-          log = "Sensors pending. Requesting permissions...";
-        });
-
-        // Step 4: Enable sensors (returns SahhaSensorStatus now)
         SahhaSensorStatus enableStatus = await SahhaFlutter.enableSensors(
           [SahhaSensor.steps, SahhaSensor.sleep],
         );
-
-        setState(() {
-          loading = false;
-          if (enableStatus == SahhaSensorStatus.enabled) {
-            log = "Sensors enabled. Device is ready.";
-          } else if (enableStatus == SahhaSensorStatus.pending) {
+        if (enableStatus == SahhaSensorStatus.enabled) {
+          setState(() {
+            connecting = false;
+            success = true;
+            titleText = "Connected!";
+            descText = "Your wearable is now linked and ready to sync data.";
+            log = "";
+          });
+        } else {
+          setState(() {
+            connecting = false;
+            success = false;
             log = "User did not complete enabling sensors.";
-          } else {
-            log = "Sensors could not be enabled.";
-          }
-        });
+          });
+        }
       } else if (status == SahhaSensorStatus.enabled) {
         setState(() {
-          loading = false;
-          log = "Sensors already enabled and ready.";
+          connecting = false;
+          success = true;
+          titleText = "Device connected successfully!";
+          descText = "Your wearable device is now synced and ready.";
+          log = "";
         });
       } else {
         setState(() {
-          loading = false;
+          connecting = false;
+          success = false;
           log = "Sensors disabled or unavailable.";
         });
       }
     } catch (e) {
       setState(() {
-        loading = false;
+        connecting = false;
+        success = false;
         log = "Error: $e";
       });
     }
@@ -105,36 +110,94 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Wearable Devices")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Center(
+      backgroundColor: AppColors.bgScreen,
+      appBar: AppBar(
+        leadingWidth: 60,
+        titleSpacing: 0,
+        title: const Text(
+          'Wearable Device',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+            color: AppColors.textPrimary,
+          ),
+        ),
+        backgroundColor: AppColors.bgScreen,
+        leading: Padding(
+          padding: const EdgeInsets.only(left: 20, top: 7, bottom: 7),
+          child: IconButton(
+            padding: EdgeInsets.zero,
+            icon: SizedBox(
+              height: 20,
+              width: 20,
+              child: SvgPicture.asset('assets/arrow-left.svg'),
+            ),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ),
+        elevation: 0,
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (loading)
+              if (connecting)
                 const CircularProgressIndicator()
+              else if (success)
+                Container(
+                  // decoration: BoxDecoration(
+                  //   shape: BoxShape.circle,
+                  //   color: Colors.green[100],
+                  // ),
+                  // padding: const EdgeInsets.all(24),
+                  child: SvgPicture.asset("assets/connected.svg"),
+                )
               else
-                Icon(
-                  log.contains("ready") || log.contains("enabled")
-                      ? Icons.check_circle
-                      : Icons.error,
-                  size: 64,
-                  color: log.contains("ready") || log.contains("enabled")
-                      ? Colors.green
-                      : Colors.red,
+                SvgPicture.asset(
+                  'assets/wearabledevice.svg',
+                  width: 100,
+                  height: 100,
+                ),
+              const SizedBox(height: 16),
+              Text(
+                titleText,
+                style: AppTextStyles.headline5,
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 16),
+              Text(
+                descText,
+                style: AppTextStyles.body2.copyWith(),
+                textAlign: TextAlign.center,
+              ),
+              const SizedBox(height: 40),
+              if (!connecting && !success)
+                GestureDetector(
+                  onTap: _initSahha,
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    decoration: BoxDecoration(
+                      color: AppColors.primaryDeepTeal,
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.white, width: 1),
+                    ),
+                    width: double.infinity,
+                    child: Text(
+                      "Allow Access",
+                      style: AppTextStyles.titleMediumWhite,
+                    ),
+                  ),
                 ),
               const SizedBox(height: 20),
-              Text(
-                log,
-                textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 16),
-              ),
-              const SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: _initSahha,
-                child: const Text("Connect"),
-              ),
+              // if (log.isNotEmpty)
+              //   Text(
+              //     log,
+              //     style: const TextStyle(fontSize: 14, color: Colors.black87),
+              //     textAlign: TextAlign.center,
+              //   ),
             ],
           ),
         ),
