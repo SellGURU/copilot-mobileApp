@@ -258,7 +258,7 @@ class _SettingPageState extends State<SettingPage> {
                     );
                   },
                   child: WearableDevicesTile(
-                    srcImage: 'shield-tick.svg',
+                    srcImage: 'watch-status.svg',
                     textTitle: 'Wearable Device',
                   ),
                 ),
