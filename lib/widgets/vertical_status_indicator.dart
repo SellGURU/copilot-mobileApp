@@ -39,20 +39,37 @@ class VerticalStatusIndicator extends StatelessWidget {
 
   Color _getStatusColor(String status) {
     switch (status.toLowerCase()) {
-      case 'excellent':
-      case 'enhanced outcome':
-        return Colors.green;
-      case 'good':
-      case 'moderately enhanced outcome':
-        return Colors.lightGreen;
-      case 'ok':
-      case 'moderately compromised outcome':
-        return Colors.orange;
-      case 'needs focus':
-      case 'compromised outcome':
-        return Colors.red;
-      default:
-        return Colors.grey;
+    // --- CriticalRange ---
+    case 'critical':
+    case 'criticalrange':
+    case 'needs focus':
+      return const Color.fromRGBO(178, 48, 46, 1);
+
+    // --- DiseaseRange ---
+    case 'disease':
+    case 'diseaserange':
+      return const Color.fromRGBO(186, 82, 37, 1);
+
+    // --- BorderlineRange ---
+    case 'borderline':
+    case 'borderlinerange':
+    case 'ok':
+      return const Color.fromRGBO(216, 216, 0, 1);
+
+    // --- HealthyRange ---
+    case 'healthy':
+    case 'healthyrange':
+    case 'good':
+      return const Color.fromRGBO(114, 193, 59, 1);
+
+    // --- OptimalRange ---
+    case 'optimal':
+    case 'optimalrange':
+    case 'excellent':
+      return const Color.fromRGBO(55, 180, 94, 1);
+
+    default:
+      return Colors.grey;
     }
   }
 
@@ -133,12 +150,12 @@ class VerticalStatusIndicator extends StatelessWidget {
                                 ),
                               ),
                              // Status dot indicator
-                             if (level['status'].toLowerCase() == status.toLowerCase())
+                             if (level['name'].toLowerCase() == current.toLowerCase())
                                Container(
                                  width: 8,
                                  height: 8,
                                  decoration: BoxDecoration(
-                                   color: level['color'],
+                                   color: _getStatusColor(status.toLowerCase()),
                                    shape: BoxShape.circle,
                                    border: Border.all(color: Colors.white, width: 1),
                                  ),
