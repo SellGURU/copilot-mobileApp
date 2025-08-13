@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:sahha_flutter/sahha_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class WearableDevicePage extends StatefulWidget {
   const WearableDevicePage({super.key});
@@ -15,10 +18,12 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
   @override
   void initState() {
     super.initState();
-    // _initSahha();
   }
 
   Future<void> _initSahha() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? storedUserId = prefs.getString('userInfoid');   
+    String userId = jsonDecode(storedUserId!); 
     setState(() {
       loading = true;
       log = "Configuring Sahha...";
@@ -27,7 +32,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
     try {
       // Step 1: Configure Sahha
       bool configured = await SahhaFlutter.configure(
-        environment: SahhaEnvironment.sandbox, // Use .production for live
+        environment: SahhaEnvironment.sandbox,
       );
 
       if (!configured) {
@@ -42,7 +47,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
       bool authSuccess = await SahhaFlutter.authenticate(
         appId: "o6rAnanD0tnm877eT73dV8BQhSvOEC7b",
         appSecret: "ayjYop9i8ZBPt7AFCvtfeLyXKBICFEa99aaCASGOPik4LgeqSQ7nROq0g3HndAOv",
-        externalId: "SampleProfile-2a4b389b-0b0a-43d3-bbfc-990f7e0acf15",
+        externalId: userId,
       );
 
       if (!authSuccess) {
@@ -63,16 +68,20 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
           log = "Sensors pending. Requesting permissions...";
         });
 
-        // Step 4: Enable sensors if pending
-        bool sensorsEnabled = (await SahhaFlutter.enableSensors(
+        // Step 4: Enable sensors (returns SahhaSensorStatus now)
+        SahhaSensorStatus enableStatus = await SahhaFlutter.enableSensors(
           [SahhaSensor.steps, SahhaSensor.sleep],
-        )) as bool;
+        );
 
         setState(() {
           loading = false;
-          log = sensorsEnabled
-              ? "Sensors enabled. Device is ready."
-              : "Sensors not enabled by user.";
+          if (enableStatus == SahhaSensorStatus.enabled) {
+            log = "Sensors enabled. Device is ready.";
+          } else if (enableStatus == SahhaSensorStatus.pending) {
+            log = "User did not complete enabling sensors.";
+          } else {
+            log = "Sensors could not be enabled.";
+          }
         });
       } else if (status == SahhaSensorStatus.enabled) {
         setState(() {
@@ -124,7 +133,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
               const SizedBox(height: 30),
               ElevatedButton(
                 onPressed: _initSahha,
-                child: const Text("connect"),
+                child: const Text("Connect"),
               ),
             ],
           ),
