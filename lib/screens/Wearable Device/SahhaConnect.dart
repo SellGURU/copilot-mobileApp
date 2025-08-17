@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sahha_flutter/sahha_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:copilet/constants/endPoints.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
 
 class WearableDevicePage extends StatefulWidget {
   const WearableDevicePage({super.key});
@@ -26,6 +29,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
   void initState() {
     super.initState();
     _checkSavedStatus();
+    _getAndEncryptKeys();
   }
 
   Future<void> _checkSavedStatus() async {
@@ -37,6 +41,41 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
         titleText = "Device connected successfully!";
         descText = "Your wearable device is now synced and ready.";
       });
+    }
+  }
+
+  String? encryptedKey;
+  String? encryptedSecret;
+
+  Future<void> _getAndEncryptKeys() async {
+    final response = await http.post(Uri.parse(Endpoints.get_keys));
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+
+      final originalKey = data['key'];
+      final originalSecret = data['secret'];
+
+      const keyString = 'Hello12345678910'; // کلید ثابت
+      final key = encrypt.Key.fromUtf8(keyString);
+
+      String encryptValue(String value) {
+        final iv = encrypt.IV.fromSecureRandom(16);
+        final encrypter = encrypt.Encrypter(
+          encrypt.AES(key, mode: encrypt.AESMode.cbc, padding: 'PKCS7'),
+        );
+
+        final encrypted = encrypter.encrypt(value, iv: iv);
+
+        // فرمت خروجی: iv:cipher
+        return '${iv.base64}:${encrypted.base64}';
+      }
+
+      setState(() {
+        encryptedKey = encryptValue(originalKey);
+        encryptedSecret = encryptValue(originalSecret);
+      });
+    } else {
+      debugPrint('Error: ${response.statusCode}');
     }
   }
 
