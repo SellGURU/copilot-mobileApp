@@ -247,21 +247,22 @@ class _SettingPageState extends State<SettingPage> {
                 //   textTitle: 'Terms of Service',
                 // ),
                 // ),
-                const SizedBox(height: 20),
+                // const SizedBox(height: 20),
 
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (_) => const WearableDevicePage()),
-                    );
-                  },
-                  child: WearableDevicesTile(
-                    srcImage: 'watch-status.svg',
-                    textTitle: 'Wearable Device',
-                  ),
-                ),
+                // GestureDetector(
+                //   onTap: () {
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (_) => const WearableDevicePage()),
+                //     );
+                //   },
+                //   child: WearableDevicesTile(
+                //     srcImage: 'watch-status.svg',
+                //     textTitle: 'Wearable Device',
+                //   ),
+                // ),
+               
                 const SizedBox(height: 20),
 
                 GestureDetector(
