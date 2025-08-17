@@ -29,4 +29,7 @@ class Endpoints {
   static const checkTask = "${baseUrlCodie}mobile/check_task";
   static const uncheckTask = "${baseUrlCodie}mobile/uncheck_task";
   static const getScores = "${baseUrlCodie}mobile/scores";
+
+  // ignore: constant_identifier_names
+  static const get_keys ="${baseUrlCodie}wearable_data/get_keys";
 }
