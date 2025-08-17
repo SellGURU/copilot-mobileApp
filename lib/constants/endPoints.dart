@@ -32,4 +32,5 @@ class Endpoints {
 
   // ignore: constant_identifier_names
   static const get_keys ="${baseUrlCodie}wearable_data/get_keys";
+  static const connected_wearable ="${baseUrlCodie}wearable_data/connected_wearable";
 }
