@@ -32,16 +32,17 @@ class HealthPlanCard extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         child: Stack(
           children: [
-           Positioned(
-              top: 0,
-              right: -30,
 
-              child: SvgPicture.asset(
-                'assets/HelthCardPlan.svg', // مسیر تصویرت
-                width: 80, // اندازه تصویر
-                height: 80,
-              ),
-            ),            
+          //  Positioned(
+          //     top: 0,
+          //     right: -30,
+
+          //     child: SvgPicture.asset(
+          //       'assets/helthplanCard.svg', // مسیر تصویرت
+          //       // width: 80, // اندازه تصویر
+          //       // height: 80,
+          //     ),
+          //   ),            
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
               child: Column(
@@ -88,7 +89,16 @@ class HealthPlanCard extends StatelessWidget {
                 ],
               ),
             ),
- 
+            Positioned(
+              top: 0,
+              left: 0,
+              child: SvgPicture.asset(
+                'assets/helthplancard.svg', // مسیر تصویرت
+              ),
+            ),
+            //  SvgPicture.asset(
+            //     'assets/helthplancard.svg', // مسیر تصویرت
+            //   ),
           ],
         ),
       ),
