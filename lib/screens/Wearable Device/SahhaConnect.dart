@@ -1,11 +1,15 @@
 import 'dart:convert';
 import 'package:copilet/components/text_style.dart';
 import 'package:copilet/res/colors.dart';
+import 'package:copilet/utility/token/getTokenLocaly.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:sahha_flutter/sahha_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:copilet/constants/endPoints.dart';
 
 class WearableDevicePage extends StatefulWidget {
   const WearableDevicePage({super.key});
@@ -17,6 +21,7 @@ class WearableDevicePage extends StatefulWidget {
 class _WearableDevicePageState extends State<WearableDevicePage> {
   bool connecting = false;
   bool success = false;
+  bool keysReady = false; // اضافه کردن متغیر برای وضعیت آماده بودن کلیدها
   String log = "";
   String titleText = "Connect to Wearable Devices";
   String descText =
@@ -26,8 +31,9 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
   void initState() {
     super.initState();
     _checkSavedStatus();
+    _getAndEncryptKeys();
   }
-
+  Dio _dio = Dio();
   Future<void> _checkSavedStatus() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool alreadyConnected = prefs.getBool('wearableConnected') ?? false;
@@ -40,6 +46,51 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
     }
   }
 
+  String? encryptedKey="BF9yybnbq44AreyJf04tNbvBCXXRIFJH";
+  String? encryptedSecret="YFhSuGe4CuY13XZZzW0dGqowfM6oMNSwz9qkQBiyCxm8FneNGncwuQU7YkU50sMp";
+
+  Future<void> _getAndEncryptKeys() async {
+    final response = await http.post(Uri.parse(Endpoints.get_keys));
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+
+      final originalKey = data['key'];
+      final originalSecret = data['secret'];
+
+      // const keyString = 'Hello12345678910'; // کلید ثابت
+      // final key = encrypt.Key.fromUtf8(keyString);
+
+      // String encryptValue(String value) {
+      //   final iv = encrypt.IV.fromSecureRandom(16);
+      //   final encrypter = encrypt.Encrypter(
+      //     encrypt.AES(key, mode: encrypt.AESMode.cbc, padding: 'PKCS7'),
+      //   );
+
+      //   final encrypted = encrypter.encrypt(value, iv: iv);
+
+      //   // فرمت خروجی: iv:cipher
+      //   return '${iv.base64}:${encrypted.base64}';
+      // }
+      print(originalKey);
+      print(originalSecret);
+      setState(() {
+        encryptedKey = originalKey;
+        encryptedSecret = originalSecret;
+        keysReady = true; // فعال کردن دکمه بعد از دریافت کلیدها
+      });
+    } else {
+      debugPrint('Error: ${response.statusCode}');
+    }
+  }
+
+  Future<void> _connectedWearable() async {
+    var token = await getTokenLocally();  // Retrieve token locally
+    _dio.options.headers['Authorization'] = "Bearer $token";  
+    final response = await _dio.post(
+      Endpoints.connected_wearable,
+    );
+  }
+
   Future<void> _initSahha() async {
     setState(() {
       connecting = true;
@@ -49,6 +100,11 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
     });
 
     if (kIsWeb) {
+      _connectedWearable();
+      // if (response.statusCode == 200) {
+      //   final data = jsonDecode(response.body);
+      //   print(data);
+      // }
       // حالت وب که ساپورت نمیشه → بعد از 5 ثانیه موفقیت نشون میدیم
       await Future.delayed(const Duration(seconds: 5));
       // SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -74,9 +130,8 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
       if (!configured) throw "Sahha configuration failed";
 
       bool authSuccess = await SahhaFlutter.authenticate(
-        appId: "o6rAnanD0tnm877eT73dV8BQhSvOEC7b",
-        appSecret:
-            "ayjYop9i8ZBPt7AFCvtfeLyXKBICFEa99aaCASGOPik4LgeqSQ7nROq0g3HndAOv",
+        appId: encryptedKey!,
+        appSecret: encryptedSecret!,
         externalId: userId,
       );
       if (!authSuccess) throw "Authentication failed";
@@ -91,6 +146,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
         );
         if (enableStatus == SahhaSensorStatus.enabled) {
           await prefs.setBool('wearableConnected', true);
+          // _connectedWearable();
           setState(() {
             connecting = false;
             success = true;
@@ -189,7 +245,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 40),
-              if (!connecting && !success)
+              if (!connecting && !success && keysReady)
                 GestureDetector(
                   onTap: _initSahha,
                   child: Container(
@@ -205,6 +261,35 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
                       "Allow Access",
                       style: AppTextStyles.titleMediumWhite,
                     ),
+                  ),
+                )
+              else if (!connecting && !success && !keysReady)
+                Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.white, width: 1),
+                  ),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.grey[600]!),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        "Loading...",
+                        style: AppTextStyles.titleMedium.copyWith(color: Colors.grey[600]),
+                      ),
+                    ],
                   ),
                 ),
               const SizedBox(height: 20),

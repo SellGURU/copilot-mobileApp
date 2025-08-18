@@ -262,6 +262,7 @@ class _SettingPageState extends State<SettingPage> {
                     textTitle: 'Wearable Device',
                   ),
                 ),
+               
                 const SizedBox(height: 20),
 
                 GestureDetector(

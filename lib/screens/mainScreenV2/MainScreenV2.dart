@@ -26,6 +26,7 @@ import 'package:intl/intl.dart';
 import '../../components/text_style.dart';
 import '../../res/colors.dart';
 import '../../utility/LaunchUrl.dart';
+import './HelthPlanCard/index.dart';
 import '../../models/Biomarker.dart'; // Import the Person class
 import '../../utility/changeScreanBloc/PageIndex_Bloc.dart';
 import '../../utility/changeScreanBloc/PageIndex_states.dart';
@@ -567,88 +568,96 @@ class _Overview2State extends State<Overview2> {
                                 Row(
                                   children: [
                                     // Only show report button when biomarker data is loaded
-                                    BlocBuilder<BiomarkerCubit, BiomarkerState>(
-                                      builder: (context, biomarkerState) {
-                                        // Only show report button if biomarker data is successfully loaded and has data
-                                        if (biomarkerState is SuccessBiomarkerState) {
-                                          var biomarkerData = biomarkerState.getBiomarkerData();
-                                          if (biomarkerData["data"] != null && biomarkerData["data"].length > 0) {
-                                            return BlocConsumer<DownloadReportPdfCubit, DownloadPdfState>(
-                                              listener: (context, state) {
-                                                // TODO: Implement listener for handling side effects based on state changes.
-                                              },
-                                              builder: (context, state) {
-                                                print("State is: \$state");
+                                    // BlocBuilder<BiomarkerCubit, BiomarkerState>(
+                                    //   builder: (context, biomarkerState) {
+                                    //     // Only show report button if biomarker data is successfully loaded and has data
+                                    //     if (biomarkerState is SuccessBiomarkerState) {
+                                    //       var biomarkerData = biomarkerState.getBiomarkerData();
+                                    //       if (biomarkerData["data"] != null && biomarkerData["data"].length > 0) {
+                                    //         return BlocConsumer<DownloadReportPdfCubit, DownloadPdfState>(
+                                    //           listener: (context, state) {
+                                    //             // TODO: Implement listener for handling side effects based on state changes.
+                                    //           },
+                                    //           builder: (context, state) {
+                                    //             print("State is: \$state");
                                                 
-                                                // State: SuccessDownloadPdf
-                                                if (state is SuccessDownloadPdf) {
-                                                  return GestureDetector(
-                                                    onTap: () async {
-                                                      // Launch the URL for the PDF download
-                                                      LaunchURL(state.pdfUrl);
-                                                    },
-                                                    child: Row(
-                                                      children: [
-                                                        SvgPicture.asset(
-                                                          "assets/document-download.svg",
-                                                          width: 16,
-                                                          height: 16,
-                                                          colorFilter: const ColorFilter.mode(
-                                                            AppColors.purpleDark,
-                                                            BlendMode.srcIn,
-                                                          ),
-                                                        ),
-                                                        const SizedBox(width: 5),
-                                                        Text(
-                                                          "Report",
-                                                          style: AppTextStyles.hintPurple,
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                }
+                                    //             // State: SuccessDownloadPdf
+                                    //             if (state is SuccessDownloadPdf) {
+                                    //               return GestureDetector(
+                                    //                 onTap: () async {
+                                    //                   // Launch the URL for the PDF download
+                                    //                   LaunchURL(state.pdfUrl);
+                                    //                 },
+                                    //                 child: Row(
+                                    //                   children: [
+                                    //                     ValueListenableBuilder<Color>(
+                                    //                       valueListenable: AppColors.dynamicSecondaryColorNotifier,
+                                    //                       builder: (context, secondaryColor, child) {
+                                    //                         return SvgPicture.asset(
+                                    //                             "assets/document-download.svg",
+                                    //                             width: 16,
+                                    //                             height: 16,
+                                    //                             color: secondaryColor,
+                                    //                             // colorFilter: const ColorFilter.mode(
+                                    //                             //   secondaryColor,
+                                    //                             //   BlendMode.srcIn,
+                                    //                             // ),
+                                    //                           );
+                                                       
+                                    //                       }
+                                    //                     ),
 
-                                                // State: LoadingDownloadPdf
-                                                if (state is LoadingDownloadPdf) {
-                                                  return const SizedBox(
-                                                    width: 15,
-                                                    height: 15,
-                                                    child: CircularProgressIndicator(color: AppColors.mainSecandaryColor),
-                                                  );
-                                                }
+                                    //                     const SizedBox(width: 5),
+                                    //                     Text(
+                                    //                       "Report",
+                                    //                       style: AppTextStyles.hintPurple.copyWith(color: AppColors.dynamicSecondaryColor),
+                                    //                     ),
+                                    //                   ],
+                                    //                 ),
+                                    //               );
+                                    //             }
 
-                                                // State: ErrorDownloadPdf
-                                                if (state is ErrorDownloadPdf) {
-                                                  return Row(
-                                                    children: [
-                                                      SvgPicture.asset(
-                                                        "assets/document-download.svg",
-                                                        width: 16,
-                                                        height: 16,
-                                                        colorFilter: const ColorFilter.mode(
-                                                          AppColors.purpleLite,
-                                                          BlendMode.srcIn,
-                                                        ),
-                                                      ),
-                                                      const SizedBox(width: 5),
-                                                      Text(
-                                                        "Report",
-                                                        style: AppTextStyles.hintLitePurple,
-                                                      ),
-                                                    ],
-                                                  );
-                                                }
+                                    //             // State: LoadingDownloadPdf
+                                    //             if (state is LoadingDownloadPdf) {
+                                    //               return const SizedBox(
+                                    //                 width: 15,
+                                    //                 height: 15,
+                                    //                 child:  CircularProgressIndicator(color: AppColors.mainSecandaryColor),
+                                    //               );
+                                    //             }
 
-                                                // Default: Unknown State
-                                                return const SizedBox();
-                                              },
-                                            );
-                                          }
-                                        }
-                                        // Return empty SizedBox if biomarker data is not loaded or empty
-                                        return const SizedBox();
-                                      },
-                                    ),
+                                    //             // State: ErrorDownloadPdf
+                                    //             if (state is ErrorDownloadPdf) {
+                                    //               return Row(
+                                    //                 children: [
+                                    //                   SvgPicture.asset(
+                                    //                     "assets/document-download.svg",
+                                    //                     width: 16,
+                                    //                     height: 16,
+                                    //                     colorFilter: const ColorFilter.mode(
+                                    //                       AppColors.purpleLite,
+                                    //                       BlendMode.srcIn,
+                                    //                     ),
+                                    //                   ),
+                                    //                   const SizedBox(width: 5),
+                                    //                   Text(
+                                    //                     "Report",
+                                    //                     style: AppTextStyles.hintLitePurple,
+                                    //                   ),
+                                    //                 ],
+                                    //               );
+                                    //             }
+
+                                    //             // Default: Unknown State
+                                    //             return const SizedBox();
+                                    //           },
+                                    //         );
+                                    //       }
+                                    //     }
+                                    //     // Return empty SizedBox if biomarker data is not loaded or empty
+                                    //     return const SizedBox();
+                                    //   },
+                                    // ),
                                     
                                     SizedBox(width: 8,),                                 
                                     NotificationWidget(
@@ -737,6 +746,48 @@ class _Overview2State extends State<Overview2> {
                 SizedBox(height: 2),
                 // const Longevity2(),
                 Longevity(),
+                
+                SizedBox(height: 12),
+                BlocBuilder<BiomarkerCubit, BiomarkerState>(
+                  builder: (context, biomarkerState) {
+                    if (biomarkerState is SuccessBiomarkerState) {
+                      var biomarkerData = biomarkerState.getBiomarkerData();
+                      if (biomarkerData["data"] != null && biomarkerData["data"].length > 0) {
+                        return BlocConsumer<DownloadReportPdfCubit, DownloadPdfState>(
+                          listener: (context, state) {
+                            // TODO: Implement listener for handling side effects based on state changes.
+                          },
+                          builder: (context, state) {
+                            print("State is: \$state");
+                            
+                            // State: SuccessDownloadPdf
+                            if (state is SuccessDownloadPdf) {
+                              return HealthPlanCard(onclick: (){
+                                LaunchURL(state.pdfUrl);
+                              },);
+                            }
+
+                            // State: LoadingDownloadPdf
+                            if (state is LoadingDownloadPdf) {
+                              return const SizedBox(
+                                width: 15,
+                                height: 15,
+                                child:  CircularProgressIndicator(color: AppColors.mainSecandaryColor),
+                              );
+                            }
+
+                            // State: ErrorDownloadPdf
+                            // Default: Unknown State
+                            return const SizedBox();
+                          },
+                        );
+                      }
+                    }
+                    // Return empty SizedBox if biomarker data is not loaded or empty
+                    return const SizedBox();                    
+                    // return const HealthPlanCard();
+                  },
+                ),
                 Tasks(title: "Daily Tasks",),
                 Tasks(title: "Flexible Tasks",),
 
