@@ -130,8 +130,8 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
       if (!configured) throw "Sahha configuration failed";
 
       bool authSuccess = await SahhaFlutter.authenticate(
-        appId: 'BF9yybnbq44AreyJf04tNbvBCXXRIFJH',
-        appSecret: 'YFhSuGe4CuY13XZZzW0dGqowfM6oMNSwz9qkQBiyCxm8FneNGncwuQU7YkU50sMp',
+        appId: encryptedKey!,
+        appSecret: encryptedSecret!,
         externalId: userId,
       );
       if (!authSuccess) throw "Authentication failed";
@@ -146,7 +146,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
         );
         if (enableStatus == SahhaSensorStatus.enabled) {
           await prefs.setBool('wearableConnected', true);
-          _connectedWearable();
+          // _connectedWearable();
           setState(() {
             connecting = false;
             success = true;
