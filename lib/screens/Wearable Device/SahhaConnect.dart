@@ -143,7 +143,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
         );
         if (enableStatus == SahhaSensorStatus.enabled) {
           await prefs.setBool('wearableConnected', true);
-          final response = await http.post(Uri.parse(Endpoints.connected_wearable));
+          _connectedWearable();
           setState(() {
             connecting = false;
             success = true;
