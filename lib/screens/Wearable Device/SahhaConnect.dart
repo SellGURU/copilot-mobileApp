@@ -46,8 +46,8 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
     }
   }
 
-  String? encryptedKey;
-  String? encryptedSecret;
+  String? encryptedKey="BF9yybnbq44AreyJf04tNbvBCXXRIFJH";
+  String? encryptedSecret="YFhSuGe4CuY13XZZzW0dGqowfM6oMNSwz9qkQBiyCxm8FneNGncwuQU7YkU50sMp";
 
   Future<void> _getAndEncryptKeys() async {
     final response = await http.post(Uri.parse(Endpoints.get_keys));
@@ -71,7 +71,8 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
       //   // فرمت خروجی: iv:cipher
       //   return '${iv.base64}:${encrypted.base64}';
       // }
-
+      print(originalKey);
+      print(originalSecret);
       setState(() {
         encryptedKey = originalKey;
         encryptedSecret = originalSecret;
@@ -129,8 +130,8 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
       if (!configured) throw "Sahha configuration failed";
 
       bool authSuccess = await SahhaFlutter.authenticate(
-        appId: encryptedKey.toString(),
-        appSecret: encryptedSecret.toString(),
+        appId: 'BF9yybnbq44AreyJf04tNbvBCXXRIFJH',
+        appSecret: 'YFhSuGe4CuY13XZZzW0dGqowfM6oMNSwz9qkQBiyCxm8FneNGncwuQU7YkU50sMp',
         externalId: userId,
       );
       if (!authSuccess) throw "Authentication failed";
