@@ -59,7 +59,7 @@ class HealthPlanCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   const FractionallySizedBox(
-                    widthFactor: 0.5,
+                    widthFactor: 1,
                     child: Text(
                       'A personalized health plan has been created for you. Explore your plan and start your journey toward better health.',
                       textAlign: TextAlign.justify,
@@ -89,13 +89,13 @@ class HealthPlanCard extends StatelessWidget {
                 ],
               ),
             ),
-            Positioned(
-              top: 0,
-              left: 0,
-              child: SvgPicture.asset(
-                'assets/helthplancard.svg', // مسیر تصویرت
-              ),
-            ),
+            // Positioned(
+            //   top: 0,
+            //   left: 0,
+            //   child: SvgPicture.asset(
+            //     'assets/helthplancard.svg', // مسیر تصویرت
+            //   ),
+            // ),
             //  SvgPicture.asset(
             //     'assets/helthplancard.svg', // مسیر تصویرت
             //   ),

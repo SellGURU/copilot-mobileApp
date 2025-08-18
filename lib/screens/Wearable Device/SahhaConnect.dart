@@ -129,8 +129,8 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
       if (!configured) throw "Sahha configuration failed";
 
       bool authSuccess = await SahhaFlutter.authenticate(
-        appId: encryptedKey!,
-        appSecret: encryptedSecret!,
+        appId: encryptedKey.toString(),
+        appSecret: encryptedSecret.toString(),
         externalId: userId,
       );
       if (!authSuccess) throw "Authentication failed";
