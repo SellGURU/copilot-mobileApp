@@ -21,6 +21,7 @@ class WearableDevicePage extends StatefulWidget {
 class _WearableDevicePageState extends State<WearableDevicePage> {
   bool connecting = false;
   bool success = false;
+  bool keysReady = false; // اضافه کردن متغیر برای وضعیت آماده بودن کلیدها
   String log = "";
   String titleText = "Connect to Wearable Devices";
   String descText =
@@ -74,6 +75,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
       setState(() {
         encryptedKey = originalKey;
         encryptedSecret = originalSecret;
+        keysReady = true; // فعال کردن دکمه بعد از دریافت کلیدها
       });
     } else {
       debugPrint('Error: ${response.statusCode}');
@@ -143,7 +145,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
         );
         if (enableStatus == SahhaSensorStatus.enabled) {
           await prefs.setBool('wearableConnected', true);
-          final response = await http.post(Uri.parse(Endpoints.connected_wearable));
+          _connectedWearable();
           setState(() {
             connecting = false;
             success = true;
@@ -242,7 +244,7 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 40),
-              if (!connecting && !success)
+              if (!connecting && !success && keysReady)
                 GestureDetector(
                   onTap: _initSahha,
                   child: Container(
@@ -258,6 +260,35 @@ class _WearableDevicePageState extends State<WearableDevicePage> {
                       "Allow Access",
                       style: AppTextStyles.titleMediumWhite,
                     ),
+                  ),
+                )
+              else if (!connecting && !success && !keysReady)
+                Container(
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(20),
+                    border: Border.all(color: Colors.white, width: 1),
+                  ),
+                  width: double.infinity,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          valueColor: AlwaysStoppedAnimation<Color>(Colors.grey[600]!),
+                        ),
+                      ),
+                      const SizedBox(width: 8),
+                      Text(
+                        "Loading...",
+                        style: AppTextStyles.titleMedium.copyWith(color: Colors.grey[600]),
+                      ),
+                    ],
                   ),
                 ),
               const SizedBox(height: 20),
