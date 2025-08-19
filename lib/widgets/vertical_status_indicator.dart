@@ -139,8 +139,8 @@ class VerticalStatusIndicator extends StatelessWidget {
                                 child: Tooltip(
                                   message: level['name'],
                                   child: Text(
-                                    level['name'].length > 5 
-                                        ? '${level['name'].substring(0, 5)}...'
+                                    level['name'].length > 8
+                                        ? '${level['name'].substring(0, 8)}...'
                                         : level['name'],
                                     style: AppTextStyles.hint.copyWith(
                                       color: Colors.grey[600],
