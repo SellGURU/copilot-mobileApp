@@ -56,6 +56,11 @@ class _TaskItemState extends State<TaskItem> {
         _controller = WebViewController()
           ..loadRequest(Uri.parse("https://holisticare.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
         setState(() {});
+      }else{
+        _controller = WebViewController()
+          // ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..loadRequest(Uri.parse("https://holisticare.vercel.app/checkin/$encodeId/${widget.task["id"]}"));
+        setState(() {});
       }
     }else {
       if (widget.task['type'] == 'Check-In' || widget.task['type'] == 'Questionary') {
@@ -65,6 +70,11 @@ class _TaskItemState extends State<TaskItem> {
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
           ..loadRequest(Uri.parse("https://holisticare.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
         setState(() {});
+      }else {
+        _controller = WebViewController()
+          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..loadRequest(Uri.parse("https://holisticare.vercel.app/checkin/$encodeId/${widget.task["id"]}"));
+        setState(() {});
       }
 
     }
@@ -72,38 +82,114 @@ class _TaskItemState extends State<TaskItem> {
 
   void _openWebViewModal(BuildContext context, String title) {
     if (widget.task['type'] == 'Check-In' || widget.task['type'] == 'Questionnaire') {
-      // showModalBottomSheet(
-      //   context: context,
-      //   isScrollControlled: true,
-      //   builder: (context) {
-      //     return SizedBox(
-      //       height: MediaQuery.of(context).size.height * 0.9,
-      //       child: Column(
-      //         children: [
-      //           AppBar(
-      //             title: Text(title, style: AppTextStyles.title1),
-      //             automaticallyImplyLeading: false,
-      //             actions: [
-      //               IconButton(
-      //                 icon: const Icon(Icons.close),
-      //                 onPressed: () => Navigator.pop(context),
-      //               ),
-      //             ],
-      //           ),
-      //           Expanded(
-      //             child: GestureDetector(
-      //               behavior: HitTestBehavior.opaque,  // مهم
-      //               child: WebViewWidget(controller: _controller),
-      //             ),
-      //           ),
-      //         ],
-      //       ),
-      //     );
-      //   },
-      // );
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return SizedBox(
+            height: MediaQuery.of(context).size.height * 0.9,
+            child: Column(
+              children: [
+                AppBar(
+                  title: Text(title, style: AppTextStyles.title1),
+                  automaticallyImplyLeading: false,
+                  actions: [
+                    IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,  // مهم
+                    child: WebViewWidget(controller: _controller),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      );
       print('widget.task["completed"] ${widget.task}');
        String taskType = widget.task['type'] == 'Check-In' ? 'checkin' : 'questionary';
       launchUrl(Uri.parse("https://holisticare.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
+    }else {
+      showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        builder: (context) {
+          return SizedBox(
+              height: MediaQuery.of(context).size.height * 0.9,
+              child: Column(
+                children: [
+                  AppBar(
+                    title: Text(title, style: AppTextStyles.title1),
+                    automaticallyImplyLeading: false,
+                    actions: [
+                      IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.opaque, // مهم
+                      child: WebViewWidget(controller: _controller),
+                    ),
+                  ),
+                  // بخش وضعیت پایین
+                  Padding(
+                    padding: const EdgeInsets.all(24.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text(
+                          "Status",
+                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
+                        Row(
+                          children: [
+                           
+                            StatefulBuilder(
+                              builder: (context, setState) {
+                                // bool isChecked = false;
+                                return Checkbox(
+                                  value: widget.task["completed"] == 'Done',
+                                  onChanged: widget.readOnly ? null : (val) {
+                                    if(widget.task["completed"] != 'Done' ){
+                                      print('widget.task["completed"] ${widget.task}');
+                                      context.read<TaskCubit>().completeTask(widget.task);
+                                      setState(() {
+                                        widget.task["completed"] = 'Done';
+                                      });
+                                      // Notify parent about completion change
+                                      widget.onTaskCompletionChanged?.call();
+                                    }else {
+                                      // _openWebViewModal(context, widget.task["title"]);
+                                      context.read<TaskCubit>().uncheckTask(widget.task);
+                                      setState(() {
+                                        widget.task["completed"] = '';
+                                      });
+                                      // Notify parent about completion change
+                                      widget.onTaskCompletionChanged?.call();
+                                    }
+                                  },
+                                );
+                              },
+                            ),
+                            const Text("Done"),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+        },
+      );
     }
   }
 
@@ -164,24 +250,25 @@ class _TaskItemState extends State<TaskItem> {
               ),
               GestureDetector(
                 onTap: widget.readOnly ? null : () {
-                  if(widget.task["completed"] != 'Done' ){
-                    print('widget.task["completed"] ${widget.task}');
-                    _openWebViewModal(context, widget.task["title"]);
-                    context.read<TaskCubit>().completeTask(widget.task);
-                    setState(() {
-                      widget.task["completed"] = 'Done';
-                    });
-                    // Notify parent about completion change
-                    widget.onTaskCompletionChanged?.call();
-                  }else {
-                    // _openWebViewModal(context, widget.task["title"]);
-                    context.read<TaskCubit>().uncheckTask(widget.task);
-                    setState(() {
-                      widget.task["completed"] = '';
-                    });
-                    // Notify parent about completion change
-                    widget.onTaskCompletionChanged?.call();
-                  }
+                   _openWebViewModal(context, widget.task["title"]);
+                  // if(widget.task["completed"] != 'Done' ){
+                  //   print('widget.task["completed"] ${widget.task}');
+                  //   _openWebViewModal(context, widget.task["title"]);
+                  //   context.read<TaskCubit>().completeTask(widget.task);
+                  //   setState(() {
+                  //     widget.task["completed"] = 'Done';
+                  //   });
+                  //   // Notify parent about completion change
+                  //   widget.onTaskCompletionChanged?.call();
+                  // }else {
+                  //   // _openWebViewModal(context, widget.task["title"]);
+                  //   context.read<TaskCubit>().uncheckTask(widget.task);
+                  //   setState(() {
+                  //     widget.task["completed"] = '';
+                  //   });
+                  //   // Notify parent about completion change
+                  //   widget.onTaskCompletionChanged?.call();
+                  // }
                 },                
                 child:ValueListenableBuilder<Color>(
                   valueListenable: AppColors.dynamicPrimaryColorNotifier,
