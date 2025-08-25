@@ -16,19 +16,24 @@ import 'package:url_launcher/url_launcher.dart';
 class TaskItem extends StatefulWidget {
   final Map<String, dynamic> task;
   final bool readOnly; // پراپ جدید برای حالت فقط خواندن
-  final VoidCallback? onTaskCompletionChanged; // Callback for task completion changes
-  const TaskItem({super.key,required this.task, this.readOnly = false, this.onTaskCompletionChanged});
+  final VoidCallback?
+      onTaskCompletionChanged; // Callback for task completion changes
+  const TaskItem(
+      {super.key,
+      required this.task,
+      this.readOnly = false,
+      this.onTaskCompletionChanged});
   @override
   State<TaskItem> createState() {
     return _TaskItemState();
-  }  
+  }
 }
 
 class _TaskItemState extends State<TaskItem> {
   // late Map<String, dynamic> taskData;
   late final WebViewController _controller;
   late String encodeId;
-  
+
   @override
   void initState() {
     super.initState();
@@ -42,46 +47,55 @@ class _TaskItemState extends State<TaskItem> {
       encodeId = fetchedEncodeId;
     });
     _initializeWebView();
-  }  
+  }
 
   Future<String> _getEncodeId() async {
-    return await getEncodeLocally() as String;   
-  }  
+    return await getEncodeLocally() as String;
+  }
 
   void _initializeWebView() {
     if (kIsWeb) {
-      if (widget.task['type'] == 'Check-In' || widget.task['type'] == 'Questionary') {
-        String taskType = widget.task['type'] == 'Check-In' ? 'checkin' : 'questionary';
+      if (widget.task['type'] == 'Check-In' ||
+          widget.task['type'] == 'Questionary') {
+        String taskType =
+            widget.task['type'] == 'Check-In' ? 'checkin' : 'questionary';
         // launchUrl(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${taskData["id"]}"));
         _controller = WebViewController()
-          ..loadRequest(Uri.parse("https://holisticare.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
+          ..loadRequest(Uri.parse(
+              "https://holisticare.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
         setState(() {});
-      }else{
+      } else {
         _controller = WebViewController()
           // ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          ..loadRequest(Uri.parse("https://holisticare.vercel.app/checkin/$encodeId/${widget.task["id"]}"));
+          ..loadRequest(Uri.parse(
+              "http://localhost:5173/tasks/$encodeId/${widget.task["id"]}"));
         setState(() {});
       }
-    }else {
-      if (widget.task['type'] == 'Check-In' || widget.task['type'] == 'Questionary') {
-        String taskType = widget.task['type'] == 'Check-In' ? 'checkin' : 'questionary';
+    } else {
+      if (widget.task['type'] == 'Check-In' ||
+          widget.task['type'] == 'Questionary') {
+        String taskType =
+            widget.task['type'] == 'Check-In' ? 'checkin' : 'questionary';
         // launchUrl(Uri.parse("https://holisticare-develop.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
         _controller = WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          ..loadRequest(Uri.parse("https://holisticare.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
+          ..loadRequest(Uri.parse(
+              "https://holisticare.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
         setState(() {});
-      }else {
+      } else {
         _controller = WebViewController()
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          ..loadRequest(Uri.parse("https://holisticare.vercel.app/checkin/$encodeId/${widget.task["id"]}"));
+          ..loadRequest(Uri.parse(
+              "http://localhost:5173/tasks/$encodeId/${widget.task["id"]}"));
         setState(() {});
       }
-
     }
   }
 
   void _openWebViewModal(BuildContext context, String title) {
-    if (widget.task['type'] == 'Check-In' || widget.task['type'] == 'Questionnaire') {
+    print('widget.task => ${widget.task}');
+    if (widget.task['type'] == 'Check-In' ||
+        widget.task['type'] == 'Questionnaire') {
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -102,7 +116,7 @@ class _TaskItemState extends State<TaskItem> {
                 ),
                 Expanded(
                   child: GestureDetector(
-                    behavior: HitTestBehavior.opaque,  // مهم
+                    behavior: HitTestBehavior.opaque, // مهم
                     child: WebViewWidget(controller: _controller),
                   ),
                 ),
@@ -112,18 +126,29 @@ class _TaskItemState extends State<TaskItem> {
         },
       );
       print('widget.task["completed"] ${widget.task}');
-       String taskType = widget.task['type'] == 'Check-In' ? 'checkin' : 'questionary';
-      launchUrl(Uri.parse("https://holisticare.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
-    }else {
+      String taskType =
+          widget.task['type'] == 'Check-In' ? 'checkin' : 'questionary';
+      launchUrl(Uri.parse(
+          "https://holisticare.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
+    } else {
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
         builder: (context) {
           return SizedBox(
-              height: MediaQuery.of(context).size.height * 0.9,
+            height: MediaQuery.of(context).size.height * 0.9,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(16),
+                  topRight: Radius.circular(16),
+                ),
+              ),
               child: Column(
                 children: [
                   AppBar(
+                    centerTitle: true,
                     title: Text(title, style: AppTextStyles.title1),
                     automaticallyImplyLeading: false,
                     actions: [
@@ -132,50 +157,69 @@ class _TaskItemState extends State<TaskItem> {
                         onPressed: () => Navigator.pop(context),
                       ),
                     ],
+                    backgroundColor: Colors.white,
+                    elevation: 0,
+                    foregroundColor: AppColors.textPrimary,
                   ),
                   Expanded(
                     child: GestureDetector(
-                      behavior: HitTestBehavior.opaque, // مهم
+                      behavior: HitTestBehavior.opaque,
                       child: WebViewWidget(controller: _controller),
                     ),
                   ),
-                  // بخش وضعیت پایین
-                  Padding(
-                    padding: const EdgeInsets.all(24.0),
+                  Container(
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 14.0),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF4F4F4),
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24.0, vertical: 10.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
                           "Status",
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.textPrimary),
                         ),
                         Row(
                           children: [
-                           
                             StatefulBuilder(
                               builder: (context, setState) {
-                                // bool isChecked = false;
                                 return Checkbox(
                                   value: widget.task["completed"] == 'Done',
-                                  onChanged: widget.readOnly ? null : (val) {
-                                    if(widget.task["completed"] != 'Done' ){
-                                      print('widget.task["completed"] ${widget.task}');
-                                      context.read<TaskCubit>().completeTask(widget.task);
-                                      setState(() {
-                                        widget.task["completed"] = 'Done';
-                                      });
-                                      // Notify parent about completion change
-                                      widget.onTaskCompletionChanged?.call();
-                                    }else {
-                                      // _openWebViewModal(context, widget.task["title"]);
-                                      context.read<TaskCubit>().uncheckTask(widget.task);
-                                      setState(() {
-                                        widget.task["completed"] = '';
-                                      });
-                                      // Notify parent about completion change
-                                      widget.onTaskCompletionChanged?.call();
-                                    }
-                                  },
+                                  onChanged: widget.readOnly
+                                      ? null
+                                      : (val) {
+                                          if (widget.task["completed"] !=
+                                              'Done') {
+                                            print(
+                                                'widget.task["completed"] ${widget.task}');
+                                            context
+                                                .read<TaskCubit>()
+                                                .completeTask(widget.task);
+                                            setState(() {
+                                              widget.task["completed"] = 'Done';
+                                            });
+                                            // Notify parent about completion change
+                                            widget.onTaskCompletionChanged
+                                                ?.call();
+                                          } else {
+                                            context
+                                                .read<TaskCubit>()
+                                                .uncheckTask(widget.task);
+                                            setState(() {
+                                              widget.task["completed"] = '';
+                                            });
+                                            // Notify parent about completion change
+                                            widget.onTaskCompletionChanged
+                                                ?.call();
+                                          }
+                                        },
                                 );
                               },
                             ),
@@ -187,7 +231,8 @@ class _TaskItemState extends State<TaskItem> {
                   ),
                 ],
               ),
-            );
+            ),
+          );
         },
       );
     }
@@ -197,43 +242,45 @@ class _TaskItemState extends State<TaskItem> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => TaskCubit()..loadTask(widget.task),
-      child: BlocBuilder<TaskCubit, TaskState>(
-        builder: (context, state) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                spacing: 4,
-                children: [
-                  ValueListenableBuilder<Color>(
+      child: BlocBuilder<TaskCubit, TaskState>(builder: (context, state) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              spacing: 4,
+              children: [
+                ValueListenableBuilder<Color>(
                     valueListenable: AppColors.dynamicPrimaryColorNotifier,
                     builder: (context, secondaryColor, child) {
-                      return  Container(
-                            width: 36,
-                            height: 36,
-                            decoration: BoxDecoration(
+                      return Container(
+                          width: 36,
+                          height: 36,
+                          decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(100),
                               border: Border.all(
-                                color: widget.task["completed"] == 'Done' || widget.task["status"] == 'Done' ? AppColors.dynamicPrimaryColor : AppColors.SilverGray,
+                                color: widget.task["completed"] == 'Done' ||
+                                        widget.task["status"] == 'Done'
+                                    ? AppColors.dynamicPrimaryColor
+                                    : AppColors.SilverGray,
                                 width: 3,
-                              )
-                            ),
-                            child: Center(
+                              )),
+                          child: Center(
                               child: SvgPicture.asset(
-                                widget.task['type'] == 'Check-In'?'assets/firstline.svg':'assets/note.svg',
-                                width: 16,
-                                height: 16,
-                                fit: BoxFit.contain,
-                                color: widget.task["completed"] == 'Done' || widget.task["status"] == 'Done' ? AppColors.dynamicPrimaryColor : AppColors.TextTriarty,
-                              )
-                            )
-                          );
-                    }
-                  ),
-
-                  Container(
+                            widget.task['type'] == 'Check-In'
+                                ? 'assets/firstline.svg'
+                                : 'assets/note.svg',
+                            width: 16,
+                            height: 16,
+                            fit: BoxFit.contain,
+                            color: widget.task["completed"] == 'Done' ||
+                                    widget.task["status"] == 'Done'
+                                ? AppColors.dynamicPrimaryColor
+                                : AppColors.TextTriarty,
+                          )));
+                    }),
+                Container(
                   width: 140, // یا هر عددی که مناسب طراحی‌ات است
                   child: Tooltip(
                     message: widget.task["title"] ?? "",
@@ -245,64 +292,65 @@ class _TaskItemState extends State<TaskItem> {
                     ),
                   ),
                 )
-                
-                ],
-              ),
-              GestureDetector(
-                onTap: widget.readOnly ? null : () {
-                   _openWebViewModal(context, widget.task["title"]);
-                  // if(widget.task["completed"] != 'Done' ){
-                  //   print('widget.task["completed"] ${widget.task}');
-                  //   _openWebViewModal(context, widget.task["title"]);
-                  //   context.read<TaskCubit>().completeTask(widget.task);
-                  //   setState(() {
-                  //     widget.task["completed"] = 'Done';
-                  //   });
-                  //   // Notify parent about completion change
-                  //   widget.onTaskCompletionChanged?.call();
-                  // }else {
-                  //   // _openWebViewModal(context, widget.task["title"]);
-                  //   context.read<TaskCubit>().uncheckTask(widget.task);
-                  //   setState(() {
-                  //     widget.task["completed"] = '';
-                  //   });
-                  //   // Notify parent about completion change
-                  //   widget.onTaskCompletionChanged?.call();
-                  // }
-                },                
-                child:ValueListenableBuilder<Color>(
+              ],
+            ),
+            GestureDetector(
+              onTap: widget.readOnly
+                  ? null
+                  : () {
+                      _openWebViewModal(context, widget.task["title"]);
+                      // if(widget.task["completed"] != 'Done' ){
+                      //   print('widget.task["completed"] ${widget.task}');
+                      //   _openWebViewModal(context, widget.task["title"]);
+                      //   context.read<TaskCubit>().completeTask(widget.task);
+                      //   setState(() {
+                      //     widget.task["completed"] = 'Done';
+                      //   });
+                      //   // Notify parent about completion change
+                      //   widget.onTaskCompletionChanged?.call();
+                      // }else {
+                      //   // _openWebViewModal(context, widget.task["title"]);
+                      //   context.read<TaskCubit>().uncheckTask(widget.task);
+                      //   setState(() {
+                      //     widget.task["completed"] = '';
+                      //   });
+                      //   // Notify parent about completion change
+                      //   widget.onTaskCompletionChanged?.call();
+                      // }
+                    },
+              child: ValueListenableBuilder<Color>(
                   valueListenable: AppColors.dynamicPrimaryColorNotifier,
                   builder: (context, secondaryColor, child) {
                     return Container(
-                            width: 24,
-                            height: 24,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: widget.task["completed"] == 'Done' ? AppColors.dynamicPrimaryColor : AppColors.SilverGray,
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Opacity(
-                              opacity: widget.readOnly ? 0.5 : 1.0,
-                              child: widget.task["completed"] == 'Done' || widget.task["status"] == 'Done'
-                                ? Center(
-                                    child: SvgPicture.asset('assets/tick.svg', color: AppColors.dynamicPrimaryColor),
-                                  )
-                                : Center(
-                                    child: SvgPicture.asset('assets/pelas.svg', color: AppColors.dynamicPrimaryColor),
-                                  )
-                            ),
-                          );
-                  }
-                ) 
-             ,
-              )
-
-            ],
-          );
-        }
-      ),
+                      width: 24,
+                      height: 24,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          color: widget.task["completed"] == 'Done'
+                              ? AppColors.dynamicPrimaryColor
+                              : AppColors.SilverGray,
+                          width: 1,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Opacity(
+                          opacity: widget.readOnly ? 0.5 : 1.0,
+                          child: widget.task["completed"] == 'Done' ||
+                                  widget.task["status"] == 'Done'
+                              ? Center(
+                                  child: SvgPicture.asset('assets/tick.svg',
+                                      color: AppColors.dynamicPrimaryColor),
+                                )
+                              : Center(
+                                  child: SvgPicture.asset('assets/pelas.svg',
+                                      color: AppColors.dynamicPrimaryColor),
+                                )),
+                    );
+                  }),
+            )
+          ],
+        );
+      }),
     );
-  }  
+  }
 }
