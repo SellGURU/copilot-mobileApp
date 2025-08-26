@@ -93,9 +93,8 @@ class _TaskItemState extends State<TaskItem> {
   }
 
   void _openWebViewModal(BuildContext context, String title) {
-    print('widget.task => ${widget.task}');
     if (widget.task['type'] == 'Check-In' ||
-        widget.task['type'] == 'Questionnaire') {
+        widget.task['type'] == 'Questionary') {
       showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -125,7 +124,6 @@ class _TaskItemState extends State<TaskItem> {
           );
         },
       );
-      print('widget.task["completed"] ${widget.task}');
       String taskType =
           widget.task['type'] == 'Check-In' ? 'checkin' : 'questionary';
       launchUrl(Uri.parse(
