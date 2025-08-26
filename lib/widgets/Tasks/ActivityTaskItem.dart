@@ -63,7 +63,7 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
       _controller = WebViewController()
         // ..setJavaScriptMode(JavaScriptMode.unrestricted)
         ..loadRequest(Uri.parse(
-            "http://localhost:5173/tasks/$encodeId/${widget.task["task_id"]}"));
+            "https://holisticare-develop.vercel.app/tasks/$encodeId/${widget.task["task_id"]}"));
       setState(() {});
     }
   }
