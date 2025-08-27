@@ -95,35 +95,35 @@ class _TaskItemState extends State<TaskItem> {
   void _openWebViewModal(BuildContext context, String title) {
     if (widget.task['type'] == 'Check-In' ||
         widget.task['type'] == 'Questionary') {
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        builder: (context) {
-          return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.9,
-            child: Column(
-              children: [
-                AppBar(
-                  title: Text(title, style: AppTextStyles.title1),
-                  automaticallyImplyLeading: false,
-                  actions: [
-                    IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: GestureDetector(
-                    behavior: HitTestBehavior.opaque, // مهم
-                    child: WebViewWidget(controller: _controller),
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
-      );
+      // showModalBottomSheet(
+      //   context: context,
+      //   isScrollControlled: true,
+      //   builder: (context) {
+      //     return SizedBox(
+      //       height: MediaQuery.of(context).size.height * 0.9,
+      //       child: Column(
+      //         children: [
+      //           AppBar(
+      //             title: Text(title, style: AppTextStyles.title1),
+      //             automaticallyImplyLeading: false,
+      //             actions: [
+      //               IconButton(
+      //                 icon: const Icon(Icons.close),
+      //                 onPressed: () => Navigator.pop(context),
+      //               ),
+      //             ],
+      //           ),
+      //           Expanded(
+      //             child: GestureDetector(
+      //               behavior: HitTestBehavior.opaque, // مهم
+      //               child: WebViewWidget(controller: _controller),
+      //             ),
+      //           ),
+      //         ],
+      //       ),
+      //     );
+      //   },
+      // );
       String taskType =
           widget.task['type'] == 'Check-In' ? 'checkin' : 'questionary';
       launchUrl(Uri.parse(

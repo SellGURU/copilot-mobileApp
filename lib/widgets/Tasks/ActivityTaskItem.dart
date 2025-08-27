@@ -6,6 +6,7 @@ import 'package:copilet/widgets/Tasks/TaskWrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'cubit.dart';
 import 'state.dart';
@@ -71,32 +72,36 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
   void _openWebViewModal(BuildContext context, String title) {
     if (widget.task['type'] == 'Check-In' ||
         widget.task['type'] == 'Questionary') {
-      showModalBottomSheet(
-        context: context,
-        isScrollControlled: true,
-        builder: (context) {
-          return SizedBox(
-            height: MediaQuery.of(context).size.height * 0.9,
-            child: Column(
-              children: [
-                AppBar(
-                  title: Text(title, style: AppTextStyles.title1),
-                  automaticallyImplyLeading: false,
-                  actions: [
-                    IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                  ],
-                ),
-                Expanded(
-                  child: WebViewWidget(controller: _controller),
-                ),
-              ],
-            ),
-          );
-        },
-      );
+      // showModalBottomSheet(
+      //   context: context,
+      //   isScrollControlled: true,
+      //   builder: (context) {
+      //     return SizedBox(
+      //       height: MediaQuery.of(context).size.height * 0.9,
+      //       child: Column(
+      //         children: [
+      //           AppBar(
+      //             title: Text(title, style: AppTextStyles.title1),
+      //             automaticallyImplyLeading: false,
+      //             actions: [
+      //               IconButton(
+      //                 icon: const Icon(Icons.close),
+      //                 onPressed: () => Navigator.pop(context),
+      //               ),
+      //             ],
+      //           ),
+      //           Expanded(
+      //             child: WebViewWidget(controller: _controller),
+      //           ),
+      //         ],
+      //       ),
+      //     );
+      //   },
+      // );
+      String taskType =
+          widget.task['type'] == 'Check-In' ? 'checkin' : 'questionary';
+      launchUrl(Uri.parse(
+          "https://holisticare.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
     } else {
       showModalBottomSheet(
         context: context,
