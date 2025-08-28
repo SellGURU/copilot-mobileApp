@@ -28,6 +28,7 @@ class Endpoints {
   static const getWeeklyTasks = "${baseUrlCodie}mobile/weekly_tasks";
   static const checkTask = "${baseUrlCodie}mobile/check_task";
   static const uncheckTask = "${baseUrlCodie}mobile/uncheck_task";
+  static const changeValueTask = "${baseUrlCodie}mobile/update_value";
   static const getScores = "${baseUrlCodie}mobile/scores";
 
   // ignore: constant_identifier_names
