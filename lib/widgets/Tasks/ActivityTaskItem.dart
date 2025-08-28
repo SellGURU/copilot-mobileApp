@@ -141,7 +141,7 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                   ),
                   Container(
                     margin: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 14.0),
+                        horizontal: 16.0, vertical: 0),
                     decoration: BoxDecoration(
                       color: const Color(0xFFF4F4F4),
                       borderRadius: BorderRadius.circular(12.0),
@@ -154,51 +154,98 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                         const Text(
                           "Status",
                           style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.textPrimary),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.textPrimary,
+                          ),
                         ),
-                        Row(
-                          children: [
-                            StatefulBuilder(
-                              builder: (context, setState) {
-                                return Checkbox(
-                                  value: widget.task["completed"] == 'Done',
+                        StatefulBuilder(
+                          builder: (context, setState) {
+                            final bool isDone =
+                                widget.task["completed"] == 'Done';
+                            return Row(
+                              children: [
+                                Checkbox(
+                                  value: isDone,
+                                  checkColor: Colors.white,
+                                  fillColor: isDone
+                                      ? WidgetStateProperty.all<Color>(
+                                          const Color(0xFF005F73))
+                                      : WidgetStateProperty.all<Color>(
+                                          Colors.white),
+                                  side: BorderSide(
+                                    color: isDone
+                                        ? const Color(0xFF005F73)
+                                        : AppColors.textPrimary,
+                                    width: 1.5,
+                                  ),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
                                   onChanged: widget.readOnly
                                       ? null
                                       : (val) {
-                                          if (widget.task["completed"] !=
-                                              'Done') {
-                                            print(
-                                                'widget.task["completed"] ${widget.task}');
-                                            context
-                                                .read<TaskCubit>()
-                                                .completeTask(widget.task);
-                                            setState(() {
-                                              widget.task["completed"] = 'Done';
-                                            });
-                                            // Notify parent about completion change
-                                            widget.onTaskCompletionChanged
-                                                ?.call();
-                                          } else {
-                                            context
-                                                .read<TaskCubit>()
-                                                .uncheckTask(widget.task);
-                                            setState(() {
-                                              widget.task["completed"] = '';
-                                            });
-                                            // Notify parent about completion change
-                                            widget.onTaskCompletionChanged
-                                                ?.call();
-                                          }
+                                          setState(() {
+                                            widget.task["completed"] =
+                                                (val ?? false) ? 'Done' : '';
+                                          });
                                         },
-                                );
-                              },
-                            ),
-                            const Text("Done"),
-                          ],
+                                ),
+                                const SizedBox(width: 1),
+                                Text(
+                                  "Done",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w400,
+                                    color: isDone
+                                        ? const Color(0xFF005F73)
+                                        : AppColors.textPrimary,
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
                         ),
                       ],
+                    ),
+                  ),
+                  Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 12.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color(0xFF005F73),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 18.0),
+                      ),
+                      onPressed: widget.readOnly
+                          ? null
+                          : () {
+                              final isDone = widget.task["completed"] == 'Done';
+
+                              if (isDone) {
+                                context
+                                    .read<TaskCubit>()
+                                    .completeTask(widget.task);
+                              } else {
+                                context
+                                    .read<TaskCubit>()
+                                    .uncheckTask(widget.task);
+                              }
+
+                              widget.onTaskCompletionChanged?.call();
+                            },
+                      child: const Text(
+                        "Save Changes",
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
                 ],
