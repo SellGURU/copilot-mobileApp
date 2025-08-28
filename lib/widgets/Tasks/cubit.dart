@@ -25,7 +25,7 @@ class TaskCubit extends Cubit<TaskState> {
       _dio.options.headers['Authorization'] = "bearer $token";
       // فقط تیک زدن
       final response = await _dio.post(Endpoints.checkTask, data: {
-        "task_id": task["task_id"] ,
+        "task_id": task["task_id"],
       });
       if (response.statusCode == 200) {
         task['completed'] = 'Done';
@@ -45,7 +45,7 @@ class TaskCubit extends Cubit<TaskState> {
       _dio.options.headers['Authorization'] = "bearer $token";
       // فقط برداشتن تیک
       final response = await _dio.post(Endpoints.uncheckTask, data: {
-        "task_id": task["task_id"] ,
+        "task_id": task["task_id"],
       });
       if (response.statusCode == 200) {
         task['completed'] = 'Pending';
@@ -58,12 +58,26 @@ class TaskCubit extends Cubit<TaskState> {
     }
   }
 
+  Future<void> changeValueTask(Map<String, dynamic> task) async {
+    emit(TaskLoading());
+    try {
+      var token = await getTokenLocally();
+      _dio.options.headers['Authorization'] = "bearer $token";
+      await _dio.post(Endpoints.changeValueTask, data: {
+        "task_id": task["task_id"],
+        "temp_value": task["temp_value"] ?? 0
+      });
+    } catch (e) {
+      emit(TaskError(e.toString()));
+    }
+  }
+
   Future<void> updateTask(Map<String, dynamic> task) async {
     emit(TaskLoading());
     try {
       var token = await getTokenLocally();
       _dio.options.headers['Authorization'] = "bearer $token";
-      
+
       // Here you would typically make an API call to update the task
       // For now, we'll just emit the updated task
       emit(TaskLoaded(task));
@@ -71,4 +85,4 @@ class TaskCubit extends Cubit<TaskState> {
       emit(TaskError(e.toString()));
     }
   }
-} 
+}
