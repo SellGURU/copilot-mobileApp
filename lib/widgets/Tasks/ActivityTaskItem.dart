@@ -161,8 +161,8 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                         ),
                         StatefulBuilder(
                           builder: (context, setState) {
-                            final bool isDone =
-                                widget.task["completed"] == 'Done';
+                            print("widget.task ${widget.task}");
+                            final bool isDone = widget.task["Status"] == true;
                             return Row(
                               children: [
                                 Checkbox(
@@ -186,8 +186,8 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                                       ? null
                                       : (val) {
                                           setState(() {
-                                            widget.task["completed"] =
-                                                (val ?? false) ? 'Done' : '';
+                                            widget.task["Status"] =
+                                                (val ?? false) ? true : false;
                                           });
                                         },
                                 ),
@@ -224,7 +224,7 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                       onPressed: widget.readOnly
                           ? null
                           : () {
-                              final isDone = widget.task["completed"] == 'Done';
+                              final isDone = widget.task["Status"] == true;
 
                               if (isDone) {
                                 context
@@ -237,6 +237,8 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                               }
 
                               widget.onTaskCompletionChanged?.call();
+                              // Close the modal after saving changes
+                              Navigator.pop(context);
                             },
                       child: const Text(
                         "Save Changes",
@@ -279,8 +281,7 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(100),
                               border: Border.all(
-                                color: widget.task["completed"] == 'Done' ||
-                                        widget.task["Status"] == true
+                                color: widget.task["Status"] == true
                                     ? AppColors.dynamicPrimaryColor
                                     : AppColors.SilverGray,
                                 width: 3,
@@ -291,8 +292,7 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                             width: 16,
                             height: 16,
                             fit: BoxFit.contain,
-                            color: widget.task["completed"] == 'Done' ||
-                                    widget.task["Status"] == true
+                            color: widget.task["Status"] == true
                                 ? AppColors.dynamicPrimaryColor
                                 : AppColors.TextTriarty,
                           )));
@@ -341,8 +341,7 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                         height: 24,
                         decoration: BoxDecoration(
                           border: Border.all(
-                            color: widget.task["completed"] == 'Done' ||
-                                    widget.task["Status"] == true
+                            color: widget.task["Status"] == true
                                 ? AppColors.dynamicPrimaryColor
                                 : AppColors.SilverGray,
                             width: 1,
@@ -351,8 +350,7 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                         ),
                         child: Opacity(
                             opacity: widget.readOnly ? 0.5 : 1.0,
-                            child: widget.task["completed"] == 'Done' ||
-                                    widget.task["Status"] == true
+                            child: widget.task["Status"] == true
                                 ? Center(
                                     child: SvgPicture.asset('assets/tick.svg',
                                         color: AppColors.dynamicPrimaryColor),
