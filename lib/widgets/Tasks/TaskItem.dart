@@ -377,6 +377,8 @@ class _TaskItemState extends State<TaskItem> {
                               }
 
                               widget.onTaskCompletionChanged?.call();
+                              // Close the modal after saving changes
+                              Navigator.pop(context);
                             },
                       child: const Text(
                         "Save Changes",
