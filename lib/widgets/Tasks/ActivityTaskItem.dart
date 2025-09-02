@@ -107,6 +107,10 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
       showModalBottomSheet(
         context: rootNavigatorKey.currentContext!,
         isScrollControlled: true,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+        ),
+        clipBehavior: Clip.antiAlias,
         builder: (context) {
           return SizedBox(
             height: MediaQuery.of(context).size.height * 0.9,
@@ -133,6 +137,12 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
                     backgroundColor: Colors.white,
                     elevation: 0,
                     foregroundColor: AppColors.textPrimary,
+                    shape: Border(
+                      bottom: BorderSide(
+                        color: AppColors.gray50,
+                        width: 1,
+                      ),
+                    ),
                   ),
                   Expanded(
                     child: GestureDetector(
