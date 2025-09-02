@@ -13,6 +13,7 @@ import 'package:copilet/screens/mainScreenV2/downloadWeaklyReportState/cubit.dar
 import 'package:copilet/screens/mainScreenV2/userinfoCubit/cubit.dart';
 import 'package:copilet/screens/welcomScreen/welcomScreen.dart';
 import 'package:copilet/utility/deviceName.dart';
+import 'package:copilet/utility/nav_keys.dart';
 import 'package:copilet/widgets/SurveysCard/googleForm/cubit.dart';
 import 'package:copilet/widgets/restart/RestartWidget.dart';
 import 'package:copilet/widgets/Tasks/cubit.dart';
@@ -78,6 +79,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        navigatorKey: rootNavigatorKey,
         title: 'App Holisticare',
         debugShowCheckedModeBanner: false,
         routes: routes,
