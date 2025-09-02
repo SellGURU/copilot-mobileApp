@@ -1,6 +1,7 @@
 // ignore: file_names
 import 'package:copilet/components/text_style.dart';
 import 'package:copilet/res/colors.dart';
+import 'package:copilet/utility/nav_keys.dart';
 import 'package:copilet/utility/token/getTokenLocaly.dart';
 import 'package:copilet/widgets/Tasks/TaskWrapper.dart';
 import 'package:flutter/material.dart';
@@ -130,7 +131,7 @@ class _TaskItemState extends State<TaskItem> {
           "https://holisticare-develop.vercel.app/$taskType/$encodeId/${widget.task["id"]}"));
     } else {
       showModalBottomSheet(
-        context: context,
+        context: rootNavigatorKey.currentContext!,
         isScrollControlled: true,
         builder: (context) {
           return SizedBox(
