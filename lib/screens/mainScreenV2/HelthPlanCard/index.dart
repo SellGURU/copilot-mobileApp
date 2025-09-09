@@ -35,12 +35,12 @@ class HealthPlanCard extends StatelessWidget {
 
           //  Positioned(
           //     top: 0,
-          //     right: -30,
+          //     right: 0,
 
           //     child: SvgPicture.asset(
-          //       'assets/helthplanCard.svg', // مسیر تصویرت
-          //       // width: 80, // اندازه تصویر
-          //       // height: 80,
+          //       'assets/helthPlanCard2.svg', // مسیر تصویرت
+          //       width: 80, // اندازه تصویر
+          //       height: 80,
           //     ),
           //   ),            
             Padding(
