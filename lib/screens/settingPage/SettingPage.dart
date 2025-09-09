@@ -1,5 +1,5 @@
 import 'package:copilet/components/text_style.dart';
-import 'package:copilet/screens/Wearable%20Device/SahhaConnect.dart';
+// import 'package:copilet/screens/Wearable%20Device/SahhaConnect.dart';
 import 'package:copilet/screens/Wearable%20Device/WearableDevice.dart';
 import 'package:copilet/services/branding_service.dart';
 import 'package:copilet/widgets/notification_widget.dart';
@@ -254,7 +254,7 @@ class _SettingPageState extends State<SettingPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => const WearableDevicePage()),
+                          builder: (_) => const WearableDevice()),
                     );
                   },
                   child: WearableDevicesTile(
