@@ -142,14 +142,20 @@ class _ActivityTaskItemState extends State<ActivityTaskItem> {
               ),
               GestureDetector(
                 onTap: widget.readOnly ? null : () {
-                    _openWebViewModal(context, widget.task["Title"]);
+                    // _openWebViewModal(context, widget.task["Title"]);
                     if ( widget.task["completed"] == 'Done' || widget.task["Status"] == true ) {
                       context.read<TaskCubit>().uncheckTask(widget.task);
                       // Notify parent about completion change
+                      setState(() {
+                        widget.task["completed"] = '';
+                      });                      
                       widget.onTaskCompletionChanged?.call();
                     } else {
                       context.read<TaskCubit>().completeTask(widget.task);
                       // Notify parent about completion change
+                      setState(() {
+                        widget.task["completed"] = 'Done';
+                      }); 
                       widget.onTaskCompletionChanged?.call();
                     }
                 },

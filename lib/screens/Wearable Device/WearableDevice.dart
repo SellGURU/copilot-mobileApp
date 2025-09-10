@@ -169,10 +169,10 @@ class ConnectCard extends StatelessWidget {
             // Connect button
             ElevatedButton(
               onPressed: () async {
+                _launchURL(link);
                 Dio _dio = Dio();
                 await _dio.post(Endpoints.add_event,
                     data: {"event_type": "connected", "event_name": title});
-                _launchURL(link);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: connected
