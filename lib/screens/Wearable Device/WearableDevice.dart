@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-
+import '../../utility/token/getTokenLocaly.dart';
 import '../../constants/endPoints.dart';
 import 'authorizersRook/state.dart';
 
@@ -171,6 +171,8 @@ class ConnectCard extends StatelessWidget {
               onPressed: () async {
                 _launchURL(link);
                 Dio _dio = Dio();
+                var token = await getTokenLocally();  // Retrieve token locally
+                _dio.options.headers['Authorization'] = "Bearer $token";                
                 await _dio.post(Endpoints.add_event,
                     data: {"event_type": "connected", "event_name": title});
               },
